@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/mvc 
+	    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	    http://www.springframework.org/schema/context 
+	    http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	    http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd 
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+     
+    <mvc:annotation-driven/>
+	
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	
+	<beans:import resource="classpath*:/model-config.xml"/>
+ 
+ 											<!-- dao beans -->
+ 
+	<beans:bean id="commonEntityDAO" class="com.dancosoft.socialcommunity.dao.impl.CommonEntityDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+
+	<beans:bean id="accountDAO" class="com.dancosoft.socialcommunity.dao.impl.AccountDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	
+	<beans:bean id="accountForumDAO" class="com.dancosoft.socialcommunity.dao.impl.AccountForumDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+
+	<beans:bean id="accountGroupDAO" class="com.dancosoft.socialcommunity.dao.impl.AccountGroupDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+ 	
+	<beans:bean id="accountGroupHistoryDAO" class="com.dancosoft.socialcommunity.dao.impl.AccountGroupHistoryDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	
+	<beans:bean id="accountHistoryDAO" class="com.dancosoft.socialcommunity.dao.impl.AccountHistoryDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+
+	<beans:bean id="cityDAO" class="com.dancosoft.socialcommunity.dao.impl.CityDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+ 	
+	<beans:bean id="countryDAO" class="com.dancosoft.socialcommunity.dao.impl.CountryDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	
+	<beans:bean id="eventPatternDAO" class="com.dancosoft.socialcommunity.dao.impl.EventPatternDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	
+	<beans:bean id="forumDAO" class="com.dancosoft.socialcommunity.dao.impl.ForumDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	
+	<beans:bean id="forumMessageDAO" class="com.dancosoft.socialcommunity.dao.impl.ForumMessageDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+		
+	<beans:bean id="forumTopicDAO" class="com.dancosoft.socialcommunity.dao.impl.ForumTopicDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+
+	<beans:bean id="groupEventDAO" class="com.dancosoft.socialcommunity.dao.impl.GroupEventDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+
+	<beans:bean id="groupMemberDAO" class="com.dancosoft.socialcommunity.dao.impl.GroupMemberDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+ 
+	<beans:bean id="groupMessageDAO" class="com.dancosoft.socialcommunity.dao.impl.GroupMessageDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+		
+	<beans:bean id="languageDAO" class="com.dancosoft.socialcommunity.dao.impl.LanguageDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+
+	<beans:bean id="securityPromptDAO" class="com.dancosoft.socialcommunity.dao.impl.SecurityPromptDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+
+	<beans:bean id="singleMessageDAO" class="com.dancosoft.socialcommunity.dao.impl.SingleMessageDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+
+	<beans:bean id="userDAO" class="com.dancosoft.socialcommunity.dao.impl.UserDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	
+	<beans:bean id="userAutobiographyDAO" class="com.dancosoft.socialcommunity.dao.impl.UserAutobiographyDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+
+	<beans:bean id="userCorespondenceDAO" class="com.dancosoft.socialcommunity.dao.impl.UserCorespondenceDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	
+	<beans:bean id="userEmailDAO" class="com.dancosoft.socialcommunity.dao.impl.UserEmailDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+ 	
+	<beans:bean id="userLocationDAO" class="com.dancosoft.socialcommunity.dao.impl.UserLocationDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	
+	<beans:bean id="userPhotoDAO" class="com.dancosoft.socialcommunity.dao.impl.UserPhotoDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+	
+	<beans:bean id="userRoleDAO" class="com.dancosoft.socialcommunity.dao.impl.UserRoleDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+
+	<beans:bean id="userSecurityDAO" class="com.dancosoft.socialcommunity.dao.impl.UserSecurityDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+
+	<beans:bean id="userSocialNetworkDAO" class="com.dancosoft.socialcommunity.dao.impl.UserSocialNetworkDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
+<!--											   
+	<beans:bean id="testObjectDAOCreator" class="com.dancosoft.socialcommunity.dao.testsupport.TestObjectDAOCreator">
+		<beans:property name="commonEntityDAO" ref="commonEntityDAO"/>
+	</beans:bean>
+ -->
+	<context:annotation-config/>
+	
+	<context:component-scan base-package="com.dancosoft.socialcommunity">
+		<context:include-filter type="regex" expression="com.dancosoft.socialcommunity.*"/>
+		<context:include-filter type="regex" expression="com.dancosoft.socialcommunity.dao.*"/>
+	</context:component-scan>
+       
+</beans:beans>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/mvc 
+	    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	    http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd 
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<mvc:annotation-driven/>
+	
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+     
+     <!-- DB properities file location-->
+     <beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<beans:property name="location">
+			<beans:value>datasource.properties</beans:value>
+		</beans:property>
+	</beans:bean>
+     
+	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"	destroy-method="close">
+		<beans:property name="driverClassName" value="${jdbc.driverClassName}" /><!--com.mysql.jdbc.Driver  -->
+		<beans:property name="url" value="${jdbc.url}" />						 <!--jdbc:mysql://localhost:3306/social_community-->
+		<beans:property name="username" value="${jdbc.username}" />				 <!-- root -->
+		<beans:property name="password" value="${jdbc.password}" />				 <!--  -->
+	</beans:bean>
+
+	<beans:bean id="hibernate4AnnotatedSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="annotatedClasses">
+			<beans:list>
+				<beans:value>com.dancosoft.socialcommunity.model.Account</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.AccountForum</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.AccountGroup</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.AccountGroupHistory</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.AccountHistory</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.City</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.Country</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.EventPattern</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.Forum</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.ForumMessage</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.ForumTopic</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.GroupEvent</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.GroupMember</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.GroupMessage</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.Language</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.SecurityPrompt</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.SingleMessage</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.User</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.UserAutobiography</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.UserCorespondence</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.UserEmail</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.UserLocation</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.UserPhoto</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.UserRole</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.UserSecurity</beans:value>
+				<beans:value>com.dancosoft.socialcommunity.model.UserSocialNetwork</beans:value>
+			</beans:list>
+		</beans:property>
+		
+		<beans:property name="hibernateProperties">
+			<beans:props>
+				<beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</beans:prop>
+				<beans:prop key="hibernate.show_sql">true</beans:prop>
+				<beans:prop key="hibernate.format_sql">true</beans:prop>
+				<beans:prop key="connection.pool_size">1</beans:prop>
+				<beans:prop key="hibernate.id.new_generator_mappings">true</beans:prop>
+				<beans:prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+		<beans:property name="dataSource" ref="dataSource" />
+	</beans:bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+
+		
+</beans:beans>
