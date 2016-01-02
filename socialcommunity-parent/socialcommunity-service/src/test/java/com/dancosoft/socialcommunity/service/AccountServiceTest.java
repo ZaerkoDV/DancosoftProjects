@@ -55,7 +55,6 @@ public class AccountServiceTest extends TestStarter {
 	@Rollback(true)
 	@Test
 	public void testSearchAccountByAccountNameUserLastName() {
-
 		logger.info("AccountServiceTest: test method SearchAccountByAccountUserLastName");
 		Assert.assertNotNull(accountService.searchAccountByAccountNameUserLastName(account.getAccountName(), user.getLastName()));
 	}
@@ -64,7 +63,6 @@ public class AccountServiceTest extends TestStarter {
 	@Rollback(true)
 	@Test
 	public void testGettingIdUserByIdAccount() {
-
 		logger.info("AccountServiceTest: test method GetIdUserByIdAccount");
 		Long actual=accountService.getIdUserByIdAccount(account.getIdAccount());
 		Long expected= user.getIdUser();
@@ -75,7 +73,6 @@ public class AccountServiceTest extends TestStarter {
 	@Rollback(true)
 	@Test
 	public void testOnAccountBlock() {
-
 		logger.info("AccountServiceTest: test method isAccountBlock");
 		Assert.assertFalse(accountService.isAccountBlock(account.getIdAccount()));
 	}
@@ -84,7 +81,6 @@ public class AccountServiceTest extends TestStarter {
 	@Rollback(true)
 	@Test
 	public void testGettingAccountStatus() {
-
 		logger.info("AccountServiceTest: test method GettingAccountStatus");
 		Assert.assertEquals(account.getAccountBlockStatus(), accountService.getAccountStatus(account.getIdAccount()));
 	}

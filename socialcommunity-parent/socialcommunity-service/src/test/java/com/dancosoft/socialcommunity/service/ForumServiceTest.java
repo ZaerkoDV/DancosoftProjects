@@ -4,7 +4,6 @@
 package com.dancosoft.socialcommunity.service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -17,7 +16,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Forum;
 import com.dancosoft.socialcommunity.service.testsupport.TestObjectServiceCreator;
 import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
@@ -42,12 +40,10 @@ public class ForumServiceTest extends TestStarter{
 		this.forumService = forumService;
 	}
 
-	public void setTestObjectServiceCreator(
-			TestObjectServiceCreator testObjectServiceCreator) {
+	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
 		this.testObjectServiceCreator = testObjectServiceCreator;
 	}
 	
-	TimeConverter converter = new TimeConverter();
 	public Forum forum;
 
 	@Before
@@ -61,13 +57,10 @@ public class ForumServiceTest extends TestStarter{
 	public void testGettingListForumCreatedBetweenDateByIdForum() {
 
 		logger.info("ForumServiceTest: test method GetListForumCreatedBetweenDateByIdForum");
-
 		LocalDateTime minDateLDT = LocalDateTime.of(2015, 12, 17, 00, 00);
 		LocalDateTime maxDateLDT = LocalDateTime.of(2015, 12, 20, 00, 00);
-		Date minDateD = converter.convertLocalDateTimeToDate(minDateLDT);
-		Date maxDateD = converter.convertLocalDateTimeToDate(maxDateLDT);
 
-		List<Forum> list = forumService.getListForumCreatedBetweenDateByIdForum(minDateD, maxDateD);
+		List<Forum> list = forumService.getListForumCreatedBetweenDateByIdForum(minDateLDT, maxDateLDT);
 		Assert.assertFalse(list.isEmpty());
 	}
 
@@ -88,7 +81,6 @@ public class ForumServiceTest extends TestStarter{
 	public void testOnSearchForumByForumName() {
 
 		logger.info("ForumServiceTest: test method SearchForumByForumName");
-		
 		List<Forum> list = forumService.searchForumByForumName(forum.getForumName());
 		Assert.assertFalse(list.isEmpty());
 		list = forumService.searchForumByForumName("ForumWhichNotExist");
@@ -99,7 +91,6 @@ public class ForumServiceTest extends TestStarter{
 	@Rollback(true)
 	@Test
 	public void testGettingListForumWithStatus() {
-		
 		logger.info("ForumServiceTest: test method GetListForumWithStatus");
 		List<Forum> list = forumService.getListForumWithStatus(forum.getViewStatus());
 		Assert.assertFalse(list.isEmpty());
@@ -109,7 +100,6 @@ public class ForumServiceTest extends TestStarter{
 	@Rollback(true)
 	@Test
 	public void testOnPrivateForum() {
-		
 		logger.info("ForumServiceTest: test method isPrivateForum");
 		Assert.assertFalse(forumService.isPrivateForum(forum.getIdForum()));
 	}

@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import com.dancosoft.socialcommunity.model.EventPattern;
+import com.dancosoft.socialcommunity.dao.LanguageDAOTest;
+import com.dancosoft.socialcommunity.model.Language;
 import com.dancosoft.socialcommunity.service.testsupport.TestObjectServiceCreator;
 import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 
@@ -17,30 +18,30 @@ import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
  * @author Zaerko_DV
  *
  */
-public class EventPatternServiceTest extends TestStarter {
+public class LanguageServiceTest extends TestStarter {
 
-	private static final Logger logger = LoggerFactory.getLogger(EventPatternServiceTest.class);
-	
+	private static final Logger logger = LoggerFactory.getLogger(LanguageDAOTest.class);
+
 	@Autowired
-	@Qualifier("eventPatternService")
-	private EventPatternService eventPatternService;
+	@Qualifier("languageService")
+	private LanguageService languageService;
 
 	@Autowired
 	@Qualifier("testObjectServiceCreator")
 	private TestObjectServiceCreator testObjectServiceCreator;
 
-	public void setEventPatternService(EventPatternService eventPatternService) {
-		this.eventPatternService = eventPatternService;
+	public void setLanguageService(LanguageService languageService) {
+		this.languageService = languageService;
 	}
 
 	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
 		this.testObjectServiceCreator = testObjectServiceCreator;
 	}
 
-	public EventPattern eventPattern;
-
+	public Language language;
+	
 	@Before
 	public void initObjectsBeforeTest() {
-		this.eventPattern = testObjectServiceCreator.createEventPatternForTest();
+		this.language = testObjectServiceCreator.createLanguageForTest();
 	}
 }

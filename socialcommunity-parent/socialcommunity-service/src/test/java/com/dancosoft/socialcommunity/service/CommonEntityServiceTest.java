@@ -102,5 +102,4 @@ public class CommonEntityServiceTest extends TestStarter {
 		logger.info("EntityServiceTest:List test entity loaded sucessfully.");
 		Assert.assertFalse(list.isEmpty());
 	}
-	
 }

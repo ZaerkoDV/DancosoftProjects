@@ -4,7 +4,6 @@
 package com.dancosoft.socialcommunity.service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -17,7 +16,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.Forum;
 import com.dancosoft.socialcommunity.model.ForumTopic;
@@ -44,12 +42,9 @@ public class ForumTopicServiceTest extends TestStarter {
 		this.forumTopicService = forumTopicService;
 	}
 
-	public void setTestObjectServiceCreator(
-			TestObjectServiceCreator testObjectServiceCreator) {
+	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
 		this.testObjectServiceCreator = testObjectServiceCreator;
 	}
-	
-	TimeConverter converter = new TimeConverter();
 
 	public ForumTopic forumTopic;
 	public Forum forum;
@@ -66,7 +61,6 @@ public class ForumTopicServiceTest extends TestStarter {
 	@Rollback(false)
 	@Test
 	public void testGettingAuthorAccountForumTopic() {
-
 		logger.info("ForumTopicServiceTest: test method GetAuthorAccountForumTopic");
 		Assert.assertNotNull(forumTopicService.getAuthorAccountForumTopic(forumTopic.getIdForumTopic()));
 	}
@@ -75,10 +69,8 @@ public class ForumTopicServiceTest extends TestStarter {
 	@Rollback(true)
 	@Test
 	public void testGettingListForumTopicByIdForum() {
-
 		logger.info("ForumTopicServiceTest: test method GetListForumTopicByIdForum");
-		List<ForumTopic> list = forumTopicService.getListForumTopicByIdForum(forum
-				.getIdForum());
+		List<ForumTopic> list = forumTopicService.getListForumTopicByIdForum(forum.getIdForum());
 		Assert.assertFalse(list.isEmpty());
 	}
 
@@ -88,14 +80,11 @@ public class ForumTopicServiceTest extends TestStarter {
 	public void testGettingListForumTopicCreateBetweenDateByIdForum() {
 
 		logger.info("ForumTopicServiceTest: test method GetListForumTopicCreateBetweenDateByIdForum");
-
 		LocalDateTime minDateLDT = LocalDateTime.of(2015, 12, 17, 00, 00);
 		LocalDateTime maxDateLDT = LocalDateTime.of(2015, 12, 20, 00, 00);
-		Date minDateD = converter.convertLocalDateTimeToDate(minDateLDT);
-		Date maxDateD = converter.convertLocalDateTimeToDate(maxDateLDT);
-
+		
 		List<ForumTopic> list = forumTopicService.getListForumTopicCreateBetweenDateByIdForum(
-						forum.getIdForum(), minDateD, maxDateD);
+						forum.getIdForum(), minDateLDT, maxDateLDT);
 		Assert.assertFalse(list.isEmpty());
 	}
 

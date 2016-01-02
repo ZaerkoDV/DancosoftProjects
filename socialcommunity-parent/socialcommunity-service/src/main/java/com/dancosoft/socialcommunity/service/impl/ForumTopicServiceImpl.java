@@ -3,6 +3,7 @@
  */
 package com.dancosoft.socialcommunity.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.ForumTopicDAO;
+import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.ForumTopic;
 import com.dancosoft.socialcommunity.service.ForumTopicService;
@@ -25,6 +27,8 @@ import com.dancosoft.socialcommunity.service.ForumTopicService;
 public class ForumTopicServiceImpl extends CommonEntityServiceImpl implements ForumTopicService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ForumTopicServiceImpl .class);
+	
+	TimeConverter converter = new TimeConverter();
 	
 	@Autowired
 	@Qualifier(value="forumTopicDAO")
@@ -44,9 +48,14 @@ public class ForumTopicServiceImpl extends CommonEntityServiceImpl implements Fo
 		return forumTopicDAO.getListForumTopicByIdForum(idForum);
 	}
 	
-	public List<ForumTopic> getListForumTopicCreateBetweenDateByIdForum(Long idForum, Date minDate, Date maxDate) {
+	public List<ForumTopic> getListForumTopicCreateBetweenDateByIdForum(Long idForum, LocalDateTime minDateLDT,
+			LocalDateTime maxDateLDT) {
+		
+		Date minDateD = converter.convertLocalDateTimeToDate(minDateLDT);
+		Date maxDateD = converter.convertLocalDateTimeToDate(maxDateLDT);
 		logger.info("ForumTopicService:List forum topic which create between dates load by id forum");
-		return forumTopicDAO.getListForumTopicCreateBetweenDateByIdForum(idForum, minDate, maxDate);
+		
+		return forumTopicDAO.getListForumTopicCreateBetweenDateByIdForum(idForum, minDateD, maxDateD);
 	}
 	
 	public int getCountForumTopic(Long idForum) {

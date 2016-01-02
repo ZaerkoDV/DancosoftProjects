@@ -4,7 +4,6 @@
 package com.dancosoft.socialcommunity.service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -17,7 +16,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.ForumMessage;
 import com.dancosoft.socialcommunity.model.ForumTopic;
@@ -47,8 +45,6 @@ public class ForumMessageServiceTest extends TestStarter {
 	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
 		this.testObjectServiceCreator = testObjectServiceCreator;
 	}
-	
-	TimeConverter converter = new TimeConverter();
 
 	public ForumMessage forumMessage;
 	public ForumTopic forumTopic;
@@ -91,11 +87,9 @@ public class ForumMessageServiceTest extends TestStarter {
 		logger.info("ForumMessageServiceTest: test method GetListForumMessageBetweenDateByIdForumTopic");
 		LocalDateTime minDateLDT = LocalDateTime.of(2015, 12, 17, 00, 00);
 		LocalDateTime maxDateLDT = LocalDateTime.of(2015, 12, 20, 00, 00);
-		Date minDateD = converter.convertLocalDateTimeToDate(minDateLDT);
-		Date maxDateD = converter.convertLocalDateTimeToDate(maxDateLDT);
 
 		List<ForumMessage> list = forumMessageService
-				.getListForumMessageBetweenDateByIdForumTopic(forumTopic.getIdForumTopic(), minDateD, maxDateD);
+				.getListForumMessageBetweenDateByIdForumTopic(forumTopic.getIdForumTopic(), minDateLDT, maxDateLDT);
 		Assert.assertFalse(list.isEmpty());
 	}
 

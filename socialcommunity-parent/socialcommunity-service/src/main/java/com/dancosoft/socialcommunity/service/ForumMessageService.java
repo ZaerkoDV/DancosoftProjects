@@ -3,7 +3,7 @@
  */
 package com.dancosoft.socialcommunity.service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.dancosoft.socialcommunity.model.Account;
@@ -21,7 +21,7 @@ public interface ForumMessageService extends CommonEntityService {
 			Long idForumTopic);
 
 	public List<ForumMessage> getListForumMessageBetweenDateByIdForumTopic(
-			Long idForumTopic, Date minDate, Date maxDate);
+			Long idForumTopic,LocalDateTime minDateLDT, LocalDateTime maxDateLDT);
 
 	public List<ForumMessage> getListForumMessagetByIdAccount(Long idAccount);
 }

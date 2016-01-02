@@ -58,7 +58,6 @@ public class CityServiceTest extends TestStarter {
 	@Rollback(true)
 	@Test
 	public void testGettingListCityByIdCountry() {
-
 		logger.info("CityServiceTest: test method GetListCityByIdCountry");
 		List<City> list=cityService.getListCityByIdCountry(country.getIdCountry());
 		Assert.assertFalse(list.isEmpty());
@@ -68,7 +67,6 @@ public class CityServiceTest extends TestStarter {
 	@Rollback(true)
 	@Test
 	public void testGettingCountryByIdCity() {
-
 		logger.info("CityServiceTest: test method GetCountryByIdCity");
 		Assert.assertNotNull(cityService.getCountryByIdCity(city.getIdCity()));
 	}
@@ -77,7 +75,6 @@ public class CityServiceTest extends TestStarter {
 	@Rollback(true)
 	@Test
 	public void testSearchingCityByCityName() {
-
 		logger.info("CityServiceTest: test method SearchCityByCityName");
 		Assert.assertNotNull(cityService.searchCityByCityName(city.getCityName()));
 	}

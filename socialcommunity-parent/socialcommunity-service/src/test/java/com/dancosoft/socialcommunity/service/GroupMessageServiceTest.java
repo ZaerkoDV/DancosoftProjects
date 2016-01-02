@@ -16,10 +16,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dancosoft.socialcommunity.dao.GroupEventDAOTest;
 import com.dancosoft.socialcommunity.model.AccountGroup;
-import com.dancosoft.socialcommunity.model.GroupEvent;
 import com.dancosoft.socialcommunity.model.GroupMember;
+import com.dancosoft.socialcommunity.model.GroupMessage;
 import com.dancosoft.socialcommunity.service.testsupport.TestObjectServiceCreator;
 import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 
@@ -27,76 +26,77 @@ import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
  * @author Zaerko_DV
  *
  */
-public class GroupEventServiceTest extends TestStarter {
+public class GroupMessageServiceTest extends TestStarter{
 
-	private static final Logger logger = LoggerFactory.getLogger(GroupEventDAOTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(GroupMessageServiceTest.class);
 
 	@Autowired
-	@Qualifier("groupEventService")
-	private GroupEventService groupEventService;
+	@Qualifier("groupMessageService")
+	private GroupMessageService groupMessageService;
 
 	@Autowired
 	@Qualifier("testObjectServiceCreator")
 	private TestObjectServiceCreator testObjectServiceCreator;
 
-	public void setGroupEventService(GroupEventService groupEventService) {
-		this.groupEventService = groupEventService;
+	public void setGroupMessageService(GroupMessageService groupMessageService) {
+		this.groupMessageService = groupMessageService;
 	}
 
 	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
 		this.testObjectServiceCreator = testObjectServiceCreator;
 	}
-
+	
 	public AccountGroup accountGroup;
 	public GroupMember groupMember;
-	public GroupEvent groupEvent;
+	public GroupMessage groupMessage;
 
 	@Before
 	public void initObjectsBeforeTest() {
-		this.groupEvent = testObjectServiceCreator.createGroupEventForTest();
-		this.groupMember = groupEvent.getGroupMember();
+		this.groupMessage = testObjectServiceCreator.createGroupMessageForTest();
+		this.groupMember = groupMessage.getGroupMember();
 		this.accountGroup = groupMember.getAccountGroup();
 	}
 
 	@Transactional
 	@Rollback(true)
 	@Test
-	public void testGettingAccountByIdGroupEvent() {
-		logger.info("GroupEventServiceTest: test method GetAccountByIdGroupEvent");
-		Assert.assertNotNull(groupEventService.getMemberAccountByIdGroupEvent(groupEvent.getIdGroupEvent()));
+	public void testGettingAccountByIdGroupMessage() {
+		logger.info("GroupMessageServiceTest: test method GetAccountByIdGroupMessage");
+		Assert.assertNotNull(groupMessageService.getMemberAccountByIdGroupMessage(groupMessage.getIdGroupMessage()));
 	}
 
 	@Transactional
 	@Rollback(true)
 	@Test
-	public void testGettingListGroupEventByIdAccountGroup() {
-		logger.info("GroupEventServiceTest: test method GetListGroupEventByIdAccountGroup");
-		List<GroupEvent> list = groupEventService.getListGroupEventByIdAccountGroup(accountGroup.getIdAccountGroup());
+	public void testGettingListGroupMessageByIdAccountGroup() {
+
+		logger.info("GroupMessageServiceTest: test method GetListGroupMessageByIdAccountGroup");
+		List<GroupMessage> list = groupMessageService
+				.getListGroupMessageByIdAccountGroup(accountGroup.getIdAccountGroup());
 		Assert.assertFalse(list.isEmpty());
 	}
 
 	@Transactional
 	@Rollback(true)
 	@Test
-	public void testGettingListGroupEventBeetweenDateByIdAccountGroup() {
+	public void testGettingListGroupMessageBeetweenDateByIdAccountGroup() {
 
-		logger.info("GroupEventServiceTest: test method GetListGroupEventBeetweenDateByIdAccountGroup");
+		logger.info("GroupMessageServiceTest: test method GetListGroupMessageBeetweenDateByIdAccountGroup");
 		LocalDateTime minDateLDT = LocalDateTime.of(2015, 12, 17, 00, 00);
 		LocalDateTime maxDateLDT = LocalDateTime.of(2015, 12, 20, 00, 00);
-		
-		List<GroupEvent> list = groupEventService.getListGroupEventBeetweenDateByIdAccountGroup(
-						accountGroup.getIdAccountGroup(), minDateLDT, maxDateLDT);
+
+		List<GroupMessage> list = groupMessageService
+				.getListGroupMessageBeetweenDateByIdAccountGroup(accountGroup.getIdAccountGroup(),minDateLDT, maxDateLDT);
 		Assert.assertFalse(list.isEmpty());
 	}
 	
 	@Transactional
 	@Rollback(true)
 	@Test
-	public void testGettingCountGroupEventByIdAccountGroup() {
-		
-		logger.info("GroupEventServiceTest: test method GetCountGroupEventByIdAccountGroup");
-		int actual=groupEventService.getCountGroupEventByIdAccountGroup(accountGroup.getIdAccountGroup());
+	public void testGettingCountGroupMessageByIdAccountGroup() {
+		logger.info("GroupMessageServiceTest: test method GetCountGroupMessageByIdAccountGroup");
+		int actual=groupMessageService.getCountGroupMessageByIdAccountGroup(accountGroup.getIdAccountGroup());
 		int expected=1;
 		Assert.assertEquals(expected, actual);	
-	}	
+	}
 }

@@ -3,6 +3,7 @@
  */
 package com.dancosoft.socialcommunity.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.ForumMessageDAO;
+import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.ForumMessage;
 import com.dancosoft.socialcommunity.service.ForumMessageService;
@@ -25,6 +27,8 @@ import com.dancosoft.socialcommunity.service.ForumMessageService;
 public class ForumMessageServiceImpl extends CommonEntityServiceImpl implements ForumMessageService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ForumMessageServiceImpl.class);
+	
+	TimeConverter converter = new TimeConverter();
 	
 	@Autowired
 	@Qualifier(value="forumMessageDAO")
@@ -44,9 +48,14 @@ public class ForumMessageServiceImpl extends CommonEntityServiceImpl implements 
 		return forumMessageDAO.getListForumMessageByIdForumTopic(idForumTopic);
 	}
 
-	public List<ForumMessage> getListForumMessageBetweenDateByIdForumTopic(Long idForumTopic, Date minDate, Date maxDate) {
+	public List<ForumMessage> getListForumMessageBetweenDateByIdForumTopic(Long idForumTopic,
+			LocalDateTime minDateLDT, LocalDateTime maxDateLDT) {
+		
+		Date minDateD = converter.convertLocalDateTimeToDate(minDateLDT);
+		Date maxDateD = converter.convertLocalDateTimeToDate(maxDateLDT);
 		logger.info("ForumMessageService: List forum message which create between date load by id forum topic.");
-		return forumMessageDAO.getListForumMessageBetweenDateByIdForumTopic(idForumTopic, minDate, maxDate);
+		
+		return forumMessageDAO.getListForumMessageBetweenDateByIdForumTopic(idForumTopic, minDateD, maxDateD);
 	}
 	
 	public List<ForumMessage> getListForumMessagetByIdAccount(Long idAccount) {

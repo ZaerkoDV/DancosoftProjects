@@ -37,8 +37,7 @@ public class CountryServiceTest extends TestStarter {
 		this.countryService = countryService;
 	}
 
-	public void setTestObjectServiceCreator(
-			TestObjectServiceCreator testObjectServiceCreator) {
+	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
 		this.testObjectServiceCreator = testObjectServiceCreator;
 	}
 	
@@ -54,7 +53,7 @@ public class CountryServiceTest extends TestStarter {
 	@Test
 	public void testSearchingCountryByCountryName() {
 
-		logger.info("CountryDAOTest: test method SearchCountryByCountryName");
+		logger.info("CountryServiceTest: test method SearchCountryByCountryName");
 		Assert.assertNotNull(countryService.searchCountryByCountryName(country.getCountryName()));
 	}
 }
