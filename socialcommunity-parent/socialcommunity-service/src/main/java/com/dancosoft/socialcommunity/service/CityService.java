@@ -18,5 +18,5 @@ public interface CityService extends CommonEntityService {
 	
 	public Country getCountryByIdCity(Long idCity);
 	
-	public City searchCityByCityName(String cityName);
+	public List<City> searchCityByCityName(String cityName);
 }

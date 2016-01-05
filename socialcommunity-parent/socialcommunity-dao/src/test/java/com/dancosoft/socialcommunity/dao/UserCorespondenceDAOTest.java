@@ -25,53 +25,53 @@ import com.dancosoft.socialcommunity.model.UserCorespondence;
  *
  */
 
-public class UserCorespondenceDAOTest {//extends TestStarter {
+public class UserCorespondenceDAOTest extends TestStarter {
 
-//	private static final Logger logger = LoggerFactory.getLogger(UserCorespondenceDAOTest.class);
-//
-//	@Autowired
-//	@Qualifier("userCorespondenceDAO")
-//	private UserCorespondenceDAO userCorespondenceDAO;
-//
-//	@Autowired
-//	@Qualifier("testObjectDAOCreator")
-//	private TestObjectDAOCreator testObjectDAOCreator;
-//
-//	public void setUserCorespondenceDAO(UserCorespondenceDAO userCorespondenceDAO) {
-//		this.userCorespondenceDAO = userCorespondenceDAO;
-//	}
-//
-//	public void setTestObjectDAOCreator(TestObjectDAOCreator testObjectDAOCreator) {
-//		this.testObjectDAOCreator = testObjectDAOCreator;
-//	}
-//
-//	public User user;
-//	public UserCorespondence userCorespondence;
-//
-//	@Before
-//	public void initObjectsBeforeTest() {
-//		this.userCorespondence = testObjectDAOCreator.createUserCorespondenceForTest();
-//		this.user = userCorespondence.getUser();
-//	}
-//
-//	@Transactional
-//	@Rollback(true)
-//	@Test
-//	public void testGettingCorespondViewStatusByIdUserCorespond() {
-//
-//		String viewStatus = userCorespondenceDAO.getCorespondViewStatusByIdUserCorespond(userCorespondence
-//						.getIdUserCorespondence());
-//		logger.info("UserCorespondenceDAOTest: test method GetCorespondViewStatusByIdUserCorespond");
-//		Assert.assertEquals(userCorespondence.getCorespondenceViewStatus(), viewStatus);
-//	}
-//
-//	@Transactional
-//	@Rollback(true)
-//	@Test
-//	public void testGettingListUserCorespondenceForBroadcastInfo() {
-//		
-//		logger.info("UserCorespondenceDAOTest: test method GetListUserCorespondenceForBroadcastInfo");
-//		List<UserCorespondence> list=userCorespondenceDAO.getListUserCorespondenceForBroadcastInfo();
-//		Assert.assertFalse(list.isEmpty());
-//	}
+	private static final Logger logger = LoggerFactory.getLogger(UserCorespondenceDAOTest.class);
+
+	@Autowired
+	@Qualifier("userCorespondenceDAO")
+	private UserCorespondenceDAO userCorespondenceDAO;
+
+	@Autowired
+	@Qualifier("testObjectDAOCreator")
+	private TestObjectDAOCreator testObjectDAOCreator;
+
+	public void setUserCorespondenceDAO(UserCorespondenceDAO userCorespondenceDAO) {
+		this.userCorespondenceDAO = userCorespondenceDAO;
+	}
+
+	public void setTestObjectDAOCreator(TestObjectDAOCreator testObjectDAOCreator) {
+		this.testObjectDAOCreator = testObjectDAOCreator;
+	}
+
+	public User user;
+	public UserCorespondence userCorespondence;
+
+	@Before
+	public void initObjectsBeforeTest() {
+		this.userCorespondence = testObjectDAOCreator.createUserCorespondenceForTest();
+		this.user = userCorespondence.getUser();
+	}
+
+	@Transactional
+	@Rollback(true)
+	@Test
+	public void testGettingCorespondViewStatusByIdUserCorespond() {
+
+		String viewStatus = userCorespondenceDAO.getCorespondViewStatusByIdUserCorespond(userCorespondence
+						.getIdUserCorespondence());
+		logger.info("UserCorespondenceDAOTest: test method GetCorespondViewStatusByIdUserCorespond");
+		Assert.assertEquals(userCorespondence.getCorespondenceViewStatus(), viewStatus);
+	}
+
+	@Transactional
+	@Rollback(true)
+	@Test
+	public void testGettingListUserCorespondenceForBroadcastInfo() {
+		
+		logger.info("UserCorespondenceDAOTest: test method GetListUserCorespondenceForBroadcastInfo");
+		List<UserCorespondence> list=userCorespondenceDAO.getListUserCorespondenceForBroadcastInfo();
+		Assert.assertFalse(list.isEmpty());
+	}
 }

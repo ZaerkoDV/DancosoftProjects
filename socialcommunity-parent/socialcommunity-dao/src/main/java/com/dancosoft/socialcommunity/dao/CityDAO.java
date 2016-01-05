@@ -61,7 +61,7 @@ public interface CityDAO extends CommonEntityDAO {
 	 * @type String
 	 * @param cityName
 	 * 
-	 * @return City
+	 * @return List<City>
 	 */
-	public City searchCityByCityName(String cityName);
+	public List<City> searchCityByCityName(String cityName);
 }

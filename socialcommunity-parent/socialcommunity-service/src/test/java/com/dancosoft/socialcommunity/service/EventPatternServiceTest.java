@@ -17,30 +17,30 @@ import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
  * @author Zaerko_DV
  *
  */
-public class EventPatternServiceTest extends TestStarter {
+public class EventPatternServiceTest {//extends TestStarter {
 
-	private static final Logger logger = LoggerFactory.getLogger(EventPatternServiceTest.class);
-	
-	@Autowired
-	@Qualifier("eventPatternService")
-	private EventPatternService eventPatternService;
-
-	@Autowired
-	@Qualifier("testObjectServiceCreator")
-	private TestObjectServiceCreator testObjectServiceCreator;
-
-	public void setEventPatternService(EventPatternService eventPatternService) {
-		this.eventPatternService = eventPatternService;
-	}
-
-	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
-		this.testObjectServiceCreator = testObjectServiceCreator;
-	}
-
-	public EventPattern eventPattern;
-
-	@Before
-	public void initObjectsBeforeTest() {
-		this.eventPattern = testObjectServiceCreator.createEventPatternForTest();
-	}
+//	private static final Logger logger = LoggerFactory.getLogger(EventPatternServiceTest.class);
+//	
+//	@Autowired
+//	@Qualifier("eventPatternService")
+//	private EventPatternService eventPatternService;
+//
+//	@Autowired
+//	@Qualifier("testObjectServiceCreator")
+//	private TestObjectServiceCreator testObjectServiceCreator;
+//
+//	public void setEventPatternService(EventPatternService eventPatternService) {
+//		this.eventPatternService = eventPatternService;
+//	}
+//
+//	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
+//		this.testObjectServiceCreator = testObjectServiceCreator;
+//	}
+//
+//	public EventPattern eventPattern;
+//
+//	@Before
+//	public void initObjectsBeforeTest() {
+//		this.eventPattern = testObjectServiceCreator.createEventPatternForTest();
+//	}
 }

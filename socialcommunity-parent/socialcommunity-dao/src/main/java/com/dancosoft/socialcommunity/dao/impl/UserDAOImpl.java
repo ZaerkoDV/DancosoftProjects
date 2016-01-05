@@ -75,7 +75,7 @@ public class UserDAOImpl extends CommonEntityDAOImpl implements UserDAO {
 	 * @return List<Account>
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Account> getListAccountBuUserId(Long idUser) {
+	public List<Account> getListAccountByUserId(Long idUser) {
 
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory()
 				.getCurrentSession().createCriteria(Account.class);

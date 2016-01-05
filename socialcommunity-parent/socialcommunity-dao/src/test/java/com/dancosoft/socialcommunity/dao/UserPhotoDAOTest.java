@@ -23,50 +23,50 @@ import com.dancosoft.socialcommunity.model.UserPhoto;
  * @author Zaerko_DV
  *
  */
-public class UserPhotoDAOTest {//extends TestStarter {
+public class UserPhotoDAOTest extends TestStarter {
 
-//	private static final Logger logger = LoggerFactory.getLogger(UserPhotoDAOTest.class);
-//
-//	@Autowired
-//	@Qualifier("userPhotoDAO")
-//	private UserPhotoDAO userPhotoDAO;
-//
-//	@Autowired
-//	@Qualifier("testObjectDAOCreator")
-//	private TestObjectDAOCreator testObjectDAOCreator;
-//
-//	public void setUserPhotoDAO(UserPhotoDAO userPhotoDAO) {
-//		this.userPhotoDAO = userPhotoDAO;
-//	}
-//
-//	public void setTestObjectDAOCreator(TestObjectDAOCreator testObjectDAOCreator) {
-//		this.testObjectDAOCreator = testObjectDAOCreator;
-//	}
-//
-//	public UserPhoto userPhoto;
-//	public User user;
-//
-//	@Before
-//	public void initObjectsBeforeTest() {
-//		this.userPhoto= testObjectDAOCreator.createUserPhotoForTest();
-//		this.user = userPhoto.getUser();
-//	}
-//
-//	@Transactional
-//	@Rollback(false)
-//	@Test
-//	public void testGettingUserPhotoByIdUser() {
-//		
-//		logger.info("UserPhotoDAOTest: test method GetUserPhotoByIdUser");
-//		Assert.assertNotNull(userPhotoDAO.getUserPhotoByIdUser(user.getIdUser()));	
-//	}
-//	
-//	@Transactional
-//	@Rollback(false)
-//	@Test
-//	public void testGettingPhotoNameByIdUser() {
-//		
-//		logger.info("UserPhotoDAOTest: test method GetPhotoNameByIdUser");
-//		Assert.assertNotNull(userPhotoDAO.getPhotoNameByIdUser(user.getIdUser()));	
-//	}
+	private static final Logger logger = LoggerFactory.getLogger(UserPhotoDAOTest.class);
+
+	@Autowired
+	@Qualifier("userPhotoDAO")
+	private UserPhotoDAO userPhotoDAO;
+
+	@Autowired
+	@Qualifier("testObjectDAOCreator")
+	private TestObjectDAOCreator testObjectDAOCreator;
+
+	public void setUserPhotoDAO(UserPhotoDAO userPhotoDAO) {
+		this.userPhotoDAO = userPhotoDAO;
+	}
+
+	public void setTestObjectDAOCreator(TestObjectDAOCreator testObjectDAOCreator) {
+		this.testObjectDAOCreator = testObjectDAOCreator;
+	}
+
+	public UserPhoto userPhoto;
+	public User user;
+
+	@Before
+	public void initObjectsBeforeTest() {
+		this.userPhoto= testObjectDAOCreator.createUserPhotoForTest();
+		this.user = userPhoto.getUser();
+	}
+
+	@Transactional
+	@Rollback(false)
+	@Test
+	public void testGettingUserPhotoByIdUser() {
+		
+		logger.info("UserPhotoDAOTest: test method GetUserPhotoByIdUser");
+		Assert.assertNotNull(userPhotoDAO.getUserPhotoByIdUser(user.getIdUser()));	
+	}
+	
+	@Transactional
+	@Rollback(false)
+	@Test
+	public void testGettingPhotoNameByIdUser() {
+		
+		logger.info("UserPhotoDAOTest: test method GetPhotoNameByIdUser");
+		Assert.assertNotNull(userPhotoDAO.getPhotoNameByIdUser(user.getIdUser()));	
+	}
 }

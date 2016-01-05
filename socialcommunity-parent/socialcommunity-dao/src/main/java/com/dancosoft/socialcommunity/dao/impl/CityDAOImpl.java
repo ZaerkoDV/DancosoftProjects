@@ -110,15 +110,16 @@ public class CityDAOImpl extends CommonEntityDAOImpl implements CityDAO {
 	 * @type String
 	 * @param cityName
 	 * 
-	 * @return City
+	 * @return List<City>
 	 */
-	public City searchCityByCityName(String cityName) {
+	@SuppressWarnings("unchecked")
+	public List<City> searchCityByCityName(String cityName) {
 
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory()
 				.getCurrentSession().createCriteria(City.class);
 		criteria.add(Restrictions.eq("cityName", cityName));
 		logger.info("CityDAO: City load by city name.");
 
-		return (City) criteria.uniqueResult();
+		return (List<City>)criteria.list();
 	}
 }

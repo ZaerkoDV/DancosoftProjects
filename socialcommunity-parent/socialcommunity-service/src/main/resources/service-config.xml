@@ -26,52 +26,52 @@
 	<beans:bean id="commonEntityService" class="com.dancosoft.socialcommunity.service.impl.CommonEntityServiceImpl">
 		<beans:property name="commonEntityDAO" ref="commonEntityDAO"></beans:property>
 	</beans:bean>
-<!--
-	<beans:bean id="accountForumServcie" class="com.dancosoft.socialcommunity.service.impl.AccountForumServcieImpl">
+
+	<beans:bean id="accountForumService" class="com.dancosoft.socialcommunity.service.impl.AccountForumServiceImpl">
 		<beans:property name="accountForumDAO" ref="accountForumDAO"></beans:property>
 	</beans:bean>
 
-	<beans:bean id="accountGroupHistoryServcie" class="com.dancosoft.socialcommunity.service.impl.AccountGroupHistoryServcieImpl">
+	<beans:bean id="accountGroupHistoryService" class="com.dancosoft.socialcommunity.service.impl.AccountGroupHistoryServiceImpl">
 		<beans:property name="accountGroupHistoryDAO" ref="accountGroupHistoryDAO"></beans:property>
 	</beans:bean>
 	
-	<beans:bean id="accountGroupServcie" class="com.dancosoft.socialcommunity.service.impl.AccountGroupServcieImpl">
-		<beans:property name="accountGroupHistoryDAO" ref="accountGroupHistoryDAO"></beans:property>
+	<beans:bean id="accountGroupService" class="com.dancosoft.socialcommunity.service.impl.AccountGroupServiceImpl">
+		<beans:property name="accountGroupDAO" ref="accountGroupDAO"></beans:property>
 	</beans:bean>
 	
-	<beans:bean id="accountHistoryServcie" class="com.dancosoft.socialcommunity.service.impl.AccountHistoryServcieImpl">
+	<beans:bean id="accountHistoryService" class="com.dancosoft.socialcommunity.service.impl.AccountHistoryServiceImpl">
 		<beans:property name="accountHistoryDAO" ref="accountHistoryDAO"></beans:property>
 	</beans:bean>
 	
-	<beans:bean id="accountServcie" class="com.dancosoft.socialcommunity.service.impl.AccountServcieImpl">
+	<beans:bean id="accountService" class="com.dancosoft.socialcommunity.service.impl.AccountServiceImpl">
 		<beans:property name="accountDAO" ref="accountDAO"></beans:property>
 	</beans:bean>
 	
-	<beans:bean id="cityServcie" class="com.dancosoft.socialcommunity.service.impl.CityServcieImpl">
+	<beans:bean id="cityService" class="com.dancosoft.socialcommunity.service.impl.CityServiceImpl">
 		<beans:property name="cityDAO" ref="cityDAO"></beans:property>
 	</beans:bean>
 	
-	<beans:bean id="countryServcie" class="com.dancosoft.socialcommunity.service.impl.CountryServcieImpl">
+	<beans:bean id="countryService" class="com.dancosoft.socialcommunity.service.impl.CountryServiceImpl">
 		<beans:property name="countryDAO" ref="countryDAO"></beans:property>
 	</beans:bean>
 	
-	<beans:bean id="eventPatternServcie" class="com.dancosoft.socialcommunity.service.impl.EventPatternServcieImpl">
+	<beans:bean id="eventPatternService" class="com.dancosoft.socialcommunity.service.impl.EventPatternServiceImpl">
 		<beans:property name="eventPatternDAO" ref="eventPatternDAO"></beans:property>
 	</beans:bean>
 
-	<beans:bean id="forumMessageServcie" class="com.dancosoft.socialcommunity.service.impl.ForumMessageServcieImpl">
+	<beans:bean id="forumMessageService" class="com.dancosoft.socialcommunity.service.impl.ForumMessageServiceImpl">
 		<beans:property name="forumMessageDAO" ref="forumMessageDAO"></beans:property>
 	</beans:bean>
 
-	<beans:bean id="forumServcie" class="com.dancosoft.socialcommunity.service.impl.ForumServcieImpl">
+	<beans:bean id="forumService" class="com.dancosoft.socialcommunity.service.impl.ForumServiceImpl">
 		<beans:property name="forumDAO" ref="forumDAO"></beans:property>
 	</beans:bean>
 	
-	<beans:bean id="forumTopicServcie" class="com.dancosoft.socialcommunity.service.impl.ForumTopicServcieImpl">
+	<beans:bean id="forumTopicService" class="com.dancosoft.socialcommunity.service.impl.ForumTopicServiceImpl">
 		<beans:property name="forumTopicDAO" ref="forumTopicDAO"></beans:property>
 	</beans:bean>
 	
-	<beans:bean id="groupEventServcie" class="com.dancosoft.socialcommunity.service.impl.GroupEventServcieImpl">
+	<beans:bean id="groupEventService" class="com.dancosoft.socialcommunity.service.impl.GroupEventServiceImpl">
 		<beans:property name="groupEventDAO" ref="groupEventDAO"></beans:property>
 	</beans:bean>
 	
@@ -79,58 +79,58 @@
 		<beans:property name="groupMemberDAO" ref="groupMemberDAO"></beans:property>
 	</beans:bean>
 	
-	<beans:bean id="groupMessageServcie" class="com.dancosoft.socialcommunity.service.impl.GroupMessageServcieImpl">
+	<beans:bean id="groupMessageService" class="com.dancosoft.socialcommunity.service.impl.GroupMessageServiceImpl">
 		<beans:property name="groupMessageDAO" ref="groupMessageDAO"></beans:property>
 	</beans:bean>
 
-	<beans:bean id="languageServcie" class="com.dancosoft.socialcommunity.service.impl.LanguageServcieImpl">
+	<beans:bean id="languageService" class="com.dancosoft.socialcommunity.service.impl.LanguageServiceImpl">
 		<beans:property name="languageDAO" ref="languageDAO"></beans:property>
 	</beans:bean>
 	
-	<beans:bean id="securityPromptServcie" class="com.dancosoft.socialcommunity.service.impl.SecurityPromptServcieImpl">
+	<beans:bean id="securityPromptService" class="com.dancosoft.socialcommunity.service.impl.SecurityPromptServiceImpl">
 		<beans:property name="securityPromptDAO" ref="securityPromptDAO"></beans:property>
 	</beans:bean>
 	
-	<beans:bean id="singleMessageServcie" class="com.dancosoft.socialcommunity.service.impl.SingleMessageServcieImpl">
+	<beans:bean id="singleMessageService" class="com.dancosoft.socialcommunity.service.impl.SingleMessageServiceImpl">
 		<beans:property name="singleMessageDAO" ref="singleMessageDAO"></beans:property>
 	</beans:bean>
 	
-	<beans:bean id="userAutobiographyServcie" class="com.dancosoft.socialcommunity.service.impl.UserAutobiographyServcieImpl">
+	<beans:bean id="userAutobiographyService" class="com.dancosoft.socialcommunity.service.impl.UserAutobiographyServiceImpl">
 		<beans:property name="userAutobiographyDAO" ref="userAutobiographyDAO"></beans:property>
 	</beans:bean>
 
-	<beans:bean id="userCorespondenceServcie" class="com.dancosoft.socialcommunity.service.impl.UserCorespondenceServcieImpl">
+	<beans:bean id="userCorespondenceService" class="com.dancosoft.socialcommunity.service.impl.UserCorespondenceServiceImpl">
 		<beans:property name="userCorespondenceDAO" ref="userCorespondenceDAO"></beans:property>
 	</beans:bean>
 	
-	<beans:bean id="userEmailServcie" class="com.dancosoft.socialcommunity.service.impl.UserEmailServcieImpl">
+	<beans:bean id="userEmailService" class="com.dancosoft.socialcommunity.service.impl.UserEmailServiceImpl">
 		<beans:property name="userEmailDAO" ref="userEmailDAO"></beans:property>
 	</beans:bean>
 	
-	<beans:bean id="userLocationServcie" class="com.dancosoft.socialcommunity.service.impl.UserLocationServcieImpl">
+	<beans:bean id="userLocationService" class="com.dancosoft.socialcommunity.service.impl.UserLocationServiceImpl">
 		<beans:property name="userLocationDAO" ref="userLocationDAO"></beans:property>
 	</beans:bean>
 	
-	<beans:bean id="userPhotoServcie" class="com.dancosoft.socialcommunity.service.impl.UserPhotoServcieImpl">
+	<beans:bean id="userPhotoService" class="com.dancosoft.socialcommunity.service.impl.UserPhotoServiceImpl">
 		<beans:property name="userPhotoDAO" ref="userPhotoDAO"></beans:property>
 	</beans:bean>
 	
-	<beans:bean id="userRoleServcie" class="com.dancosoft.socialcommunity.service.impl.UserRoleServcieImpl">
+	<beans:bean id="userRoleService" class="com.dancosoft.socialcommunity.service.impl.UserRoleServiceImpl">
 		<beans:property name="userRoleDAO" ref="userRoleDAO"></beans:property>
 	</beans:bean>
 	
-	<beans:bean id="userSecurityServcie" class="com.dancosoft.socialcommunity.service.impl.UserSecurityServcieImpl">
+	<beans:bean id="userSecurityService" class="com.dancosoft.socialcommunity.service.impl.UserSecurityServiceImpl">
 		<beans:property name="userSecurityDAO" ref="userSecurityDAO"></beans:property>
 	</beans:bean>
 	
-	<beans:bean id="userServcie" class="com.dancosoft.socialcommunity.service.impl.UserServcieImpl">
+	<beans:bean id="userService" class="com.dancosoft.socialcommunity.service.impl.UserServiceImpl">
 		<beans:property name="userDAO" ref="userDAO"></beans:property>
 	</beans:bean>
 
-	<beans:bean id="userSocialNetworkServcie" class="com.dancosoft.socialcommunity.service.impl.UserSocialNetworkServcieImpl">
+	<beans:bean id="userSocialNetworkService" class="com.dancosoft.socialcommunity.service.impl.UserSocialNetworkServiceImpl">
 		<beans:property name="userSocialNetworkDAO" ref="userSocialNetworkDAO"></beans:property>
 	</beans:bean>
--->
+
 
 	<beans:bean id="testObjectServcieCreator" class="com.dancosoft.socialcommunity.service.testsupport.TestObjectServiceCreator">
 		<beans:property name="commonEntityDAO" ref="commonEntityDAO"/>

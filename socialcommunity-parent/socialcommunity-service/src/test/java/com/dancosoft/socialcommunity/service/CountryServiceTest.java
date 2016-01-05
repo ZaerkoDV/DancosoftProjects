@@ -21,39 +21,39 @@ import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
  * @author Zaerko_DV
  *
  */
-public class CountryServiceTest extends TestStarter {
+public class CountryServiceTest {//extends TestStarter {
 
-	private static final Logger logger = LoggerFactory.getLogger(CountryServiceTest.class);
-	
-	@Autowired
-	@Qualifier("countryService")
-	private CountryService countryService;
-
-	@Autowired
-	@Qualifier("testObjectServiceCreator")								
-	private TestObjectServiceCreator testObjectServiceCreator;
-
-	public void setCountryService(CountryService countryService) {
-		this.countryService = countryService;
-	}
-
-	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
-		this.testObjectServiceCreator = testObjectServiceCreator;
-	}
-	
-	public Country country;
-
-	@Before
-	public void initObjectsBeforeTest() {
-		this.country = testObjectServiceCreator.createCountryForTest();
-	}
-
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testSearchingCountryByCountryName() {
-
-		logger.info("CountryServiceTest: test method SearchCountryByCountryName");
-		Assert.assertNotNull(countryService.searchCountryByCountryName(country.getCountryName()));
-	}
+//	private static final Logger logger = LoggerFactory.getLogger(CountryServiceTest.class);
+//	
+//	@Autowired
+//	@Qualifier("countryService")
+//	private CountryService countryService;
+//
+//	@Autowired
+//	@Qualifier("testObjectServiceCreator")								
+//	private TestObjectServiceCreator testObjectServiceCreator;
+//
+//	public void setCountryService(CountryService countryService) {
+//		this.countryService = countryService;
+//	}
+//
+//	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
+//		this.testObjectServiceCreator = testObjectServiceCreator;
+//	}
+//	
+//	public Country country;
+//
+//	@Before
+//	public void initObjectsBeforeTest() {
+//		this.country = testObjectServiceCreator.createCountryForTest();
+//	}
+//
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testSearchingCountryByCountryName() {
+//
+//		logger.info("CountryServiceTest: test method SearchCountryByCountryName");
+//		Assert.assertNotNull(countryService.searchCountryByCountryName(country.getCountryName()));
+//	}
 }

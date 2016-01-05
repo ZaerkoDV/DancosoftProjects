@@ -82,6 +82,7 @@ public class CityDAOTest extends TestStarter {
 	public void testSearchingCityByCityName() {
 
 		logger.info("CountryDAOTest: test method SearchCityByCityName");
-		Assert.assertNotNull(cityDAO.searchCityByCityName(city.getCityName()));
+		List<City> list=cityDAO.searchCityByCityName(city.getCityName());
+		Assert.assertFalse(list.isEmpty());
 	}
 }

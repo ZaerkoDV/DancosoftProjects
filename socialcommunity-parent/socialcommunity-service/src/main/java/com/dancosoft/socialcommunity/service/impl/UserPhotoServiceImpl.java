@@ -26,6 +26,10 @@ public class UserPhotoServiceImpl extends CommonEntityServiceImpl implements Use
 	@Qualifier(value="userPhotoDAO")
 	private UserPhotoDAO userPhotoDAO;
 	
+	public void setUserPhotoDAO(UserPhotoDAO userPhotoDAO) {
+		this.userPhotoDAO = userPhotoDAO;
+	}
+
 	public UserPhoto getUserPhotoByIdUser(Long idUser) {
 		logger.info("UserPhotoService: User photo load by id user");
 		return userPhotoDAO.getUserPhotoByIdUser(idUser);

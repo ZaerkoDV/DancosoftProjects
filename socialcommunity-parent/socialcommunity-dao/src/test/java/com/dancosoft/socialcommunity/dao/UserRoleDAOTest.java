@@ -24,52 +24,52 @@ import com.dancosoft.socialcommunity.model.UserSecurity;
  * @author Zaerko_DV
  *
  */
-public class UserRoleDAOTest {//extends TestStarter {
+public class UserRoleDAOTest extends TestStarter {
 
-//	private static final Logger logger = LoggerFactory.getLogger(UserRoleDAOTest.class);
-//
-//	@Autowired
-//	@Qualifier("userRoleDAO")
-//	private UserRoleDAO userRoleDAO;
-//
-//	@Autowired
-//	@Qualifier("testObjectDAOCreator")
-//	private TestObjectDAOCreator testObjectDAOCreator;
-//
-//	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
-//		this.userRoleDAO = userRoleDAO;
-//	}
-//
-//	public void setTestObjectDAOCreator(TestObjectDAOCreator testObjectDAOCreator) {
-//		this.testObjectDAOCreator = testObjectDAOCreator;
-//	}
-//
-//	public User user;
-//	public UserSecurity userSecurity;
-//
-//	@Before
-//	public void initObjectsBeforeTest() {
-//		this.userSecurity = testObjectDAOCreator.createUserSecurityForTest();
-//		this.user = userSecurity.getUser();
-//	}
-//	
-//	@Transactional
-//	@Rollback(true)
-//	@Test
-//	public void testGettingListUserWithRole() {
-//
-//		logger.info("UserSecurityDAOTest: test method testGettingListUserWithRole");
-//		List<User> listUser = userRoleDAO.getListUserByRole("User");
-//		Assert.assertFalse(listUser.isEmpty());
-//	}
-//	
-//	@Transactional
-//	@Rollback(true)
-//	@Test
-//	public void testGettingCountUserByRole() {
-//
-//		logger.info("UserSecurityDAOTest: test method testGettingCountUserByRole");
-//		int countUser = userRoleDAO.getCountUserByRole("User");
-//		Assert.assertEquals(1,countUser);
-//	}
+	private static final Logger logger = LoggerFactory.getLogger(UserRoleDAOTest.class);
+
+	@Autowired
+	@Qualifier("userRoleDAO")
+	private UserRoleDAO userRoleDAO;
+
+	@Autowired
+	@Qualifier("testObjectDAOCreator")
+	private TestObjectDAOCreator testObjectDAOCreator;
+
+	public void setUserRoleDAO(UserRoleDAO userRoleDAO) {
+		this.userRoleDAO = userRoleDAO;
+	}
+
+	public void setTestObjectDAOCreator(TestObjectDAOCreator testObjectDAOCreator) {
+		this.testObjectDAOCreator = testObjectDAOCreator;
+	}
+
+	public User user;
+	public UserSecurity userSecurity;
+
+	@Before
+	public void initObjectsBeforeTest() {
+		this.userSecurity = testObjectDAOCreator.createUserSecurityForTest();
+		this.user = userSecurity.getUser();
+	}
+	
+	@Transactional
+	@Rollback(true)
+	@Test
+	public void testGettingListUserWithRole() {
+
+		logger.info("UserSecurityDAOTest: test method testGettingListUserWithRole");
+		List<User> listUser = userRoleDAO.getListUserByRole("User");
+		Assert.assertFalse(listUser.isEmpty());
+	}
+	
+	@Transactional
+	@Rollback(true)
+	@Test
+	public void testGettingCountUserByRole() {
+
+		logger.info("UserSecurityDAOTest: test method testGettingCountUserByRole");
+		int countUser = userRoleDAO.getCountUserByRole("User");
+		Assert.assertEquals(1,countUser);
+	}
 }

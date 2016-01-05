@@ -25,38 +25,64 @@
 	<!-- Application Loggers -->
 	<logger name="com.dancosoft.socialcommunity">
 		<level value="info" />
-		<!--<level value="debug" />-->
+		<level value="warn" />
+		<!--
+		<level value="debug" />
+		-->
+		<level value="error" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
 		<level value="info" />
-		<!--<level value="debug" />-->
+		<level value="warn" />
+		<!--
+		<level value="debug" />
+		<level value="error" />
+		-->
 	</logger>
 	
 	<logger name="org.hibernate">
 		<level value="info" />
-		<!--<level value="debug" />-->
+		<!--
+		<level value="warn" />
+		<level value="debug" />
+		<level value="error" />
+		-->
 	</logger>
 	
 	<logger name="org.springframework.beans">
 		<level value="info" />
-		<!--<level value="debug" />-->
+		<!--
+		<level value="warn" />
+		<level value="debug" />
+		<level value="error" />
+		-->
 	</logger>
 	
 	<logger name="org.springframework.context">
 		<level value="info" />
-		<!--<level value="debug" />-->
+		<!--
+		<level value="warn" />
+		<level value="debug" />
+		<level value="error" />
+		-->
 	</logger>
 
 	<logger name="org.springframework.web">
 		<level value="info" />
-		<!--<level value="debug" />-->
+		<!--
+		<level value="warn" />
+		<level value="debug" />
+		<level value="error" />
+		-->
 	</logger>
 
 	<root>
-		<level value ="info"/>
+		<level value="info" />
+		<level value="warn" />
 		<level value="debug" />
+		<level value="error" />
 		
 		<!--into console  -->
 		<appender-ref ref="console" />

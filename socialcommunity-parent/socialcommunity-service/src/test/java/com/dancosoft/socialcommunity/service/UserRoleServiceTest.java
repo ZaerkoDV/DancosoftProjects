@@ -25,50 +25,50 @@ import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
  * @author Zaerko_DV
  *
  */
-public class UserRoleServiceTest extends TestStarter {
+public class UserRoleServiceTest {//extends TestStarter {
 
-	private static final Logger logger = LoggerFactory.getLogger(UserRoleDAOTest.class);
-
-	@Autowired
-	@Qualifier("userRoleService")
-	private UserRoleService userRoleService;
-
-	@Autowired
-	@Qualifier("testObjectServiceCreator")
-	private TestObjectServiceCreator testObjectServiceCreator;
-
-	public void setUserRoleService(UserRoleService userRoleService) {
-		this.userRoleService = userRoleService;
-	}
-
-	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
-		this.testObjectServiceCreator = testObjectServiceCreator;
-	}
-	
-	public User user;
-	public UserSecurity userSecurity;
-
-	@Before
-	public void initObjectsBeforeTest() {
-		this.userSecurity = testObjectServiceCreator.createUserSecurityForTest();
-		this.user = userSecurity.getUser();
-	}
-	
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingListUserWithRole() {
-		logger.info("UserRoleServiceTest: test method testGettingListUserWithRole");
-		List<User> listUser = userRoleService.getListUserByRole("User");
-		Assert.assertFalse(listUser.isEmpty());
-	}
-	
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingCountUserByRole() {
-		logger.info("UserRoleServiceTest: test method testGettingCountUserByRole");
-		int countUser = userRoleService.getCountUserByRole("User");
-		Assert.assertEquals(1,countUser);
-	}
+//	private static final Logger logger = LoggerFactory.getLogger(UserRoleDAOTest.class);
+//
+//	@Autowired
+//	@Qualifier("userRoleService")
+//	private UserRoleService userRoleService;
+//
+//	@Autowired
+//	@Qualifier("testObjectServiceCreator")
+//	private TestObjectServiceCreator testObjectServiceCreator;
+//
+//	public void setUserRoleService(UserRoleService userRoleService) {
+//		this.userRoleService = userRoleService;
+//	}
+//
+//	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
+//		this.testObjectServiceCreator = testObjectServiceCreator;
+//	}
+//	
+//	public User user;
+//	public UserSecurity userSecurity;
+//
+//	@Before
+//	public void initObjectsBeforeTest() {
+//		this.userSecurity = testObjectServiceCreator.createUserSecurityForTest();
+//		this.user = userSecurity.getUser();
+//	}
+//	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListUserWithRole() {
+//		logger.info("UserRoleServiceTest: test method testGettingListUserWithRole");
+//		List<User> listUser = userRoleService.getListUserByRole("User");
+//		Assert.assertFalse(listUser.isEmpty());
+//	}
+//	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingCountUserByRole() {
+//		logger.info("UserRoleServiceTest: test method testGettingCountUserByRole");
+//		int countUser = userRoleService.getCountUserByRole("User");
+//		Assert.assertEquals(1,countUser);
+//	}
 }

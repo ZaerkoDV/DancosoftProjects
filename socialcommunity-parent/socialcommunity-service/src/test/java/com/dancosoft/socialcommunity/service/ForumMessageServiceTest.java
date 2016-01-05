@@ -26,81 +26,81 @@ import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
  * @author Zaerko_DV
  *
  */
-public class ForumMessageServiceTest extends TestStarter {
+public class ForumMessageServiceTest {//extends TestStarter {
 
-	private static final Logger logger = LoggerFactory.getLogger(ForumMessageServiceTest.class);
-
-	@Autowired
-	@Qualifier("forumMessageService")
-	private ForumMessageService forumMessageService;
-
-	@Autowired
-	@Qualifier("testObjectServiceCreator")
-	private TestObjectServiceCreator testObjectServiceCreator;
-
-	public void setForumMessageService(ForumMessageService forumMessageService) {
-		this.forumMessageService = forumMessageService;
-	}
-
-	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
-		this.testObjectServiceCreator = testObjectServiceCreator;
-	}
-
-	public ForumMessage forumMessage;
-	public ForumTopic forumTopic;
-	public Account authorAccount;
-
-	@Before
-	public void initObjectsBeforeTest() {
-		this.forumMessage = testObjectServiceCreator.createForumMessageForTest();
-		this.forumTopic = forumMessage.getForumTopic();
-		this.authorAccount = forumMessage.getAuthorAccount();
-	}
-
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingAccountAuthorMessageByIdForumMessage() {
-
-		logger.info("ForumMessageServiceTest: test method GetAccountAuthorMessageByIdForumMessage");
-		Account account = forumMessageService
-				.getAccountAuthorMessageByIdForumMessage(forumMessage.getIdForumMessage());
-		Assert.assertNotNull(account);
-	}
-
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingListForumMessageByIdForumTopic() {
-
-		logger.info("ForumMessageServiceTest: test method GetListForumMessageByIdForumTopic");
-		List<ForumMessage> list = forumMessageService
-				.getListForumMessageByIdForumTopic(forumTopic.getIdForumTopic());
-		Assert.assertFalse(list.isEmpty());
-	}
-
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingListForumMessageBetweenDateByIdForumTopic() {
-
-		logger.info("ForumMessageServiceTest: test method GetListForumMessageBetweenDateByIdForumTopic");
-		LocalDateTime minDateLDT = LocalDateTime.of(2015, 12, 17, 00, 00);
-		LocalDateTime maxDateLDT = LocalDateTime.of(2015, 12, 20, 00, 00);
-
-		List<ForumMessage> list = forumMessageService
-				.getListForumMessageBetweenDateByIdForumTopic(forumTopic.getIdForumTopic(), minDateLDT, maxDateLDT);
-		Assert.assertFalse(list.isEmpty());
-	}
-
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingListForumMessageByIdAccount() {
-		
-		logger.info("ForumMessageServiceTest: test method GetListForumMessagetByIdAccount");
-		List<ForumMessage> list = forumMessageService
-				.getListForumMessagetByIdAccount(authorAccount.getIdAccount());
-		Assert.assertFalse(list.isEmpty());	
-	}
+//	private static final Logger logger = LoggerFactory.getLogger(ForumMessageServiceTest.class);
+//
+//	@Autowired
+//	@Qualifier("forumMessageService")
+//	private ForumMessageService forumMessageService;
+//
+//	@Autowired
+//	@Qualifier("testObjectServiceCreator")
+//	private TestObjectServiceCreator testObjectServiceCreator;
+//
+//	public void setForumMessageService(ForumMessageService forumMessageService) {
+//		this.forumMessageService = forumMessageService;
+//	}
+//
+//	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
+//		this.testObjectServiceCreator = testObjectServiceCreator;
+//	}
+//
+//	public ForumMessage forumMessage;
+//	public ForumTopic forumTopic;
+//	public Account authorAccount;
+//
+//	@Before
+//	public void initObjectsBeforeTest() {
+//		this.forumMessage = testObjectServiceCreator.createForumMessageForTest();
+//		this.forumTopic = forumMessage.getForumTopic();
+//		this.authorAccount = forumMessage.getAuthorAccount();
+//	}
+//
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingAccountAuthorMessageByIdForumMessage() {
+//
+//		logger.info("ForumMessageServiceTest: test method GetAccountAuthorMessageByIdForumMessage");
+//		Account account = forumMessageService
+//				.getAccountAuthorMessageByIdForumMessage(forumMessage.getIdForumMessage());
+//		Assert.assertNotNull(account);
+//	}
+//
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListForumMessageByIdForumTopic() {
+//
+//		logger.info("ForumMessageServiceTest: test method GetListForumMessageByIdForumTopic");
+//		List<ForumMessage> list = forumMessageService
+//				.getListForumMessageByIdForumTopic(forumTopic.getIdForumTopic());
+//		Assert.assertFalse(list.isEmpty());
+//	}
+//
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListForumMessageBetweenDateByIdForumTopic() {
+//
+//		logger.info("ForumMessageServiceTest: test method GetListForumMessageBetweenDateByIdForumTopic");
+//		LocalDateTime minDateLDT = LocalDateTime.of(2015, 12, 17, 00, 00);
+//		LocalDateTime maxDateLDT = LocalDateTime.of(2015, 12, 20, 00, 00);
+//
+//		List<ForumMessage> list = forumMessageService
+//				.getListForumMessageBetweenDateByIdForumTopic(forumTopic.getIdForumTopic(), minDateLDT, maxDateLDT);
+//		Assert.assertFalse(list.isEmpty());
+//	}
+//
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListForumMessageByIdAccount() {
+//		
+//		logger.info("ForumMessageServiceTest: test method GetListForumMessagetByIdAccount");
+//		List<ForumMessage> list = forumMessageService
+//				.getListForumMessagetByIdAccount(authorAccount.getIdAccount());
+//		Assert.assertFalse(list.isEmpty());	
+//	}
 }

@@ -43,7 +43,7 @@ public interface UserDAO extends CommonEntityDAO {
 	 * 
 	 * @return List<Account>
 	 */
-	public List<Account> getListAccountBuUserId(Long idUser);
+	public List<Account> getListAccountByUserId(Long idUser);
 
 	/**
 	 * Method return list of user which belong to sex. If list of user is not
