@@ -3,12 +3,17 @@
  */
 package com.dancosoft.socialcommunity.service.impl;
 
+import java.util.Collections;
 import java.util.List;
+
+import javax.persistence.NonUniqueResultException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.UserSecurityDAO;
@@ -34,52 +39,216 @@ public class UserSecurityServiceImpl extends CommonEntityServiceImpl implements 
 	}
 	
 	public User getUserByLoginPassword(String userLogin,String userPassword) {
-		logger.info("UserSecurityService: User loaded by login and password.");
-		return userSecurityDAO.getUserByLoginPassword(userLogin, userPassword);
+		
+		User user=null;
+		if (userLogin.equals(null) || userLogin.equals("")) {
+			throw new RuntimeException("UserSecurityService:User login must not null amd empty");
+			
+		} else if(userPassword.equals(null) || userPassword.equals("")){
+			throw new RuntimeException("UserSecurityService:User password must not null and empty");
+			
+		}else{
+			try {
+				logger.info("UserSecurityService: User loaded by login and password.");
+				user=userSecurityDAO.getUserByLoginPassword(userLogin, userPassword);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("UserSecurityService: User with login "+userLogin+" and password"
+						+ " "+userPassword+". " + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserSecurityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return user;
 	}
 	
 	public Long getIdUserByLoginPassword(String userLogin,String userPassword){
-		logger.info("UserSecurityService:User id loaded sucessfully by his login and password.");
-		return userSecurityDAO.getIdUserByLoginPassword(userLogin, userPassword);
+		
+		Long idUser=null;
+		if (userLogin.equals(null) || userLogin.equals("")) {
+			throw new RuntimeException("UserSecurityService:User login must not null amd empty");
+			
+		} else if(userPassword.equals(null) || userPassword.equals("")){
+			throw new RuntimeException("UserSecurityService:User password must not null and empty");
+			
+		}else{
+			try {
+				logger.info("UserSecurityService:User id loaded sucessfully by his login and password.");
+				idUser= userSecurityDAO.getIdUserByLoginPassword(userLogin, userPassword);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("UserSecurityService:Id user with login "+userLogin+" and password"
+						+" "+userPassword+" not exist. " + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserSecurityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return idUser;
 	}
 	
 	public Boolean signInUserByLoginPassword(String userLogin, String userPassword){
-		logger.info("UserSecurityService:User sign in in system sucessfully");
-		return userSecurityDAO.signInUserByLoginPassword(userLogin, userPassword);
+		
+		Boolean signIn=false;
+		if (userLogin.equals(null) || userLogin.equals("")) {
+			throw new RuntimeException("UserSecurityService:User login must not null amd empty");
+			
+		} else if(userPassword.equals(null) || userPassword.equals("")){
+			throw new RuntimeException("UserSecurityService:User password must not null and empty");
+			
+		}else{
+			try {
+				logger.info("UserSecurityService:User sign in in system sucessfully");
+				signIn= userSecurityDAO.signInUserByLoginPassword(userLogin, userPassword);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("UserSecurityService: User with login "+userLogin+" and password"
+						+" "+userPassword+" not exist. SignIn have status false." + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserSecurityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return signIn;
 	}
 	
 	public Boolean isUniqueLogin(String userLogin){
-		logger.info("UserSecurityService:Check login on unique value.");
-		return userSecurityDAO.isUniqueLogin(userLogin);
+		
+		Boolean isUnique=false;
+		if (userLogin.equals(null) || userLogin.equals("")) {
+			throw new RuntimeException("UserSecurityService:User login must not null amd empty");
+			
+		}else{
+			try {
+				logger.info("UserSecurityService:Check login on unique value.");
+				isUnique= userSecurityDAO.isUniqueLogin(userLogin);
+			
+			}catch (NonUniqueResultException nu) {
+				logger.error("UserSecurityService: User login is not unique." + nu);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserSecurityService:Exeption connect with data base or other error= "+da);
+			}
+		}		
+		return isUnique;
 	}
 	
 	public Boolean isUniquePassword(String userPassword){
-		logger.info("UserSecurityService:Check password on unique value.");
-		return userSecurityDAO.isUniquePassword(userPassword);
+		
+		Boolean isUnique=false;
+		if (userPassword.equals(null) || userPassword.equals("")) {
+			throw new RuntimeException("UserSecurityService:User password must not null amd empty");
+			
+		}else{
+			try {
+				logger.info("UserSecurityService:Check password on unique value.");
+				isUnique= userSecurityDAO.isUniquePassword(userPassword);
+				
+			} catch (NonUniqueResultException nu) {
+				logger.error("UserSecurityService: User password is not unique." + nu);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserSecurityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return isUnique;
 	}
 	
 	public String getUserRoleByIdUser(Long idUser){
-		logger.info("UserSecurityService:User role loaded by id user.");
-		return userSecurityDAO.getUserRoleByIdUser(idUser);
+		
+		String userRole=null;
+		if (idUser.equals(null)) {
+			throw new RuntimeException("UserSecurityService:Id user must not null.");
+		}else{
+			try {
+				logger.info("UserSecurityService:User role loaded by id user.");
+				userRole= userSecurityDAO.getUserRoleByIdUser(idUser);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("UserSecurityService: User role for user with id "+idUser+"not exist" + rf);
+				
+			} catch (NonUniqueResultException nu) {
+				logger.error("UserSecurityService:User role for user with id is not unique." + nu);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserSecurityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return userRole;
 	}
 	
 	public List<User> getListUserWithUserRole(){
-		logger.info("UserSecurityService:List user loaded successfully.");
-		return userSecurityDAO.getListUserWithUserRole();
+		
+		List<User> list=Collections.emptyList();
+		try {
+			logger.info("UserSecurityService:List of user with user role loaded successfully.");
+			list= userSecurityDAO.getListUserWithUserRole();
+			
+		} catch (DataRetrievalFailureException rf) {
+			logger.warn("UserSecurityService: List of user with user role load, but list is empty" + rf);
+			
+		}catch (DataAccessException da) {
+			logger.error("UserSecurityService:Exeption connect with data base or other error= "+da);
+		}
+		return list;
 	}
 	
 	public List<User> getListUserWithAdminRole(){
-		logger.info("UserSecurityService:List administrators loaded successfully.");
-		return userSecurityDAO.getListUserWithAdminRole();
+		
+		List<User> list=Collections.emptyList();
+		try {
+			logger.info("UserSecurityService:List of user with administrator role loaded successfully.");
+			list= userSecurityDAO.getListUserWithAdminRole();
+			
+		} catch (DataRetrievalFailureException rf) {
+			logger.warn("UserSecurityService: List of user with administrator role user load,"
+					+ " but list is empty" + rf);
+			
+		}catch (DataAccessException da) {
+			logger.error("UserSecurityService:Exeption connect with data base or other error= "+da);
+		}
+		return list;
 	}
 	
 	public Boolean updateLoginPasswordByIdUser(Long idUser){
-		logger.info("UserSecurityService:Login and password update by id user.");
-		return userSecurityDAO.updateLoginPasswordByIdUser(idUser);
+		
+		Boolean statusUpdate=false;
+		if (idUser.equals(null)) {
+			throw new RuntimeException("UserSecurityService:Id user must not null.");
+		}else{
+			try {
+				logger.info("UserSecurityService:Login and password update by id user.");
+				statusUpdate= userSecurityDAO.updateLoginPasswordByIdUser(idUser);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("UserSecurityService: User with id "+idUser+" not exist."
+						+ "Login and password not update "+ rf);
+				
+			}catch (DataAccessException da) {
+				logger.error("UserSecurityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return statusUpdate;
 	}
 	
 	public UserSecurity getLoginPasswordByIdUser(Long idUser){
-		logger.info("UserSecurityService:Login and password loaded by id user.");
-		return userSecurityDAO.getLoginPasswordByIdUser(idUser);
+		
+		UserSecurity userSecurity=null;
+		if (idUser.equals(null)) {
+			throw new RuntimeException("UserSecurityService:Id user must not null.");
+		}else{
+			try {
+				logger.info("UserSecurityService:Login and password loaded by id user.");
+				userSecurity= userSecurityDAO.getLoginPasswordByIdUser(idUser);
+				
+			}catch (DataRetrievalFailureException rf) {
+				logger.warn("UserSecurityService: User with id "+idUser+" not exist."+ rf);
+				
+			}catch (DataAccessException da) {
+				logger.error("UserSecurityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return userSecurity;
 	}
 }

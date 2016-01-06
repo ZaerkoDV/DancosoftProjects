@@ -8,5 +8,4 @@ package com.dancosoft.socialcommunity.service;
  *
  */
 public class LanguageServiceTest {
-
 }

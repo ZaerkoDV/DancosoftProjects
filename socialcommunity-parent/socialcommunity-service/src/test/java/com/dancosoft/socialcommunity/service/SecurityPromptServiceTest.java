@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dancosoft.socialcommunity.dao.SecurityPromptDAOTest;
 import com.dancosoft.socialcommunity.model.SecurityPrompt;
 import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserSecurity;
@@ -26,7 +25,7 @@ import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
  */
 public class SecurityPromptServiceTest {//extends TestStarter{
 
-//	private static final Logger logger = LoggerFactory.getLogger(SecurityPromptDAOTest.class);
+//	private static final Logger logger = LoggerFactory.getLogger(SecurityPromptServiceTest.class);
 //
 //	@Autowired
 //	@Qualifier("securityPromptService")

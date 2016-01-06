@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dancosoft.socialcommunity.dao.GroupMemberDAOTest;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountGroup;
 import com.dancosoft.socialcommunity.model.GroupMember;
@@ -22,7 +21,7 @@ import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 
 public class GroupMemberServiceTest {//extends TestStarter{
 
-//	private static final Logger logger = LoggerFactory.getLogger(GroupMemberDAOTest.class);
+//	private static final Logger logger = LoggerFactory.getLogger(GroupMemberServiceTest.class);
 //
 //	@Autowired
 //	@Qualifier("groupMemberService")

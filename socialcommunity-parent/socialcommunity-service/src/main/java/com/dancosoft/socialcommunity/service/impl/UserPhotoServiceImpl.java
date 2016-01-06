@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.UserPhotoDAO;
@@ -31,13 +33,43 @@ public class UserPhotoServiceImpl extends CommonEntityServiceImpl implements Use
 	}
 
 	public UserPhoto getUserPhotoByIdUser(Long idUser) {
-		logger.info("UserPhotoService: User photo load by id user");
-		return userPhotoDAO.getUserPhotoByIdUser(idUser);
+		
+		UserPhoto userPhoto=null;
+		if (idUser.equals(null)) {
+			throw new RuntimeException("UserPhotoService:Id user must not null!");
+		} else{
+			try {
+				logger.info("UserPhotoService: UserPhoto load by id user");
+				userPhoto= userPhotoDAO.getUserPhotoByIdUser(idUser);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("UserPhotoService: UserPhoto for user with id "+idUser+" not exist." + rf);
+				
+			}catch (DataAccessException da) {
+				logger.error("UserPhotoService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return userPhoto;
 	}
 	
 	public String getPhotoNameByIdUser(Long idUser) {
-		logger.info("UserPhotoService: Name user photo load by id user");
-		return userPhotoDAO.getPhotoNameByIdUser(idUser);
+		
+		String photoName=null;
+		if (idUser.equals(null)) {
+			throw new RuntimeException("UserPhotoService:Id user must not null!");
+		} else{
+			try {
+				logger.info("UserPhotoService:Name of user photo load by id user");
+				photoName= userPhotoDAO.getPhotoNameByIdUser(idUser);
+				
+			}catch (DataRetrievalFailureException rf) {
+				logger.warn("UserPhotoService: Name of user photo with user id "+idUser+" not exist." + rf);
+				
+			}catch (DataAccessException da) {
+				logger.error("UserPhotoService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return photoName;
 	}
 	
 	//load photo frome disk(idUser)

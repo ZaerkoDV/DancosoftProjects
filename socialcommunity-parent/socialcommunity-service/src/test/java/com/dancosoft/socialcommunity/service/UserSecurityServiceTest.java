@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dancosoft.socialcommunity.dao.UserSecurityDAOTest;
 import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserSecurity;
 import com.dancosoft.socialcommunity.service.testsupport.TestObjectServiceCreator;
@@ -28,7 +27,7 @@ import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 
 public class UserSecurityServiceTest {//extends TestStarter {
 
-//	private static final Logger logger = LoggerFactory.getLogger(UserSecurityDAOTest.class);
+//	private static final Logger logger = LoggerFactory.getLogger(UserSecurityServiceTest.class);
 //
 //	@Autowired
 //	@Qualifier("userSecurityService")

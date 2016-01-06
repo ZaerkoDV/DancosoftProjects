@@ -87,9 +87,10 @@ public class SingleMessageServiceTest {//extends TestStarter {
 //		logger.info("SingleMessageServiceTest: test method GetListIntrlocutorSingleMessageBeetweenDateByIdAccount");
 //		LocalDateTime minDateLDT = LocalDateTime.of(2015, 12, 17, 00, 00);
 //		LocalDateTime maxDateLDT = LocalDateTime.of(2015, 12, 20, 00, 00);
-//
-//		List<SingleMessage> list = singleMessageService.getListIntrlocutorSingleMessageBeetweenDateByIdAccount(account
-//						.getIdAccount(), singleMessage.getInterlocutorAccount().getIdAccount(), minDateLDT, maxDateLDT);
+//		Long idInterlocutorAccount=singleMessage.getInterlocutorAccount().getIdAccount();
+//		
+//		List<SingleMessage> list = singleMessageService.getListIntrlocutorSingleMessageBeetweenDateByIdAccount(
+//						account.getIdAccount(), idInterlocutorAccount, minDateLDT, maxDateLDT);
 //		Assert.assertFalse(list.isEmpty());
 //	}
 }
