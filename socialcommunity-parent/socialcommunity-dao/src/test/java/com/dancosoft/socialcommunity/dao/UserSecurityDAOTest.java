@@ -142,7 +142,14 @@ public class UserSecurityDAOTest extends TestStarter {
 
 		logger.info("UserSecurityDAOTest: test method testOnUpdateLoginPasswordByIdUser");
 		Long idUser = userSecurity.getUser().getIdUser();
-		Assert.assertTrue(userSecurityDAO.updateLoginPasswordByIdUser(idUser));
+		
+		String newLogin="NewLogin";
+		String newPassword="NewPassword";
+		Assert.assertTrue(userSecurityDAO.updateLoginPasswordByIdUser(idUser,newLogin,newPassword));
+		
+		newLogin=userSecurity.getUserLogin();
+		newPassword=userSecurity.getUserPassword();
+		Assert.assertFalse(userSecurityDAO.updateLoginPasswordByIdUser(idUser,newLogin,newPassword));
 	}
 
 	@Transactional

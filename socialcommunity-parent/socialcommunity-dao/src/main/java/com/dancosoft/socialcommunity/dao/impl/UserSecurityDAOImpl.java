@@ -263,25 +263,28 @@ public class UserSecurityDAOImpl extends CommonEntityDAOImpl implements UserSecu
 	 * @type Long
 	 * @type Boolean
 	 * @param idUser
+	 * @param newLogin
+	 * @param newPassword
 	 * 
 	 * @return Boolean
 	 */
-///how to generate new Password?
-	public Boolean updateLoginPasswordByIdUser(Long idUser){
+	public Boolean updateLoginPasswordByIdUser(Long idUser, String newLogin, String newPassword){
+		
+		Boolean status;
+		String lastLogin;
+		String lastPassword;
+		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
 				.createCriteria(UserSecurity.class);
 		criteria.createAlias("user", "u");
 		criteria.add(Restrictions.eq("u.idUser", idUser));
-
-		Boolean status;
 		logger.info("UserSecurityDAO:Login and password loaded by id user.");
 		UserSecurity userSecurity=(UserSecurity) criteria.uniqueResult();
 		
-		String lastLogin=userSecurity.getUserLogin();
-		String lastPassword=userSecurity.getUserPassword();
-
-		userSecurity.setUserLogin("newLogin");
-		userSecurity.setUserPassword("newPassword");
+		lastLogin=userSecurity.getUserLogin();
+		lastPassword=userSecurity.getUserPassword();
+		userSecurity.setUserLogin(newLogin);
+		userSecurity.setUserPassword(newPassword);
 		this.getHibernateTemplate().update(userSecurity);
 		
 		if(!lastLogin.equals(userSecurity.getUserLogin()) && !lastPassword.equals(userSecurity.getUserPassword())){

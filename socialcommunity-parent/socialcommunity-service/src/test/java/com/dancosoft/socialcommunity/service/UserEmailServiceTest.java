@@ -99,4 +99,18 @@ public class UserEmailServiceTest {//extends TestStarter {
 //		idUser=userEmailService.getIdUserByEmail("user@gmail.com");
 //		Assert.assertNull(idUser);
 //	}
+//	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testOnValidEmail(){
+//		
+//		Boolean isValidEmail;
+//		isValidEmail=userEmailService.isValidEmail(userEmail.getUserEmail());
+//		Assert.assertTrue(isValidEmail);
+//		isValidEmail=userEmailService.isValidEmail("falsegmail.com");
+//		Assert.assertFalse(isValidEmail);
+//		
+//		logger.info("UserEmailServiceTest:Cheack email on valid value completed.");
+//	}
 }

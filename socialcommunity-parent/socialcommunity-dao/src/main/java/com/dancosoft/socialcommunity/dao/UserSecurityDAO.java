@@ -123,10 +123,12 @@ public interface UserSecurityDAO extends CommonEntityDAO {
 	 * @type Long
 	 * @type Boolean
 	 * @param idUser
+	 * @param newLogin
+	 * @param newPassword
 	 * 
 	 * @return Boolean
 	 */
-	public Boolean updateLoginPasswordByIdUser(Long idUser);
+	public Boolean updateLoginPasswordByIdUser(Long idUser, String newLogin, String newPassword);
 
 	/**
 	 * Method return new user password and login after updating.

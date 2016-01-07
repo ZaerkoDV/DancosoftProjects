@@ -20,4 +20,6 @@ public interface UserEmailService extends CommonEntityService {
 	public Boolean isUniqueEmail(String userEmail);
 
 	public Long getIdUserByEmail(String userEmail);
+	
+	public Boolean isValidEmail(String email);
 }

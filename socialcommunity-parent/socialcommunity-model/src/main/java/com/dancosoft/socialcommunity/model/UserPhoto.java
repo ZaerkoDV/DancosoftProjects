@@ -67,7 +67,6 @@ public class UserPhoto implements Serializable {
 	 * 
 	 * @type String
 	 */
-	@NotNull
 	@Column(name = "photo_name")
 	private String photoName;
 

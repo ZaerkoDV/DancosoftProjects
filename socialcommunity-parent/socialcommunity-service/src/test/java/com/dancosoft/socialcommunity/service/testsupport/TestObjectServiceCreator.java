@@ -148,11 +148,13 @@ public class TestObjectServiceCreator {
 
 		User testUser = createUserForTest();
 		UserPhoto testUserPhoto = new UserPhoto();
-		testUserPhoto.setPhotoName("1.jpg");
+		String idUser=testUser.getIdUser().toString();
+		
+		testUserPhoto.setPhotoName(idUser+".jsp");
 		testUserPhoto.setPhotoNote("testPhoto");
 		testUserPhoto.setUser(testUser);
 		commonEntityDAO.saveEntity(testUserPhoto);
-
+		
 		return testUserPhoto;
 	}
 

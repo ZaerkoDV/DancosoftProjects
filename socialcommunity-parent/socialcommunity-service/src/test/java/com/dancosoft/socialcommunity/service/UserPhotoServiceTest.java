@@ -52,7 +52,7 @@ public class UserPhotoServiceTest {//extends TestStarter {
 //	}
 //
 //	@Transactional
-//	@Rollback(false)
+//	@Rollback(true)
 //	@Test
 //	public void testGettingUserPhotoByIdUser() {
 //		logger.info("UserPhotoServiceTest: test method GetUserPhotoByIdUser");
@@ -60,10 +60,32 @@ public class UserPhotoServiceTest {//extends TestStarter {
 //	}
 //	
 //	@Transactional
-//	@Rollback(false)
+//	@Rollback(true)
 //	@Test
 //	public void testGettingPhotoNameByIdUser() {
 //		logger.info("UserPhotoServiceTest: test method GetPhotoNameByIdUser");
 //		Assert.assertNotNull(userPhotoService.getPhotoNameByIdUser(user.getIdUser()));	
 //	}	
+//	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testSavePhotoAsJPG() {
+//		
+//		String testPhotoPath="http://www.mkyong.com/image/mypic.jpg";
+//		String format="jpg";
+//		Boolean result=userPhotoService.savePhotoAsFormat(user.getIdUser(),format,testPhotoPath);
+//		Assert.assertTrue(result);
+//	}
+//	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testLoadPathToUserPhoto() {
+//		
+//		String testPhotoPath="http://www.mkyong.com/image/mypic.jpg";
+//		String format="jpg";
+//		userPhotoService.savePhotoAsFormat(user.getIdUser(),format,testPhotoPath);
+//		Assert.assertNotNull(userPhotoService.loadPathToUserPhoto(user.getIdUser()));
+//	}
 }

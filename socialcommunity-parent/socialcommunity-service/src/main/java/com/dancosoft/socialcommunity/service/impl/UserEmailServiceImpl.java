@@ -5,6 +5,8 @@ package com.dancosoft.socialcommunity.service.impl;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.persistence.NonUniqueResultException;
 
@@ -29,6 +31,13 @@ public class UserEmailServiceImpl extends CommonEntityServiceImpl implements Use
 
 	private static final Logger logger = LoggerFactory.getLogger(UserEmailServiceImpl.class);	
 	
+	private Pattern pattern;
+
+	private Matcher matcher;
+	
+	private static final String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
 	@Autowired
 	@Qualifier(value="userEmailDAO")
 	private UserEmailDAO userEmailDAO;
@@ -124,5 +133,21 @@ public class UserEmailServiceImpl extends CommonEntityServiceImpl implements Use
 			}
 		}
 		return idUser;
+	}
+	
+	public Boolean isValidEmail(String email){
+		
+		logger.info("UserEmailService:Cheack email on valid value is completed.");
+		Boolean isValid;
+		try {
+			pattern = Pattern.compile(emailPattern);
+			matcher = pattern.matcher(email);
+			isValid=matcher.matches();
+			
+		} catch (Exception e) {
+			isValid=false;
+			logger.error("UserEmailService: Email "+email+" is invalid. ");
+		}
+		return isValid;
 	}
 }
