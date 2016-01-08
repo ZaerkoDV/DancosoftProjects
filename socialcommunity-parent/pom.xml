@@ -146,13 +146,13 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>4.2.0.Final</version>
 		</dependency>
-
+<!--  
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-java8</artifactId>
 			<version>5.0.5.Final</version>
 		</dependency>
-  
+ --> 
   	    <!-- connector  -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>

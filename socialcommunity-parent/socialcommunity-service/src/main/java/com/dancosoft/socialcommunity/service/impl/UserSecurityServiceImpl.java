@@ -12,18 +12,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.stereotype.Service;
-
 import com.dancosoft.socialcommunity.dao.UserEmailDAO;
 import com.dancosoft.socialcommunity.dao.UserSecurityDAO;
 import com.dancosoft.socialcommunity.model.User;
-import com.dancosoft.socialcommunity.model.UserEmail;
 import com.dancosoft.socialcommunity.model.UserSecurity;
 import com.dancosoft.socialcommunity.service.UserSecurityService;
-import com.dancosoft.socialcommunity.service.support.EmailSender;
-import com.dancosoft.socialcommunity.service.support.GeneratorSecurityFeature;
+import com.dancosoft.socialcommunity.service.support.email.EmailCreator;
+import com.dancosoft.socialcommunity.service.support.security.GeneratorSecurityFeature;
 
 /**
  * @author Zaerko_DV
@@ -36,7 +35,8 @@ public class UserSecurityServiceImpl extends CommonEntityServiceImpl implements 
 	
 	//length password as parametr
 	GeneratorSecurityFeature generator= new GeneratorSecurityFeature(8);
-	EmailSender sender= new EmailSender();
+	EmailCreator emailCreator=new EmailCreator();
+	//LetterSender sender= new LetterSender();
 	
 	@Autowired
 	@Qualifier(value="userSecurityDAO")
@@ -45,7 +45,7 @@ public class UserSecurityServiceImpl extends CommonEntityServiceImpl implements 
 	@Autowired
 	@Qualifier(value="userEmailDAO")
 	private UserEmailDAO userEmailDAO;
-
+	
 	public void setUserSecurityDAO(UserSecurityDAO userSecurityDAO) {
 		this.userSecurityDAO = userSecurityDAO;
 	}
@@ -230,21 +230,24 @@ public class UserSecurityServiceImpl extends CommonEntityServiceImpl implements 
 	public Boolean updateLoginPasswordByIdUser(Long idUser){
 		
 		Boolean statusUpdate=false;
+		String newLogin;
+		String newPassword;
 		if (idUser.equals(null)) {
 			throw new RuntimeException("UserSecurityService:Id user must not null.");
 		}else{
 			try {
 				
-				
 				logger.info("UserSecurityService:Login and password update by id user.");
-				String newLogin=generator.generateNewSecutityRow();
-				String newPassword=generator.generateNewSecutityRow();
+				newLogin=generator.generateNewSecutityRow();
+				newPassword=generator.generateNewSecutityRow();
 				statusUpdate= userSecurityDAO.updateLoginPasswordByIdUser(idUser,newLogin,newPassword);
-				
-				List<UserEmail> list=userEmailDAO.getListEmailByIdUser(idUser);
-				
-				sender.sendEmail(list,newLogin,newPassword);
-				logger.info("UserSecurityService:New login and password send to post.");
+					
+//				List<UserEmail> list=userEmailDAO.getListEmailByIdUser(idUser);
+//				sender.sendEmail(list,newLogin,newPassword);
+//				logger.info("UserSecurityService:New login and password send to post.");
+
+				String content="\n Login:" + newLogin +"\n Password:" + newPassword;
+				emailCreator.createSecurityMail("zaerko1991@mail.ru","zaerko1991@mail.ru",content);
 				
 			} catch (DataRetrievalFailureException rf) {
 				logger.warn("UserSecurityService: User with id "+idUser+" not exist."
@@ -254,7 +257,6 @@ public class UserSecurityServiceImpl extends CommonEntityServiceImpl implements 
 				logger.error("UserSecurityService:Exeption connect with data base or other error= "+da);
 			}
 		}
-		
 		return statusUpdate;
 	}
 	

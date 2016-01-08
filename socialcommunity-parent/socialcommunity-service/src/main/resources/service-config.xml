@@ -16,12 +16,48 @@
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-
 	<mvc:annotation-driven/>
 	
 	<mvc:resources mapping="/resources/**" location="/resources/" />
-	
+
 	<beans:import resource="classpath*:/dao-config.xml"/>
+	
+									<!--velocity email sender  -->
+									
+	<beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<beans:property name="host" value="smtp.mail.ru" />
+		<beans:property name="port" value="587" />
+		<beans:property name="username" value="zaerko1991@mail.ru" />
+		<beans:property name="password" value="AragorN" />
+		<beans:property name="javaMailProperties">
+		   <beans:props>
+				 <!--<beans:prop key="mail.debug">true</beans:prop> -->
+				 <beans:prop key="mail.smtp.auth">true</beans:prop>
+				 <beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+				 <beans:prop key="mail.mime.charset">UTF-8</beans:prop>
+				 <beans:prop key="mail.smtp.ssl.enable">false</beans:prop>
+				 <beans:prop key="mail.transport.protocol">smtp</beans:prop>
+		   </beans:props>
+		</beans:property>
+	</beans:bean>
+		
+	<beans:bean id="emailSender" class="com.dancosoft.socialcommunity.service.support.email.EmailSender">
+		 <beans:property name="mailSender" ref="mailSender" />
+		 <beans:property name="velocityEngine" ref="velocityEngine"/>
+    </beans:bean>
+		
+	<beans:bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+		<beans:property name="velocityProperties">
+		    <beans:props>
+		        <beans:prop key="resource.loader">class</beans:prop>
+		         <beans:prop key="class.resource.loader.class">
+		                org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+		         </beans:prop>
+		    </beans:props>
+		 </beans:property>
+	</beans:bean>
+
+										<!-- service beans -->
 	
 	<beans:bean id="commonEntityService" class="com.dancosoft.socialcommunity.service.impl.CommonEntityServiceImpl">
 		<beans:property name="commonEntityDAO" ref="commonEntityDAO"></beans:property>

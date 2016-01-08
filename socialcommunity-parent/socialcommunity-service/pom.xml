@@ -24,8 +24,24 @@
 			 <groupId>javax.mail</groupId>
 			 <artifactId>mail</artifactId>
 			 <version>1.4.7</version>
+			 <scope>provided</scope>	
 		 </dependency>
-		   
+		 
+		<!-- 
+		<dependency>
+			<groupId>jaf</groupId>
+			<artifactId>activation</artifactId>
+			<version>1.0.2</version>
+			<scope>provided</scope>	
+		</dependency>  
+		-->
+		
+		<dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
+        </dependency>
+        
 	  </dependencies>
 	  
 </project>

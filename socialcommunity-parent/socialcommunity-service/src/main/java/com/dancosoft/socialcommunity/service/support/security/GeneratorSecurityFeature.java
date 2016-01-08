@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.dancosoft.socialcommunity.service.support;
+package com.dancosoft.socialcommunity.service.support.security;
 
 import java.util.Random;
 

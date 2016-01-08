@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.dancosoft.socialcommunity.service.support;
+package com.dancosoft.socialcommunity.service.support.email;
 
 import java.util.List;
 import java.util.Properties;
@@ -24,13 +24,13 @@ import com.dancosoft.socialcommunity.model.UserEmail;
  * @author Zaerko_DV
  *
  */
-public class EmailSender {
+public class LetterSender {
 
-	
-	public Boolean sendEmail(List<UserEmail> list,String login, String password)  {
+	//antivirus program must closed.
+	public void sendEmail(List<UserEmail> list,String login, String password)  {
 		
 		Properties props=new Properties();
-		props.put("mail.smtp.host","smtp.mail.ru.");
+		props.put("mail.smtp.host","smtp.mail.ru");
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.socketFactory.port", "587");
 		props.put("mail.smtp.socketFactory.class", "javax.net.SocketFactory");
@@ -40,28 +40,28 @@ public class EmailSender {
 		
 		Session mailSession=Session.getInstance(props,new Authenticator(){
 			protected PasswordAuthentication getPasswordAuthentication(){
-				return(new PasswordAuthentication("zaerko1991@mail.ru",""));
+				return(new PasswordAuthentication("zaerko1991@mail.ru","AragorN"));
 			}
 		});
 		
 		MimeMessage message=new MimeMessage(mailSession);
-		String[] emails={"zaerko1991@mail.ru", "zaerko1991@gmail.com"};
 		try {
 			InternetAddress dests[] = new InternetAddress[list.size()];
-			
 			for (int i = 0; i < list.size(); i++) {
-				dests[i] = new InternetAddress(emails[i].trim().toLowerCase());
+				dests[i] = new InternetAddress(list.get(i).getUserEmail().trim().toLowerCase());
 			}
-			message.setFrom(new InternetAddress("zaerko1991@mail.ru"));//ot kogo
-			message.setRecipients(Message.RecipientType.TO, dests);		//komy
+//			String[] emails={"zaerko1991@mail.ru", "zaerko1991@gmail.com"};
+//			InternetAddress dests[] = new InternetAddress[emails.length];
+//			for (int i = 0; i < emails.length; i++) {
+//				dests[i] = new InternetAddress(emails[i].trim().toLowerCase());
+//			}
+			message.setFrom(new InternetAddress("zaerko1991@mail.ru"));//frome
+			message.setRecipients(Message.RecipientType.TO, dests);	   //to  dests
 			message.setSubject("Test letter.","KOI8-R");
-			
-			
 			
 		} catch (MessagingException e1) {
 			e1.printStackTrace();
 		}
-		
 		
 		Multipart mp=new MimeMultipart();
 		MimeBodyPart mbp1=new MimeBodyPart();
@@ -77,8 +77,6 @@ public class EmailSender {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-		
-		return null;
 	}
 
 }

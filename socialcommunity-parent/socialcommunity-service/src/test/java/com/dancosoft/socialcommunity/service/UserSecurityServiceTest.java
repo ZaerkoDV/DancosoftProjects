@@ -54,78 +54,78 @@ public class UserSecurityServiceTest extends TestStarter {
 		this.user = userSecurity.getUser();
 	}
 
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingUserByLoginPassword() {
-
-		logger.info("UserSecurityServiceTest: test method testGettingUserByLoginPassword");
-		String login = userSecurity.getUserLogin();
-		String password = userSecurity.getUserPassword();
-
-		Assert.assertNotNull(userSecurityService.getUserByLoginPassword(login,password));
-	}
-
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingIdUserByLoginPassword() {
-		logger.info("UserSecurityServiceTest: test method testGettingIdUserByLoginPassword");
-		Assert.assertNotNull(userSecurityService.getIdUserByLoginPassword(
-				userSecurity.getUserLogin(), userSecurity.getUserPassword()));
-	}
-
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testOnSignInUserByLoginPassword() {
-		logger.info("UserSecurityServiceTest: test method testOnSignInUserByLoginPassword");
-		Assert.assertTrue(userSecurityService.signInUserByLoginPassword(
-				userSecurity.getUserLogin(), userSecurity.getUserPassword()));
-	}
-
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testUniqueLogin() {
-		logger.info("UserSecurityServiceTest: test method testUniqueLogin");
-		Assert.assertTrue(userSecurityService.isUniqueLogin("newLogin"));
-	}
-
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testUniquePassword() {
-		logger.info("UserSecurityServiceTest: test method testUniquePassword");
-		Assert.assertTrue(userSecurityService.isUniquePassword("newPassword"));
-	}
-
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingUserRoleByIdUser() {
-		logger.info("UserSecurityServiceTest: test method testGettingUserRoleByIdUser");
-		Long idUser = user.getIdUser();
-		Assert.assertEquals("User", userSecurityService.getUserRoleByIdUser(idUser));
-	}
-
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingListUserWithUserRole() {
-		logger.info("UserSecurityServiceTest: test method testGettingListUserWithUserRole");
-		List<User> listUser = userSecurityService.getListUserWithUserRole();
-		Assert.assertFalse(listUser.isEmpty());
-	}
-
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingListAdminWithUserRole() {
-		logger.info("UserSecurityServiceTest: test method testGettingListUserWithUserRole");
-		List<User> listAdmin = userSecurityService.getListUserWithAdminRole();
-		Assert.assertTrue(listAdmin.isEmpty());
-	}
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingUserByLoginPassword() {
+//
+//		logger.info("UserSecurityServiceTest: test method testGettingUserByLoginPassword");
+//		String login = userSecurity.getUserLogin();
+//		String password = userSecurity.getUserPassword();
+//
+//		Assert.assertNotNull(userSecurityService.getUserByLoginPassword(login,password));
+//	}
+//
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingIdUserByLoginPassword() {
+//		logger.info("UserSecurityServiceTest: test method testGettingIdUserByLoginPassword");
+//		Assert.assertNotNull(userSecurityService.getIdUserByLoginPassword(
+//				userSecurity.getUserLogin(), userSecurity.getUserPassword()));
+//	}
+//
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testOnSignInUserByLoginPassword() {
+//		logger.info("UserSecurityServiceTest: test method testOnSignInUserByLoginPassword");
+//		Assert.assertTrue(userSecurityService.signInUserByLoginPassword(
+//				userSecurity.getUserLogin(), userSecurity.getUserPassword()));
+//	}
+//
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testUniqueLogin() {
+//		logger.info("UserSecurityServiceTest: test method testUniqueLogin");
+//		Assert.assertTrue(userSecurityService.isUniqueLogin("newLogin"));
+//	}
+//
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testUniquePassword() {
+//		logger.info("UserSecurityServiceTest: test method testUniquePassword");
+//		Assert.assertTrue(userSecurityService.isUniquePassword("newPassword"));
+//	}
+//
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingUserRoleByIdUser() {
+//		logger.info("UserSecurityServiceTest: test method testGettingUserRoleByIdUser");
+//		Long idUser = user.getIdUser();
+//		Assert.assertEquals("User", userSecurityService.getUserRoleByIdUser(idUser));
+//	}
+//
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListUserWithUserRole() {
+//		logger.info("UserSecurityServiceTest: test method testGettingListUserWithUserRole");
+//		List<User> listUser = userSecurityService.getListUserWithUserRole();
+//		Assert.assertFalse(listUser.isEmpty());
+//	}
+//
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListAdminWithUserRole() {
+//		logger.info("UserSecurityServiceTest: test method testGettingListUserWithUserRole");
+//		List<User> listAdmin = userSecurityService.getListUserWithAdminRole();
+//		Assert.assertTrue(listAdmin.isEmpty());
+//	}
 
 	@Transactional
 	@Rollback(true)
@@ -136,12 +136,12 @@ public class UserSecurityServiceTest extends TestStarter {
 		Assert.assertTrue(userSecurityService.updateLoginPasswordByIdUser(idUser));
 	}
 
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingLoginPasswordByIdUser() {
-		logger.info("UserSecurityServiceTest: test method testGettingLoginPasswordByIdUser");
-		UserSecurity userSecurity = userSecurityService.getLoginPasswordByIdUser(user.getIdUser());
-		Assert.assertNotNull(userSecurity);
-	}
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingLoginPasswordByIdUser() {
+//		logger.info("UserSecurityServiceTest: test method testGettingLoginPasswordByIdUser");
+//		UserSecurity userSecurity = userSecurityService.getLoginPasswordByIdUser(user.getIdUser());
+//		Assert.assertNotNull(userSecurity);
+//	}
 }
