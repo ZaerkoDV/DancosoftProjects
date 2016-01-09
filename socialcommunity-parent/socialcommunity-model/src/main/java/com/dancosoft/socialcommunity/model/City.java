@@ -42,7 +42,7 @@ import javax.validation.constraints.NotNull;
  * @author Denis Zaerko
  */
 @Entity(name = "City")
-@Table(name = "cities")
+@Table(name = "city")
 public class City implements Serializable {
 
 	private static final long serialVersionUID = 3040006023145410666L;

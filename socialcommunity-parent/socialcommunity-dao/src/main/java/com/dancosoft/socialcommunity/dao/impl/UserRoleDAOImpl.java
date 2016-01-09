@@ -25,7 +25,6 @@ import org.springframework.stereotype.Repository;
 
 import com.dancosoft.socialcommunity.dao.UserRoleDAO;
 import com.dancosoft.socialcommunity.model.User;
-import com.dancosoft.socialcommunity.model.UserRole;
 import com.dancosoft.socialcommunity.model.UserSecurity;
 
 /**

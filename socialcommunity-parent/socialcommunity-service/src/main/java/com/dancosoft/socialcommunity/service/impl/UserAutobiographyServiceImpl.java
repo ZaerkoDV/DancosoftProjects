@@ -1,5 +1,17 @@
 /**
+ * @package com.dancosoft.socialcommunity.service.impl
  * 
+ * Package com.dancosoft.socialcommunity.service.impl contain set of class which description
+ * service layer(modul) in SocialCommunity project. This project based on MVC architecture.
+ * This class is part of service layer in MVC architecture.This layer defines the boundary
+ * of the application and a set of permitted operations. It encapsulates the business logic
+ * of the application and controls the answers in the implementation of operations.All classes
+ * which contain postfix “Service” provide to work Service for SocialCommunity application.
+ * Also this package user support classes: for generate new passworl and login,for sending
+ * email to user and other from com.dancosoft.socialcommunity.service.support package.
+ * 
+ * Please contact with Zaerko Denis or send letter on zaerko1991@gmail.com if you need
+ * to use information or have any questions.   
  */
 package com.dancosoft.socialcommunity.service.impl;
 
@@ -20,8 +32,24 @@ import com.dancosoft.socialcommunity.model.UserAutobiography;
 import com.dancosoft.socialcommunity.service.UserAutobiographyService;
 
 /**
- * @author Zaerko_DV
- *
+ * <p>The class UserAutobiographyServiceImpl use Service pattern which describes
+ * business logic SocialCommunity application. Service layer perform link
+ * between, presentation layer and DAO layer(UserAutobiographyDAO).This layer is
+ * the main role becouse layer contents(set of methods in classes) affect on
+ * functionality of all application. This class contain methods which describes
+ * specific operation for UserAutobiography.This class perform service layer to
+ * UserAutobiography.Class extend base class CommonEntityServiceImpl and
+ * implement UserAutobiographyService interface which perform all methods of
+ * this class. For logging use fasade slf4j and framework log4j. Class contain
+ * also private, static variable logger, which use to call log message. Class
+ * use Spring framework anatations to work with service layer.
+ * 
+ * @see org.springframework.stereotype
+ * @see slf4j framework
+ * @see log4j framework
+ * 
+ * @version 1.0 05.01.2016
+ * @author Zaerko Denis
  */
 @Service(value="userAutobiographyService")
 public class UserAutobiographyServiceImpl extends CommonEntityServiceImpl implements UserAutobiographyService{
@@ -36,6 +64,18 @@ public class UserAutobiographyServiceImpl extends CommonEntityServiceImpl implem
 		this.userAutobiographyDAO = userAutobiographyDAO;
 	}
 	
+	/**
+	 * Method return user autobiogeaphy by id user. If user autobiography
+	 * is not exist return null
+	 * 
+	 * @type Long
+	 * @param idUser
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return UserAutobiography
+	 */
 	public UserAutobiography getUserAutobiographyByIdUser(Long idUser) {
 		
 		UserAutobiography userAutobiography=null;
@@ -56,6 +96,18 @@ public class UserAutobiographyServiceImpl extends CommonEntityServiceImpl implem
 		return userAutobiography;
 	}
 	
+	/**
+	 * Method return list of user with the same hobby.
+	 * If users are not exist return empty list.
+	 * 
+	 * @type String
+	 * @param hobby
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return UserAutobiography
+	 */
 	public List<User> getListUserByHobby(String hobby) {
 		
 		List<User> list=Collections.emptyList();
@@ -77,6 +129,19 @@ public class UserAutobiographyServiceImpl extends CommonEntityServiceImpl implem
 		return list;
 	}
 	
+	/**
+	 * Method return result of check user no adult value. Yers Adult is
+	 * year value after which user become adult status. If user is adult
+	 * returm true else false.
+	 * 
+	 * @type Long
+	 * @param idUser
+	 * @param yearAdult
+	 * 
+	 * @exception DataAccessException
+	 * 
+	 * @return Boolean
+	 */
 	public Boolean isUserAdult(Long idUser,Long yearAdult) {
 		
 		Boolean isUserAdult=false;
@@ -98,6 +163,18 @@ public class UserAutobiographyServiceImpl extends CommonEntityServiceImpl implem
 		return isUserAdult;
 	}
 	
+	/**
+	 * Method return list of adult user. If adult users are
+	 * not exist return empty list.
+	 * 
+	 * @type Long
+	 * @param yearAdult
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<User>
+	 */
 	public List<User> getListAdultUser(Long yearAdult) {
 		
 		List<User> list=Collections.emptyList();

@@ -1,5 +1,17 @@
 /**
+ * @package com.dancosoft.socialcommunity.service.impl
  * 
+ * Package com.dancosoft.socialcommunity.service.impl contain set of class which description
+ * service layer(modul) in SocialCommunity project. This project based on MVC architecture.
+ * This class is part of service layer in MVC architecture.This layer defines the boundary
+ * of the application and a set of permitted operations. It encapsulates the business logic
+ * of the application and controls the answers in the implementation of operations.All classes
+ * which contain postfix “Service” provide to work Service for SocialCommunity application.
+ * Also this package user support classes: for generate new passworl and login,for sending
+ * email to user and other from com.dancosoft.socialcommunity.service.support package.
+ * 
+ * Please contact with Zaerko Denis or send letter on zaerko1991@gmail.com if you need
+ * to use information or have any questions.   
  */
 package com.dancosoft.socialcommunity.service.impl;
 
@@ -23,8 +35,24 @@ import com.dancosoft.socialcommunity.model.ForumMessage;
 import com.dancosoft.socialcommunity.service.ForumMessageService;
 
 /**
- * @author Zaerko_DV
- *
+ * <p>The class ForumMessageServiceImpl use Service pattern which describes
+ * business logic SocialCommunity application. Service layer perform link
+ * between, presentation layer and DAO layer(ForumMessageDAO).This layer is the
+ * main role becouse layer contents(set of methods in classes) affect on
+ * functionality of all application. This class contain methods which describes
+ * specific operation for ForumMessage.This class perform service layer to
+ * ForumMessage.Class extend base class CommonEntityServiceImpl and implement
+ * ForumMessageService interface which perform all methods of this class. For
+ * logging use fasade slf4j and framework log4j. Class contain also private,
+ * static variable logger, which use to call log message. Class use Spring
+ * framework anatations to work with service layer.
+ * 
+ * @see org.springframework.stereotype
+ * @see slf4j framework
+ * @see log4j framework
+ * 
+ * @version 1.0 05.01.2016
+ * @author Zaerko Denis
  */
 @Service(value="forumMessageService")
 public class ForumMessageServiceImpl extends CommonEntityServiceImpl implements ForumMessageService {
@@ -41,6 +69,18 @@ public class ForumMessageServiceImpl extends CommonEntityServiceImpl implements 
 		this.forumMessageDAO = forumMessageDAO;
 	}
 	
+	/**
+	 * Method return Account of author which create message. If account is not
+	 * exist return null;
+	 * 
+	 * @type Long
+	 * @param idForumMessage
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException 
+	 * 
+	 * @return Account
+	 */
 	public Account getAccountAuthorMessageByIdForumMessage(Long idForumMessage) {
 		
 		Account account= null;
@@ -62,6 +102,18 @@ public class ForumMessageServiceImpl extends CommonEntityServiceImpl implements 
 		return account;
 	}
 	
+	/**
+	 * Method return list of forum message by id forum topic. If messages are
+	 * not exist return empty list
+	 * 
+	 * @type Long
+	 * @param idForumTopic
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<ForumMessage>
+	 */
 	public List<ForumMessage> getListForumMessageByIdForumTopic(Long idForumTopic) {
 		
 		List<ForumMessage> list=Collections.emptyList();
@@ -82,13 +134,24 @@ public class ForumMessageServiceImpl extends CommonEntityServiceImpl implements 
 		return list;
 	}
 
+	/**
+	 * Method return list of forum message which create between dates by id
+	 * forum topic. If messages are not exist return empty list
+	 * 
+	 * @type Long
+	 * @param idForumTopic
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<ForumMessage>
+	 */
 	public List<ForumMessage> getListForumMessageBetweenDateByIdForumTopic(Long idForumTopic,
 			LocalDateTime minDateLDT, LocalDateTime maxDateLDT) {
 		
 		List<ForumMessage> list=Collections.emptyList();
 		Date minDateD;
 		Date maxDateD;
-		
 		if (idForumTopic.equals(null) || idForumTopic.equals("")) {
 			throw new RuntimeException("ForumMessageService:Id Forum messages must not null!");
 			
@@ -113,6 +176,17 @@ public class ForumMessageServiceImpl extends CommonEntityServiceImpl implements 
 		return list;
 	}
 	
+	/**
+	 * Method return list of forum message by idAccount(user). If Account not
+	 * exist retunr null.
+	 * 
+	 * @type Long
+	 * @param idForumTopic
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<ForumMessage>
+	 */
 	public List<ForumMessage> getListForumMessagetByIdAccount(Long idAccount) {
 		
 		List<ForumMessage> list=Collections.emptyList();

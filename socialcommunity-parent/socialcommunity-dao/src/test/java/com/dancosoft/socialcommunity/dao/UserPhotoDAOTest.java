@@ -53,7 +53,7 @@ public class UserPhotoDAOTest extends TestStarter {
 	}
 
 	@Transactional
-	@Rollback(false)
+	@Rollback(true)
 	@Test
 	public void testGettingUserPhotoByIdUser() {
 		
@@ -62,7 +62,7 @@ public class UserPhotoDAOTest extends TestStarter {
 	}
 	
 	@Transactional
-	@Rollback(false)
+	@Rollback(true)
 	@Test
 	public void testGettingPhotoNameByIdUser() {
 		

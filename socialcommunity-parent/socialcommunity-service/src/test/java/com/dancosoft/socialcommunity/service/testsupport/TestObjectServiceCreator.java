@@ -115,7 +115,7 @@ public class TestObjectServiceCreator {
 		deleteUserAfterTest(testUser.getIdUser());
 		deleteUserRoleAfterTest(testUserRole.getIdUserRole());
 	}
-
+	
 	public SecurityPrompt createSecurityPromptForTest() {
 
 		UserSecurity testUserSecurity = createUserSecurityForTest();
@@ -195,7 +195,7 @@ public class TestObjectServiceCreator {
 		UserCorespondence testUserCorespondence = createUserCorespondenceForTest();
 		UserEmail testUserEmail = new UserEmail();
 
-		testUserEmail.setUserEmail("test@gmail.com");
+		testUserEmail.setUserEmail("zaerko1991@gmail.com");//test@gmail.com
 		testUserEmail.setUserCorespondence(testUserCorespondence);
 		commonEntityDAO.saveEntity(testUserEmail);
 

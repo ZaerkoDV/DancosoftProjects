@@ -41,7 +41,7 @@ import javax.persistence.Table;
  * @author Denis Zaerko
  */
 @Entity(name = "EventPattern")
-@Table(name = "event_patterns")
+@Table(name = "event_pattern")
 public class EventPattern implements Serializable {
 
 	private static final long serialVersionUID = 6888569018693283549L;

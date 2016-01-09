@@ -1,10 +1,21 @@
 /**
+ * @package com.dancosoft.socialcommunity.service.impl
  * 
+ * Package com.dancosoft.socialcommunity.service.impl contain set of class which description
+ * service layer(modul) in SocialCommunity project. This project based on MVC architecture.
+ * This class is part of service layer in MVC architecture.This layer defines the boundary
+ * of the application and a set of permitted operations. It encapsulates the business logic
+ * of the application and controls the answers in the implementation of operations.All classes
+ * which contain postfix “Service” provide to work Service for SocialCommunity application.
+ * Also this package user support classes: for generate new passworl and login,for sending
+ * email to user and other from com.dancosoft.socialcommunity.service.support package.
+ * 
+ * Please contact with Zaerko Denis or send letter on zaerko1991@gmail.com if you need
+ * to use information or have any questions.   
  */
 package com.dancosoft.socialcommunity.service.impl;
 
 import java.time.LocalDateTime;
-
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -23,8 +34,24 @@ import com.dancosoft.socialcommunity.model.Forum;
 import com.dancosoft.socialcommunity.service.ForumService;
 
 /**
- * @author Zaerko_DV
- *
+ * <p>The class ForumServiceImpl use Service pattern which describes
+ * business logic SocialCommunity application. Service layer perform link
+ * between, presentation layer and DAO layer(ForumDAO).This layer is the
+ * main role becouse layer contents(set of methods in classes) affect on
+ * functionality of all application. This class contain methods which describes
+ * specific operation for Forum.This class perform service layer to
+ * Forum.Class extend base class CommonEntityServiceImpl and implement
+ * ForumService interface which perform all methods of this class. For
+ * logging use fasade slf4j and framework log4j. Class contain also private,
+ * static variable logger, which use to call log message. Class use Spring
+ * framework anatations to work with service layer.
+ * 
+ * @see org.springframework.stereotype
+ * @see slf4j framework
+ * @see log4j framework
+ * 
+ * @version 1.0 05.01.2016
+ * @author Zaerko Denis
  */
 @Service(value="forumService")
 public class ForumServiceImpl extends CommonEntityServiceImpl implements ForumService {
@@ -41,6 +68,19 @@ public class ForumServiceImpl extends CommonEntityServiceImpl implements ForumSe
 		this.forumDAO = forumDAO;
 	}
 	
+	/**
+	 * Method return list forum which crated between dates. If forums
+	 * are not exist return empty list.
+	 * 
+	 * @type Date
+	 * @param minDate
+	 * @param maxDate
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Forum>
+	 */
 	public List<Forum> getListForumCreatedBetweenDateByIdForum(LocalDateTime minDateLDT,LocalDateTime maxDateLDT) {
 		
 		List<Forum> list=Collections.emptyList();
@@ -67,6 +107,14 @@ public class ForumServiceImpl extends CommonEntityServiceImpl implements ForumSe
 		return list;
 	}
 	
+	/**
+	 * Method return total count of forums. If forums are not exist return zero. 
+	 * 
+	 * @type int
+	 * @exception DataAccessException
+	 * 
+	 * @return int
+	 */
 	public int getCountForum() {
 		
 		int count = 0;
@@ -79,6 +127,18 @@ public class ForumServiceImpl extends CommonEntityServiceImpl implements ForumSe
 		return count;
 	}
 	
+	/**
+	 * Method return list forum by forum name. If forums are not
+	 * exist return empty list
+	 * 
+	 * @type String 
+	 * @param forumName
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Forum>
+	 */
 	public List<Forum> searchForumByForumName(String forumName) {
 		
 		List<Forum> list=Collections.emptyList();
@@ -100,6 +160,18 @@ public class ForumServiceImpl extends CommonEntityServiceImpl implements ForumSe
 		return list;
 	}
 	
+	/**
+	 * Method return list forum with view status. If forums are not
+	 * exist return empty list.
+	 * 
+	 * @type String 
+	 * @param viewStatus
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Forum>
+	 */
 	public List<Forum> getListForumWithStatus(String viewStatus) {
 		
 		List<Forum> list=Collections.emptyList();
@@ -121,6 +193,18 @@ public class ForumServiceImpl extends CommonEntityServiceImpl implements ForumSe
 		return list;
 	}
 	
+	/**
+	 * Method return result of check forum on private view status.
+	 * 
+	 * @type Long
+	 * @type Boolean
+	 * @param idForum
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return Boolean
+	 */
 	public Boolean isPrivateForum(Long idForum) {
 		
 		Boolean isPrivateForum=null;

@@ -1,5 +1,17 @@
 /**
+ * @package com.dancosoft.socialcommunity.service.impl
  * 
+ * Package com.dancosoft.socialcommunity.service.impl contain set of class which description
+ * service layer(modul) in SocialCommunity project. This project based on MVC architecture.
+ * This class is part of service layer in MVC architecture.This layer defines the boundary
+ * of the application and a set of permitted operations. It encapsulates the business logic
+ * of the application and controls the answers in the implementation of operations.All classes
+ * which contain postfix “Service” provide to work Service for SocialCommunity application.
+ * Also this package user support classes: for generate new passworl and login,for sending
+ * email to user and other from com.dancosoft.socialcommunity.service.support package.
+ * 
+ * Please contact with Zaerko Denis or send letter on zaerko1991@gmail.com if you need
+ * to use information or have any questions.   
  */
 package com.dancosoft.socialcommunity.service.impl;
 
@@ -24,11 +36,27 @@ import org.springframework.stereotype.Service;
 import com.dancosoft.socialcommunity.dao.UserPhotoDAO;
 import com.dancosoft.socialcommunity.model.UserPhoto;
 import com.dancosoft.socialcommunity.service.UserPhotoService;
-import com.dancosoft.socialcommunity.service.support.UrlChecker;
+import com.dancosoft.socialcommunity.service.support.url.UrlChecker;
 
 /**
- * @author Zaerko_DV
- *
+ * <p>The class UserPhotoServiceImpl use Service pattern which describes business
+ * logic SocialCommunity application. Service layer perform link between,
+ * presentation layer and DAO layer(UserPhotoDAO).This layer is the main role
+ * becouse layer contents(set of methods in classes) affect on functionality of
+ * all application. This class contain methods which describes specific
+ * operation for UserLocation.This class perform service layer to UserLocation.Class
+ * extend base class CommonEntityServiceImpl and implement UserLocationService
+ * interface which perform all methods of this class. For logging use fasade
+ * slf4j and framework log4j. Class contain also private, static variable
+ * logger, which use to call log message. Class use Spring framework anatations
+ * to work with service layer.
+ * 
+ * @see org.springframework.stereotype
+ * @see slf4j framework
+ * @see log4j framework
+ * 
+ * @version 1.0 05.01.2016
+ * @author Zaerko Denis
  */
 @Service(value="userPhotoService")
 public class UserPhotoServiceImpl extends CommonEntityServiceImpl implements UserPhotoService {
@@ -49,6 +77,17 @@ public class UserPhotoServiceImpl extends CommonEntityServiceImpl implements Use
 		this.userPhotoDAO = userPhotoDAO;
 	}
 
+	/**
+	 * Method return user photo by id user. If user photo is not exist return null
+	 * 
+	 * @type Long
+	 * @param idUser
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return UserPhoto
+	 */
 	public UserPhoto getUserPhotoByIdUser(Long idUser) {
 		
 		UserPhoto userPhoto=null;
@@ -69,6 +108,18 @@ public class UserPhotoServiceImpl extends CommonEntityServiceImpl implements Use
 		return userPhoto;
 	}
 	
+	/**
+	 * Method return return photo name by id user. If photo name
+	 * is not exist return null.
+	 * 
+	 * @type Long
+	 * @param idUser
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return String
+	 */
 	public String getPhotoNameByIdUser(Long idUser) {
 		
 		String photoName=null;
@@ -89,6 +140,24 @@ public class UserPhotoServiceImpl extends CommonEntityServiceImpl implements Use
 		return photoName;
 	}
 	
+	/**
+	 * Save photo in floder (/src/main/resources/user-image/) of project.
+	 * And save uniqul photo name in data base. If save successfully return
+	 * true else false
+	 * 
+	 * @type Long
+	 * @boolean
+	 * @param idUser
+	 * @param format
+	 * @param urlSource
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * @exception IOException
+	 * @exception FileNotFoundException
+	 * 
+	 * @return Boolean
+	 */
 	public Boolean savePhotoAsFormat(Long idUser,String format, String urlSource){
 		
 		Boolean localSave=false;
@@ -146,6 +215,18 @@ public class UserPhotoServiceImpl extends CommonEntityServiceImpl implements Use
 		}
 	}
 	
+	/**
+	 * Load path to user photo by id user. If photo not found return null;
+	 * 
+	 * @type Long
+	 * @type String 
+	 * @param idUser
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return String
+	 */
 	public String loadPathToUserPhoto(Long idUser){
 		
 		String path=null;
@@ -161,14 +242,25 @@ public class UserPhotoServiceImpl extends CommonEntityServiceImpl implements Use
 	    	
 	    }else if(resultSearchFile.size()==0){
 	    	logger.warn("UserPhotoService: Path for user photo not found by user id"+idUser);
+	    	//throw new RuntimeException("Not found photo");    
 	    	
 	    }else{
 	    	path=resultSearchFile.get(0)+"\\"+photoName;
 	    	logger.info("UserPhotoService:Path for user photo load by user id"+idUser);
+	
 	    }
 	    return path;
 	}
 		
+	/**
+	 * Method add to list path(absolute) to file. If several file
+	 * return list pathes
+	 * 
+	 * @type String
+	 * @type File
+	 * @param fileName
+	 * @param directoryForSearch
+	 */
 	public void findFile(String fileName,File directoryForSearch){
 	
 		File[] files = directoryForSearch.listFiles();

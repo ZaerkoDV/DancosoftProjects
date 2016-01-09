@@ -45,7 +45,7 @@ import javax.validation.constraints.NotNull;
  * @author Denis Zaerko
  */
 @Entity(name = "GroupMessage")
-@Table(name = "group_messages")
+@Table(name = "group_message")
 public class GroupMessage implements Serializable {
 
 	private static final long serialVersionUID = 3159733576771917401L;

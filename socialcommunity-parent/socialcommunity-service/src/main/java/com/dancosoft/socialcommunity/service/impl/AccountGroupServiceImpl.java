@@ -1,5 +1,17 @@
 /**
+ * @package com.dancosoft.socialcommunity.service.impl
  * 
+ * Package com.dancosoft.socialcommunity.service.impl contain set of class which description
+ * service layer(modul) in SocialCommunity project. This project based on MVC architecture.
+ * This class is part of service layer in MVC architecture.This layer defines the boundary
+ * of the application and a set of permitted operations. It encapsulates the business logic
+ * of the application and controls the answers in the implementation of operations.All classes
+ * which contain postfix “Service” provide to work Service for SocialCommunity application.
+ * Also this package user support classes: for generate new passworl and login,for sending
+ * email to user and other from com.dancosoft.socialcommunity.service.support package.
+ * 
+ * Please contact with Zaerko Denis or send letter on zaerko1991@gmail.com if you need
+ * to use information or have any questions.   
  */
 package com.dancosoft.socialcommunity.service.impl;
 
@@ -19,8 +31,24 @@ import com.dancosoft.socialcommunity.model.AccountGroup;
 import com.dancosoft.socialcommunity.service.AccountGroupService;
 
 /**
- * @author Zaerko_DV
- *
+ * <p> The class AccountGroupServiceImpl use Service pattern which describes
+ * business logic SocialCommunity application. Service layer perform link
+ * between, presentation layer and DAO layer(AccountGroupDAO).This layer is the
+ * main role becouse layer contents(set of methods in classes) affect on
+ * functionality of all application. This class contain methods which describes
+ * specific operation for AccountGroup.This class perform service layer to
+ * AccountGroup.Class extend base class CommonEntityServiceImpl and implement
+ * AccountGroupService interface which perform all methods of this class. For
+ * logging use fasade slf4j and framework log4j. Class contain also private,
+ * static variable logger, which use to call log message. Class use Spring
+ * framework anatations to work with service layer.
+ * 
+ * @see org.springframework.stereotype
+ * @see slf4j framework
+ * @see log4j framework
+ * 
+ * @version 1.0 05.01.2016
+ * @author Zaerko Denis
  */
 @Service(value="accountGroupService")
 public class AccountGroupServiceImpl extends CommonEntityServiceImpl implements AccountGroupService {
@@ -35,6 +63,18 @@ public class AccountGroupServiceImpl extends CommonEntityServiceImpl implements 
 		this.accountGroupDAO = accountGroupDAO;
 	}
 	
+	/**
+	 * Method cheack account group on block status by id group. If group
+	 * is block return true else false
+	 * 
+	 * @type Long
+	 * @param idAccountGroup
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return Boolean
+	 */
 	public Boolean isBlockAccountGroup(Long idAccountGroup) {
 		
 		Boolean isBlockAccountGroup=null;
@@ -56,6 +96,17 @@ public class AccountGroupServiceImpl extends CommonEntityServiceImpl implements 
 		return isBlockAccountGroup;
 	}
 	
+	/**
+	 * Method return  block status of account group by id group. 
+	 * 
+	 * @type String
+	 * @param idAccount
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return String
+	 */
 	public String getAccountGroupBlockStatus(Long idAccount) {
 		
 		String blokStatus=null;
@@ -77,6 +128,19 @@ public class AccountGroupServiceImpl extends CommonEntityServiceImpl implements 
 		return blokStatus;
 	}
 	
+	/**
+	 * Method return list of account group by id account which have status block. 
+	 * 
+	 * @type Long
+	 * @type String
+	 * @param idAccount
+	 * @param blockStatus
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<AccountGroup>
+	 */
 	public List<AccountGroup> getListAccountGroupWithBlockStatusByIdAccount(Long idAccount,String blockStatus) {
 		
 		List<AccountGroup> list=Collections.emptyList();
@@ -98,6 +162,19 @@ public class AccountGroupServiceImpl extends CommonEntityServiceImpl implements 
 		return list;
 	}
 	
+	/**
+	 * Search account group by group name and account name. Method return list of account
+	 * group else empty list.
+	 * 
+	 * @type String
+	 * @param groupName
+	 * @param accountName
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<AccountGroup>
+	 */
 	public List<AccountGroup> searchAccountGroupByGroupNameAccountName(String groupName, String accountName) {
 		
 		List<AccountGroup> list=Collections.emptyList();
@@ -120,6 +197,19 @@ public class AccountGroupServiceImpl extends CommonEntityServiceImpl implements 
 		return list;
 	}
 	
+	/**
+	 * Method return list of account group with view status by id account.
+	 * 
+	 * @type Long
+	 * @type String
+	 * @param idAccount
+	 * @param viewStatus
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<AccountGroup>
+	 */
 	public List<AccountGroup> getListAccountGroupWithViewStatusByIdAccount(Long idAccount,String viewStatus){
 		
 		List<AccountGroup> list=Collections.emptyList();

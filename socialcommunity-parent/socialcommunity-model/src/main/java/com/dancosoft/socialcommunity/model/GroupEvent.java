@@ -44,7 +44,7 @@ import javax.persistence.Table;
  * @author Denis Zaerko
  */
 @Entity(name = "GroupEvent")
-@Table(name = "group_events")
+@Table(name = "group_event")
 public class GroupEvent implements Serializable {
 
 	private static final long serialVersionUID = -2813438273739211518L;

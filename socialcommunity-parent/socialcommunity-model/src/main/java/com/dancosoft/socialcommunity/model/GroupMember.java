@@ -48,7 +48,7 @@ import org.hibernate.annotations.Type;
  * @author Denis Zaerko
  */
 @Entity(name = "GroupMember")
-@Table(name = "group_members")
+@Table(name = "group_member")
 public class GroupMember implements Serializable {
 
 	private static final long serialVersionUID = -4058616864381015496L;

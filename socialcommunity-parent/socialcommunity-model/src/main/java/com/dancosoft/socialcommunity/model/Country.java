@@ -37,7 +37,7 @@ import javax.validation.constraints.NotNull;
  * @author Denis Zaerko
  */
 @Entity(name = "Country")
-@Table(name = "countries")
+@Table(name = "country")
 public class Country implements Serializable {
 
 	private static final long serialVersionUID = 4274838529152003050L;

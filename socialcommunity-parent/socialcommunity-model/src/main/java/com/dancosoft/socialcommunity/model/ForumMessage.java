@@ -46,7 +46,7 @@ import javax.validation.constraints.NotNull;
  * @author Denis Zaerko
  */
 @Entity(name = "ForumMessage")
-@Table(name = "forum_messages")
+@Table(name = "forum_message")
 public class ForumMessage implements Serializable {
 
 	private static final long serialVersionUID = 8273971263780828665L;

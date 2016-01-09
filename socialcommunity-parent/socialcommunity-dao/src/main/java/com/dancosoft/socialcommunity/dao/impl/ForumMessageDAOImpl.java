@@ -30,8 +30,7 @@ import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.ForumMessage;
 
 /**
- * <p>
- * The class ForumMessageDAOImpl use DAO pattern which describes layer of data
+ * <p>The class ForumMessageDAOImpl use DAO pattern which describes layer of data
  * access to object. DAO layer perform link between relational and object model.
  * Model for this dao layer describied in class ForumMessage. This class contain
  * methods which intended to access to special operation with ForumMessage

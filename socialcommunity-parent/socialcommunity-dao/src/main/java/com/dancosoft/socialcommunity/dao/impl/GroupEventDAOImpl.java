@@ -34,7 +34,7 @@ import com.dancosoft.socialcommunity.model.GroupEvent;
  * access to object. DAO layer perform link between relational and object model.
  * Model for this dao layer describied in class GroupEvent. This class contain
  * methods which intended to access to special operation with GroupEvent entity.
- * Class extend �ommonEntityDAOImpl class, which contain base set of
+ * Class extend CommonEntityDAOImpl class, which contain base set of
  * operation(CRUD). Class implements interface GroupEventDAO located in package
  * which have name com.dancosoft.socialcommunity.dao. All methods are public in
  * class.For logging use logger fasade slf4j and framework log4j. Class contain

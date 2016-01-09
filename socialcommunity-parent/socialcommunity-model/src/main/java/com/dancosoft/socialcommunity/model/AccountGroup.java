@@ -47,7 +47,7 @@ import org.hibernate.annotations.Type;
  * @author Denis Zaerko
  */
 @Entity(name = "AccountGroup")
-@Table(name = "account_groups")
+@Table(name = "account_group")
 public class AccountGroup implements Serializable {
 
 	private static final long serialVersionUID = -8020917819030526925L;

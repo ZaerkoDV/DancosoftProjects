@@ -50,7 +50,7 @@ import org.hibernate.annotations.Type;
  * @author Denis Zaerko
  */
 @Entity(name = "Account")
-@Table(name = "accounts")
+@Table(name = "account")
 public class Account implements Serializable {
 
 	private static final long serialVersionUID = 1630597814422471782L;

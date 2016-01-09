@@ -43,7 +43,7 @@ import javax.persistence.Table;
  * @author Denis Zaerko
  */
 @Entity(name = "UserSocialNetwork")
-@Table(name = "user_social_networks")
+@Table(name = "user_social_network")
 public class UserSocialNetwork implements Serializable {
 
 	private static final long serialVersionUID = -3300071014183871745L;

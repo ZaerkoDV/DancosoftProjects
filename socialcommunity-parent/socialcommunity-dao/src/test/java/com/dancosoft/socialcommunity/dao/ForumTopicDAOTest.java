@@ -62,7 +62,7 @@ public class ForumTopicDAOTest extends TestStarter {
 	}
 
 	@Transactional
-	@Rollback(false)
+	@Rollback(true)
 	@Test
 	public void testGettingAuthorAccountForumTopic() {
 

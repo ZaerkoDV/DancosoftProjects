@@ -17,7 +17,6 @@ package com.dancosoft.socialcommunity.dao.impl;
 import org.springframework.stereotype.Repository;
 
 import com.dancosoft.socialcommunity.dao.LanguageDAO;
-import com.dancosoft.socialcommunity.model.Language;
 
 /**
  * <p>

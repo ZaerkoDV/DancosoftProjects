@@ -41,7 +41,7 @@ import javax.validation.constraints.NotNull;
  * @author Denis Zaerko
  */
 @Entity(name = "Language")
-@Table(name = "languages")
+@Table(name = "language")
 public class Language implements Serializable {
 
 	private static final long serialVersionUID = 7484950127297064081L;

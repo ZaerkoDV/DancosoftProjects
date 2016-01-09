@@ -75,7 +75,6 @@ public class CommonEntityDAOImpl extends HibernateDaoSupport implements CommonEn
 	 * 
 	 * @return Object
 	 */
-	@SuppressWarnings("unchecked")
 	public <T> Object getEntityById(Class<T> entityClass,Long idEntity) {
 		logger.info("EntityDAO:Entity"+entityClass.getName()+" loaded successfully id="+idEntity);
 		
@@ -115,7 +114,6 @@ public class CommonEntityDAOImpl extends HibernateDaoSupport implements CommonEn
 	 * @param entityClass
 	 * @param idEntity
 	 */
-	@SuppressWarnings("unchecked")
 	public <T> void deleteEntityById(Class<T> entityClass,Long idEntity) {
 		
 		logger.info("EntityDAO:Entity" + entityClass.getName()+ " delete successfully,id=" + idEntity);

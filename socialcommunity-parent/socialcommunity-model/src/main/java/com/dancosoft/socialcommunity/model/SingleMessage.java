@@ -46,7 +46,7 @@ import javax.validation.constraints.NotNull;
  * @author Denis Zaerko
  */
 @Entity(name = "SingleMessage")
-@Table(name = "single_messages")
+@Table(name = "single_message")
 public class SingleMessage implements Serializable {
 
 	private static final long serialVersionUID = 2653932138631752467L;
