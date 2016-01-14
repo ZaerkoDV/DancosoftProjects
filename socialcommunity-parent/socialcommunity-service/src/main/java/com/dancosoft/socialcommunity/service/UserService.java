@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.User;
@@ -35,7 +36,7 @@ import com.dancosoft.socialcommunity.model.User;
  * @version 1.0 08.10.2015
  * @author Zaerko Denis
  */
-public interface UserService extends CommonEntityService {
+public interface UserService {
 
 	/**
 	 * Method return list of user accounts. If user accounts are
@@ -80,4 +81,76 @@ public interface UserService extends CommonEntityService {
 	 */
 	public List<User> searchUserByFirstLastMiddleName(String firstName,
 			String lastName, String middleName);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idUser
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return User
+	 */
+	public User getUserById(Long idUser);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type User
+	 * @param user
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveUser(User user);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type User
+	 * @param user
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateUser(User user);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idUser
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteUserById(Long idUser);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type User
+	 * @param user
+	 * @exception DataAccessException
+	 */
+	public void deleteUser(User user);
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListUser();
 }

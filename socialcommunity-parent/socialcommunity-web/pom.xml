@@ -1,7 +1,6 @@
-<?xml version="1.0"?>
-<project
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
@@ -12,8 +11,8 @@
 
 	<artifactId>socialcommunity-web</artifactId>
 	<packaging>war</packaging>
-	<name>socialcommunity-web Maven Webapp</name>
-	<url>http://maven.apache.org</url>
+	<name>socialcommunity-web</name><!-- Maven Webapp -->
+	<!--<url>http://maven.apache.org</url>-->
 
 	<dependencies>
 
@@ -23,12 +22,25 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 
-
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-core-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+		<!--для преобразования json в pojo  -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
+
+
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-json</artifactId>
+			<version>1.18.1</version>
+		</dependency>
+
 
 	</dependencies>
 

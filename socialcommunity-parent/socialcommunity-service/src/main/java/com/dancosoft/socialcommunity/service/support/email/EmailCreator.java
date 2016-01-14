@@ -36,20 +36,16 @@ public class EmailCreator {
 //	@Autowired
 //	@Qualifier(value="emailSender")
 //	private EmailSender emailSender;
-//
+//	
 //	public void setEmailSender(EmailSender emailSender) {
 //		this.emailSender = emailSender;
 //	}
-
+	
 	public void createSecurityEmail(String fromeEmail, String toEmail, String content){
 			
 		ApplicationContext context = new ClassPathXmlApplicationContext("classpath*:/service-config.xml");
 		EmailSender emailSender = (EmailSender) context.getBean("emailSender");
-		
-		if(emailSender.equals(null)){
-			throw new RuntimeException("EmailCreator: Bean EmailSender not found!");
-			
-		}else{
+		try {
 			Email email = new Email();
 			email.setEmailFrom(fromeEmail);
 			email.setEmailTo(toEmail);
@@ -57,6 +53,9 @@ public class EmailCreator {
 			email.setEmailContent(content);
 			email.setTemplateName("emailtemplate.vm");
 			emailSender.sendEmail(email);
+			
+		} catch (NullPointerException e) {
+			throw new RuntimeException("EmailCreator: Bean EmailSender not found! "+e);
 		}
 	}
 }

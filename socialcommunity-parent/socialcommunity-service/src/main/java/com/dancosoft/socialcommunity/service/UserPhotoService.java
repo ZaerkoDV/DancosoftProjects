@@ -18,9 +18,11 @@ package com.dancosoft.socialcommunity.service;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 
 import com.dancosoft.socialcommunity.model.UserPhoto;
 
@@ -35,7 +37,7 @@ import com.dancosoft.socialcommunity.model.UserPhoto;
  * @version 1.0 08.10.2015
  * @author Zaerko Denis
  */
-public interface UserPhotoService extends CommonEntityService {
+public interface UserPhotoService {
 
 	/**
 	 * Method return user photo by id user. If user photo is not exist return null
@@ -97,4 +99,77 @@ public interface UserPhotoService extends CommonEntityService {
 	 * @return String
 	 */
 	public String loadPathToUserPhoto(Long idUser);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idUserPhoto
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return UserPhoto
+	 */
+	public UserPhoto getUserPhotoById(Long idUserPhoto);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type UserPhoto
+	 * @param userPhoto
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveUserPhoto(UserPhoto userPhoto);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type UserPhoto
+	 * @param userPhoto
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateUserPhoto(UserPhoto userPhoto);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idUserPhoto
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteUserPhotoById(Long idUserPhoto);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type UserPhoto
+	 * @param userPhoto
+	 * 
+	 * @exception DataAccessException
+	 */
+	public void deleteUserPhoto(UserPhoto userPhoto);
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public <T> List<Object> getListUserPhoto();
 }

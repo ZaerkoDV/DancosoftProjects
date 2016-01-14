@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.UserCorespondenceDAO;
@@ -51,7 +52,7 @@ import com.dancosoft.socialcommunity.service.UserCorespondenceService;
  * @author Zaerko Denis
  */
 @Service(value="userCorespondenceService")
-public class UserCorespondenceServiceImpl extends CommonEntityServiceImpl implements UserCorespondenceService {
+public class UserCorespondenceServiceImpl implements UserCorespondenceService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserCorespondenceServiceImpl.class);
 	
@@ -119,6 +120,172 @@ public class UserCorespondenceServiceImpl extends CommonEntityServiceImpl implem
 		} catch (DataAccessException da) {
 			logger.error("UserCorespondenceService:Exeption connect with data base"
 					+ " or other error= "+da);
+		}
+		return list;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idUserCorespondence
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return UserCorespondence
+	 */
+	public UserCorespondence getUserCorespondenceById(Long idUserCorespondence) {
+		
+		UserCorespondence userCorespondence = null;
+		if (idUserCorespondence.equals(null) || idUserCorespondence.equals("")) {
+			throw new RuntimeException("UserCorespondenceService:Id entity is null");
+		} else {
+			try {
+				userCorespondence = (UserCorespondence) userCorespondenceDAO.getEntityById(idUserCorespondence);
+				logger.info("UserCorespondenceService:Entity loaded successfully id=" + idUserCorespondence);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("UserCorespondenceService:Not found entity in data base=" + rf);
+			
+			} catch (DataAccessException da) {
+				logger.error("UserCorespondenceService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return userCorespondence;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type UserCorespondence
+	 * @param userCorespondence
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveUserCorespondence(UserCorespondence userCorespondence) {
+		
+		if(userCorespondence.equals(null)){
+			throw new RuntimeException("UserCorespondenceService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				userCorespondenceDAO.saveEntity(userCorespondence);
+				logger.info("UserCorespondenceService:Entity save successfully");
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("UserCorespondenceService:New entity not save becouse mismatch field type "+tm);
+				
+			}catch (DataAccessException da) {
+				logger.error("UserCorespondenceService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type UserCorespondence
+	 * @param userCorespondence
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateUserCorespondence(UserCorespondence userCorespondence) {
+		
+		if (userCorespondence.equals(null)) {
+			throw new RuntimeException("UserCorespondenceService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				logger.info("UserCorespondenceService:Entity update successfully");
+				userCorespondenceDAO.updateEntity(userCorespondence);
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("UserCorespondenceService:New entity not update becouse mismatch field type "+ tm);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserCorespondenceService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idUserCorespondence
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteUserCorespondenceById(Long idUserCorespondence) {
+		
+		if (idUserCorespondence.equals(null) || idUserCorespondence.equals("")) {
+			throw new RuntimeException("UserCorespondenceService:Id entity is null");
+		} else{
+			try {
+				logger.info("UserCorespondenceService:Entity delete successfully,id=" + idUserCorespondence);
+				userCorespondenceDAO.deleteEntityById(idUserCorespondence);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("UserCorespondenceService: Operation delete is faled becouse"
+						+ " not found entity in data base by id=" + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserCorespondenceService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type UserCorespondence
+	 * @param userCorespondence
+	 * @exception DataAccessException
+	 */
+	public void deleteUserCorespondence(UserCorespondence userCorespondence) {
+		
+		if (userCorespondence.equals(null)) {
+			throw new RuntimeException("UserCorespondenceService: Object is "+userCorespondence+ " yet and not delete again.");
+		}else{
+			try {
+				logger.info("UserCorespondenceService:Entity " + userCorespondence + " delete successfully");
+				userCorespondenceDAO.deleteEntity(userCorespondence);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserCorespondenceService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListEntity() {
+		
+		List<Object>list=Collections.emptyList();
+		try {
+			logger.info("UserCorespondenceService: List of entity load");
+			list=userCorespondenceDAO.getListEntity();
+			
+		} catch (DataRetrievalFailureException rf) {
+			logger.warn("UserCorespondenceService: List of entity not load becouse list is empty=" + rf);
+			
+		}catch (DataAccessException da) {
+			logger.error("UserCorespondenceService:Exeption connect with data base or other error= "+da);
 		}
 		return list;
 	}

@@ -16,6 +16,8 @@
 package com.dancosoft.socialcommunity.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.AccountHistoryDAO;
@@ -50,7 +53,7 @@ import com.dancosoft.socialcommunity.service.AccountHistoryService;
  * @author Zaerko Denis
  */
 @Service(value="accountHistoryService")
-public class AccountHistoryServiceImpl extends CommonEntityServiceImpl implements AccountHistoryService{
+public class AccountHistoryServiceImpl implements AccountHistoryService{
 	
 	private static final Logger logger = LoggerFactory.getLogger(AccountHistoryServiceImpl.class);
 	
@@ -123,5 +126,172 @@ public class AccountHistoryServiceImpl extends CommonEntityServiceImpl implement
 			}
 		}
 		return lastVisit;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idAccountHistory
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return AccountHistory
+	 */
+	public AccountHistory getAccountHistoryById(Long idAccountHistory) {
+		
+		AccountHistory accountHistory= null;
+		if (idAccountHistory.equals(null) || idAccountHistory.equals("")) {
+			throw new RuntimeException("AccountHistoryService:Id entity is null");
+		} else {
+			try {
+				accountHistory = (AccountHistory) accountHistoryDAO.getEntityById(idAccountHistory);
+				logger.info("AccountHistoryService:Entity loaded successfully id=" + idAccountHistory);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("AccountHistoryService:Not found entity in data base=" + rf);
+		
+			} catch (DataAccessException da) {
+				logger.error("AccountHistoryService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return accountHistory;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type AccountHistory
+	 * @param accountHistory
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveAccountHistory(AccountHistory accountHistory) {
+		
+		if(accountHistory.equals(null)){
+			throw new RuntimeException("AccountHistoryService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				accountHistoryDAO.saveEntity(accountHistory);
+				logger.info("AccountHistoryService:Entity save successfully");
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("AccountHistoryService:New entity not save becouse mismatch field type "+tm);
+				
+			}catch (DataAccessException da) {
+				logger.error("AccountHistoryService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type AccountHistory
+	 * @param accountHistory
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateAccountHistory(AccountHistory accountHistory) {
+		
+		if (accountHistory.equals(null)) {
+			throw new RuntimeException("AccountHistoryService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				logger.info("AccountHistoryService:Entity update successfully");
+				accountHistoryDAO.updateEntity(accountHistory);
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("AccountHistoryService:New entity not update becouse mismatch field type "+ tm);
+				
+			} catch (DataAccessException da) {
+				logger.error("AccountHistoryService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idAccountHistory
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteAccountHistoryById(Long idAccountHistory) {
+		
+		if (idAccountHistory.equals(null) || idAccountHistory.equals("")) {
+			throw new RuntimeException("AccountHistoryService:Id entity is null");
+		} else{
+			try {
+				logger.info("AccountHistoryService:Entity  delete successfully,id=" + idAccountHistory);
+				accountHistoryDAO.deleteEntityById(idAccountHistory);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("AccountHistoryService: Operation delete is faled becouse"
+						+ " not found entity in data base by id=" + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("AccountHistoryService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type AccountHistory
+	 * @param accountHistory
+	 * 
+	 * @exception DataAccessException
+	 */
+	public void deleteAccountHistory(AccountHistory accountHistory) {
+		
+		if (accountHistory.equals(null)) {
+			throw new RuntimeException("AccountHistoryService: Object is "+accountHistory+ " yet and not delete again.");
+		}else{
+			try {
+				logger.info("AccountHistoryService:Entity " + accountHistory + " delete successfully");
+				accountHistoryDAO.deleteEntity(accountHistory);
+				
+			} catch (DataAccessException da) {
+				logger.error("AccountHistoryService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListAccountHistory() {
+		
+		List<Object>list=Collections.emptyList();
+		try {
+			logger.info("AccountHistoryService: List of entity" + this.getClass().getName()+ " load");
+			list=accountHistoryDAO.getListEntity();
+			
+		} catch (DataRetrievalFailureException rf) {
+			logger.warn("AccountHistoryService:: List of entity not load becouse list is empty=" + rf);
+			
+		}catch (DataAccessException da) {
+			logger.error("AccountHistoryService::Exeption connect with data base or other error= "+da);
+		}
+		return list;
 	}
 }

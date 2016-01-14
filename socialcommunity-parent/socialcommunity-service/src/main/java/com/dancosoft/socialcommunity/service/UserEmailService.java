@@ -22,6 +22,7 @@ import javax.persistence.NonUniqueResultException;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 
 import com.dancosoft.socialcommunity.model.UserEmail;
 
@@ -36,7 +37,7 @@ import com.dancosoft.socialcommunity.model.UserEmail;
  * @version 1.0 08.10.2015
  * @author Zaerko Denis
  */
-public interface UserEmailService extends CommonEntityService {
+public interface UserEmailService {
 
 	/**
 	 * Method return list of user email with view status. If list is not exist return empty list.
@@ -107,4 +108,76 @@ public interface UserEmailService extends CommonEntityService {
 	 * @return Boolean. If email is valid return true else false.
 	 */
 	public Boolean isValidEmail(String email);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idUserEmail
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return UserEmail
+	 */
+	public UserEmail getUserEmailById(Long idUserEmail);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type UserEmail
+	 * @param userEmail
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveUserEmail(UserEmail userEmail);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type UserEmail
+	 * @param userEmail
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateUserEmail(UserEmail userEmail);
+
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idUserEmail
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteUserEmailById(Long idUserEmail);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type UserEmail
+	 * @param userEmail
+	 * @exception DataAccessException
+	 */
+	public void deleteUserEmail(UserEmail userEmail);
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListEntity();	
 }

@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>The class EmailSender use for send email.The Class contain only one method sendEmail.
@@ -38,6 +39,7 @@ import org.springframework.mail.SimpleMailMessage;
  * @version 1.0 05.01.2016
  * @author Zaerko Denis
  */
+@Component(value="emailSender")
 public class EmailSender {
 
 	@Autowired

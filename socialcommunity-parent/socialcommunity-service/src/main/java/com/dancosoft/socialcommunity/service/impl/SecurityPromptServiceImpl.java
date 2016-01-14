@@ -15,6 +15,9 @@
  */
 package com.dancosoft.socialcommunity.service.impl;
 
+import java.util.Collections;
+import java.util.List;
+
 import javax.persistence.NonUniqueResultException;
 
 import org.slf4j.Logger;
@@ -23,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.SecurityPromptDAO;
@@ -50,7 +54,7 @@ import com.dancosoft.socialcommunity.service.SecurityPromptService;
  * @author Zaerko Denis
  */
 @Service(value="securityPromptService")
-public class SecurityPromptServiceImpl extends CommonEntityServiceImpl implements SecurityPromptService{
+public class SecurityPromptServiceImpl implements SecurityPromptService{
 
 	private static final Logger logger = LoggerFactory.getLogger(SecurityPromptServiceImpl.class);
 	
@@ -248,5 +252,173 @@ public class SecurityPromptServiceImpl extends CommonEntityServiceImpl implement
 			}
 		}
 		return isUnique;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idSecurityPrompt
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return SecurityPrompt
+	 */
+	public SecurityPrompt getSecurityPromptById(Long idSecurityPrompt) {
+		
+		SecurityPrompt securityPrompt = null;
+		if (idSecurityPrompt.equals(null) || idSecurityPrompt.equals("")) {
+			throw new RuntimeException("SecurityPromptService:Id entity is null");
+		} else {
+			try {
+				securityPrompt = (SecurityPrompt) securityPromptDAO.getEntityById(idSecurityPrompt);
+				logger.info("SecurityPromptService:Entity loaded successfully id=" + idSecurityPrompt);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("SecurityPromptService:Not found entity in data base=" + rf);
+		
+			} catch (DataAccessException da) {
+				logger.error("SecurityPromptService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return securityPrompt;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type SecurityPrompt
+	 * @param securityPrompt
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveSecurityPrompt(SecurityPrompt securityPrompt) {
+		
+		if(securityPrompt.equals(null)){
+			throw new RuntimeException("SecurityPromptService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				securityPromptDAO.saveEntity(securityPrompt);
+				logger.info("SecurityPromptService:Entity save successfully");
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("SecurityPromptService:New entity not save becouse mismatch field type "+tm);
+				
+			}catch (DataAccessException da) {
+				logger.error("SecurityPromptService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type SecurityPrompt
+	 * @param securityPrompt
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateSecurityPrompt(SecurityPrompt securityPrompt) {
+		
+		if (securityPrompt.equals(null)) {
+			throw new RuntimeException("SecurityPrompt: Entity not save becouse entity is null.");
+			
+		} else {
+			try {
+				logger.info("SecurityPromptService:Entity update successfully");
+				securityPromptDAO.updateEntity(securityPrompt);
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("SecurityPromptService:New entity not update becouse mismatch field type "+ tm);
+				
+			} catch (DataAccessException da) {
+				logger.error("SecurityPromptService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idSecurityPrompt
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteSecurityPromptById(Long idSecurityPrompt) {
+		
+		if (idSecurityPrompt.equals(null) || idSecurityPrompt.equals("")) {
+			throw new RuntimeException("SecurityPromptService:Id entity is null");
+		} else{
+			try {
+				logger.info("SecurityPromptService:Entity delete successfully,id=" + idSecurityPrompt);
+				securityPromptDAO.deleteEntityById(idSecurityPrompt);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("SecurityPromptService: Operation delete is faled becouse"
+						+ " not found entity in data base by id=" + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("SecurityPromptService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type SecurityPrompt
+	 * @param securityPrompt
+	 * 
+	 * @exception DataAccessException
+	 */
+	public void deleteSecurityPrompt(SecurityPrompt securityPrompt) {
+		
+		if (securityPrompt.equals(null)) {
+			throw new RuntimeException("SecurityPromptService: Object is "+securityPrompt+ " yet and not delete again.");
+		}else{
+			try {
+				logger.info("SecurityPromptService:Entity " + securityPrompt + " delete successfully");
+				securityPromptDAO.deleteEntity(securityPrompt);
+				
+			} catch (DataAccessException da) {
+				logger.error("SecurityPromptService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListSecurityPrompt() {
+		
+		List<Object>list=Collections.emptyList();
+		try {
+			logger.info("SecurityPromptService: List of entity load");
+			list=securityPromptDAO.getListEntity();
+			
+		} catch (DataRetrievalFailureException rf) {
+			logger.warn("SecurityPromptService: List of entity not load becouse list is empty=" + rf);
+			
+		}catch (DataAccessException da) {
+			logger.error("SecurityPromptService:Exeption connect with data base or other error= "+da);
+		}
+		return list;
 	}
 }

@@ -24,10 +24,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.AccountForumDAO;
 import com.dancosoft.socialcommunity.model.Account;
+import com.dancosoft.socialcommunity.model.AccountForum;
 import com.dancosoft.socialcommunity.model.Forum;
 import com.dancosoft.socialcommunity.service.AccountForumService;
 /**
@@ -49,7 +51,7 @@ import com.dancosoft.socialcommunity.service.AccountForumService;
  * @author Zaerko Denis
  */
 @Service(value="accountForumService")
-public class AccountForumServiceImpl extends CommonEntityServiceImpl implements AccountForumService {
+public class AccountForumServiceImpl implements AccountForumService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(AccountForumServiceImpl.class);
 	
@@ -122,6 +124,174 @@ public class AccountForumServiceImpl extends CommonEntityServiceImpl implements 
 				logger.error("AccountForumService:Exeption connect with data base or other error= "+da);
 				list=Collections.emptyList();
 			}
+		}
+		return list;
+	}
+	
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idAccountForum
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return AccountForum
+	 */
+	public AccountForum getAccountForumById(Long idAccountForum) {
+		
+		AccountForum accountForum = null;
+		if (idAccountForum.equals(null) || idAccountForum.equals("")) {
+			throw new RuntimeException("AccountForumService:Id entity is null");
+		} else {
+			try {
+				accountForum = (AccountForum) accountForumDAO.getEntityById(idAccountForum);
+				logger.info("AccountForumService:Entity loaded successfully id=" + idAccountForum);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("AccountForumService:Not found entity in data base=" + rf);
+		
+			} catch (DataAccessException da) {
+				logger.error("AccountForumService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return accountForum;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type AccountForum
+	 * @param accountForum
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveAccountForum(AccountForum accountForum) {
+		
+		if(accountForum.equals(null)){
+			throw new RuntimeException("AccountForumService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				accountForumDAO.saveEntity(accountForum);
+				logger.info("AccountForumService:Entity save successfully");
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("AccountForumService:New entity not save becouse mismatch field type "+tm);
+				
+			}catch (DataAccessException da) {
+				logger.error("AccountForumService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type AccountForum
+	 * @param accountForum
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateAccountForum(AccountForum accountForum) {
+		
+		if (accountForum.equals(null)) {
+			throw new RuntimeException("AccountForumService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				logger.info("AccountForumService:Entity update successfully");
+				accountForumDAO.updateEntity(accountForum);
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("AccountForumService:New entity not update becouse mismatch field type "+ tm);
+				
+			} catch (DataAccessException da) {
+				logger.error("AccountForumService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idAccountForum
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteAccountForumById(Long idAccountForum) {
+		
+		if (idAccountForum.equals(null) || idAccountForum.equals("")) {
+			throw new RuntimeException("AccountForumService:Id entity is null");
+		} else{
+			try {
+				logger.info("AccountForumService:Entity delete successfully,id=" + idAccountForum);
+				accountForumDAO.deleteEntityById(idAccountForum);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("AccountForumService: Operation delete is faled becouse"
+						+ " not found entity in data base by id=" + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("AccountForumService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type AccountForum
+	 * @param accountForum
+	 * 
+	 * @exception DataAccessException
+	 */
+	public void deleteAccountForum(AccountForum accountForum) {
+		
+		if (accountForum.equals(null)) {
+			throw new RuntimeException("AccountForumService: Object is "+accountForum+ " yet and not delete again.");
+		}else{
+			try {
+				logger.info("AccountForumService:Entity " + accountForum + " delete successfully");
+				accountForumDAO.deleteEntity(accountForum);
+				
+			} catch (DataAccessException da) {
+				logger.error("AccountForumService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListAccountForum() {
+		
+		List<Object> list=Collections.emptyList();
+		try {
+			logger.info("AccountForumService: List of entity" +this.getClass().getName()+ "load");
+			list=accountForumDAO.getListEntity();
+			
+		} catch (DataRetrievalFailureException rf) {
+			logger.warn("AccountForumService: List of entity not load becouse list is empty=" + rf);
+			
+		}catch (DataAccessException da) {
+			logger.error("AccountForumService:Exeption connect with data base or other error= "+da);
 		}
 		return list;
 	}

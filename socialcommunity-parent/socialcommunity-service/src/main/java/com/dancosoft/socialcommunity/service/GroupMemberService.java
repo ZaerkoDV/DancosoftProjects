@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.GroupMember;
@@ -35,7 +36,7 @@ import com.dancosoft.socialcommunity.model.GroupMember;
  * @version 1.0 08.10.2015
  * @author Zaerko Denis
  */
-public interface GroupMemberService extends CommonEntityService{
+public interface GroupMemberService {
 
 	/**
 	 * Method return list of group member by id account group. If group member
@@ -65,4 +66,77 @@ public interface GroupMemberService extends CommonEntityService{
 	 * @return List<Account>
 	 */
 	public List<Account> getListAccountWithStatusByIdAccountGroup(Long idAccountGroup, String friendStatus);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idGroupMember
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return GroupMember
+	 */
+	public GroupMember getGroupMemberById(Long idGroupMember);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type GroupMember
+	 * @param groupMember
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveGroupMember(GroupMember groupMember);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type GroupMember
+	 * @param groupMember
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateGroupMember(GroupMember groupMember);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idGroupMember
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteGroupMemberById(Long idGroupMember);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type GroupMember
+	 * @param groupMember
+	 * 
+	 * @exception DataAccessException
+	 */
+	public void deleteGroupMember(GroupMember groupMember);
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListGroupMember();
 }

@@ -31,7 +31,6 @@
 		<beans:property name="password" value="AragorN" />
 		<beans:property name="javaMailProperties">
 		   <beans:props>
-				 <!--<beans:prop key="mail.debug">true</beans:prop> -->
 				 <beans:prop key="mail.smtp.auth">true</beans:prop>
 				 <beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
 				 <beans:prop key="mail.mime.charset">UTF-8</beans:prop>
@@ -41,10 +40,12 @@
 		</beans:property>
 	</beans:bean>
 		
+	<!--	
 	<beans:bean id="emailSender" class="com.dancosoft.socialcommunity.service.support.email.EmailSender">
 		 <beans:property name="mailSender" ref="mailSender" />
 		 <beans:property name="velocityEngine" ref="velocityEngine"/>
     </beans:bean>
+	 -->	
 		
 	<beans:bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
 		<beans:property name="velocityProperties">
@@ -58,10 +59,6 @@
 	</beans:bean>
 
 										<!-- service beans -->
-	
-	<beans:bean id="commonEntityService" class="com.dancosoft.socialcommunity.service.impl.CommonEntityServiceImpl">
-		<beans:property name="commonEntityDAO" ref="commonEntityDAO"></beans:property>
-	</beans:bean>
 
 	<beans:bean id="accountForumService" class="com.dancosoft.socialcommunity.service.impl.AccountForumServiceImpl">
 		<beans:property name="accountForumDAO" ref="accountForumDAO"></beans:property>
@@ -165,11 +162,6 @@
 
 	<beans:bean id="userSocialNetworkService" class="com.dancosoft.socialcommunity.service.impl.UserSocialNetworkServiceImpl">
 		<beans:property name="userSocialNetworkDAO" ref="userSocialNetworkDAO"></beans:property>
-	</beans:bean>
-
-
-	<beans:bean id="testObjectServcieCreator" class="com.dancosoft.socialcommunity.service.testsupport.TestObjectServiceCreator">
-		<beans:property name="commonEntityDAO" ref="commonEntityDAO"/>
 	</beans:bean>
 
 	<context:annotation-config/>

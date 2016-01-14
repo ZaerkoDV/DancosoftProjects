@@ -21,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -31,6 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.UserPhotoDAO;
@@ -59,7 +61,7 @@ import com.dancosoft.socialcommunity.service.support.url.UrlChecker;
  * @author Zaerko Denis
  */
 @Service(value="userPhotoService")
-public class UserPhotoServiceImpl extends CommonEntityServiceImpl implements UserPhotoService {
+public class UserPhotoServiceImpl implements UserPhotoService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserPhotoServiceImpl.class);
 	
@@ -278,5 +280,171 @@ public class UserPhotoServiceImpl extends CommonEntityServiceImpl implements Use
 			}
 		}
 	}
-
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idUserPhoto
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return UserPhoto
+	 */
+	public UserPhoto getUserPhotoById(Long idUserPhoto) {
+		
+		UserPhoto userPhoto = null;
+		if (idUserPhoto.equals(null) || idUserPhoto.equals("")) {
+			throw new RuntimeException("UserPhotoService:Id entity is null");
+		} else {
+			try {
+				userPhoto = (UserPhoto) userPhotoDAO.getEntityById(idUserPhoto);
+				logger.info("EntityService:Entity loaded successfully id=" + idUserPhoto);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("UserPhotoService:Not found entity in data base=" + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserPhotoService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return userPhoto;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type UserPhoto
+	 * @param userPhoto
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveUserPhoto(UserPhoto userPhoto) {
+		
+		if(userPhoto.equals(null)){
+			throw new RuntimeException("UserPhotoService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				userPhotoDAO.saveEntity(userPhoto);
+				logger.info("UserPhotoService:Entity save successfully");
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("UserPhotoService:New entity not save becouse mismatch field type "+tm);
+				
+			}catch (DataAccessException da) {
+				logger.error("UserPhotoService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type UserPhoto
+	 * @param userPhoto
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateUserPhoto(UserPhoto userPhoto) {
+		
+		if (userPhoto.equals(null)) {
+			throw new RuntimeException("UserPhotoService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				logger.info("UserPhotoService:Entity update successfully");
+				userPhotoDAO.updateEntity(userPhoto);
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("UserPhotoService:New entity not update becouse mismatch field type "+ tm);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserPhotoService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idUserPhoto
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteUserPhotoById(Long idUserPhoto) {
+		
+		if (idUserPhoto.equals(null) || idUserPhoto.equals("")) {
+			throw new RuntimeException("UserPhotoService:Id entity is null");
+		} else{
+			try {
+				logger.info("UserPhotoService:Entity  delete successfully,id=" + idUserPhoto);
+				userPhotoDAO.deleteEntityById(idUserPhoto);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("UserPhotoService: Operation delete is faled becouse"
+						+ " not found entity in data base by id=" + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserPhotoService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type UserPhoto
+	 * @param userPhoto
+	 * 
+	 * @exception DataAccessException
+	 */
+	public void deleteUserPhoto(UserPhoto userPhoto) {
+		
+		if (userPhoto.equals(null)) {
+			throw new RuntimeException("UserPhotoService: Object is "+userPhoto+ " yet and not delete again.");
+		}else{
+			try {
+				logger.info("UserPhotoService:Entity " + userPhoto + " delete successfully");
+				userPhotoDAO.deleteEntity(userPhoto);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserPhotoService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public <T> List<Object> getListUserPhoto() {
+		
+		List<Object>list=Collections.emptyList();
+		try {
+			logger.info("UserPhotoService: List of entity load");
+			list=userPhotoDAO.getListEntity();
+			
+		} catch (DataRetrievalFailureException rf) {
+			logger.warn("UserPhotoService: List of entity not load becouse list is empty=" + rf);
+			
+		}catch (DataAccessException da) {
+			logger.error("UserPhotoService:Exeption connect with data base or other error= "+da);
+		}
+		return list;
+	}
 }

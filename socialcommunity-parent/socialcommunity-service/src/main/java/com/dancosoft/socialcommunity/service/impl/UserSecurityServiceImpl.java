@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.UserEmailDAO;
@@ -58,7 +59,7 @@ import com.dancosoft.socialcommunity.service.support.security.GeneratorSecurityF
  * @author Zaerko Denis
  */
 @Service(value="userSecurityService")
-public class UserSecurityServiceImpl extends CommonEntityServiceImpl implements UserSecurityService {
+public class UserSecurityServiceImpl implements UserSecurityService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserSecurityServiceImpl.class);
 	
@@ -66,7 +67,6 @@ public class UserSecurityServiceImpl extends CommonEntityServiceImpl implements 
 	GeneratorSecurityFeature generator= new GeneratorSecurityFeature(8);
 	
 	EmailCreator emailCreator=new EmailCreator();
-	
 	//LetterSender sender= new LetterSender();
 	
 	@Autowired
@@ -367,7 +367,7 @@ public class UserSecurityServiceImpl extends CommonEntityServiceImpl implements 
 		String newLogin = null;
 		String newPassword = null;
 		
-		String contentEmail="\n Login:" + newLogin +"\n Password:" + newPassword;
+		String contentEmail;
 		String fromeEmail="zaerko1991@mail.ru";
 		String toEmail;
 		List<UserEmail> list=Collections.emptyList();
@@ -382,11 +382,11 @@ public class UserSecurityServiceImpl extends CommonEntityServiceImpl implements 
 				statusUpdate= userSecurityDAO.updateLoginPasswordByIdUser(idUser,newLogin,newPassword);
 				logger.info("UserSecurityService:Login and password update by id user.");
 				
-				//get user email
+				//send login amd password on user email
 				//list=userEmailDAO.getListEmailByIdUser(idUser);
 				//toEmail=list.get(0).getUserEmail();
 				
-				//send login amd password on user email
+				//contentEmail="\n Login:" + newLogin +"\n Password:" + newPassword;
 				//emailCreator.createSecurityEmail(fromeEmail, toEmail,contentEmail);
 				//logger.info("UserSecurityService:New login and password send to post.");
 				
@@ -394,7 +394,7 @@ public class UserSecurityServiceImpl extends CommonEntityServiceImpl implements 
 				
 			} catch (DataRetrievalFailureException rf) {
 				logger.warn("UserSecurityService: User with id "+idUser+" not exist or user email not exist!"
-						+ "(User must have email before update login amd password!)"
+						+ "(User must have email before update login and password!)"
 						+ "Login and password not update "+ rf);
 				
 			}catch (DataAccessException da) {
@@ -433,5 +433,172 @@ public class UserSecurityServiceImpl extends CommonEntityServiceImpl implements 
 			}
 		}
 		return userSecurity;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idUserSecurity
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return UserSecurity
+	 */
+	public UserSecurity getUserSecurityById(Long idUserSecurity) {
+		
+		UserSecurity userSecurity = null;
+		if (idUserSecurity.equals(null) || idUserSecurity.equals("")) {
+			throw new RuntimeException("UserSecurityService:Id entity is null");
+		} else {
+			try {
+				userSecurity = (UserSecurity) userSecurityDAO.getEntityById(idUserSecurity);
+				logger.info("UserSecurityService:Entity loaded successfully id=" + idUserSecurity);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("UserSecurityService:Not found entity in data base=" + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserSecurityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return userSecurity;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type UserSecurity
+	 * @param userSecurity
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveUserSecurity(UserSecurity userSecurity) {
+		
+		if(userSecurity.equals(null)){
+			throw new RuntimeException("UserSecurityService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				userSecurityDAO.saveEntity(userSecurity);
+				logger.info("UserSecurityService:Entity save successfully");
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("UserSecurityService:New entity not save becouse mismatch field type "+tm);
+				
+			}catch (DataAccessException da) {
+				logger.error("UserSecurityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type UserSecurity
+	 * @param userSecurity
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateUserSecurity(UserSecurity userSecurity) {
+		
+		if (userSecurity.equals(null)) {
+			throw new RuntimeException("UserSecurityService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				logger.info("UserSecurityService:Entity update successfully");
+				userSecurityDAO.updateEntity(userSecurity);
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("UserSecurityService:New entity not update becouse mismatch field type "+ tm);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserSecurityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idUserSecurity
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteUserSecurityById(Long idUserSecurity) {
+		
+		if (idUserSecurity.equals(null) || idUserSecurity.equals("")) {
+			throw new RuntimeException("UserSecurityService:Id entity is null");
+		} else{
+			try {
+				logger.info("UserSecurityService:Entity  delete successfully,id=" + idUserSecurity);
+				userSecurityDAO.deleteEntityById(idUserSecurity);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("UserSecurityService: Operation delete is faled becouse"
+						+ " not found entity in data base by id=" + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserSecurityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type UserSecurity
+	 * @param userSecurity
+	 * 
+	 * @exception DataAccessException
+	 */
+	public void deleteUserSecurity(UserSecurity userSecurity) {
+		
+		if (userSecurity.equals(null)) {
+			throw new RuntimeException("UserSecurityService: Object is "+userSecurity+ " yet and not delete again.");
+		}else{
+			try {
+				logger.info("UserSecurityService:Entity " + userSecurity + " delete successfully");
+				userSecurityDAO.deleteEntity(userSecurity);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserSecurityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListUserSecurity() {
+		
+		List<Object>list=Collections.emptyList();
+		try {
+			logger.info("UserSecurityService: List of entity load");
+			list=userSecurityDAO.getListEntity();
+			
+		} catch (DataRetrievalFailureException rf) {
+			logger.warn("UserSecurityService: List of entity not load becouse list is empty=" + rf);
+			
+		}catch (DataAccessException da) {
+			logger.error("UserSecurityService:Exeption connect with data base or other error= "+da);
+		}
+		return list;
 	}
 }

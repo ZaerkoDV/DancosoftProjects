@@ -22,6 +22,7 @@ import javax.persistence.NonUniqueResultException;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 
 import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserSecurity;
@@ -37,7 +38,7 @@ import com.dancosoft.socialcommunity.model.UserSecurity;
  * @version 1.0 08.10.2015
  * @author Zaerko Denis
  */
-public interface UserSecurityService extends CommonEntityService {
+public interface UserSecurityService {
 
 	/**
 	 * Method return user by login and password. If user is not exist return null.
@@ -173,4 +174,77 @@ public interface UserSecurityService extends CommonEntityService {
 	 * @return UserSecurity
 	 */
 	public UserSecurity getLoginPasswordByIdUser(Long idUser);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idUserSecurity
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return UserSecurity
+	 */
+	public UserSecurity getUserSecurityById(Long idUserSecurity);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type UserSecurity
+	 * @param userSecurity
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveUserSecurity(UserSecurity userSecurity);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type UserSecurity
+	 * @param userSecurity
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateUserSecurity(UserSecurity userSecurity);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idUserSecurity
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteUserSecurityById(Long idUserSecurity);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type UserSecurity
+	 * @param userSecurity
+	 * 
+	 * @exception DataAccessException
+	 */
+	public void deleteUserSecurity(UserSecurity userSecurity);
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListUserSecurity();
 }

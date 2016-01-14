@@ -3,11 +3,16 @@
 <head>
 	<meta charset="utf-8">
     <title>Social Community Service</title>
+   
 	<link rel="stylesheet" href="resources/css/app.css"/>
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.css" />
     <!--
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     -->
+    
 <style>
 #bg {
         position:fixed;
@@ -29,7 +34,7 @@
 }
 </style>
     
- </head>
+</head>
 <body>
 
 	<!--<div id="bg"><img src="resources/bootstrap/img/title-image.jpg"  alt="" ></div>-->
@@ -46,16 +51,16 @@
 	        <li><a href="#">SAME 2</a></li>
 	      </ul>
 	      <ul class="nav navbar-nav navbar-right">
-	        <li><a href="#/user/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-	        <li><a href="#/user/signin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+	        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+	        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 	      </ul>
 	    </div>
 	  </div>
 	</nav>
 	
 	
-	
-	<div ng-view></div>
+
+	<div ng-view/>
 
 	<script src="resources/js/angular/angular.js"></script>
 	<script src="resources/js/angular/angular-route.js"></script>
@@ -68,6 +73,6 @@
 	<script src="resources/js/services.js"></script>
 	<script src="resources/js/filters.js"></script>
 	<script src="resources/js/directives.js"></script>
-	
+
   </body>
 </html>

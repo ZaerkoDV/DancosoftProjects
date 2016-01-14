@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.GroupMessage;
@@ -36,7 +37,7 @@ import com.dancosoft.socialcommunity.model.GroupMessage;
  * @version 1.0 08.10.2015
  * @author Zaerko Denis
  */
-public interface GroupMessageService extends CommonEntityService {
+public interface GroupMessageService {
 
 	/**
 	 * Method return member account by id message which user create in account group.
@@ -64,8 +65,7 @@ public interface GroupMessageService extends CommonEntityService {
 	 * 
 	 * @return List<GroupMessage>
 	 */
-	public List<GroupMessage> getListGroupMessageByIdAccountGroup(
-			Long idAccountGroup);
+	public List<GroupMessage> getListGroupMessageByIdAccountGroup(Long idAccountGroup);
 
 	/**
 	 * Method return list of group message which belong to account group and which create
@@ -98,4 +98,82 @@ public interface GroupMessageService extends CommonEntityService {
 	 * @return int 
 	 */
 	public int getCountGroupMessageByIdAccountGroup(Long idAccountGroup);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idGroupMessage
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return GroupMessage
+	 */
+	public GroupMessage getGroupMessageById(Long idGroupMessage);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type GroupMessage
+	 * @param groupMessage
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveGroupMessage(GroupMessage groupMessage);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type GroupMessage
+	 * @param groupMessage
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateGroupMessage(GroupMessage groupMessage);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idGroupMessage
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteGroupMessageById(Long idGroupMessage);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type GroupMessage
+	 * @param groupMessage
+	 * 
+	 * @exception DataAccessException
+	 */
+	public void deleteGroupMessage(GroupMessage groupMessage);
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListGroupMessage();
+	
+		
+	
+	
+	
 }

@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.UserSocialNetworkDAO;
@@ -53,7 +54,7 @@ import com.dancosoft.socialcommunity.service.UserSocialNetworkService;
  * @author Zaerko Denis
  */
 @Service(value="userSocialNetworkService")
-public class UserSocialNetworkServiceImpl extends CommonEntityServiceImpl implements UserSocialNetworkService{
+public class UserSocialNetworkServiceImpl implements UserSocialNetworkService{
 
 	private static final Logger logger = LoggerFactory.getLogger(UserSocialNetworkServiceImpl.class);
 	
@@ -195,5 +196,172 @@ public class UserSocialNetworkServiceImpl extends CommonEntityServiceImpl implem
 			}
 		}
 		return idUser;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idUserSocialNetwork
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return UserSocialNetwork
+	 */
+	public UserSocialNetwork getUserSocialNetworkById(Long idUserSocialNetwork) {
+		
+		UserSocialNetwork userSocialNetwork = null;
+		if (idUserSocialNetwork.equals(null) || idUserSocialNetwork.equals("")) {
+			throw new RuntimeException("UserSocialNetworkService:Id entity is null");
+		} else {
+			try {
+				userSocialNetwork = (UserSocialNetwork) userSocialNetworkDAO.getEntityById(idUserSocialNetwork);
+				logger.info("EntityService:Entity loaded successfully id=" + idUserSocialNetwork);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("UserSocialNetworkService:Not found entity in data base=" + rf);
+		
+			} catch (DataAccessException da) {
+				logger.error("UserSocialNetworkService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return userSocialNetwork;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type UserSocialNetwork
+	 * @param userSocialNetwork
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveUserSocialNetwork(UserSocialNetwork userSocialNetwork) {
+		
+		if(userSocialNetwork.equals(null)){
+			throw new RuntimeException("UserSocialNetworkService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				userSocialNetworkDAO.saveEntity(userSocialNetwork);
+				logger.info("UserSocialNetworkService:Entity save successfully");
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("UserSocialNetworkService:New entity not save becouse mismatch field type "+tm);
+				
+			}catch (DataAccessException da) {
+				logger.error("UserSocialNetworkService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type UserSocialNetwork
+	 * @param userSocialNetwork
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateUserSocialNetwork(UserSocialNetwork userSocialNetwork) {
+		
+		if (userSocialNetwork.equals(null)) {
+			throw new RuntimeException("UserSocialNetworkService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				logger.info("UserSocialNetworkService:Entity update successfully");
+				userSocialNetworkDAO.updateEntity(userSocialNetwork);
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("UserSocialNetworkService:New entity not update becouse mismatch field type "+ tm);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserSocialNetworkService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idUserSocialNetwork
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteUserSocialNetworkById(Long idUserSocialNetwork) {
+		
+		if (idUserSocialNetwork.equals(null) || idUserSocialNetwork.equals("")) {
+			throw new RuntimeException("UserSocialNetworkService:Id entity is null");
+		} else{
+			try {
+				logger.info("UserSocialNetworkService:Entity delete successfully,id=" + idUserSocialNetwork);
+				userSocialNetworkDAO.deleteEntityById(idUserSocialNetwork);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("UserSocialNetworkService: Operation delete is faled becouse"
+						+ " not found entity in data base by id=" + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserSocialNetworkService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type UserSocialNetwork
+	 * @param userSocialNetwork
+	 * 
+	 * @exception DataAccessException
+	 */
+	public void deleteUserSocialNetwork(UserSocialNetwork userSocialNetwork) {
+		
+		if (userSocialNetwork.equals(null)) {
+			throw new RuntimeException("UserSocialNetworkService: Object is "+userSocialNetwork+ " yet and not delete again.");
+		}else{
+			try {
+				logger.info("UserSocialNetworkService:Entity " + userSocialNetwork + " delete successfully");
+				userSocialNetworkDAO.deleteEntity(userSocialNetwork);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserSocialNetworkService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListUserSocialNetwork() {
+		
+		List<Object>list=Collections.emptyList();
+		try {
+			logger.info("UserSocialNetworkService: List of entity load");
+			list=userSocialNetworkDAO.getListEntity();
+			
+		} catch (DataRetrievalFailureException rf) {
+			logger.warn("UserSocialNetworkService: List of entity not load becouse list is empty=" + rf);
+			
+		}catch (DataAccessException da) {
+			logger.error("UserSocialNetworkService:Exeption connect with data base or other error= "+da);
+		}
+		return list;
 	}
 }

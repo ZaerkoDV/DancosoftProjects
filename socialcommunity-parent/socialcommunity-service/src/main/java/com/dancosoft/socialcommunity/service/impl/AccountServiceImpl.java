@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.AccountDAO;
@@ -51,7 +52,7 @@ import com.dancosoft.socialcommunity.service.AccountService;
  * @author Zaerko Denis
  */
 @Service(value="accountService")
-public class AccountServiceImpl extends CommonEntityServiceImpl implements AccountService {
+public class AccountServiceImpl implements AccountService {
 
 	private static final Logger logger = LoggerFactory.getLogger(AccountServiceImpl.class);
 	
@@ -189,5 +190,170 @@ public class AccountServiceImpl extends CommonEntityServiceImpl implements Accou
 			}
 		}
 		return blokStatus;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idAccount
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return Account
+	 */
+	public Account getAccountById(Long idAccount) {
+		
+		Account account = null;
+		if (idAccount.equals(null) || idAccount.equals("")) {
+			throw new RuntimeException("AccountService:Id entity is null");
+		} else {
+			try {
+				account = (Account) accountDAO.getEntityById(idAccount);
+				logger.info("AccountService:Entity loaded successfully id=" + idAccount);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("AccountService:Not found entity in data base=" + rf);
+		
+			} catch (DataAccessException da) {
+				logger.error("AccountService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return account;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type Account
+	 * @param account
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveAccount(Account account) {
+		
+		if(account.equals(null)){
+			throw new RuntimeException("AccountService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				accountDAO.saveEntity(account);
+				logger.info("AccountService:Entity save successfully");
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("AccountService:New entity not save becouse mismatch field type "+tm);
+				
+			}catch (DataAccessException da) {
+				logger.error("AccountService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type Account
+	 * @param account
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateAccount(Account account) {
+		
+		if (account.equals(null)) {
+			throw new RuntimeException("AccountService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				logger.info("AccountService:Entity update successfully");
+				accountDAO.updateEntity(account);
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("AccountService:New entity not update becouse mismatch field type "+ tm);
+			} catch (DataAccessException da) {
+				logger.error("AccountService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idAccount
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteAccountById(Long idAccount) {
+		
+		if (idAccount.equals(null) || idAccount.equals("")) {
+			throw new RuntimeException("AccountService:Id  entity is null");
+		} else{
+			try {
+				logger.info("AccountService:Entity delete successfully,id=" + idAccount);
+				accountDAO.deleteEntityById(idAccount);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("AccountService: Operation delete is faled becouse"
+						+ " not found entity in data base by id=" + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("AccountService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type Account
+	 * @param account
+	 * @exception DataAccessException
+	 */
+	public void deleteAccount(Account account) {
+		
+		if (account.equals(null)) {
+			throw new RuntimeException("AccountService: Object is "+account+ " yet and not delete again.");
+		}else{
+			try {
+				logger.info("AccountService:Entity " + account + " delete successfully");
+				accountDAO.deleteEntity(account);
+				
+			} catch (DataAccessException da) {
+				logger.error("AccountService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListAccount() {
+		
+		List<Object>list=Collections.emptyList();
+		try {
+			logger.info("AccountService: List of entity load");
+			list=accountDAO.getListEntity();
+			
+		} catch (DataRetrievalFailureException rf) {
+			logger.warn("AccountService: List of entity not load becouse list is empty=" + rf);
+			
+		}catch (DataAccessException da) {
+			logger.error("AccountService:Exeption connect with data base or other error= "+da);
+		}
+		return list;
 	}
 }

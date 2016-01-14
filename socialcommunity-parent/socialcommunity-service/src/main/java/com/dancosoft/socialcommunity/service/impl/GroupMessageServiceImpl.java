@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.GroupMessageDAO;
@@ -55,7 +56,7 @@ import com.dancosoft.socialcommunity.service.GroupMessageService;
  * @author Zaerko Denis
  */
 @Service(value="groupMessageService")
-public class GroupMessageServiceImpl extends CommonEntityServiceImpl implements GroupMessageService {
+public class GroupMessageServiceImpl implements GroupMessageService {
 
 	private static final Logger logger = LoggerFactory.getLogger(GroupMessageServiceImpl.class);
 	
@@ -212,5 +213,172 @@ public class GroupMessageServiceImpl extends CommonEntityServiceImpl implements 
 			}
 		}
 		return count;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idGroupMessage
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return GroupMessage
+	 */
+	public GroupMessage getGroupMessageById(Long idGroupMessage) {
+		
+		GroupMessage groupMessage = null;
+		if (idGroupMessage.equals(null) || idGroupMessage.equals("")) {
+			throw new RuntimeException("GroupMessageService:Id entity is null");
+		} else {
+			try {
+				groupMessage = (GroupMessage) groupMessageDAO.getEntityById(idGroupMessage);
+				logger.info("GroupMessageService:Entity loaded successfully id=" + idGroupMessage);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("GroupMessageService:Not found entity in data base=" + rf);
+		
+			} catch (DataAccessException da) {
+				logger.error("GroupMessageService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return groupMessage;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type GroupMessage
+	 * @param groupMessage
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveGroupMessage(GroupMessage groupMessage) {
+		
+		if(groupMessage.equals(null)){
+			throw new RuntimeException("GroupMessageService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				groupMessageDAO.saveEntity(groupMessage);
+				logger.info("GroupMessageService:Entity save successfully");
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("GroupMessageService:New entity not save becouse mismatch field type "+tm);
+				
+			}catch (DataAccessException da) {
+				logger.error("GroupMessageService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type GroupMessage
+	 * @param groupMessage
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateGroupMessage(GroupMessage groupMessage) {
+		
+		if (groupMessage.equals(null)) {
+			throw new RuntimeException("GroupMessageService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				logger.info("GroupMessageService:Entity update successfully");
+				groupMessageDAO.updateEntity(groupMessage);
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("GroupMessageService:New entity not update becouse mismatch field type "+ tm);
+				
+			} catch (DataAccessException da) {
+				logger.error("GroupMessageService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idGroupMessage
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteGroupMessageById(Long idGroupMessage) {
+		
+		if (idGroupMessage.equals(null) || idGroupMessage.equals("")) {
+			throw new RuntimeException("GroupMessageService:Id entity is null");
+		} else{
+			try {
+				logger.info("GroupMessageService:Entity delete successfully,id=" + idGroupMessage);
+				groupMessageDAO.deleteEntityById(idGroupMessage);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("GroupMessageService: Operation delete is faled becouse"
+						+ " not found entity in data base by id=" + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("GroupMessageService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type GroupMessage
+	 * @param groupMessage
+	 * 
+	 * @exception DataAccessException
+	 */
+	public void deleteGroupMessage(GroupMessage groupMessage) {
+		
+		if (groupMessage.equals(null)) {
+			throw new RuntimeException("GroupMessageService: Object is "+groupMessage+ " yet and not delete again.");
+		}else{
+			try {
+				logger.info("GroupMessageService:Entity " + groupMessage + " delete successfully");
+				groupMessageDAO.deleteEntity(groupMessage);
+				
+			} catch (DataAccessException da) {
+				logger.error("EntityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListGroupMessage() {
+		
+		List<Object>list=Collections.emptyList();
+		try {
+			logger.info("GroupMessageService: List of entity load");
+			list=groupMessageDAO.getListEntity();
+			
+		} catch (DataRetrievalFailureException rf) {
+			logger.warn("GroupMessageService: List of entity not load becouse list is empty=" + rf);
+			
+		}catch (DataAccessException da) {
+			logger.error("GroupMessageService:Exeption connect with data base or other error= "+da);
+		}
+		return list;
 	}
 }

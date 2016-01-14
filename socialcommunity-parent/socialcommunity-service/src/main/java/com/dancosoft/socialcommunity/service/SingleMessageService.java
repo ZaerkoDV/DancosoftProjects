@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.SingleMessage;
@@ -36,7 +37,7 @@ import com.dancosoft.socialcommunity.model.SingleMessage;
  * @version 1.0 08.10.2015
  * @author Zaerko Denis
  */
-public interface SingleMessageService extends CommonEntityService {
+public interface SingleMessageService {
 
 	/**
 	 * Method return list of user messages which created between date. If messages are not exist return empty list.
@@ -87,4 +88,79 @@ public interface SingleMessageService extends CommonEntityService {
 	 */
 	public List<SingleMessage> getListIntrlocutorSingleMessageBeetweenDateByIdAccount(Long idAccount,
 			Long idInterlocutorAccount,LocalDateTime minDateLDT,LocalDateTime maxDateLDT);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idSingleMessage
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return SingleMessage
+	 */
+	public SingleMessage getSingleMessageById(Long idSingleMessage);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type SingleMessage
+	 * @param singleMessage
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveSingleMessage(SingleMessage singleMessage);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type SingleMessage
+	 * @param singleMessage
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateSingleMessage(SingleMessage singleMessage);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idSingleMessage
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteSingleMessageById(Long idSingleMessage);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type SingleMessage
+	 * @param singleMessage
+	 * 
+	 * @exception DataAccessException
+	 */
+	public void deleteSingleMessage(SingleMessage singleMessage);
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListSingleMessage();
+	
+	
 }

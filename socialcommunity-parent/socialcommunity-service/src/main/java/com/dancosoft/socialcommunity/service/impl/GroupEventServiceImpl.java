@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.GroupEventDAO;
@@ -57,7 +58,7 @@ import com.dancosoft.socialcommunity.service.GroupEventService;
  * @author Zaerko Denis
  */
 @Service(value="groupEventService")
-public class GroupEventServiceImpl extends CommonEntityServiceImpl implements GroupEventService {
+public class GroupEventServiceImpl implements GroupEventService {
 
 	private static final Logger logger = LoggerFactory.getLogger(GroupEventServiceImpl.class);
 	
@@ -214,5 +215,172 @@ public class GroupEventServiceImpl extends CommonEntityServiceImpl implements Gr
 			}
 		}
 		return count;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idGroupEvent
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return GroupEvent
+	 */
+	public GroupEvent getGroupEventById(Long idGroupEvent) {
+		
+		GroupEvent groupEvent = null;
+		if (idGroupEvent.equals(null) || idGroupEvent.equals("")) {
+			throw new RuntimeException("GroupEventService:Id entity is null");
+		} else {
+			try {
+				groupEvent = (GroupEvent) groupEventDAO.getEntityById(idGroupEvent);
+				logger.info("GroupEventService:Entity loaded successfully id=" + idGroupEvent);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("GroupEventService:Not found entity in data base=" + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("GroupEventService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return groupEvent;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type GroupEvent
+	 * @param groupEvent
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveGroupEvent(GroupEvent groupEvent) {
+		
+		if(groupEvent.equals(null)){
+			throw new RuntimeException("GroupEventService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				groupEventDAO.saveEntity(groupEvent);
+				logger.info("GroupEventService:Entity save successfully");
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("GroupEventService:New entity not save becouse mismatch field type "+tm);
+				
+			}catch (DataAccessException da) {
+				logger.error("GroupEventService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type GroupEvent
+	 * @param groupEvent
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateGroupEvent(GroupEvent groupEvent) {
+		
+		if (groupEvent.equals(null)) {
+			throw new RuntimeException("GroupEventService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				logger.info("GroupEventService:Entity update successfully");
+				groupEventDAO.updateEntity(groupEvent);
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("GroupEventService:New entity not update becouse mismatch field type "+ tm);
+				
+			} catch (DataAccessException da) {
+				logger.error("GroupEventService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idGroupEvent
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteGroupEventById(Long idGroupEvent) {
+		
+		if (idGroupEvent.equals(null) || idGroupEvent.equals("")) {
+			throw new RuntimeException("GroupEventService:Id entity is null");
+		} else{
+			try {
+				logger.info("EntityService:Entity  delete successfully,id=" + idGroupEvent);
+				groupEventDAO.deleteEntityById(idGroupEvent);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("GroupEventService: Operation delete is faled becouse"
+						+ " not found entity in data base by id=" + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("GroupEventService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type GroupEvent
+	 * @param groupEvent
+	 * 
+	 * @exception DataAccessException
+	 */
+	public void deleteGroupEvent(GroupEvent groupEvent) {
+		
+		if (groupEvent.equals(null)) {
+			throw new RuntimeException("GroupEventService: Object is "+groupEvent+ " yet and not delete again.");
+		}else{
+			try {
+				logger.info("GroupEventService:Entity " + groupEvent + " delete successfully");
+				groupEventDAO.deleteEntity(groupEvent);
+				
+			} catch (DataAccessException da) {
+				logger.error("GroupEventService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListGroupEvent() {
+		
+		List<Object>list=Collections.emptyList();
+		try {
+			logger.info("GroupEventService: List of entity load");
+			list=groupEventDAO.getListEntity();
+			
+		} catch (DataRetrievalFailureException rf) {
+			logger.warn("GroupEventService: List of entity not load becouse list is empty=" + rf);
+			
+		}catch (DataAccessException da) {
+			logger.error("GroupEventService:Exeption connect with data base or other error= "+da);
+		}
+		return list;
 	}
 }

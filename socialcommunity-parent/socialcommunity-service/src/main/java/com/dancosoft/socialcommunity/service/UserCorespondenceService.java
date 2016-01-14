@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 
 import com.dancosoft.socialcommunity.model.UserCorespondence;
 
@@ -34,7 +35,7 @@ import com.dancosoft.socialcommunity.model.UserCorespondence;
  * @version 1.0 08.10.2015
  * @author Zaerko Denis
  */
-public interface UserCorespondenceService extends CommonEntityService {
+public interface UserCorespondenceService {
 	
 	/**
 	 * Method return status user corespondence by id user corespondence.
@@ -59,4 +60,76 @@ public interface UserCorespondenceService extends CommonEntityService {
 	 * @return List<UserCorespondence>
 	 */
 	public List<UserCorespondence> getListUserCorespondenceForBroadcastInfo();
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idUserCorespondence
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return UserCorespondence
+	 */
+	public UserCorespondence getUserCorespondenceById(Long idUserCorespondence);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type UserCorespondence
+	 * @param userCorespondence
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveUserCorespondence(UserCorespondence userCorespondence);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type UserCorespondence
+	 * @param userCorespondence
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateUserCorespondence(UserCorespondence userCorespondence);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idUserCorespondence
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteUserCorespondenceById(Long idUserCorespondence);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type UserCorespondence
+	 * @param userCorespondence
+	 * @exception DataAccessException
+	 */
+	public void deleteUserCorespondence(UserCorespondence userCorespondence);
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListEntity();
 }

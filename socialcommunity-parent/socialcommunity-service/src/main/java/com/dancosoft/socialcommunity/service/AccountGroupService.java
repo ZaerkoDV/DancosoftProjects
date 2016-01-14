@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 
 import com.dancosoft.socialcommunity.model.AccountGroup;
 
@@ -34,7 +35,7 @@ import com.dancosoft.socialcommunity.model.AccountGroup;
  * @version 1.0 08.10.2015
  * @author Zaerko Denis
  */
-public interface AccountGroupService extends CommonEntityService {
+public interface AccountGroupService {
 
 	/**
 	 * Method cheack account group on block status by id group. If group
@@ -110,4 +111,78 @@ public interface AccountGroupService extends CommonEntityService {
 	 */
 	public List<AccountGroup> getListAccountGroupWithViewStatusByIdAccount(
 			Long idAccount, String viewStatus);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @type AccountGroup
+	 * @param idAccountGroup
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return AccountGroup
+	 */
+	public AccountGroup getAccountGroupById(Long idAccountGroup);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type AccountGroup
+	 * @param accountGroup
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveAccountGroup(AccountGroup accountGroup);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type AccountGroup
+	 * @param accountGroup
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateAccountGroup(AccountGroup accountGroup);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idAccountGroup
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteAccountGroupById(Long idAccountGroup);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type AccountGroup
+	 * @param accountGroup
+	 * 
+	 * @exception DataAccessException
+	 */
+	public void deleteAccountGroup(AccountGroup accountGroup);
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListAccountGroup();
 }

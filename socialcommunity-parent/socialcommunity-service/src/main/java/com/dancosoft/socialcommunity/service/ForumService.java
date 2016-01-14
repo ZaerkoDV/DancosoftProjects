@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 
 import com.dancosoft.socialcommunity.model.Forum;
 
@@ -35,7 +36,7 @@ import com.dancosoft.socialcommunity.model.Forum;
  * @version 1.0 08.10.2015
  * @author Zaerko Denis
  */
-public interface ForumService extends CommonEntityService {
+public interface ForumService{
 
 	/**
 	 * Method return list forum which crated between dates. If forums
@@ -103,4 +104,76 @@ public interface ForumService extends CommonEntityService {
 	 * @return Boolean
 	 */
 	public Boolean isPrivateForum(Long idForum);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idForum
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return Forum
+	 */
+	public Forum getForumById(Long idForum);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type Forum
+	 * @param forum
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveForum(Forum forum);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type Forum
+	 * @param forum
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateForum(Forum forum);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idForum
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteForumById(Long idForum);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type Forum
+	 * @param forum
+	 * @exception DataAccessException
+	 */
+	public void deleteForum(Forum forum);
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListForum(); 
 }

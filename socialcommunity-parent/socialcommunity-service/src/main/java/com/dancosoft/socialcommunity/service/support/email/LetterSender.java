@@ -88,5 +88,4 @@ public class LetterSender {
 			e.printStackTrace();
 		}
 	}
-
 }

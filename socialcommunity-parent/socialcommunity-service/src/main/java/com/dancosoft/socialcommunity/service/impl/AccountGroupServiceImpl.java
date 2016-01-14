@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.AccountGroupDAO;
@@ -51,7 +52,7 @@ import com.dancosoft.socialcommunity.service.AccountGroupService;
  * @author Zaerko Denis
  */
 @Service(value="accountGroupService")
-public class AccountGroupServiceImpl extends CommonEntityServiceImpl implements AccountGroupService {
+public class AccountGroupServiceImpl implements AccountGroupService {
 
 	private static final Logger logger = LoggerFactory.getLogger(AccountGroupServiceImpl.class);
 	
@@ -228,6 +229,174 @@ public class AccountGroupServiceImpl extends CommonEntityServiceImpl implements 
 			}catch (DataAccessException da) {
 				logger.error("AccountGroupService:Exeption connect with data base or other error= "+da);
 			}	
+		}
+		return list;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @type AccountGroup
+	 * @param idAccountGroup
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return AccountGroup
+	 */
+	public AccountGroup getAccountGroupById(Long idAccountGroup) {
+		
+		AccountGroup accountGroup = null;
+		if (idAccountGroup.equals(null) || idAccountGroup.equals("")) {
+			throw new RuntimeException("AccountGroupService:Id entity is null");
+		} else {
+			try {
+				accountGroup = (AccountGroup) accountGroupDAO.getEntityById(idAccountGroup);
+				logger.info("AccountGroupService:Entity loaded successfully id=" + idAccountGroup);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("AccountGroupService:Not found entity in data base=" + rf);
+		
+			} catch (DataAccessException da) {
+				logger.error("AccountGroupService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return accountGroup;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type AccountGroup
+	 * @param accountGroup
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveAccountGroup(AccountGroup accountGroup) {
+		
+		if(accountGroup.equals(null)){
+			throw new RuntimeException("AccountGroupService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				accountGroupDAO.saveEntity(accountGroup);
+				logger.info("AccountGroupService:Entity save successfully");
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("AccountGroupService:New entity not save becouse mismatch field type "+tm);
+				
+			}catch (DataAccessException da) {
+				logger.error("AccountGroupService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type AccountGroup
+	 * @param accountGroup
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateAccountGroup(AccountGroup accountGroup) {
+		
+		if (accountGroup.equals(null)) {
+			throw new RuntimeException("AccountGroupService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				logger.info("AccountGroupService:Entity update successfully");
+				accountGroupDAO.updateEntity(accountGroup);
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("AccountGroupService:New entity not update becouse mismatch field type "+ tm);
+				
+			} catch (DataAccessException da) {
+				logger.error("AccountGroupService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idAccountGroup
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteAccountGroupById(Long idAccountGroup) {
+		
+		if (idAccountGroup.equals(null) || idAccountGroup.equals("")) {
+			throw new RuntimeException("AccountGroupService:Id "+this.getClass().getName() + " entity is null");
+		} else{
+			try {
+				logger.info("AccountGroupService:Entity" + this.getClass().getName()+ " delete successfully,id=" + idAccountGroup);
+				accountGroupDAO.deleteEntityById(idAccountGroup);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("AccountGroupService: Operation delete is faled becouse"
+						+ " not found entity in data base by id=" + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("AccountGroupService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type AccountGroup
+	 * @param accountGroup
+	 * 
+	 * @exception DataAccessException
+	 */
+	public void deleteAccountGroup(AccountGroup accountGroup) {
+		
+		if (accountGroup.equals(null)) {
+			throw new RuntimeException("AccountGroupService: Object is "+accountGroup+ " yet and not delete again.");
+		}else{
+			try {
+				logger.info("AccountGroupService:Entity " + accountGroup + " delete successfully");
+				accountGroupDAO.deleteEntity(accountGroup);
+				
+			} catch (DataAccessException da) {
+				logger.error("AccountGroupService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListAccountGroup() {
+		
+		List<Object>list=Collections.emptyList();
+		try {
+			logger.info("AccountGroupService: List of entity" + this.getClass().getName()+ "load");
+			list=accountGroupDAO.getListEntity();
+			
+		} catch (DataRetrievalFailureException rf) {
+			logger.warn("AccountGroupService: List of entity not load becouse list is empty=" + rf);
+			
+		}catch (DataAccessException da) {
+			logger.error("AccountGroupService:Exeption connect with data base or other error= "+da);
 		}
 		return list;
 	}

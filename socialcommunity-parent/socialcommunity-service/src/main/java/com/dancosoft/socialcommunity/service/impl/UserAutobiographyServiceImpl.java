@@ -24,9 +24,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.UserAutobiographyDAO;
+import com.dancosoft.socialcommunity.model.SingleMessage;
 import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserAutobiography;
 import com.dancosoft.socialcommunity.service.UserAutobiographyService;
@@ -52,7 +54,7 @@ import com.dancosoft.socialcommunity.service.UserAutobiographyService;
  * @author Zaerko Denis
  */
 @Service(value="userAutobiographyService")
-public class UserAutobiographyServiceImpl extends CommonEntityServiceImpl implements UserAutobiographyService{
+public class UserAutobiographyServiceImpl implements UserAutobiographyService{
 
 	private static final Logger logger = LoggerFactory.getLogger(UserAutobiographyServiceImpl.class);
 	
@@ -192,6 +194,172 @@ public class UserAutobiographyServiceImpl extends CommonEntityServiceImpl implem
 			} catch (DataAccessException da) {
 				logger.error("UserAutobiographyService:Exeption connect with data base or other error= "+da);
 			}
+		}
+		return list;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idSingleMessage
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return SingleMessage
+	 */
+	public SingleMessage getEntityById(Long idSingleMessage) {
+		
+		SingleMessage singleMessage = null;
+		if (idSingleMessage.equals(null) || idSingleMessage.equals("")) {
+			throw new RuntimeException("SingleMessageService:Id entity is null");
+		} else {
+			try {
+				singleMessage = (SingleMessage) userAutobiographyDAO.getEntityById(idSingleMessage);
+				logger.info("EntityService:Entity loaded successfully id=" + idSingleMessage);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("SingleMessageService:Not found entity in data base=" + rf);
+			
+			} catch (DataAccessException da) {
+				logger.error("SingleMessageService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return singleMessage;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type SingleMessage
+	 * @param singleMessage
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveSingleMessage(SingleMessage singleMessage) {
+		
+		if(singleMessage.equals(null)){
+			throw new RuntimeException("SingleMessageService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				userAutobiographyDAO.saveEntity(singleMessage);
+				logger.info("SingleMessageService:Entity save successfully");
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("SingleMessageService:New entity not save becouse mismatch field type "+tm);
+				
+			}catch (DataAccessException da) {
+				logger.error("SingleMessageService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type SingleMessage
+	 * @param singleMessage
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateSingleMessage(SingleMessage singleMessage) {
+		
+		if (singleMessage.equals(null)) {
+			throw new RuntimeException("SingleMessageService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				logger.info("SingleMessageService:Entity update successfully");
+				userAutobiographyDAO.updateEntity(singleMessage);
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("SingleMessageService:New entity not update becouse mismatch field type "+ tm);
+				
+			} catch (DataAccessException da) {
+				logger.error("SingleMessageService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idSingleMessage
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteSingleMessageById(Long idSingleMessage) {
+		
+		if (idSingleMessage.equals(null) || idSingleMessage.equals("")) {
+			throw new RuntimeException("SingleMessageService:Id entity is null");
+		} else{
+			try {
+				logger.info("SingleMessageService:Entity  delete successfully,id=" + idSingleMessage);
+				userAutobiographyDAO.deleteEntityById(idSingleMessage);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("SingleMessageService: Operation delete is faled becouse"
+						+ " not found entity in data base by id=" + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("SingleMessageService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type SingleMessage
+	 * @param singleMessage
+	 * @exception DataAccessException
+	 */
+	public void deleteSingleMessage(SingleMessage singleMessage) {
+		
+		if (singleMessage.equals(null)) {
+			throw new RuntimeException("SingleMessageService: Object is "+singleMessage+ " yet and not delete again.");
+		}else{
+			try {
+				logger.info("SingleMessageService:Entity " + singleMessage + " delete successfully");
+				userAutobiographyDAO.deleteEntity(singleMessage);
+				
+			} catch (DataAccessException da) {
+				logger.error("SingleMessageService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListEntity() {
+		
+		List<Object>list=Collections.emptyList();
+		try {
+			logger.info("SingleMessageService: List of entity load");
+			list=userAutobiographyDAO.getListEntity();
+			
+		} catch (DataRetrievalFailureException rf) {
+			logger.warn("SingleMessageService: List of entity not load becouse list is empty=" + rf);
+			
+		}catch (DataAccessException da) {
+			logger.error("SingleMessageService:Exeption connect with data base or other error= "+da);
 		}
 		return list;
 	}

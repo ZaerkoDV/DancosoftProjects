@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.ForumTopicDAO;
@@ -58,7 +59,7 @@ import com.dancosoft.socialcommunity.service.ForumTopicService;
  * @author Zaerko Denis
  */
 @Service(value="forumTopicService")
-public class ForumTopicServiceImpl extends CommonEntityServiceImpl implements ForumTopicService {
+public class ForumTopicServiceImpl implements ForumTopicService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ForumTopicServiceImpl .class);
 	
@@ -190,6 +191,7 @@ public class ForumTopicServiceImpl extends CommonEntityServiceImpl implements Fo
 	 * 
 	 * @type Long
 	 * @param idForum
+	 * 
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
@@ -213,5 +215,171 @@ public class ForumTopicServiceImpl extends CommonEntityServiceImpl implements Fo
 			}
 		}
 		return count;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idForumTopic
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return ForumTopic
+	 */
+	public ForumTopic getForumTopicById(Long idForumTopic) {
+		
+		ForumTopic forumTopic = null;
+		if (idForumTopic.equals(null) || idForumTopic.equals("")) {
+			throw new RuntimeException("ForumTopicService:Id entity is null");
+		} else {
+			try {
+				forumTopic = (ForumTopic) forumTopicDAO.getEntityById(idForumTopic);
+				logger.info("ForumTopicService:Entity loaded successfully id=" + idForumTopic);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("ForumTopicService:Not found entity in data base=" + rf);
+			
+			} catch (DataAccessException da) {
+				logger.error("ForumTopicService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return forumTopic;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type ForumTopic
+	 * @param forumTopic
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveForumTopic(ForumTopic forumTopic) {
+		
+		if(forumTopic.equals(null)){
+			throw new RuntimeException("ForumTopicService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				forumTopicDAO.saveEntity(forumTopic);
+				logger.info("ForumTopicService:Entity save successfully");
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("ForumTopicService:New entity not save becouse mismatch field type "+tm);
+				
+			}catch (DataAccessException da) {
+				logger.error("ForumTopicService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type ForumTopic
+	 * @param forumTopic
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateForumTopic(ForumTopic forumTopic) {
+		
+		if (forumTopic.equals(null)) {
+			throw new RuntimeException("ForumTopicService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				logger.info("ForumTopicService:Entity update successfully");
+				forumTopicDAO.updateEntity(forumTopic);
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("ForumTopicService:New entity not update becouse mismatch field type "+ tm);
+				
+			} catch (DataAccessException da) {
+				logger.error("ForumTopicService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idForumTopic
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteEntityById(Long idForumTopic) {
+		
+		if (idForumTopic.equals(null) || idForumTopic.equals("")) {
+			throw new RuntimeException("ForumTopicService:Id entity is null");
+		} else{
+			try {
+				logger.info("ForumTopicService:Entity  delete successfully,id=" + idForumTopic);
+				forumTopicDAO.deleteEntityById(idForumTopic);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("ForumTopicService: Operation delete is faled becouse"
+						+ " not found entity in data base by id=" + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("ForumTopicService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type ForumTopic
+	 * @param forumTopic
+	 * @exception DataAccessException
+	 */
+	public void deleteForumTopic(ForumTopic forumTopic) {
+		
+		if (forumTopic.equals(null)) {
+			throw new RuntimeException("ForumTopicService: Object is "+forumTopic+ " yet and not delete again.");
+		}else{
+			try {
+				logger.info("ForumTopicService:Entity " + forumTopic + " delete successfully");
+				forumTopicDAO.deleteEntity(forumTopic);
+				
+			} catch (DataAccessException da) {
+				logger.error("ForumTopicService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public  List<Object> getListForumTopic() {
+		
+		List<Object>list=Collections.emptyList();
+		try {
+			logger.info("ForumTopicService: List of entity load");
+			list=forumTopicDAO.getListEntity();
+			
+		} catch (DataRetrievalFailureException rf) {
+			logger.warn("ForumTopicService: List of entity not load becouse list is empty=" + rf);
+			
+		}catch (DataAccessException da) {
+			logger.error("ForumTopicService: Exeption connect with data base or other error= "+da);
+		}
+		return list;
 	}
 }

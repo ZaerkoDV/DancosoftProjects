@@ -23,6 +23,7 @@ import javax.persistence.NonUniqueResultException;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.GroupEvent;
@@ -38,7 +39,7 @@ import com.dancosoft.socialcommunity.model.GroupEvent;
  * @version 1.0 08.10.2015
  * @author Zaerko Denis
  */
-public interface GroupEventService extends CommonEntityService {
+public interface GroupEventService {
 
 	/**
 	 * Method return group member account by id group event. Account
@@ -98,4 +99,77 @@ public interface GroupEventService extends CommonEntityService {
 	 * @return int
 	 */
 	public int getCountGroupEventByIdAccountGroup(Long idAccountGroup);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idGroupEvent
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return GroupEvent
+	 */
+	public GroupEvent getGroupEventById(Long idGroupEvent);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type GroupEvent
+	 * @param groupEvent
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveGroupEvent(GroupEvent groupEvent);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type GroupEvent
+	 * @param groupEvent
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateGroupEvent(GroupEvent groupEvent);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idGroupEvent
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteGroupEventById(Long idGroupEvent);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type GroupEvent
+	 * @param groupEvent
+	 * 
+	 * @exception DataAccessException
+	 */
+	public void deleteGroupEvent(GroupEvent groupEvent);
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListGroupEvent();	
 }

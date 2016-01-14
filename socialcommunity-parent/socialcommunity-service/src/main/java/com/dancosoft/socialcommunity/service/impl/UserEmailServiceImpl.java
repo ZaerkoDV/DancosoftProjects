@@ -28,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.UserEmailDAO;
@@ -55,7 +56,7 @@ import com.dancosoft.socialcommunity.service.UserEmailService;
  * @author Zaerko Denis
  */
 @Service(value="userEmailService")
-public class UserEmailServiceImpl extends CommonEntityServiceImpl implements UserEmailService {
+public class UserEmailServiceImpl implements UserEmailService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserEmailServiceImpl.class);	
 	
@@ -237,5 +238,170 @@ public class UserEmailServiceImpl extends CommonEntityServiceImpl implements Use
 			logger.error("UserEmailService: Email "+email+" is invalid. ");
 		}
 		return isValid;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idUserEmail
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return UserEmail
+	 */
+	public UserEmail getUserEmailById(Long idUserEmail) {
+		
+		UserEmail userEmail = null;
+		if (idUserEmail.equals(null) || idUserEmail.equals("")) {
+			throw new RuntimeException("UserEmailService:Id entity is null");
+		} else {
+			try {
+				userEmail= (UserEmail) userEmailDAO.getEntityById(idUserEmail);
+				logger.info("UserEmailService:Entity loaded successfully id=" + idUserEmail);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("UserEmailService:Not found entity in data base=" + rf);
+			
+			} catch (DataAccessException da) {
+				logger.error("UserEmailService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return userEmail;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type UserEmail
+	 * @param userEmail
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveUserEmail(UserEmail userEmail) {
+		
+		if(userEmail.equals(null)){
+			throw new RuntimeException("UserEmailService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				userEmailDAO.saveEntity(userEmail);
+				logger.info("UserEmailService:Entity save successfully");
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("UserEmailService:New entity not save becouse mismatch field type "+tm);
+			}catch (DataAccessException da) {
+				logger.error("UserEmailService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type UserEmail
+	 * @param userEmail
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateUserEmail(UserEmail userEmail) {
+		
+		if (userEmail.equals(null)) {
+			throw new RuntimeException("UserEmailService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				logger.info("UserEmailService:Entity update successfully");
+				userEmailDAO.updateEntity(userEmail);
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("UserEmailService:New entity not update becouse mismatch field type "+ tm);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserEmailService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idUserEmail
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteUserEmailById(Long idUserEmail) {
+		
+		if (idUserEmail.equals(null) || idUserEmail.equals("")) {
+			throw new RuntimeException("UserEmailService:Id entity is null");
+		} else{
+			try {
+				logger.info("UserEmailService:Entity delete successfully,id=" + idUserEmail);
+				userEmailDAO.deleteEntityById(idUserEmail);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("UserEmailService: Operation delete is faled becouse"
+						+ " not found entity in data base by id=" + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserEmailService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type UserEmail
+	 * @param userEmail
+	 * @exception DataAccessException
+	 */
+	public void deleteUserEmail(UserEmail userEmail) {
+		
+		if (userEmail.equals(null)) {
+			throw new RuntimeException("UserEmailService: Object is "+userEmail+ " yet and not delete again.");
+		}else{
+			try {
+				logger.info("UserEmailService:Entity " + userEmail + " delete successfully");
+				userEmailDAO.deleteEntity(userEmail);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserEmailService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListEntity() {
+		
+		List<Object>list=Collections.emptyList();
+		try {
+			logger.info("UserEmailService: List of entity load");
+			list=userEmailDAO.getListEntity();
+			
+		} catch (DataRetrievalFailureException rf) {
+			logger.warn("UserEmailService: List of entity not load becouse list is empty=" + rf);
+			
+		}catch (DataAccessException da) {
+			logger.error("UserEmailService:Exeption connect with data base or other error= "+da);
+		}
+		return list;
 	}
 }

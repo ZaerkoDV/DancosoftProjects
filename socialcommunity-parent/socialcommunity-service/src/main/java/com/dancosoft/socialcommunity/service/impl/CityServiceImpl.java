@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.CityDAO;
@@ -52,7 +53,7 @@ import com.dancosoft.socialcommunity.service.CityService;
  * @author Zaerko Denis
  */
 @Service(value="cityService")
-public class CityServiceImpl extends CommonEntityServiceImpl implements CityService {
+public class CityServiceImpl implements CityService {
 
 	private static final Logger logger = LoggerFactory.getLogger(CityServiceImpl.class);
 	
@@ -151,6 +152,171 @@ public class CityServiceImpl extends CommonEntityServiceImpl implements CityServ
 			} catch (DataAccessException da) {
 				logger.error("CityService:Exeption connect with data base or other error= "+da);
 			}
+		}
+		return list;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idCity
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return City
+	 */
+	public City getCityById(Long idCity) {
+		
+		City city = null;
+		if (idCity.equals(null) || idCity.equals("")) {
+			throw new RuntimeException("CityService:Id entity is null");
+		} else {
+			try {
+				city = (City) cityDAO.getEntityById(idCity);
+				logger.info("CityService:Entity loaded successfully id=" + idCity);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("CityService:Not found entity in data base=" + rf);
+	
+			} catch (DataAccessException da) {
+				logger.error("CityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return city;
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type City
+	 * @param city
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveCity(City city) {
+		
+		if(city.equals(null)){
+			throw new RuntimeException("CityService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				cityDAO.saveEntity(city);
+				logger.info("CityService:Entity save successfully");
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("CityService:New entity not save becouse mismatch field type "+tm);
+				
+			}catch (DataAccessException da) {
+				logger.error("CityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type City
+	 * @param city
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateCity(City city) {
+		
+		if (city.equals(null)) {
+			throw new RuntimeException("CityService: Entity not save becouse entity is null.");
+		} else {
+			try {
+				logger.info("CityService:Entity update successfully");
+				cityDAO.updateEntity(city);
+				
+			} catch (TypeMismatchDataAccessException tm) {
+				logger.error("CityService:New entity not update becouse mismatch field type "+ tm);
+			} catch (DataAccessException da) {
+				logger.error("CityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idCity
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteCityById(Long idCity) {
+		
+		if (idCity.equals(null) || idCity.equals("")) {
+			throw new RuntimeException("CityService:Id entity is null");
+		} else{
+			try {
+				logger.info("CityService: Entity delete successfully,id=" + idCity);
+				cityDAO.deleteEntityById(idCity);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("CityService: Operation delete is faled becouse"
+						+ " not found entity in data base by id=" + rf);
+				
+			} catch (DataAccessException da) {
+				logger.error("CityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type City
+	 * @param city
+	 * @exception DataAccessException
+	 */
+	public void deleteCity(City city) {
+		
+		if (city.equals(null)) {
+			throw new RuntimeException("CityService: Object is yet and not delete again.");
+		}else{
+			try {
+				logger.info("CityService:Entity  delete successfully");
+				cityDAO.deleteEntity(city);
+				
+			} catch (DataAccessException da) {
+				logger.error("CityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+	}
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListCity() {
+		
+		List<Object>list=Collections.emptyList();
+		try {
+			logger.info("CityService: List of entity load");
+			list=cityDAO.getListEntity();
+			
+		} catch (DataRetrievalFailureException rf) {
+			logger.warn("CityService: List of entity not load becouse list is empty=" + rf);
+			
+		}catch (DataAccessException da) {
+			logger.error("CityService:Exeption connect with data base or other error= "+da);
 		}
 		return list;
 	}

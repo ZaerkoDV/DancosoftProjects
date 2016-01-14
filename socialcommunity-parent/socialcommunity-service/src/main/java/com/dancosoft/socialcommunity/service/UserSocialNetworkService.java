@@ -22,6 +22,7 @@ import javax.persistence.NonUniqueResultException;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 
 import com.dancosoft.socialcommunity.model.UserSocialNetwork;
 
@@ -36,7 +37,7 @@ import com.dancosoft.socialcommunity.model.UserSocialNetwork;
  * @version 1.0 08.10.2015
  * @author Zaerko Denis
  */
-public interface UserSocialNetworkService extends CommonEntityService {
+public interface UserSocialNetworkService {
 
 	/**
 	 * Method return list of social community with wiev status which use user.
@@ -95,4 +96,77 @@ public interface UserSocialNetworkService extends CommonEntityService {
 	 * @return Long
 	 */
 	public Long getIdUserByFacebookAddress(String facebookAddress);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idUserSocialNetwork
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return UserSocialNetwork
+	 */
+	public UserSocialNetwork getUserSocialNetworkById(Long idUserSocialNetwork);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type UserSocialNetwork
+	 * @param userSocialNetwork
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveUserSocialNetwork(UserSocialNetwork userSocialNetwork);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type UserSocialNetwork
+	 * @param userSocialNetwork
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateUserSocialNetwork(UserSocialNetwork userSocialNetwork);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idUserSocialNetwork
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteUserSocialNetworkById(Long idUserSocialNetwork);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type UserSocialNetwork
+	 * @param userSocialNetwork
+	 * 
+	 * @exception DataAccessException
+	 */
+	public void deleteUserSocialNetwork(UserSocialNetwork userSocialNetwork);
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListUserSocialNetwork();
 }

@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
+import org.springframework.dao.TypeMismatchDataAccessException;
 
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.ForumMessage;
@@ -36,7 +37,7 @@ import com.dancosoft.socialcommunity.model.ForumMessage;
  * @version 1.0 08.10.2015
  * @author Zaerko Denis
  */
-public interface ForumMessageService extends CommonEntityService {
+public interface ForumMessageService {
 
 	/**
 	 * Method return Account of author which create message. If account is not
@@ -88,10 +89,84 @@ public interface ForumMessageService extends CommonEntityService {
 	 * 
 	 * @type Long
 	 * @param idForumTopic
+	 * 
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
 	 * @return List<ForumMessage>
 	 */
 	public List<ForumMessage> getListForumMessagetByIdAccount(Long idAccount);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method return entity by idEntity. If entity not exist return null(use
+	 * hibernateTamplate method get)
+	 * 
+	 * @type Long
+	 * @param idForumMessage
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return ForumMessage
+	 */
+	public ForumMessage getForumMessageById(Long idForumMessage);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method save entity if entity not null.
+	 * 
+	 * @type ForumMessage
+	 * @param forumMessage
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void saveForumMessage(ForumMessage forumMessage);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method update entity if entity not null.
+	 * 
+	 * @type ForumMessage
+	 * @param forumMessage
+	 * 
+	 * @exception TypeMismatchDataAccessException
+	 * @exception DataAccessException
+	 */
+	public void updateForumMessage(ForumMessage forumMessage);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity by id if entity not null.
+	 * 
+	 * @type Long
+	 * @param idForumMessage
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 */
+	public void deleteForumMessageById(Long idForumMessage);
+	
+	/**
+	 * This method is basic for all entities.The method is one of CRUD methods.
+	 * Method delete entity if entity not null.
+	 * 
+	 * @type ForumMessage
+	 * @param forumMessage
+	 * 
+	 * @exception DataAccessException
+	 */
+	public void deleteForumMessage(ForumMessage forumMessage);
+	
+	/**
+	 * This method is basic for all entities. Method return list of entity. If entyty
+	 * list not load return empty list.
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return List<Object>
+	 */
+	public List<Object> getListForumMessage(); 	
 }
