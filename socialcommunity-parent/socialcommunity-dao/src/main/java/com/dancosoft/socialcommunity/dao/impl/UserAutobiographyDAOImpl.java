@@ -65,9 +65,9 @@ public class UserAutobiographyDAOImpl extends CommonEntityDAOImpl implements Use
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserAutobiographyDAOImpl.class);
 	
-//	public UserAutobiographyDAOImpl(){
-//		super(UserAutobiography.class);
-//	}
+	public UserAutobiographyDAOImpl(){
+		super(UserAutobiography.class);
+	}
 	
 	/**
 	 * Method return user autobiogeaphy by id user. If user autobiography

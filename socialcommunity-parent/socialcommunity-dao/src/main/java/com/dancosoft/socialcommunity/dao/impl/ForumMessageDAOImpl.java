@@ -63,9 +63,9 @@ public class ForumMessageDAOImpl extends CommonEntityDAOImpl implements ForumMes
 
 	private static final Logger logger = LoggerFactory.getLogger(ForumMessageDAOImpl.class);
 
-//	public ForumMessageDAOImpl(){
-//		super(ForumMessage.class);
-//	}
+	public ForumMessageDAOImpl(){
+		super(ForumMessage.class);
+	}
 	
 	/**
 	 * Method return Account of author which create message. If account is not

@@ -63,9 +63,9 @@ public class AccountForumDAOImpl extends CommonEntityDAOImpl implements AccountF
 	
 	private static final Logger logger = LoggerFactory.getLogger(AccountForumDAOImpl.class);
 	
-//	public AccountForumDAOImpl(){
-//		super(AccountForum.class);
-//	}
+	public AccountForumDAOImpl(){
+		super(AccountForum.class);
+	}
 	
 	/**
 	 * Method return list forum by id account. List contain forums which use in account.

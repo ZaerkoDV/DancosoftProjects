@@ -62,9 +62,9 @@ public class UserSocialNetworkDAOImpl extends CommonEntityDAOImpl implements Use
 
 	private static final Logger logger = LoggerFactory.getLogger(UserSocialNetworkDAOImpl.class);
 	
-//	public UserSocialNetworkDAOImpl(){
-//		super(UserSocialNetwork.class);
-//	}
+	public UserSocialNetworkDAOImpl(){
+		super(UserSocialNetwork.class);
+	}
 	
 	/**
 	 * Method return list of social community with wiev status which use user.

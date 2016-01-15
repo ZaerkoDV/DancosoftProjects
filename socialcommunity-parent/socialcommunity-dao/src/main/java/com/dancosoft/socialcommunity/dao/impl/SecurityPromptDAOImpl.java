@@ -61,9 +61,9 @@ public class SecurityPromptDAOImpl extends CommonEntityDAOImpl implements Securi
 
 	private static final Logger logger = LoggerFactory.getLogger(SecurityPromptDAOImpl.class);
 
-//	public SecurityPromptDAOImpl(){
-//		super(SecurityPrompt.class);
-//	}
+	public SecurityPromptDAOImpl(){
+		super(SecurityPrompt.class);
+	}
 	
 	/**
 	 * Method return SecurityPrompt by id user. If SecurityPrompt is not exist return null.
@@ -129,12 +129,8 @@ public class SecurityPromptDAOImpl extends CommonEntityDAOImpl implements Securi
 
 		logger.info("SecurityPromptDAO:User sign in system sucessfully by user answer");
 		Boolean signIn = false;
-		if (criteria.list().isEmpty()) {
-			signIn = false;
-		} else {
-			signIn = true;
-		}
-		return signIn;
+		
+		return criteria.list().isEmpty();
 	}
 
 	/**

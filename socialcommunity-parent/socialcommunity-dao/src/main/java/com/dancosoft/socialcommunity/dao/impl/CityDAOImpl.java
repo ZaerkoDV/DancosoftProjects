@@ -62,9 +62,9 @@ public class CityDAOImpl extends CommonEntityDAOImpl implements CityDAO {
 
 	private static final Logger logger = LoggerFactory.getLogger(CityDAOImpl.class);
 
-//	public CityDAOImpl(){
-//		super(City.class);
-//	}
+	public CityDAOImpl(){
+		super(City.class);
+	}
 	
 	/**
 	 * Method return list city by id country. This country contain list of city

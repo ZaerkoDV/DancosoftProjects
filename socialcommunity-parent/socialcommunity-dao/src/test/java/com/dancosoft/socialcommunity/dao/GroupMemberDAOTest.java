@@ -25,54 +25,54 @@ import com.dancosoft.socialcommunity.model.GroupMember;
  * @author Zaerko_DV
  *
  */
-public class GroupMemberDAOTest extends TestStarter {
+public class GroupMemberDAOTest {//extends TestStarter {
 
-	private static final Logger logger = LoggerFactory.getLogger(GroupMemberDAOTest.class);
-
-	@Autowired
-	@Qualifier("groupMemberDAO")
-	private GroupMemberDAO groupMemberDAO;
-
-	@Autowired
-	@Qualifier("testObjectDAOCreator")
-	private TestObjectDAOCreator testObjectDAOCreator;
-
-	public void setGroupMemberDAO(GroupMemberDAO groupMemberDAO) {
-		this.groupMemberDAO = groupMemberDAO;
-	}
-
-	public void setTestObjectDAOCreator(TestObjectDAOCreator testObjectDAOCreator) {
-		this.testObjectDAOCreator = testObjectDAOCreator;
-	}
-
-	public AccountGroup accountGroup;
-	public GroupMember groupMember;
-
-	@Before
-	public void initObjectsBeforeTest() {
-		this.groupMember = testObjectDAOCreator.createGroupMemberForTest();
-		this.accountGroup = groupMember.getAccountGroup();
-	}
-	
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingListGroupMemberByIdAccountGroup() {
-
-		logger.info("GroupMemberDAOTest: test method GetListGroupMemberByIdAccountGroup");
-		List<GroupMember> list= groupMemberDAO.getListGroupMemberByIdAccountGroup(accountGroup.getIdAccountGroup());
-		Assert.assertFalse(list.isEmpty());
-	}
-
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingListAccountWithStatusByIdAccountGroup() {
-
-		logger.info("GroupMemberDAOTest: test method GetListAccountWithStatusByIdAccountGroup");
-		Long idAccountGroup=accountGroup.getIdAccountGroup();
-		String status=groupMember.getGroupMemberStatus();
-		List<Account> list= groupMemberDAO.getListAccountWithStatusByIdAccountGroup(idAccountGroup,status);
-		Assert.assertFalse(list.isEmpty());
-	}
+//	private static final Logger logger = LoggerFactory.getLogger(GroupMemberDAOTest.class);
+//
+//	@Autowired
+//	@Qualifier("groupMemberDAO")
+//	private GroupMemberDAO groupMemberDAO;
+//
+//	@Autowired
+//	@Qualifier("testObjectDAOCreator")
+//	private TestObjectDAOCreator testObjectDAOCreator;
+//
+//	public void setGroupMemberDAO(GroupMemberDAO groupMemberDAO) {
+//		this.groupMemberDAO = groupMemberDAO;
+//	}
+//
+//	public void setTestObjectDAOCreator(TestObjectDAOCreator testObjectDAOCreator) {
+//		this.testObjectDAOCreator = testObjectDAOCreator;
+//	}
+//
+//	public AccountGroup accountGroup;
+//	public GroupMember groupMember;
+//
+//	@Before
+//	public void initObjectsBeforeTest() {
+//		this.groupMember = testObjectDAOCreator.createGroupMemberForTest();
+//		this.accountGroup = groupMember.getAccountGroup();
+//	}
+//	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListGroupMemberByIdAccountGroup() {
+//
+//		logger.info("GroupMemberDAOTest: test method GetListGroupMemberByIdAccountGroup");
+//		List<GroupMember> list= groupMemberDAO.getListGroupMemberByIdAccountGroup(accountGroup.getIdAccountGroup());
+//		Assert.assertFalse(list.isEmpty());
+//	}
+//
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListAccountWithStatusByIdAccountGroup() {
+//
+//		logger.info("GroupMemberDAOTest: test method GetListAccountWithStatusByIdAccountGroup");
+//		Long idAccountGroup=accountGroup.getIdAccountGroup();
+//		String status=groupMember.getGroupMemberStatus();
+//		List<Account> list= groupMemberDAO.getListAccountWithStatusByIdAccountGroup(idAccountGroup,status);
+//		Assert.assertFalse(list.isEmpty());
+//	}
 }

@@ -62,9 +62,9 @@ public class GroupMemberDAOImpl extends CommonEntityDAOImpl implements GroupMemb
 
 	private static final Logger logger = LoggerFactory.getLogger(GroupMemberDAOImpl.class);
 
-//	public GroupMemberDAOImpl(){
-//		super(GroupMember.class);
-//	}
+	public GroupMemberDAOImpl(){
+		super(GroupMember.class);
+	}
 	
 	/**
 	 * Method return list of group member by id account group. If group member

@@ -63,9 +63,9 @@ public class GroupEventDAOImpl extends CommonEntityDAOImpl implements GroupEvent
 
 	private static final Logger logger = LoggerFactory.getLogger(GroupEventDAOImpl.class);
 
-//	public GroupEventDAOImpl(){
-//		super(GroupEvent.class);
-//	}
+	public GroupEventDAOImpl(){
+		super(GroupEvent.class);
+	}
 	
 	/**
 	 * Method return group member account by id group event. Account

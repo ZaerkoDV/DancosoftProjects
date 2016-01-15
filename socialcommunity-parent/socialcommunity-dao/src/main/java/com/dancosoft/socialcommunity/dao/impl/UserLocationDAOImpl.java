@@ -64,9 +64,9 @@ public class UserLocationDAOImpl extends CommonEntityDAOImpl implements UserLoca
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserLocationDAOImpl.class);
 	
-//	public UserLocationDAOImpl(){
-//		super(UserLocation.class);
-//	}
+	public UserLocationDAOImpl(){
+		super(UserLocation.class);
+	}
 	
 	/**
 	 * Method return user location by id user. If user

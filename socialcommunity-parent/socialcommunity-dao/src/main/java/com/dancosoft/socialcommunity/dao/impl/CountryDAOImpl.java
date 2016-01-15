@@ -59,9 +59,9 @@ public class CountryDAOImpl extends CommonEntityDAOImpl implements CountryDAO {
 
 	private static final Logger logger = LoggerFactory.getLogger(CountryDAOImpl.class);
 	
-//	public CountryDAOImpl(){
-//		super(Country.class);
-//	}
+	public CountryDAOImpl(){
+		super(Country.class);
+	}
 	
 	/**
 	 * Search country by his attribute countryName. If country

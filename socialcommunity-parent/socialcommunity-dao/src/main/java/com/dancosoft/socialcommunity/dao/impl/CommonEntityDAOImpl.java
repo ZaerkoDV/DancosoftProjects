@@ -55,13 +55,16 @@ public class CommonEntityDAOImpl extends HibernateDaoSupport implements CommonEn
 
 	private static final Logger logger = LoggerFactory.getLogger(CommonEntityDAOImpl.class);
 
-//	@SuppressWarnings({ "rawtypes"})
-//	private Class entityClass;
-//	
-//	@SuppressWarnings({ "rawtypes"})
-//	public CommonEntityDAOImpl(Class entityClass){
-//		this.entityClass=entityClass;
-//	}
+	@SuppressWarnings({ "rawtypes"})
+	private Class entityClass;
+	
+	public CommonEntityDAOImpl(){	
+	}
+	
+	@SuppressWarnings({ "rawtypes"})
+	public CommonEntityDAOImpl(Class entityClass){
+		this.entityClass=entityClass;
+	}
 	
 	/**
 	 * This method is basic for all entities.The method is one of CRUD methods.
@@ -75,9 +78,9 @@ public class CommonEntityDAOImpl extends HibernateDaoSupport implements CommonEn
 	 * 
 	 * @return Object
 	 */
-	public <T> Object getEntityById(Class<T> entityClass,Long idEntity) {
+	@SuppressWarnings("unchecked")
+	public <T> Object getEntityById(Long idEntity) {
 		logger.info("EntityDAO:Entity"+entityClass.getName()+" loaded successfully id="+idEntity);
-		
 		return this.getHibernateTemplate().get(entityClass, idEntity);
 	}
 
@@ -114,7 +117,8 @@ public class CommonEntityDAOImpl extends HibernateDaoSupport implements CommonEn
 	 * @param entityClass
 	 * @param idEntity
 	 */
-	public <T> void deleteEntityById(Class<T> entityClass,Long idEntity) {
+	@SuppressWarnings("unchecked")
+	public <T> void deleteEntityById(Long idEntity) {
 		
 		logger.info("EntityDAO:Entity" + entityClass.getName()+ " delete successfully,id=" + idEntity);
 		Object entity = this.getHibernateTemplate().get(entityClass, idEntity);
@@ -143,7 +147,7 @@ public class CommonEntityDAOImpl extends HibernateDaoSupport implements CommonEn
 	 * @return List<Object>
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> List<Object> getListEntity(Class<T> entityClass) {
+	public <T> List<Object> getListEntity() {
 
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory()
 				.getCurrentSession().createCriteria(entityClass);

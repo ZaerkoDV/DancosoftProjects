@@ -63,9 +63,9 @@ public class ForumDAOImpl extends CommonEntityDAOImpl implements ForumDAO {
 
 	private static final Logger logger = LoggerFactory.getLogger(ForumDAOImpl.class);
 
-//	public ForumDAOImpl(){
-//		super(Forum.class);
-//	}
+	public ForumDAOImpl(){
+		super(Forum.class);
+	}
 	
 	/**
 	 * Method return list forum which crated between dates. If forums

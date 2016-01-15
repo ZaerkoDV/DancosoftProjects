@@ -62,9 +62,9 @@ public class AccountGroupDAOImpl extends CommonEntityDAOImpl implements	AccountG
 
 	private static final Logger logger = LoggerFactory.getLogger(AccountGroupDAOImpl.class);
 
-//	public AccountGroupDAOImpl(){
-//		super(AccountGroup.class);
-//	}
+	public AccountGroupDAOImpl(){
+		super(AccountGroup.class);
+	}
 	
 	/**
 	 * Method cheack account group on block status by id group. If group

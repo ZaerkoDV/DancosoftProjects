@@ -61,9 +61,9 @@ public class UserDAOImpl extends CommonEntityDAOImpl implements UserDAO {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
 
-//	public UserDAOImpl(){
-//		super(User.class);
-//	}
+	public UserDAOImpl(){
+		super(User.class);
+	}
 	
 	/**
 	 * Method return list of user accounts. If user accounts are

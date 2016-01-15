@@ -55,9 +55,9 @@ public class UserPhotoDAOImpl extends CommonEntityDAOImpl implements UserPhotoDA
 
 	private static final Logger logger = LoggerFactory.getLogger(UserPhotoDAOImpl.class);
 
-//	public UserPhotoDAOImpl(){
-//		super(UserPhoto.class);
-//	}
+	public UserPhotoDAOImpl(){
+		super(UserPhoto.class);
+	}
 	
 	/**
 	 * Method return user photo by id user. If user photo is not exist return null

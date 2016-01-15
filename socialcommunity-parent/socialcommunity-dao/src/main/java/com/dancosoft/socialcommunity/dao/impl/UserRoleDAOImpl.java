@@ -25,6 +25,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dancosoft.socialcommunity.dao.UserRoleDAO;
 import com.dancosoft.socialcommunity.model.User;
+import com.dancosoft.socialcommunity.model.UserRole;
 import com.dancosoft.socialcommunity.model.UserSecurity;
 
 /**
@@ -61,9 +62,9 @@ public class UserRoleDAOImpl extends CommonEntityDAOImpl implements UserRoleDAO 
 
 	private static final Logger logger = LoggerFactory.getLogger(UserRoleDAOImpl.class);
 	
-//	public UserRoleDAOImpl(){
-//		super(UserRole.class);
-//	}
+	public UserRoleDAOImpl(){
+		super(UserRole.class);
+	}
 	
 	/**
 	 * Method return list user by user role. If users are not exist return empty list

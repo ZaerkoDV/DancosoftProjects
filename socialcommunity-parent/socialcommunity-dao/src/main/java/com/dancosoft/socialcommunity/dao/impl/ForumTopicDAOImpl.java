@@ -64,9 +64,9 @@ public class ForumTopicDAOImpl extends CommonEntityDAOImpl implements ForumTopic
 	
 	private static final Logger logger = LoggerFactory.getLogger(ForumTopicDAOImpl.class);
 	
-//	public ForumTopicDAOImpl(){
-//		super(ForumTopic.class);
-//	}
+	public ForumTopicDAOImpl(){
+		super(ForumTopic.class);
+	}
 	
 	/**
 	 * Method return account(author) which create forum topic by id forum topic.

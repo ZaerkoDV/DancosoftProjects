@@ -60,9 +60,9 @@ public class AccountGroupHistoryDAOImpl extends CommonEntityDAOImpl implements A
 
 	private static final Logger logger = LoggerFactory.getLogger(AccountGroupHistoryDAOImpl.class);
 	
-//	public AccountGroupHistoryDAOImpl(){
-//		super(AccountGroupHistory.class);
-//	}
+	public AccountGroupHistoryDAOImpl(){
+		super(AccountGroupHistory.class);
+	}
 	
 	/**
 	 * Method return account group history by id account group. If account group

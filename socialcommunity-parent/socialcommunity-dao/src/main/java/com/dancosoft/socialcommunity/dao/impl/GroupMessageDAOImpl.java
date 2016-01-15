@@ -64,9 +64,9 @@ public class GroupMessageDAOImpl extends CommonEntityDAOImpl implements GroupMes
 
 	private static final Logger logger = LoggerFactory.getLogger(GroupMessageDAOImpl.class);
 
-//	public GroupMessageDAOImpl(){
-//		super(GroupMessage.class);
-//	}
+	public GroupMessageDAOImpl(){
+		super(GroupMessage.class);
+	}
 	
 	/**
 	 * Method return member account by id message which user create in account group.

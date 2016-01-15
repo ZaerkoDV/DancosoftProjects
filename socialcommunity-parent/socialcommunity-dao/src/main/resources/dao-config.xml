@@ -131,11 +131,7 @@
 	<beans:bean id="userSocialNetworkDAO" class="com.dancosoft.socialcommunity.dao.impl.UserSocialNetworkDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
-<!--											   
-	<beans:bean id="testObjectDAOCreator" class="com.dancosoft.socialcommunity.dao.testsupport.TestObjectDAOCreator">
-		<beans:property name="commonEntityDAO" ref="commonEntityDAO"/>
-	</beans:bean>
- -->
+
 	<context:annotation-config/>
 	
 	<context:component-scan base-package="com.dancosoft.socialcommunity">

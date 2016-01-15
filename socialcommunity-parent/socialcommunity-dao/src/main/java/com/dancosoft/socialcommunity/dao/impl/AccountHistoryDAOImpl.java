@@ -62,9 +62,9 @@ public class AccountHistoryDAOImpl  extends CommonEntityDAOImpl implements Accou
 	
 	private static final Logger logger = LoggerFactory.getLogger(AccountHistoryDAOImpl.class);
 	
-//	public AccountHistoryDAOImpl(){
-//		super(AccountHistory.class);
-//	}
+	public AccountHistoryDAOImpl(){
+		super(AccountHistory.class);
+	}
 	
 	/**
 	 * This is instance of class TimeConverter which

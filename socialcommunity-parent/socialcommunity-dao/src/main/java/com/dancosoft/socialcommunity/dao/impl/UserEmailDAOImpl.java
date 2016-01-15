@@ -60,9 +60,9 @@ public class UserEmailDAOImpl extends CommonEntityDAOImpl implements UserEmailDA
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserEmailDAOImpl.class);	
 	
-//	public UserEmailDAOImpl(){
-//		super(UserEmail.class);
-//	}
+	public UserEmailDAOImpl(){
+		super(UserEmail.class);
+	}
 	
 	/**
 	 * Method return list of user email with view status. If list is not exist return empty list.

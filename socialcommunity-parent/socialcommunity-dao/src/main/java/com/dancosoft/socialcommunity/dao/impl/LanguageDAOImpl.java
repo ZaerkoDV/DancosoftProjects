@@ -17,6 +17,7 @@ package com.dancosoft.socialcommunity.dao.impl;
 import org.springframework.stereotype.Repository;
 
 import com.dancosoft.socialcommunity.dao.LanguageDAO;
+import com.dancosoft.socialcommunity.model.Language;
 
 /**
  * <p>
@@ -33,7 +34,7 @@ import com.dancosoft.socialcommunity.dao.LanguageDAO;
 @Repository(value="languageDAO")
 public class LanguageDAOImpl extends CommonEntityDAOImpl implements LanguageDAO {
 	
-//	public LanguageDAOImpl(){
-//		super(Language.class);
-//	}	
+	public LanguageDAOImpl(){
+		super(Language.class);
+	}	
 }

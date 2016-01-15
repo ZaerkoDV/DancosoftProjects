@@ -18,17 +18,18 @@
 	<mvc:resources mapping="/resources/**" location="/resources/" />
      
      <!-- DB properities file location-->
+     <!--
      <beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<beans:property name="location">
 			<beans:value>datasource.properties</beans:value>
 		</beans:property>
 	</beans:bean>
-     
+     -->
 	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"	destroy-method="close">
-		<beans:property name="driverClassName" value="${jdbc.driverClassName}" /><!--com.mysql.jdbc.Driver  -->
-		<beans:property name="url" value="${jdbc.url}" />						 <!--jdbc:mysql://localhost:3306/social_community-->
-		<beans:property name="username" value="${jdbc.username}" />				 <!-- root -->
-		<beans:property name="password" value="${jdbc.password}" />				 <!--  -->
+		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />					<!--com.mysql.jdbc.Driver  ${jdbc.driverClassName}-->
+		<beans:property name="url" value="jdbc:mysql://localhost:3306/social_community" />	 <!--${jdbc.url}-->
+		<beans:property name="username" value="root" />											 <!-- root ${jdbc.username}-->
+		<beans:property name="password" value="" />												 <!-- ${jdbc.password} -->
 	</beans:bean>
 
 	<beans:bean id="hibernate4AnnotatedSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">

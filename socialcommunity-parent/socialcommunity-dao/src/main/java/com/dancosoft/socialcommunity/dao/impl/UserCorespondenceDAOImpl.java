@@ -61,9 +61,9 @@ public class UserCorespondenceDAOImpl extends CommonEntityDAOImpl implements Use
 
 	private static final Logger logger = LoggerFactory.getLogger(UserCorespondenceDAOImpl.class);
 
-//	public UserCorespondenceDAOImpl(){
-//		super(UserCorespondence.class);
-//	}
+	public UserCorespondenceDAOImpl(){
+		super(UserCorespondence.class);
+	}
 	
 	/**
 	 * Method return status user corespondence by id user corespondence.

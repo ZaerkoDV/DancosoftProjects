@@ -25,54 +25,54 @@ import com.dancosoft.socialcommunity.model.Forum;
  *
  */
 
-public class AccountForumDAOTest extends TestStarter {
+public class AccountForumDAOTest {//extends TestStarter {
 
-	private static final Logger logger = LoggerFactory.getLogger(AccountForumDAOTest.class);
-
-	@Autowired
-	@Qualifier("accountForumDAO")
-	private AccountForumDAO accountForumDAO;
-
-	@Autowired
-	@Qualifier("testObjectDAOCreator")
-	private TestObjectDAOCreator testObjectDAOCreator;
-
-	public void setAccountForumDAO(AccountForumDAO accountForumDAO) {
-		this.accountForumDAO = accountForumDAO;
-	}
-
-	public void setTestObjectDAOCreator(TestObjectDAOCreator testObjectDAOCreator) {
-		this.testObjectDAOCreator = testObjectDAOCreator;
-	}
-
-	public AccountForum accountForum;
-	public Account account;
-	public Forum forum;
-
-	@Before
-	public void initObjectsBeforeTest() {
-		this.accountForum = testObjectDAOCreator.createAccountForumForTest();
-		this.account =accountForum.getAccount();
-		this.forum = accountForum.getForum();
-	}
-	
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingListAccountByIdForum() {
-
-		logger.info("AccountForumDAOTest: test method GetListAccountByIdForum");
-		List<Account>list=accountForumDAO.getListAccountByIdForum(forum.getIdForum());
-		Assert.assertFalse(list.isEmpty());
-	}
-	
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingListForumByIdAccount() {
-
-		logger.info("AccountForumDAOTest: test method GetListForumByIdAccount");
-		List<Forum>list=accountForumDAO.getListForumByIdAccount(account.getIdAccount());
-		Assert.assertFalse(list.isEmpty());
-	}
+//	private static final Logger logger = LoggerFactory.getLogger(AccountForumDAOTest.class);
+//
+//	@Autowired
+//	@Qualifier("accountForumDAO")
+//	private AccountForumDAO accountForumDAO;
+//
+//	@Autowired
+//	@Qualifier("testObjectDAOCreator")
+//	private TestObjectDAOCreator testObjectDAOCreator;
+//
+//	public void setAccountForumDAO(AccountForumDAO accountForumDAO) {
+//		this.accountForumDAO = accountForumDAO;
+//	}
+//
+//	public void setTestObjectDAOCreator(TestObjectDAOCreator testObjectDAOCreator) {
+//		this.testObjectDAOCreator = testObjectDAOCreator;
+//	}
+//
+//	public AccountForum accountForum;
+//	public Account account;
+//	public Forum forum;
+//
+//	@Before
+//	public void initObjectsBeforeTest() {
+//		this.accountForum = testObjectDAOCreator.createAccountForumForTest();
+//		this.account =accountForum.getAccount();
+//		this.forum = accountForum.getForum();
+//	}
+//	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListAccountByIdForum() {
+//
+//		logger.info("AccountForumDAOTest: test method GetListAccountByIdForum");
+//		List<Account>list=accountForumDAO.getListAccountByIdForum(forum.getIdForum());
+//		Assert.assertFalse(list.isEmpty());
+//	}
+//	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListForumByIdAccount() {
+//
+//		logger.info("AccountForumDAOTest: test method GetListForumByIdAccount");
+//		List<Forum>list=accountForumDAO.getListForumByIdAccount(account.getIdAccount());
+//		Assert.assertFalse(list.isEmpty());
+//	}
 }

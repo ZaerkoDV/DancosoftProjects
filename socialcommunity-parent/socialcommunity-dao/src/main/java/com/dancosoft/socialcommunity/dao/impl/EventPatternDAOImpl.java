@@ -37,7 +37,7 @@ import com.dancosoft.socialcommunity.model.EventPattern;
 @Repository(value = "eventPatternDAO")
 public class EventPatternDAOImpl extends CommonEntityDAOImpl implements	EventPatternDAO {
 	
-//	public EventPatternDAOImpl(){
-//		super(EventPattern.class);
-//	}
+	public EventPatternDAOImpl(){
+		super(EventPattern.class);
+	}
 }

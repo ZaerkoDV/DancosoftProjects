@@ -28,61 +28,61 @@ import com.dancosoft.socialcommunity.model.Country;
  * @author Zaerko_DV
  *
  */
-public class CityDAOTest extends TestStarter {
+public class CityDAOTest {//extends TestStarter {
 
-	private static final Logger logger = LoggerFactory.getLogger(CityDAOTest.class);
-
-	@Autowired
-	@Qualifier("cityDAO")
-	private CityDAO cityDAO;
-
-	@Autowired
-	@Qualifier("testObjectDAOCreator")
-	private TestObjectDAOCreator testObjectDAOCreator;
-
-	public void setCityDAO(CityDAO cityDAO) {
-		this.cityDAO = cityDAO;
-	}
-
-	public void setTestObjectDAOCreator(TestObjectDAOCreator testObjectDAOCreator) {
-		this.testObjectDAOCreator = testObjectDAOCreator;
-	}
-
-	public City city;
-	public Country country;
-
-	@Before
-	public void initObjectsBeforeTest() {
-		this.city = testObjectDAOCreator.createCityForTest();
-		this.country = city.getCountry();
-	}
-
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingListCityByIdCountry() {
-
-		logger.info("CityDAOTest: test method GetListCityByIdCountry");
-		List<City> list=cityDAO.getListCityByIdCountry(country.getIdCountry());
-		Assert.assertFalse(list.isEmpty());
-	}
-	
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testGettingCountryByIdCity() {
-
-		logger.info("CityDAOTest: test method GetCountryByIdCity");
-		Assert.assertNotNull(cityDAO.getCountryByIdCity(city.getIdCity()));
-	}
-	
-	@Transactional
-	@Rollback(true)
-	@Test
-	public void testSearchingCityByCityName() {
-
-		logger.info("CountryDAOTest: test method SearchCityByCityName");
-		List<City> list=cityDAO.searchCityByCityName(city.getCityName());
-		Assert.assertFalse(list.isEmpty());
-	}
+//	private static final Logger logger = LoggerFactory.getLogger(CityDAOTest.class);
+//
+//	@Autowired
+//	@Qualifier("cityDAO")
+//	private CityDAO cityDAO;
+//
+//	@Autowired
+//	@Qualifier("testObjectDAOCreator")
+//	private TestObjectDAOCreator testObjectDAOCreator;
+//
+//	public void setCityDAO(CityDAO cityDAO) {
+//		this.cityDAO = cityDAO;
+//	}
+//
+//	public void setTestObjectDAOCreator(TestObjectDAOCreator testObjectDAOCreator) {
+//		this.testObjectDAOCreator = testObjectDAOCreator;
+//	}
+//
+//	public City city;
+//	public Country country;
+//
+//	@Before
+//	public void initObjectsBeforeTest() {
+//		this.city = testObjectDAOCreator.createCityForTest();
+//		this.country = city.getCountry();
+//	}
+//
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingListCityByIdCountry() {
+//
+//		logger.info("CityDAOTest: test method GetListCityByIdCountry");
+//		List<City> list=cityDAO.getListCityByIdCountry(country.getIdCountry());
+//		Assert.assertFalse(list.isEmpty());
+//	}
+//	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testGettingCountryByIdCity() {
+//
+//		logger.info("CityDAOTest: test method GetCountryByIdCity");
+//		Assert.assertNotNull(cityDAO.getCountryByIdCity(city.getIdCity()));
+//	}
+//	
+//	@Transactional
+//	@Rollback(true)
+//	@Test
+//	public void testSearchingCityByCityName() {
+//
+//		logger.info("CountryDAOTest: test method SearchCityByCityName");
+//		List<City> list=cityDAO.searchCityByCityName(city.getCityName());
+//		Assert.assertFalse(list.isEmpty());
+//	}
 }

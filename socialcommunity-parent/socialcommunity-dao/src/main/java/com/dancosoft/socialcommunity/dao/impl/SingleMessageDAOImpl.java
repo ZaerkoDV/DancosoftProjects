@@ -64,9 +64,9 @@ public class SingleMessageDAOImpl extends CommonEntityDAOImpl implements SingleM
 
 	private static final Logger logger = LoggerFactory.getLogger(SingleMessageDAOImpl.class);
 
-//	public SingleMessageDAOImpl(){
-//		super(SingleMessage.class);
-//	}
+	public SingleMessageDAOImpl(){
+		super(SingleMessage.class);
+	}
 	
 	/**
 	 * Method return list of user messages which created between date. If messages are not exist return empty list.

@@ -62,9 +62,9 @@ public class AccountDAOImpl extends CommonEntityDAOImpl implements AccountDAO {
 
 	private static final Logger logger = LoggerFactory.getLogger(AccountDAOImpl.class);
 
-//	public AccountDAOImpl(){
-//		super(Account.class);
-//	}
+	public AccountDAOImpl(){
+		super(Account.class);
+	}
 	
 	/**
 	 * Search account by his attribute lastName and by last name his ovner.

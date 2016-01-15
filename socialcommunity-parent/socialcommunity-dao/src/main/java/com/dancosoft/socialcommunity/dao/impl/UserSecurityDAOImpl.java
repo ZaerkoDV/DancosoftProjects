@@ -61,9 +61,9 @@ public class UserSecurityDAOImpl extends CommonEntityDAOImpl implements UserSecu
 
 	private static final Logger logger = LoggerFactory.getLogger(UserSecurityDAOImpl.class);
 
-//	public UserSecurityDAOImpl(){
-//		super(UserSecurity.class);
-//	}
+	public UserSecurityDAOImpl(){
+		super(UserSecurity.class);
+	}
 	
 	/**
 	 * Method return user by login and password. If user is not exist return null.

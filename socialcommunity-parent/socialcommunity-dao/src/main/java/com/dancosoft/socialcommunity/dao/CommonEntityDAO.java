@@ -40,7 +40,7 @@ public interface CommonEntityDAO {
 	 * 
 	 * @return Object
 	 */
-	public <T> Object getEntityById(Class<T> entityClass,Long idEntity);
+	public <T> Object getEntityById(Long idEntity);
 
 	/**
 	 * This method is basic for all entities.The method is one of CRUD methods.
@@ -69,7 +69,7 @@ public interface CommonEntityDAO {
 	 * @param entityClass
 	 * @param idEntity
 	 */
-	public <T> void deleteEntityById(Class<T> entityClass,Long idEntity);
+	public <T> void deleteEntityById(Long idEntity);
 
 	/**
 	 * This method is basic for all entities.The method is one of CRUD methods.
@@ -89,5 +89,5 @@ public interface CommonEntityDAO {
 	 * 
 	 * @return List<Object>
 	 */
-	public <T> List<Object> getListEntity(Class<T> entityClass);
+	public <T> List<Object> getListEntity();
 }
