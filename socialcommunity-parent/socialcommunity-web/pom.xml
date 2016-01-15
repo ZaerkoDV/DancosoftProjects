@@ -27,6 +27,7 @@
 			<artifactId>jackson-core-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
+		
 		<!--для преобразования json в pojo  -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>

@@ -15,7 +15,7 @@
         <dependent-module archiveName="socialcommunity-model-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/socialcommunity-model/socialcommunity-model">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-		<property name="context-root" value="socialcommunity-web"/>
 		<property name="java-output-path" value="/socialcommunity-web/target/classes"/>
+        <property name="context-root" value="socialcommunity-web"/>
 	</wb-module>
 </project-modules>

@@ -23,17 +23,18 @@
 
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 
-<!-- <beans:bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-        <beans:property name="resourceLoaderPath" value=""/>
-    </beans:bean>
+<!--
+	 <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value=""/>
+    </bean>
 
-    <beans:bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
-        <beans:property name="cache" value="true"/>
-        <beans:property name="prefix" value=""/>
-        <beans:property name="suffix" value=""/>
-        <beans:property name="exposeSpringMacroHelpers" value="true"/>
-    </beans:bean> -->
-
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        <property name="cache" value="true"/>
+        <property name="prefix" value=""/>
+        <property name="suffix" value=""/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+    </bean>
+-->
 
 </beans>
 

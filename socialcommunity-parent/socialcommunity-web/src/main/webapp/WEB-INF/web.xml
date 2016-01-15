@@ -28,10 +28,10 @@
 	</context-param>
 
 <!--
-		<welcome-file-list>
-		 	<welcome-file>/index.html</welcome-file>
-		</welcome-file-list>
--->	
+	<welcome-file-list>
+	 	<welcome-file>http://localhost:8080/socialcommunity/views/index.html</welcome-file>
+	</welcome-file-list>
+ -->
 
 	<servlet-mapping>
 		<servlet-name>socialcommunity-web</servlet-name>
