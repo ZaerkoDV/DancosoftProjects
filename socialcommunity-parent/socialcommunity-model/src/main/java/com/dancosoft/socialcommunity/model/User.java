@@ -21,6 +21,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Type;
+
 /**
  * User entity describe base characteristics and behavior of user enity.This
  * class is basic for all user in system (user may not have account but must
@@ -96,7 +98,8 @@ public class User implements Serializable {
 	 * @type String
 	 */
 	@NotNull
-	@Column(name = "sex", nullable = false,columnDefinition = "VARCHAR(1)")
+	@Column(name = "sex")
+	@Type(type = "org.hibernate.type.StringType")//, nullable = false,columnDefinition = "VARCHAR(1)"
 	private String sex;
 
 	/**

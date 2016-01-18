@@ -28,7 +28,6 @@ import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.dancosoft.socialcommunity.dao.UserAutobiographyDAO;
-import com.dancosoft.socialcommunity.model.SingleMessage;
 import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserAutobiography;
 import com.dancosoft.socialcommunity.service.UserAutobiographyService;
@@ -204,57 +203,57 @@ public class UserAutobiographyServiceImpl implements UserAutobiographyService{
 	 * hibernateTamplate method get)
 	 * 
 	 * @type Long
-	 * @param idSingleMessage
+	 * @param idUserAutobiographyService
 	 * 
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
-	 * @return SingleMessage
+	 * @return UserAutobiographyService
 	 */
-	public SingleMessage getEntityById(Long idSingleMessage) {
+	public UserAutobiography getUserAutobiographyById(Long idUserAutobiography) {
 		
-		SingleMessage singleMessage = null;
-		if (idSingleMessage.equals(null) || idSingleMessage.equals("")) {
-			throw new RuntimeException("SingleMessageService:Id entity is null");
+		UserAutobiography userAutobiography = null;
+		if (idUserAutobiography.equals(null) || idUserAutobiography.equals("")) {
+			throw new RuntimeException("UserAutobiographyService:Id entity is null");
 		} else {
 			try {
-				singleMessage = (SingleMessage) userAutobiographyDAO.getEntityById(idSingleMessage);
-				logger.info("EntityService:Entity loaded successfully id=" + idSingleMessage);
+				userAutobiography = (UserAutobiography) userAutobiographyDAO.getEntityById(idUserAutobiography);
+				logger.info("UserAutobiographyService:Entity loaded successfully id=" + idUserAutobiography);
 				
 			} catch (DataRetrievalFailureException rf) {
-				logger.warn("SingleMessageService:Not found entity in data base=" + rf);
+				logger.warn("UserAutobiographyService:Not found entity in data base=" + rf);
 			
 			} catch (DataAccessException da) {
-				logger.error("SingleMessageService:Exeption connect with data base or other error= "+da);
+				logger.error("UserAutobiographyService:Exeption connect with data base or other error= "+da);
 			}
 		}
-		return singleMessage;
+		return userAutobiography;
 	}
 	
 	/**
 	 * This method is basic for all entities.The method is one of CRUD methods.
 	 * Method save entity if entity not null.
 	 * 
-	 * @type SingleMessage
-	 * @param singleMessage
+	 * @type UserAutobiography
+	 * @param userAutobiography
 	 * 
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
-	public void saveSingleMessage(SingleMessage singleMessage) {
+	public void saveUserAutobiographyService(UserAutobiography userAutobiography) {
 		
-		if(singleMessage.equals(null)){
-			throw new RuntimeException("SingleMessageService: Entity not save becouse entity is null.");
+		if(userAutobiography.equals(null)){
+			throw new RuntimeException("UserAutobiographyService: Entity not save becouse entity is null.");
 		} else {
 			try {
-				userAutobiographyDAO.saveEntity(singleMessage);
-				logger.info("SingleMessageService:Entity save successfully");
+				userAutobiographyDAO.saveEntity(userAutobiography);
+				logger.info("UserAutobiographyService:Entity save successfully");
 				
 			} catch (TypeMismatchDataAccessException tm) {
-				logger.error("SingleMessageService:New entity not save becouse mismatch field type "+tm);
+				logger.error("UserAutobiographyService:New entity not save becouse mismatch field type "+tm);
 				
 			}catch (DataAccessException da) {
-				logger.error("SingleMessageService:Exeption connect with data base or other error= "+da);
+				logger.error("UserAutobiographyService:Exeption connect with data base or other error= "+da);
 			}
 		}
 	}
@@ -263,26 +262,26 @@ public class UserAutobiographyServiceImpl implements UserAutobiographyService{
 	 * This method is basic for all entities.The method is one of CRUD methods.
 	 * Method update entity if entity not null.
 	 * 
-	 * @type SingleMessage
-	 * @param singleMessage
+	 * @type UserAutobiography
+	 * @param userAutobiography
 	 * 
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
-	public void updateSingleMessage(SingleMessage singleMessage) {
+	public void updateUserAutobiography(UserAutobiography userAutobiography) {
 		
-		if (singleMessage.equals(null)) {
-			throw new RuntimeException("SingleMessageService: Entity not save becouse entity is null.");
+		if (userAutobiography.equals(null)) {
+			throw new RuntimeException("UserAutobiographyService: Entity not save becouse entity is null.");
 		} else {
 			try {
-				logger.info("SingleMessageService:Entity update successfully");
-				userAutobiographyDAO.updateEntity(singleMessage);
+				logger.info("UserAutobiographyService:Entity update successfully");
+				userAutobiographyDAO.updateEntity(userAutobiography);
 				
 			} catch (TypeMismatchDataAccessException tm) {
-				logger.error("SingleMessageService:New entity not update becouse mismatch field type "+ tm);
+				logger.error("UserAutobiographyService:New entity not update becouse mismatch field type "+ tm);
 				
 			} catch (DataAccessException da) {
-				logger.error("SingleMessageService:Exeption connect with data base or other error= "+da);
+				logger.error("UserAutobiographyService:Exeption connect with data base or other error= "+da);
 			}
 		}
 	}
@@ -292,26 +291,26 @@ public class UserAutobiographyServiceImpl implements UserAutobiographyService{
 	 * Method delete entity by id if entity not null.
 	 * 
 	 * @type Long
-	 * @param idSingleMessage
+	 * @param idUserAutobiography
 	 * 
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
-	public void deleteSingleMessageById(Long idSingleMessage) {
+	public void deleteUserAutobiographyById(Long idUserAutobiography) {
 		
-		if (idSingleMessage.equals(null) || idSingleMessage.equals("")) {
-			throw new RuntimeException("SingleMessageService:Id entity is null");
+		if (idUserAutobiography.equals(null) || idUserAutobiography.equals("")) {
+			throw new RuntimeException("UserAutobiographyService:Id entity is null");
 		} else{
 			try {
-				logger.info("SingleMessageService:Entity  delete successfully,id=" + idSingleMessage);
-				userAutobiographyDAO.deleteEntityById(idSingleMessage);
+				logger.info("UserAutobiographyService:Entity  delete successfully,id=" + idUserAutobiography);
+				userAutobiographyDAO.deleteEntityById(idUserAutobiography);
 				
 			} catch (DataRetrievalFailureException rf) {
-				logger.warn("SingleMessageService: Operation delete is faled becouse"
+				logger.warn("UserAutobiographyService: Operation delete is faled becouse"
 						+ " not found entity in data base by id=" + rf);
 				
 			} catch (DataAccessException da) {
-				logger.error("SingleMessageService:Exeption connect with data base or other error= "+da);
+				logger.error("UserAutobiographyService:Exeption connect with data base or other error= "+da);
 			}
 		}
 	}
@@ -320,21 +319,21 @@ public class UserAutobiographyServiceImpl implements UserAutobiographyService{
 	 * This method is basic for all entities.The method is one of CRUD methods.
 	 * Method delete entity if entity not null.
 	 * 
-	 * @type SingleMessage
-	 * @param singleMessage
+	 * @type UserAutobiography
+	 * @param userAutobiography
 	 * @exception DataAccessException
 	 */
-	public void deleteSingleMessage(SingleMessage singleMessage) {
+	public void deleteUserAutobiography(UserAutobiography userAutobiography) {
 		
-		if (singleMessage.equals(null)) {
-			throw new RuntimeException("SingleMessageService: Object is "+singleMessage+ " yet and not delete again.");
+		if (userAutobiography.equals(null)) {
+			throw new RuntimeException("UserAutobiographyService: Object is "+userAutobiography+ " yet and not delete again.");
 		}else{
 			try {
-				logger.info("SingleMessageService:Entity " + singleMessage + " delete successfully");
-				userAutobiographyDAO.deleteEntity(singleMessage);
+				logger.info("UserAutobiographyService:Entity " + userAutobiography + " delete successfully");
+				userAutobiographyDAO.deleteEntity(userAutobiography);
 				
 			} catch (DataAccessException da) {
-				logger.error("SingleMessageService:Exeption connect with data base or other error= "+da);
+				logger.error("UserAutobiographyService:Exeption connect with data base or other error= "+da);
 			}
 		}
 	}
@@ -348,18 +347,18 @@ public class UserAutobiographyServiceImpl implements UserAutobiographyService{
 	 * 
 	 * @return List<Object>
 	 */
-	public List<Object> getListEntity() {
+	public List<Object> getListUserAutobiography() {
 		
 		List<Object>list=Collections.emptyList();
 		try {
-			logger.info("SingleMessageService: List of entity load");
+			logger.info("UserAutobiographyService: List of entity load");
 			list=userAutobiographyDAO.getListEntity();
 			
 		} catch (DataRetrievalFailureException rf) {
-			logger.warn("SingleMessageService: List of entity not load becouse list is empty=" + rf);
+			logger.warn("UserAutobiographyService: List of entity not load becouse list is empty=" + rf);
 			
 		}catch (DataAccessException da) {
-			logger.error("SingleMessageService:Exeption connect with data base or other error= "+da);
+			logger.error("UserAutobiographyService:Exeption connect with data base or other error= "+da);
 		}
 		return list;
 	}

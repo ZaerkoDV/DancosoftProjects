@@ -22,7 +22,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 
-import com.dancosoft.socialcommunity.model.SingleMessage;
 import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserAutobiography;
 
@@ -102,60 +101,60 @@ public interface UserAutobiographyService {
 	 * hibernateTamplate method get)
 	 * 
 	 * @type Long
-	 * @param idSingleMessage
+	 * @param idUserAutobiographyService
 	 * 
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
-	 * @return SingleMessage
+	 * @return UserAutobiographyService
 	 */
-	public SingleMessage getEntityById(Long idSingleMessage);
+	public UserAutobiography getUserAutobiographyById(Long idUserAutobiography);
 	
 	/**
 	 * This method is basic for all entities.The method is one of CRUD methods.
 	 * Method save entity if entity not null.
 	 * 
-	 * @type SingleMessage
-	 * @param singleMessage
+	 * @type UserAutobiography
+	 * @param userAutobiography
 	 * 
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
-	public void saveSingleMessage(SingleMessage singleMessage);
+	public void saveUserAutobiographyService(UserAutobiography userAutobiography);
 	
 	/**
 	 * This method is basic for all entities.The method is one of CRUD methods.
 	 * Method update entity if entity not null.
 	 * 
-	 * @type SingleMessage
-	 * @param singleMessage
+	 * @type UserAutobiography
+	 * @param userAutobiography
 	 * 
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
-	public void updateSingleMessage(SingleMessage singleMessage);
+	public void updateUserAutobiography(UserAutobiography userAutobiography);
 	
 	/**
 	 * This method is basic for all entities.The method is one of CRUD methods.
 	 * Method delete entity by id if entity not null.
 	 * 
 	 * @type Long
-	 * @param idSingleMessage
+	 * @param idUserAutobiography
 	 * 
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
-	public void deleteSingleMessageById(Long idSingleMessage);
+	public void deleteUserAutobiographyById(Long idUserAutobiography);
 	
 	/**
 	 * This method is basic for all entities.The method is one of CRUD methods.
 	 * Method delete entity if entity not null.
 	 * 
-	 * @type SingleMessage
-	 * @param singleMessage
+	 * @type UserAutobiography
+	 * @param userAutobiography
 	 * @exception DataAccessException
 	 */
-	public void deleteSingleMessage(SingleMessage singleMessage);
+	public void deleteUserAutobiography(UserAutobiography userAutobiography);
 	
 	/**
 	 * This method is basic for all entities. Method return list of entity. If entyty
@@ -166,7 +165,5 @@ public interface UserAutobiographyService {
 	 * 
 	 * @return List<Object>
 	 */
-	public List<Object> getListEntity();
-	
-	
+	public List<Object> getListUserAutobiography();
 }

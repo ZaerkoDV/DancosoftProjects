@@ -3,22 +3,23 @@
 <head>
 	<meta charset="utf-8">
     <title>Social Community Service</title>
-   
+    
 	<link rel="stylesheet" href="resources/css/app.css"/>
     <link rel="stylesheet" href="resources/bootstrap/css/bootstrap.css" />
-    
-    <script src="resources/js/angular/angular.js"></script>	
+   
+	<script src="resources/js/angular/angular.js"></script>
 	<script src="resources/js/angular/angular-route.js"></script>
-
+	
+	<script src="resources/bootstrap/js/jquery.min.js"></script>
+   	<script src="resources/bootstrap/js/bootstrap.js"></script>
+	
 	<script src="resources/js/app.js"></script>
 	<script src="resources/js/controllers/IndexController.js"></script>
-	<script src="resources/js/controllers/UserController.js"></script>
-	<script src="resources/js/controllers/AdministratorController.js"></script>
 	
 	<script src="resources/js/services.js"></script>
 	<script src="resources/js/filters.js"></script>
 	<script src="resources/js/directives.js"></script>
-    
+
 <style>
 
 #bg {
@@ -57,14 +58,20 @@
 	        <li class="active"><a href="#">HOME</a></li>
 	      </ul>
 	      <ul class="nav navbar-nav navbar-right">
-	        <li><a href="#/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-	        <li><a href="#/signin"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+	        <li>
+	        	<a href="#/signup"><span class="glyphicon glyphicon-user"></span>Sign Up</a>
+	        </li>
+	        <li>
+	        	<a href="#/signin">
+	        	<span class="glyphicon glyphicon-log-in"></span> Login</a>
+	        </li>
 	      </ul>
 	    </div>
 	  </div>
 	</nav>
 	
-	<div ng-view></div>
-
+	
+	<ng-view></ng-view>
+	
   </body>
 </html>

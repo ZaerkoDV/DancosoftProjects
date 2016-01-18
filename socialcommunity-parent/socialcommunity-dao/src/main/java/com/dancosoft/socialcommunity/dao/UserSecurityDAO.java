@@ -14,6 +14,7 @@ package com.dancosoft.socialcommunity.dao;
 import java.util.List;
 
 import com.dancosoft.socialcommunity.model.User;
+import com.dancosoft.socialcommunity.model.UserRole;
 import com.dancosoft.socialcommunity.model.UserSecurity;
 
 /**
@@ -100,6 +101,17 @@ public interface UserSecurityDAO extends CommonEntityDAO {
 	 */
 	public String getUserRoleByIdUser(Long idUser);
 
+	/**
+	 * Method return user role by id user. If user role not
+	 * exist return null else return true.
+	 * 
+	 * @type UserRole
+	 * @param idUser
+	 * 
+	 * @return UserRole
+	 */
+	public UserRole getUserRoleAsObjectByIdUser(Long idUser);
+	
 	/**
 	 * Method return list of user with User role. If user with user role is not
 	 * exist in system return empty list.

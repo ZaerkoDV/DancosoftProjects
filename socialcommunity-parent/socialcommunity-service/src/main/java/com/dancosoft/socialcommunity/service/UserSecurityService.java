@@ -25,6 +25,7 @@ import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 
 import com.dancosoft.socialcommunity.model.User;
+import com.dancosoft.socialcommunity.model.UserRole;
 import com.dancosoft.socialcommunity.model.UserSecurity;
 
 /**
@@ -126,7 +127,22 @@ public interface UserSecurityService {
 	 * @return String
 	 */
 	public String getUserRoleByIdUser(Long idUser);
-
+	
+	/**
+	 * Method return user role bu id user. If user role not
+	 * exist return null else return true.
+	 * 
+	 * @type Long
+	 * @param idUser
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception NonUniqueResultException
+	 * @exception DataAccessException
+	 * 
+	 * @return UserRole
+	 */
+	public UserRole getUserRoleAsObjectByIdUser(Long idUser);
+	
 	/**
 	 * Method return list of user with User role. If user with user role is not
 	 * exist in system return empty list.

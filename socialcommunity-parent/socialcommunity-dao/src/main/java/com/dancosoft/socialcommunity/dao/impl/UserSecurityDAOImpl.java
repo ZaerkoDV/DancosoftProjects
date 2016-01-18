@@ -25,6 +25,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dancosoft.socialcommunity.dao.UserSecurityDAO;
 import com.dancosoft.socialcommunity.model.User;
+import com.dancosoft.socialcommunity.model.UserRole;
 import com.dancosoft.socialcommunity.model.UserSecurity;
 
 /**
@@ -210,6 +211,28 @@ public class UserSecurityDAOImpl extends CommonEntityDAOImpl implements UserSecu
 		logger.info("UserSecurityDAO:User role loaded by id user.");
 	
 		return (String) criteria.uniqueResult();
+	}
+	
+	/**
+	 * Method return user role by id user. If user role not
+	 * exist return null else return true.
+	 * 
+	 * @type UserRole
+	 * @param idUser
+	 * 
+	 * @return UserRole
+	 */
+	public UserRole getUserRoleAsObjectByIdUser(Long idUser){
+
+		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
+				.createCriteria(UserSecurity.class);
+		criteria.setProjection(Projections.property("userRole"));
+		criteria.createAlias("user", "u");
+		criteria.add(Restrictions.eq("u.idUser", idUser));
+		
+		logger.info("UserSecurityDAO:User role loaded by id user.");
+	
+		return (UserRole) criteria.uniqueResult();
 	}
 
 	/**

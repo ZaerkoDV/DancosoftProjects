@@ -1,3 +1,74 @@
-<div class="page-header">
-	<h2>commonprofile</h2>
-</div>
+
+
+<style>
+	
+	
+input:invalid {
+  border: 1px solid red;
+}
+
+input:valid {
+  border: 1px solid green;
+}
+
+</style>
+
+
+<title>Common Sign Up</title>
+
+  <div class="col-lg-6 col-lg-offset-2">
+	<div class="well">
+	    <div class="container">
+		    <div class="row">
+			   <div class="col-lg-6">
+				<form name="myForm" class="form-horizontal">
+					<fieldset>
+						<legend>Common Sign Up Form</legend>
+						
+					    <div class="form-group">
+					        <label for="userFirstName" class="col-lg-3 control-label">First Name</label>
+					        <div class="col-lg-8">
+					            <input type="text" class="form-control" id="firstName" ng-model="user.firstName" placeholder="Must not empty"
+					            required pattern=".{1,}" title="1 character minimum"
+					            onkeypress='return !(event.charCode >= 47 && event.charCode <= 57)'>
+					        </div>
+					    </div>
+					    <div class="form-group">
+					        <label for="lastName" class="col-lg-3 control-label">Last Name</label>
+					        <div class="col-lg-8">
+					            <input type="text" class="form-control" id="lastName" ng-model="user.lastName" placeholder="Must not empty"
+					            required pattern=".{1,}" title="1 character minimum"
+					            onkeypress='return !(event.charCode >= 47 && event.charCode <= 57)'>
+					        </div>
+					    </div>
+					    <div class="form-group">
+					        <label for="middleName" class="col-lg-3 control-label">Middle Name</label>
+					        <div class="col-lg-8">
+					            <input type="text" class="form-control" id="middleName" ng-model="user.middleName" placeholder="May be empty"
+					            required pattern=".{1,}" title="1 character minimum"
+					            onkeypress='return !(event.charCode >= 47 && event.charCode <= 57)' >					 
+					        </div>
+					    </div>
+					
+						<div class="form-group">
+							<label for="sex" class="col-lg-3 control-label">Sex </label>
+							<div class="col-lg-8">
+								<select class="form-control" id="sex" ng-model="user.sex" placeholder="Must select" >
+							   	 	<option value="M">M</option>
+							     	<option value="M">F</option>
+								</select>
+							</div>
+						</div>
+						
+						<div class="controls">  
+					         <button type="button" class="btn btn-primary" ng-disabled="!user.firstName || !user.lastName || !user.sex"
+					         ng-click="saveCommonUser(user)">Save</button>       
+					    </div>
+					    
+					 </fieldset>
+				</form>
+	          </div>
+	        </div>
+	     </div>
+      </div>
+   </div>

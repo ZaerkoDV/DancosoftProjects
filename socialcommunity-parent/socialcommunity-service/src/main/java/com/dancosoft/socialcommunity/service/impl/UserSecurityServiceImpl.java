@@ -33,6 +33,7 @@ import com.dancosoft.socialcommunity.dao.UserEmailDAO;
 import com.dancosoft.socialcommunity.dao.UserSecurityDAO;
 import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserEmail;
+import com.dancosoft.socialcommunity.model.UserRole;
 import com.dancosoft.socialcommunity.model.UserSecurity;
 import com.dancosoft.socialcommunity.service.UserSecurityService;
 import com.dancosoft.socialcommunity.service.support.email.EmailCreator;
@@ -298,6 +299,46 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 		}
 		return userRole;
 	}
+	
+	/**
+	 * Method return user role bu id user. If user role not
+	 * exist return null else return true.
+	 * 
+	 * @type Long
+	 * @param idUser
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception NonUniqueResultException
+	 * @exception DataAccessException
+	 * 
+	 * @return UserRole
+	 */
+	public UserRole getUserRoleAsObjectByIdUser(Long idUser){
+		
+		UserRole userRole=null;
+		if (idUser.equals(null)) {
+			throw new RuntimeException("UserSecurityService:Id user must not null.");
+		}else{
+			try {
+				logger.info("UserSecurityService:User role loaded by id user.");
+				userRole= userSecurityDAO.getUserRoleAsObjectByIdUser(idUser);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("UserSecurityService: User role for user with id "+idUser+"not exist" + rf);
+				
+			} catch (NonUniqueResultException nu) {
+				logger.error("UserSecurityService:User role for user with id is not unique." + nu);
+				
+			} catch (DataAccessException da) {
+				logger.error("UserSecurityService:Exeption connect with data base or other error= "+da);
+			}
+		}
+		return userRole;
+		
+		
+	}
+	
+	
 	
 	/**
 	 * Method return list of user with User role. If user with user role is not
