@@ -11,6 +11,9 @@
 package com.dancosoft.socialcommunity.model;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -143,19 +146,29 @@ public class GroupMessage implements Serializable {
 		this.groupMessage = groupMessage;
 	}
 
-	/**
-	 * @return the dateCreateGroupMessage
-	 */
-	public Date getDateCreateGroupMessage() {
-		return dateCreateGroupMessage;
+//	/**
+//	 * @return the dateCreateGroupMessage
+//	 */
+//	public Date getDateCreateGroupMessage() {
+//		return dateCreateGroupMessage;
+//	}
+//
+//	/**
+//	 * @param dateCreateGroupMessage
+//	 *            the dateCreateGroupMessage to set
+//	 */
+//	public void setDateCreateGroupMessage(Date dateCreateGroupMessage) {
+//		this.dateCreateGroupMessage = dateCreateGroupMessage;
+//	}
+	
+	public LocalDateTime getDateCreateGroupMessage() {
+		Instant instant = Instant.ofEpochMilli(dateCreateGroupMessage.getTime());
+		return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
 	}
-
-	/**
-	 * @param dateCreateGroupMessage
-	 *            the dateCreateGroupMessage to set
-	 */
-	public void setDateCreateGroupMessage(Date dateCreateGroupMessage) {
-		this.dateCreateGroupMessage = dateCreateGroupMessage;
+	
+	public void setDateCreateGroupMessage(LocalDateTime dateCreateGroupMessage) {
+		Instant instant = dateCreateGroupMessage.toInstant(ZoneOffset.UTC);		
+		this.dateCreateGroupMessage = Date.from(instant);
 	}
 
 	/**

@@ -28,6 +28,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.AccountGroupHistoryDAO;
 import com.dancosoft.socialcommunity.dao.impl.AccountGroupHistoryDAOImpl;
@@ -78,6 +79,7 @@ public class AccountGroupHistoryServiceImpl implements AccountGroupHistoryServic
 	 * 
 	 * @return AccountGroupHistory
 	 */
+	@Transactional
 	public AccountGroupHistory getAccountGroupHistoryByIdAccountGroup(Long idAccountGroup) {
 		
 		AccountGroupHistory accountGroupHistory=null;
@@ -115,6 +117,7 @@ public class AccountGroupHistoryServiceImpl implements AccountGroupHistoryServic
 	 * 
 	 * @return AccountGroupHistory
 	 */
+	@Transactional
 	public AccountGroupHistory getAccountGroupHistoryById(Long idAccountGroupHistory) {
 		
 		AccountGroupHistory accountGroupHistory = null;
@@ -146,6 +149,7 @@ public class AccountGroupHistoryServiceImpl implements AccountGroupHistoryServic
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveAccountGroupHistory(AccountGroupHistory accountGroupHistory) {
 		
 		if(accountGroupHistory.equals(null)){
@@ -174,6 +178,7 @@ public class AccountGroupHistoryServiceImpl implements AccountGroupHistoryServic
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateAccountGroupHistory(AccountGroupHistory accountGroupHistory) {
 		
 		if (accountGroupHistory.equals(null)) {
@@ -202,6 +207,7 @@ public class AccountGroupHistoryServiceImpl implements AccountGroupHistoryServic
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteAccountGroupHistoryById(Long idAccountGroupHistory) {
 		
 		if (idAccountGroupHistory.equals(null) || idAccountGroupHistory.equals("")) {
@@ -230,6 +236,7 @@ public class AccountGroupHistoryServiceImpl implements AccountGroupHistoryServic
 	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteAccountGroupHistory(AccountGroupHistory accountGroupHistory) {
 		
 		if (accountGroupHistory.equals(null)) {
@@ -254,6 +261,7 @@ public class AccountGroupHistoryServiceImpl implements AccountGroupHistoryServic
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListAccountGroupHistory() {
 		
 		List<Object>list=Collections.emptyList();

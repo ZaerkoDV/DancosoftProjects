@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,6 +24,7 @@ import com.dancosoft.socialcommunity.dao.testsupport.TestObjectDAOCreator;
 import com.dancosoft.socialcommunity.dao.testsupport.TestStarter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.SingleMessage;
+import com.dancosoft.socialcommunity.model.User;
 
 /**
  * @author Zaerko_DV
@@ -36,26 +38,74 @@ public class SingleMessageDAOTest {//extends TestStarter {
 //	@Qualifier("singleMessageDAO")
 //	private SingleMessageDAO singleMessageDAO;
 //
-//	@Autowired
-//	@Qualifier("testObjectDAOCreator")
-//	private TestObjectDAOCreator testObjectDAOCreator;
-//
 //	public void setSingleMessageDAO(SingleMessageDAO singleMessageDAO) {
 //		this.singleMessageDAO = singleMessageDAO;
 //	}
+//	
+//	@Autowired
+//	@Qualifier("accountDAO")
+//	private AccountDAO accountDAO; 
 //
-//	public void setTestObjectDAOCreator(TestObjectDAOCreator testObjectDAOCreator) {
-//		this.testObjectDAOCreator = testObjectDAOCreator;
+//	public void setAccountDAO(AccountDAO accountDAO) {
+//		this.accountDAO = accountDAO;
 //	}
 //
-//	TimeConverter converter = new TimeConverter();
+//	@Autowired
+//	@Qualifier("userDAO")
+//	private UserDAO userDAO;
+//	
+//	public void setUserDAO(UserDAO userDAO) {
+//		this.userDAO = userDAO;
+//	}
 //
 //	public SingleMessage singleMessage;
 //	public Account account;
+//	public User user;
 //
+//	TimeConverter converter = new TimeConverter();
+//
+//	public User createUserForTest() {
+//
+//		User testUser = new User();
+//		testUser.setFirstName("testFirstName");
+//		testUser.setLastName("testLastName");
+//		testUser.setMiddleName("testMiddleName");
+//		testUser.setSex("F");
+//		userDAO.saveEntity(testUser);
+//
+//		return testUser;
+//	}
+//	
+//	public Account createAccountForTest() {
+//
+//		User testUser = createUserForTest();
+//		Account testAccount = new Account();
+//
+//		testAccount.setAccountName("TestAccount");
+//		testAccount.setAccountBlockStatus("unblock");
+//		testAccount.setUser(testUser);
+//		accountDAO.saveEntity(testAccount);
+//
+//		return testAccount;
+//	}
+//	
+//	public SingleMessage createSingleMessageForTest() {
+//
+//		Account testAccount = createAccountForTest();
+//		SingleMessage testSingleMessage = new SingleMessage();
+//		testSingleMessage.setSingleMessage("Same test message");
+//		testSingleMessage.setDateCreateSingleMessage(LocalDateTime.of(2015, 12,	17, 00, 00));
+//		testSingleMessage.setAccount(testAccount);
+//		testSingleMessage.setInterlocutorAccount(testAccount);
+//		singleMessageDAO.saveEntity(testSingleMessage);
+//
+//		return testSingleMessage;
+//	}
+//	
 //	@Before
 //	public void initObjectsBeforeTest() {
-//		this.singleMessage = testObjectDAOCreator.createSingleMessageForTest();
+//	
+//		this.singleMessage = createSingleMessageForTest();
 //		this.account = singleMessage.getAccount();
 //	}
 //
@@ -70,8 +120,7 @@ public class SingleMessageDAOTest {//extends TestStarter {
 //		Date minDateD = converter.convertLocalDateTimeToDate(minDateLDT);
 //		Date maxDateD = converter.convertLocalDateTimeToDate(maxDateLDT);
 //
-//		List<SingleMessage> list = singleMessageDAO
-//				.getListSingleMessageBeetweenDateByIdAccount(
+//		List<SingleMessage> list = singleMessageDAO.getListSingleMessageBeetweenDateByIdAccount(
 //						account.getIdAccount(), minDateD, maxDateD);
 //		Assert.assertFalse(list.isEmpty());
 //	}

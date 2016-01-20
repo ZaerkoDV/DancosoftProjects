@@ -77,7 +77,7 @@ public interface UserRoleService{
 	 * 
 	 * @return UserRole
 	 */
-	public UserRole getEntityById(Long idUserRole);
+	public UserRole getUserRoleById(Long idUserRole);
 	
 	/**
 	 * This method is basic for all entities.The method is one of CRUD methods.

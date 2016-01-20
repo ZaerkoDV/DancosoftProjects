@@ -28,6 +28,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.SecurityPromptDAO;
 import com.dancosoft.socialcommunity.model.SecurityPrompt;
@@ -79,6 +80,7 @@ public class SecurityPromptServiceImpl implements SecurityPromptService{
 	 * 
 	 * @return SecurityPrompt
 	 */
+	@Transactional
 	public SecurityPrompt getSecurityPromptByIdUser(Long idUser) {
 		
 		SecurityPrompt securityPrompt=null;
@@ -114,6 +116,7 @@ public class SecurityPromptServiceImpl implements SecurityPromptService{
 	 * 
 	 * @return SecurityPrompt
 	 */
+	@Transactional
 	public SecurityPrompt getSecurityPromptByLogin(String userLogin) {
 		
 		SecurityPrompt securityPrompt=null;
@@ -152,15 +155,16 @@ public class SecurityPromptServiceImpl implements SecurityPromptService{
 	 * 
 	 * @return Boolean
 	 */
+	@Transactional
 	public Boolean signInUserByPromptAnswer(Long idSecurityPrompt,String userAnswer) {
 		
 		Boolean signIn=false;
 		if (idSecurityPrompt.equals(null) || idSecurityPrompt.equals("")) {
-			throw new RuntimeException("SecurityPromptService:Id security"
-					+ " prompt must not null or empty.");
+			throw new RuntimeException("SecurityPromptService:Id security prompt must not null or empty.");
+			
 		}else if(userAnswer.equals(null) || userAnswer.equals("")){
-			throw new RuntimeException("SecurityPromptService: User answer no"
-					+ " security question must not null or empty.");
+			throw new RuntimeException("SecurityPromptService: User answer no security question must not null or empty.");
+			
 		}else{
 			try {
 				logger.info("SecurityPromptService:User sign in system sucessfully by user answer");
@@ -191,6 +195,7 @@ public class SecurityPromptServiceImpl implements SecurityPromptService{
 	 * 
 	 * @return Long
 	 */
+	@Transactional
 	public Long getIdUserByPromptAnswer(Long idSecurityPrompt, String userAnswer) {
 		
 		Long idUser=null;
@@ -230,6 +235,7 @@ public class SecurityPromptServiceImpl implements SecurityPromptService{
 	 * 
 	 * @return Boolean
 	 */
+	@Transactional
 	public Boolean isUniquePrompt(String securityPrompt, String userAnswer) {
 		
 		Boolean isUnique=false;
@@ -267,6 +273,7 @@ public class SecurityPromptServiceImpl implements SecurityPromptService{
 	 * 
 	 * @return SecurityPrompt
 	 */
+	@Transactional
 	public SecurityPrompt getSecurityPromptById(Long idSecurityPrompt) {
 		
 		SecurityPrompt securityPrompt = null;
@@ -297,6 +304,7 @@ public class SecurityPromptServiceImpl implements SecurityPromptService{
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveSecurityPrompt(SecurityPrompt securityPrompt) {
 		
 		if(securityPrompt.equals(null)){
@@ -325,6 +333,7 @@ public class SecurityPromptServiceImpl implements SecurityPromptService{
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateSecurityPrompt(SecurityPrompt securityPrompt) {
 		
 		if (securityPrompt.equals(null)) {
@@ -354,6 +363,7 @@ public class SecurityPromptServiceImpl implements SecurityPromptService{
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteSecurityPromptById(Long idSecurityPrompt) {
 		
 		if (idSecurityPrompt.equals(null) || idSecurityPrompt.equals("")) {
@@ -382,6 +392,7 @@ public class SecurityPromptServiceImpl implements SecurityPromptService{
 	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteSecurityPrompt(SecurityPrompt securityPrompt) {
 		
 		if (securityPrompt.equals(null)) {
@@ -406,6 +417,7 @@ public class SecurityPromptServiceImpl implements SecurityPromptService{
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListSecurityPrompt() {
 		
 		List<Object>list=Collections.emptyList();

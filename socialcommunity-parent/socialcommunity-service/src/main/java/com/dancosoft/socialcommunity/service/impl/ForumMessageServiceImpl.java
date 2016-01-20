@@ -28,6 +28,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.ForumMessageDAO;
 import com.dancosoft.socialcommunity.dao.support.TimeConverter;
@@ -82,6 +83,7 @@ public class ForumMessageServiceImpl implements ForumMessageService {
 	 * 
 	 * @return Account
 	 */
+	@Transactional
 	public Account getAccountAuthorMessageByIdForumMessage(Long idForumMessage) {
 		
 		Account account= null;
@@ -115,6 +117,7 @@ public class ForumMessageServiceImpl implements ForumMessageService {
 	 * 
 	 * @return List<ForumMessage>
 	 */
+	@Transactional
 	public List<ForumMessage> getListForumMessageByIdForumTopic(Long idForumTopic) {
 		
 		List<ForumMessage> list=Collections.emptyList();
@@ -147,6 +150,7 @@ public class ForumMessageServiceImpl implements ForumMessageService {
 	 * 
 	 * @return List<ForumMessage>
 	 */
+	@Transactional
 	public List<ForumMessage> getListForumMessageBetweenDateByIdForumTopic(Long idForumTopic,
 			LocalDateTime minDateLDT, LocalDateTime maxDateLDT) {
 		
@@ -188,6 +192,7 @@ public class ForumMessageServiceImpl implements ForumMessageService {
 	 * 
 	 * @return List<ForumMessage>
 	 */
+	@Transactional
 	public List<ForumMessage> getListForumMessagetByIdAccount(Long idAccount) {
 		
 		List<ForumMessage> list=Collections.emptyList();
@@ -223,6 +228,7 @@ public class ForumMessageServiceImpl implements ForumMessageService {
 	 * 
 	 * @return ForumMessage
 	 */
+	@Transactional
 	public ForumMessage getForumMessageById(Long idForumMessage) {
 		
 		ForumMessage forumMessage = null;
@@ -253,6 +259,7 @@ public class ForumMessageServiceImpl implements ForumMessageService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveForumMessage(ForumMessage forumMessage) {
 		
 		if(forumMessage.equals(null)){
@@ -281,6 +288,7 @@ public class ForumMessageServiceImpl implements ForumMessageService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateForumMessage(ForumMessage forumMessage) {
 		
 		if (forumMessage.equals(null)) {
@@ -309,6 +317,7 @@ public class ForumMessageServiceImpl implements ForumMessageService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteForumMessageById(Long idForumMessage) {
 		
 		if (idForumMessage.equals(null) || idForumMessage.equals("")) {
@@ -337,6 +346,7 @@ public class ForumMessageServiceImpl implements ForumMessageService {
 	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteForumMessage(ForumMessage forumMessage) {
 		
 		if (forumMessage.equals(null)) {
@@ -361,6 +371,7 @@ public class ForumMessageServiceImpl implements ForumMessageService {
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListForumMessage() {
 		
 		List<Object>list=Collections.emptyList();

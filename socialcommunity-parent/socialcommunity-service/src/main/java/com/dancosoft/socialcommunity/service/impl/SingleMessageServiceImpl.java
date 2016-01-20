@@ -28,6 +28,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.SingleMessageDAO;
 import com.dancosoft.socialcommunity.dao.support.TimeConverter;
@@ -84,6 +85,7 @@ public class SingleMessageServiceImpl implements SingleMessageService {
 	 * 
 	 * @return List<SingleMessage>
 	 */
+	@Transactional
 	public List<SingleMessage> getListSingleMessageBeetweenDateByIdAccount(Long idAccount,
 			LocalDateTime minDateLDT, LocalDateTime maxDateLDT) {
 
@@ -127,6 +129,7 @@ public class SingleMessageServiceImpl implements SingleMessageService {
 	 * 
 	 * @return List<Account>
 	 */
+	@Transactional
 	public List<Account> getListInterlocutorAccountByIdAccount(Long idAccount) {
 		
 		List<Account> list=Collections.emptyList();
@@ -165,6 +168,7 @@ public class SingleMessageServiceImpl implements SingleMessageService {
 	 * 
 	 * @return List<SingleMessage>
 	 */
+	@Transactional
 	public List<SingleMessage> getListIntrlocutorSingleMessageBeetweenDateByIdAccount(Long idAccount,
 			Long idInterlocutorAccount,LocalDateTime minDateLDT,LocalDateTime maxDateLDT) {
 		
@@ -212,6 +216,7 @@ public class SingleMessageServiceImpl implements SingleMessageService {
 	 * 
 	 * @return SingleMessage
 	 */
+	@Transactional
 	public SingleMessage getSingleMessageById(Long idSingleMessage) {
 		
 		SingleMessage singleMessage = null;
@@ -242,6 +247,7 @@ public class SingleMessageServiceImpl implements SingleMessageService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveSingleMessage(SingleMessage singleMessage) {
 		
 		if(singleMessage.equals(null)){
@@ -270,6 +276,7 @@ public class SingleMessageServiceImpl implements SingleMessageService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateSingleMessage(SingleMessage singleMessage) {
 		
 		if (singleMessage.equals(null)) {
@@ -298,6 +305,7 @@ public class SingleMessageServiceImpl implements SingleMessageService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteSingleMessageById(Long idSingleMessage) {
 		
 		if (idSingleMessage.equals(null) || idSingleMessage.equals("")) {
@@ -326,6 +334,7 @@ public class SingleMessageServiceImpl implements SingleMessageService {
 	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteSingleMessage(SingleMessage singleMessage) {
 		
 		if (singleMessage.equals(null)) {
@@ -350,6 +359,7 @@ public class SingleMessageServiceImpl implements SingleMessageService {
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListSingleMessage() {
 		
 		List<Object>list=Collections.emptyList();

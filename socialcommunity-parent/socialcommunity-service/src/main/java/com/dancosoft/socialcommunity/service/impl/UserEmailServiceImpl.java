@@ -30,6 +30,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.UserEmailDAO;
 import com.dancosoft.socialcommunity.model.UserEmail;
@@ -88,6 +89,7 @@ public class UserEmailServiceImpl implements UserEmailService {
 	 * 
 	 * @return List<UserEmail>
 	 */
+	@Transactional
 	public List<UserEmail> getListEmailWithStatusByIdUser(Long idUser,String viewStatus){
 		
 		List<UserEmail> list=Collections.emptyList();
@@ -124,6 +126,7 @@ public class UserEmailServiceImpl implements UserEmailService {
 	 * 
 	 * @return List<UserEmail>
 	 */
+	@Transactional
 	public List<UserEmail> getListEmailByIdUser(Long idUser){
 		
 		List<UserEmail> list=Collections.emptyList();
@@ -157,6 +160,7 @@ public class UserEmailServiceImpl implements UserEmailService {
 	 * 
 	 * @return Boolean
 	 */
+	@Transactional
 	public Boolean isUniqueEmail(String userEmail){
 		
 		Boolean isUnique=false;
@@ -189,6 +193,7 @@ public class UserEmailServiceImpl implements UserEmailService {
 	 * 
 	 * @return long
 	 */
+	@Transactional
 	public Long getIdUserByEmail(String userEmail){
 		
 		Long idUser=null;
@@ -253,6 +258,7 @@ public class UserEmailServiceImpl implements UserEmailService {
 	 * 
 	 * @return UserEmail
 	 */
+	@Transactional
 	public UserEmail getUserEmailById(Long idUserEmail) {
 		
 		UserEmail userEmail = null;
@@ -283,6 +289,7 @@ public class UserEmailServiceImpl implements UserEmailService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveUserEmail(UserEmail userEmail) {
 		
 		if(userEmail.equals(null)){
@@ -310,6 +317,7 @@ public class UserEmailServiceImpl implements UserEmailService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateUserEmail(UserEmail userEmail) {
 		
 		if (userEmail.equals(null)) {
@@ -338,6 +346,7 @@ public class UserEmailServiceImpl implements UserEmailService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteUserEmailById(Long idUserEmail) {
 		
 		if (idUserEmail.equals(null) || idUserEmail.equals("")) {
@@ -365,6 +374,7 @@ public class UserEmailServiceImpl implements UserEmailService {
 	 * @param userEmail
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteUserEmail(UserEmail userEmail) {
 		
 		if (userEmail.equals(null)) {
@@ -389,6 +399,7 @@ public class UserEmailServiceImpl implements UserEmailService {
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListEntity() {
 		
 		List<Object>list=Collections.emptyList();

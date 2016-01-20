@@ -26,6 +26,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.UserDAO;
 import com.dancosoft.socialcommunity.model.Account;
@@ -76,6 +77,7 @@ public class UserServiceImpl implements UserService{
 	 * 
 	 * @return List<Account>
 	 */
+	@Transactional
 	public List<Account> getListAccountByUserId(Long idUser) {
 		
 		List<Account> list=Collections.emptyList();
@@ -109,6 +111,7 @@ public class UserServiceImpl implements UserService{
 	 * 
 	 * @return List<User>
 	 */
+	@Transactional
 	public List<User> getListUserBySex(String sex) {
 		
 		List<User> list=Collections.emptyList();
@@ -143,6 +146,7 @@ public class UserServiceImpl implements UserService{
 	 * 
 	 * @return List<User>
 	 */
+	@Transactional
 	public List<User> searchUserByFirstLastMiddleName(String firstName,String lastName,String middleName) {
 		
 		List<User> list=Collections.emptyList();
@@ -169,6 +173,7 @@ public class UserServiceImpl implements UserService{
 	 * 
 	 * @return User
 	 */
+	@Transactional
 	public User getUserById(Long idUser) {
 		
 		User user = null;
@@ -199,6 +204,7 @@ public class UserServiceImpl implements UserService{
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveUser(User user) {
 		
 		if(user.equals(null)){
@@ -227,6 +233,7 @@ public class UserServiceImpl implements UserService{
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateUser(User user) {
 		
 		if (user.equals(null)) {
@@ -255,6 +262,7 @@ public class UserServiceImpl implements UserService{
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteUserById(Long idUser) {
 		
 		if (idUser.equals(null) || idUser.equals("")) {
@@ -282,6 +290,7 @@ public class UserServiceImpl implements UserService{
 	 * @param user
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteUser(User user) {
 		
 		if (user.equals(null)) {
@@ -306,6 +315,7 @@ public class UserServiceImpl implements UserService{
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListUser() {
 		
 		List<Object>list=Collections.emptyList();

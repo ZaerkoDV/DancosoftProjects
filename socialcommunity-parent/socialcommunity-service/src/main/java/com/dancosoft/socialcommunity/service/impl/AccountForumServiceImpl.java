@@ -26,6 +26,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.AccountForumDAO;
 import com.dancosoft.socialcommunity.model.Account;
@@ -73,6 +74,7 @@ public class AccountForumServiceImpl implements AccountForumService {
 	 * 
 	 * @return List<Account>
 	 */
+	@Transactional
 	public List<Account> getListAccountByIdForum(Long idForum) {
 		
 		List<Account> list;
@@ -106,6 +108,7 @@ public class AccountForumServiceImpl implements AccountForumService {
 	 * 
 	 * @return List<Forum>
 	 */
+	@Transactional
 	public List<Forum> getListForumByIdAccount(Long idAccount) {
 		
 		List<Forum> list;
@@ -142,6 +145,7 @@ public class AccountForumServiceImpl implements AccountForumService {
 	 * 
 	 * @return AccountForum
 	 */
+	@Transactional
 	public AccountForum getAccountForumById(Long idAccountForum) {
 		
 		AccountForum accountForum = null;
@@ -172,6 +176,7 @@ public class AccountForumServiceImpl implements AccountForumService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveAccountForum(AccountForum accountForum) {
 		
 		if(accountForum.equals(null)){
@@ -200,6 +205,7 @@ public class AccountForumServiceImpl implements AccountForumService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateAccountForum(AccountForum accountForum) {
 		
 		if (accountForum.equals(null)) {
@@ -228,6 +234,7 @@ public class AccountForumServiceImpl implements AccountForumService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteAccountForumById(Long idAccountForum) {
 		
 		if (idAccountForum.equals(null) || idAccountForum.equals("")) {
@@ -256,6 +263,7 @@ public class AccountForumServiceImpl implements AccountForumService {
 	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteAccountForum(AccountForum accountForum) {
 		
 		if (accountForum.equals(null)) {
@@ -280,6 +288,7 @@ public class AccountForumServiceImpl implements AccountForumService {
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListAccountForum() {
 		
 		List<Object> list=Collections.emptyList();

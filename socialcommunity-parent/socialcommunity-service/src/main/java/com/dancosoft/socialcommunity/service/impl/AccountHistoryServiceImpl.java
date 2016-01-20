@@ -27,6 +27,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.AccountHistoryDAO;
 import com.dancosoft.socialcommunity.model.AccountHistory;
@@ -77,6 +78,7 @@ public class AccountHistoryServiceImpl implements AccountHistoryService{
 	 * 
 	 * @return AccountHistory
 	 */
+	@Transactional
 	public AccountHistory getAccountHistoryByIdAccount(Long idAccount) {
 		
 		AccountHistory accountHistory=null;
@@ -108,6 +110,7 @@ public class AccountHistoryServiceImpl implements AccountHistoryService{
 	 * 
 	 * @return LocalDateTime
 	 */
+	@Transactional
 	public LocalDateTime getLastVisitAccountByIdAccount(Long idAccount) {
 		
 		LocalDateTime lastVisit = null;
@@ -141,6 +144,7 @@ public class AccountHistoryServiceImpl implements AccountHistoryService{
 	 * 
 	 * @return AccountHistory
 	 */
+	@Transactional
 	public AccountHistory getAccountHistoryById(Long idAccountHistory) {
 		
 		AccountHistory accountHistory= null;
@@ -171,6 +175,7 @@ public class AccountHistoryServiceImpl implements AccountHistoryService{
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveAccountHistory(AccountHistory accountHistory) {
 		
 		if(accountHistory.equals(null)){
@@ -199,6 +204,7 @@ public class AccountHistoryServiceImpl implements AccountHistoryService{
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateAccountHistory(AccountHistory accountHistory) {
 		
 		if (accountHistory.equals(null)) {
@@ -227,6 +233,7 @@ public class AccountHistoryServiceImpl implements AccountHistoryService{
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteAccountHistoryById(Long idAccountHistory) {
 		
 		if (idAccountHistory.equals(null) || idAccountHistory.equals("")) {
@@ -255,6 +262,7 @@ public class AccountHistoryServiceImpl implements AccountHistoryService{
 	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteAccountHistory(AccountHistory accountHistory) {
 		
 		if (accountHistory.equals(null)) {
@@ -279,6 +287,7 @@ public class AccountHistoryServiceImpl implements AccountHistoryService{
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListAccountHistory() {
 		
 		List<Object>list=Collections.emptyList();

@@ -26,6 +26,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.LanguageDAO;
 import com.dancosoft.socialcommunity.model.Language;
@@ -77,7 +78,8 @@ public class LanguageServiceImpl implements LanguageService {
 	 * 
 	 * @return Language
 	 */
-	public Language getEntityById(Long idLanguage) {
+	@Transactional
+	public Language getLanguageById(Long idLanguage) {
 		
 		Language language = null;
 		if (idLanguage.equals(null) || idLanguage.equals("")) {
@@ -107,6 +109,7 @@ public class LanguageServiceImpl implements LanguageService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveLanguage(Language language) {
 		
 		if(language.equals(null)){
@@ -135,6 +138,7 @@ public class LanguageServiceImpl implements LanguageService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateLanguage(Language language) {
 		
 		if (language.equals(null)) {
@@ -163,6 +167,7 @@ public class LanguageServiceImpl implements LanguageService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteLanguageById(Long idLanguage) {
 		
 		if (idLanguage.equals(null) || idLanguage.equals("")) {
@@ -191,6 +196,7 @@ public class LanguageServiceImpl implements LanguageService {
 	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteLanguage(Language language) {
 		
 		if (language.equals(null)) {
@@ -215,6 +221,7 @@ public class LanguageServiceImpl implements LanguageService {
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListLanguage() {
 		
 		List<Object>list=Collections.emptyList();

@@ -26,6 +26,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.EventPatternDAO;
 import com.dancosoft.socialcommunity.model.EventPattern;
@@ -77,6 +78,7 @@ public class EventPatternServiceImpl implements EventPatternService {
 	 * 
 	 * @return EventPattern
 	 */
+	@Transactional
 	public EventPattern getEventPatternById(Long idEventPattern) {
 		
 		EventPattern eventPattern = null;
@@ -107,6 +109,7 @@ public class EventPatternServiceImpl implements EventPatternService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveEventPattern(EventPattern eventPattern) {
 		
 		if(eventPattern.equals(null)){
@@ -135,6 +138,7 @@ public class EventPatternServiceImpl implements EventPatternService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateEventPattern(EventPattern eventPattern) {
 		
 		if (eventPattern.equals(null)) {
@@ -163,6 +167,7 @@ public class EventPatternServiceImpl implements EventPatternService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteEventPatternById(Long idEventPattern) {
 		
 		if (idEventPattern.equals(null) || idEventPattern.equals("")) {
@@ -191,6 +196,7 @@ public class EventPatternServiceImpl implements EventPatternService {
 	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteEventPattern(EventPattern eventPattern) {
 		
 		if (eventPattern.equals(null)) {
@@ -215,6 +221,7 @@ public class EventPatternServiceImpl implements EventPatternService {
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListEventPattern() {
 		
 		List<Object>list=Collections.emptyList();

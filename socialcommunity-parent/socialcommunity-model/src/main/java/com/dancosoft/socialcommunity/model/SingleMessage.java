@@ -11,6 +11,9 @@
 package com.dancosoft.socialcommunity.model;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -156,21 +159,31 @@ public class SingleMessage implements Serializable {
 		this.singleMessage = singleMessage;
 	}
 
-	/**
-	 * @return the dateCreateSingleMessage
-	 */
-	public Date getDateCreateSingleMessage() {
-		return dateCreateSingleMessage;
+//	/**
+//	 * @return the dateCreateSingleMessage
+//	 */
+//	public Date getDateCreateSingleMessage() {
+//		return dateCreateSingleMessage;
+//	}
+//
+//	/**
+//	 * @param dateCreateSingleMessage
+//	 *            the dateCreateSingleMessage to set
+//	 */
+//	public void setDateCreateSingleMessage(Date dateCreateSingleMessage) {
+//		this.dateCreateSingleMessage = dateCreateSingleMessage;
+//	}
+	
+	public LocalDateTime getDateCreateSingleMessage() {
+		Instant instant = Instant.ofEpochMilli(dateCreateSingleMessage.getTime());
+		return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
 	}
-
-	/**
-	 * @param dateCreateSingleMessage
-	 *            the dateCreateSingleMessage to set
-	 */
-	public void setDateCreateSingleMessage(Date dateCreateSingleMessage) {
-		this.dateCreateSingleMessage = dateCreateSingleMessage;
+	
+	public void setDateCreateSingleMessage(LocalDateTime dateCreateSingleMessage) {
+		Instant instant = dateCreateSingleMessage.toInstant(ZoneOffset.UTC);		
+		this.dateCreateSingleMessage = Date.from(instant);
 	}
-
+	
 	/**
 	 * @return the interlocutorAccount
 	 */

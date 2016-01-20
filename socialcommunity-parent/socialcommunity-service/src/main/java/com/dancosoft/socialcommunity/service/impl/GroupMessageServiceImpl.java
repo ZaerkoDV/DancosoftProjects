@@ -28,6 +28,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.GroupMessageDAO;
 import com.dancosoft.socialcommunity.dao.support.TimeConverter;
@@ -82,6 +83,7 @@ public class GroupMessageServiceImpl implements GroupMessageService {
 	 * 
 	 * @return Account
 	 */
+	@Transactional
 	public Account getMemberAccountByIdGroupMessage(Long idGroupMessage) {
 		
 		Account account= null;
@@ -115,6 +117,7 @@ public class GroupMessageServiceImpl implements GroupMessageService {
 	 * 
 	 * @return List<GroupMessage>
 	 */
+	@Transactional
 	public List<GroupMessage> getListGroupMessageByIdAccountGroup(Long idAccountGroup) {
 		
 		List<GroupMessage> list=Collections.emptyList();
@@ -151,6 +154,7 @@ public class GroupMessageServiceImpl implements GroupMessageService {
 	 * 
 	 * @return List<GroupMessage> 
 	 */
+	@Transactional
 	public List<GroupMessage> getListGroupMessageBeetweenDateByIdAccountGroup(
 			Long idAccountGroup, LocalDateTime minDateLDT, LocalDateTime maxDateLDT) {
 
@@ -194,6 +198,7 @@ public class GroupMessageServiceImpl implements GroupMessageService {
 	 * 
 	 * @return int 
 	 */
+	@Transactional
 	public int getCountGroupMessageByIdAccountGroup(Long idAccountGroup) {
 		
 		int count=0;
@@ -228,6 +233,7 @@ public class GroupMessageServiceImpl implements GroupMessageService {
 	 * 
 	 * @return GroupMessage
 	 */
+	@Transactional
 	public GroupMessage getGroupMessageById(Long idGroupMessage) {
 		
 		GroupMessage groupMessage = null;
@@ -258,6 +264,7 @@ public class GroupMessageServiceImpl implements GroupMessageService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveGroupMessage(GroupMessage groupMessage) {
 		
 		if(groupMessage.equals(null)){
@@ -286,6 +293,7 @@ public class GroupMessageServiceImpl implements GroupMessageService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateGroupMessage(GroupMessage groupMessage) {
 		
 		if (groupMessage.equals(null)) {
@@ -314,6 +322,7 @@ public class GroupMessageServiceImpl implements GroupMessageService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteGroupMessageById(Long idGroupMessage) {
 		
 		if (idGroupMessage.equals(null) || idGroupMessage.equals("")) {
@@ -342,6 +351,7 @@ public class GroupMessageServiceImpl implements GroupMessageService {
 	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteGroupMessage(GroupMessage groupMessage) {
 		
 		if (groupMessage.equals(null)) {
@@ -366,6 +376,7 @@ public class GroupMessageServiceImpl implements GroupMessageService {
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListGroupMessage() {
 		
 		List<Object>list=Collections.emptyList();

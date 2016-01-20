@@ -129,8 +129,11 @@ public class SecurityPromptDAOImpl extends CommonEntityDAOImpl implements Securi
 
 		logger.info("SecurityPromptDAO:User sign in system sucessfully by user answer");
 		Boolean signIn = false;
-		
-		return criteria.list().isEmpty();
+
+		if(!criteria.list().isEmpty()){
+			signIn=true;
+		}
+		return signIn;
 	}
 
 	/**

@@ -30,6 +30,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.ForumTopicDAO;
 import com.dancosoft.socialcommunity.dao.support.TimeConverter;
@@ -86,6 +87,7 @@ public class ForumTopicServiceImpl implements ForumTopicService {
 	 * 
 	 * @return Account
 	 */
+	@Transactional
 	public Account getAuthorAccountForumTopic(Long idForumTopic) {
 		
 		Account account=null;
@@ -122,6 +124,7 @@ public class ForumTopicServiceImpl implements ForumTopicService {
 	 * 
 	 * @return List<ForumTopic>
 	 */
+	@Transactional
 	public List<ForumTopic> getListForumTopicByIdForum(Long idForum) {
 		
 		List<ForumTopic> list=Collections.emptyList();
@@ -157,6 +160,7 @@ public class ForumTopicServiceImpl implements ForumTopicService {
 	 * 
 	 * @return List<ForumTopic>
 	 */
+	@Transactional
 	public List<ForumTopic> getListForumTopicCreateBetweenDateByIdForum(Long idForum, LocalDateTime minDateLDT,
 			LocalDateTime maxDateLDT) {
 		Date minDateD;
@@ -197,6 +201,7 @@ public class ForumTopicServiceImpl implements ForumTopicService {
 	 * 
 	 * @return int
 	 */
+	@Transactional
 	public int getCountForumTopic(Long idForum) {
 
 		int count = 0;
@@ -230,6 +235,7 @@ public class ForumTopicServiceImpl implements ForumTopicService {
 	 * 
 	 * @return ForumTopic
 	 */
+	@Transactional
 	public ForumTopic getForumTopicById(Long idForumTopic) {
 		
 		ForumTopic forumTopic = null;
@@ -260,6 +266,7 @@ public class ForumTopicServiceImpl implements ForumTopicService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveForumTopic(ForumTopic forumTopic) {
 		
 		if(forumTopic.equals(null)){
@@ -288,6 +295,7 @@ public class ForumTopicServiceImpl implements ForumTopicService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateForumTopic(ForumTopic forumTopic) {
 		
 		if (forumTopic.equals(null)) {
@@ -316,7 +324,8 @@ public class ForumTopicServiceImpl implements ForumTopicService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
-	public void deleteEntityById(Long idForumTopic) {
+	@Transactional
+	public void deleteForumTopicById(Long idForumTopic) {
 		
 		if (idForumTopic.equals(null) || idForumTopic.equals("")) {
 			throw new RuntimeException("ForumTopicService:Id entity is null");
@@ -343,6 +352,7 @@ public class ForumTopicServiceImpl implements ForumTopicService {
 	 * @param forumTopic
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteForumTopic(ForumTopic forumTopic) {
 		
 		if (forumTopic.equals(null)) {
@@ -367,6 +377,7 @@ public class ForumTopicServiceImpl implements ForumTopicService {
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public  List<Object> getListForumTopic() {
 		
 		List<Object>list=Collections.emptyList();

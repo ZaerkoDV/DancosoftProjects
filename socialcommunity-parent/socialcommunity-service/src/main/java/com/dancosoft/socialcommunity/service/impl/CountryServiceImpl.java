@@ -28,6 +28,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.CountryDAO;
 import com.dancosoft.socialcommunity.model.Country;
@@ -72,12 +73,14 @@ public class CountryServiceImpl implements CountryService {
 	 * 
 	 * @type String
 	 * @param countryName
+	 * 
 	 * @exception DataRetrievalFailureException
 	 * @exception NonUniqueResultException
 	 * @exception DataAccessExceptio
 	 * 
 	 * @return Country
 	 */
+	@Transactional
 	public Country searchCountryByCountryName(String countryName) {
 		
 		Country country = null;
@@ -114,6 +117,7 @@ public class CountryServiceImpl implements CountryService {
 	 * 
 	 * @return Country
 	 */
+	@Transactional
 	public Country getCountryById(Long idCountry) {
 		
 		Country country = null;
@@ -144,6 +148,7 @@ public class CountryServiceImpl implements CountryService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveCountry(Country country) {
 		
 		if(country.equals(null)){
@@ -172,6 +177,7 @@ public class CountryServiceImpl implements CountryService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateCountry(Country country) {
 		
 		if (country.equals(null)) {
@@ -200,6 +206,7 @@ public class CountryServiceImpl implements CountryService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteCountryById(Long idCountry) {
 		
 		if (idCountry.equals(null) || idCountry.equals("")) {
@@ -227,6 +234,7 @@ public class CountryServiceImpl implements CountryService {
 	 * @param country
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteCountry(Country country) {
 		
 		if (country.equals(null)) {
@@ -251,6 +259,7 @@ public class CountryServiceImpl implements CountryService {
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListCountry() {
 		
 		List<Object>list=Collections.emptyList();

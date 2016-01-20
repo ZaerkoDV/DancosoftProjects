@@ -26,6 +26,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.GroupMemberDAO;
 import com.dancosoft.socialcommunity.model.Account;
@@ -77,6 +78,7 @@ public class GroupMemberServiceImpl implements GroupMemberService{
 	 * 
 	 * @return List<GroupMember>
 	 */
+	@Transactional
 	public List<GroupMember> getListGroupMemberByIdAccountGroup(Long idAccountGroup){
 		
 		List<GroupMember> list=Collections.emptyList();
@@ -107,11 +109,13 @@ public class GroupMemberServiceImpl implements GroupMemberService{
 	 * @type String
 	 * @param idAccountGroup
 	 * @param friendStatus
+	 * 
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
 	 * @return List<Account>
 	 */
+	@Transactional
 	public List<Account> getListAccountWithStatusByIdAccountGroup(Long idAccountGroup, String friendStatus) {
 		
 		List<Account> list=Collections.emptyList();
@@ -147,6 +151,7 @@ public class GroupMemberServiceImpl implements GroupMemberService{
 	 * 
 	 * @return GroupMember
 	 */
+	@Transactional
 	public GroupMember getGroupMemberById(Long idGroupMember) {
 		
 		GroupMember groupMember = null;
@@ -177,6 +182,7 @@ public class GroupMemberServiceImpl implements GroupMemberService{
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveGroupMember(GroupMember groupMember) {
 		
 		if(groupMember.equals(null)){
@@ -205,6 +211,7 @@ public class GroupMemberServiceImpl implements GroupMemberService{
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateGroupMember(GroupMember groupMember) {
 		
 		if (groupMember.equals(null)) {
@@ -233,6 +240,7 @@ public class GroupMemberServiceImpl implements GroupMemberService{
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteGroupMemberById(Long idGroupMember) {
 		
 		if (idGroupMember.equals(null) || idGroupMember.equals("")) {
@@ -261,6 +269,7 @@ public class GroupMemberServiceImpl implements GroupMemberService{
 	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteGroupMember(GroupMember groupMember) {
 		
 		if (groupMember.equals(null)) {
@@ -285,6 +294,7 @@ public class GroupMemberServiceImpl implements GroupMemberService{
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListGroupMember() {
 		
 		List<Object>list=Collections.emptyList();

@@ -50,7 +50,7 @@ public interface LanguageService {
 	 * 
 	 * @return Language
 	 */
-	public Language getEntityById(Long idLanguage);
+	public Language getLanguageById(Long idLanguage);
 	
 	/**
 	 * This method is basic for all entities.The method is one of CRUD methods.

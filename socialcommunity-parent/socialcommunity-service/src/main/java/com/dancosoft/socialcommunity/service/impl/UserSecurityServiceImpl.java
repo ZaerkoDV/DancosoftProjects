@@ -28,6 +28,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.UserEmailDAO;
 import com.dancosoft.socialcommunity.dao.UserSecurityDAO;
@@ -98,6 +99,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 	 * 
 	 * @return User
 	 */
+	@Transactional
 	public User getUserByLoginPassword(String userLogin,String userPassword) {
 		
 		User user=null;
@@ -135,6 +137,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 	 * 
 	 * @return Long
 	 */
+	@Transactional
 	public Long getIdUserByLoginPassword(String userLogin,String userPassword){
 		
 		Long idUser=null;
@@ -173,6 +176,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 	 * 
 	 * @return Boolean
 	 */
+	@Transactional
 	public Boolean signInUserByLoginPassword(String userLogin, String userPassword){
 		
 		Boolean signIn=false;
@@ -210,6 +214,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 	 * 
 	 * @return Boolean
 	 */
+	@Transactional
 	public Boolean isUniqueLogin(String userLogin){
 		
 		Boolean isUnique=false;
@@ -243,6 +248,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 	 * 
 	 * @return Boolean
 	 */
+	@Transactional
 	public Boolean isUniquePassword(String userPassword){
 		
 		Boolean isUnique=false;
@@ -277,6 +283,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 	 * 
 	 * @return String
 	 */
+	@Transactional
 	public String getUserRoleByIdUser(Long idUser){
 		
 		String userRole=null;
@@ -313,6 +320,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 	 * 
 	 * @return UserRole
 	 */
+	@Transactional
 	public UserRole getUserRoleAsObjectByIdUser(Long idUser){
 		
 		UserRole userRole=null;
@@ -338,8 +346,6 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 		
 	}
 	
-	
-	
 	/**
 	 * Method return list of user with User role. If user with user role is not
 	 * exist in system return empty list.
@@ -349,6 +355,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 	 * 
 	 * @return List<User>
 	 */
+	@Transactional
 	public List<User> getListUserWithUserRole(){
 		
 		List<User> list=Collections.emptyList();
@@ -374,6 +381,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 	 * 
 	 * @return List<User>
 	 */
+	@Transactional
 	public List<User> getListUserWithAdminRole(){
 		
 		List<User> list=Collections.emptyList();
@@ -402,6 +410,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 	 * 
 	 * @return Boolean
 	 */
+	@Transactional
 	public Boolean updateLoginPasswordByIdUser(Long idUser){
 		
 		Boolean statusUpdate=false;
@@ -456,6 +465,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 	 * 
 	 * @return UserSecurity
 	 */
+	@Transactional
 	public UserSecurity getLoginPasswordByIdUser(Long idUser){
 		
 		UserSecurity userSecurity=null;
@@ -489,6 +499,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 	 * 
 	 * @return UserSecurity
 	 */
+	@Transactional
 	public UserSecurity getUserSecurityById(Long idUserSecurity) {
 		
 		UserSecurity userSecurity = null;
@@ -519,6 +530,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveUserSecurity(UserSecurity userSecurity) {
 		
 		if(userSecurity.equals(null)){
@@ -547,6 +559,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateUserSecurity(UserSecurity userSecurity) {
 		
 		if (userSecurity.equals(null)) {
@@ -575,6 +588,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteUserSecurityById(Long idUserSecurity) {
 		
 		if (idUserSecurity.equals(null) || idUserSecurity.equals("")) {
@@ -603,6 +617,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteUserSecurity(UserSecurity userSecurity) {
 		
 		if (userSecurity.equals(null)) {
@@ -627,6 +642,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListUserSecurity() {
 		
 		List<Object>list=Collections.emptyList();

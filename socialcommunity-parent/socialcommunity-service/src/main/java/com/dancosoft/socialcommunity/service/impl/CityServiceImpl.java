@@ -26,6 +26,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.CityDAO;
 import com.dancosoft.socialcommunity.model.City;
@@ -70,11 +71,13 @@ public class CityServiceImpl implements CityService {
 	 * 
 	 * @type Long
 	 * @param idAccount
+	 * 
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
 	 * @return List<City>
 	 */
+	@Transactional
 	public List<City> getListCityByIdCountry(Long idCountry) {
 		
 		List<City> list=Collections.emptyList();
@@ -105,6 +108,7 @@ public class CityServiceImpl implements CityService {
 	 * 
 	 * @return Country
 	 */
+	@Transactional
 	public Country getCountryByIdCity(Long idCity) {
 		
 		Country country=null;
@@ -131,11 +135,13 @@ public class CityServiceImpl implements CityService {
 	 * 
 	 * @type String
 	 * @param cityName
+	 * 
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
 	 * @return List<City>
 	 */
+	@Transactional
 	public List<City> searchCityByCityName(String cityName) {
 		
 		List<City> list=Collections.emptyList();
@@ -169,6 +175,7 @@ public class CityServiceImpl implements CityService {
 	 * 
 	 * @return City
 	 */
+	@Transactional
 	public City getCityById(Long idCity) {
 		
 		City city = null;
@@ -199,6 +206,7 @@ public class CityServiceImpl implements CityService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveCity(City city) {
 		
 		if(city.equals(null)){
@@ -227,6 +235,7 @@ public class CityServiceImpl implements CityService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateCity(City city) {
 		
 		if (city.equals(null)) {
@@ -254,6 +263,7 @@ public class CityServiceImpl implements CityService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteCityById(Long idCity) {
 		
 		if (idCity.equals(null) || idCity.equals("")) {
@@ -279,8 +289,10 @@ public class CityServiceImpl implements CityService {
 	 * 
 	 * @type City
 	 * @param city
+	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteCity(City city) {
 		
 		if (city.equals(null)) {
@@ -305,6 +317,7 @@ public class CityServiceImpl implements CityService {
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListCity() {
 		
 		List<Object>list=Collections.emptyList();

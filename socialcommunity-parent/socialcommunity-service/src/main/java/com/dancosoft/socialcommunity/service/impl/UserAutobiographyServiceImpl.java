@@ -26,6 +26,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.UserAutobiographyDAO;
 import com.dancosoft.socialcommunity.model.User;
@@ -77,6 +78,7 @@ public class UserAutobiographyServiceImpl implements UserAutobiographyService{
 	 * 
 	 * @return UserAutobiography
 	 */
+	@Transactional
 	public UserAutobiography getUserAutobiographyByIdUser(Long idUser) {
 		
 		UserAutobiography userAutobiography=null;
@@ -109,6 +111,7 @@ public class UserAutobiographyServiceImpl implements UserAutobiographyService{
 	 * 
 	 * @return UserAutobiography
 	 */
+	@Transactional
 	public List<User> getListUserByHobby(String hobby) {
 		
 		List<User> list=Collections.emptyList();
@@ -143,6 +146,7 @@ public class UserAutobiographyServiceImpl implements UserAutobiographyService{
 	 * 
 	 * @return Boolean
 	 */
+	@Transactional
 	public Boolean isUserAdult(Long idUser,Long yearAdult) {
 		
 		Boolean isUserAdult=false;
@@ -176,6 +180,7 @@ public class UserAutobiographyServiceImpl implements UserAutobiographyService{
 	 * 
 	 * @return List<User>
 	 */
+	@Transactional
 	public List<User> getListAdultUser(Long yearAdult) {
 		
 		List<User> list=Collections.emptyList();
@@ -210,6 +215,7 @@ public class UserAutobiographyServiceImpl implements UserAutobiographyService{
 	 * 
 	 * @return UserAutobiographyService
 	 */
+	@Transactional
 	public UserAutobiography getUserAutobiographyById(Long idUserAutobiography) {
 		
 		UserAutobiography userAutobiography = null;
@@ -240,6 +246,7 @@ public class UserAutobiographyServiceImpl implements UserAutobiographyService{
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveUserAutobiographyService(UserAutobiography userAutobiography) {
 		
 		if(userAutobiography.equals(null)){
@@ -268,6 +275,7 @@ public class UserAutobiographyServiceImpl implements UserAutobiographyService{
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateUserAutobiography(UserAutobiography userAutobiography) {
 		
 		if (userAutobiography.equals(null)) {
@@ -296,6 +304,7 @@ public class UserAutobiographyServiceImpl implements UserAutobiographyService{
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteUserAutobiographyById(Long idUserAutobiography) {
 		
 		if (idUserAutobiography.equals(null) || idUserAutobiography.equals("")) {
@@ -323,6 +332,7 @@ public class UserAutobiographyServiceImpl implements UserAutobiographyService{
 	 * @param userAutobiography
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteUserAutobiography(UserAutobiography userAutobiography) {
 		
 		if (userAutobiography.equals(null)) {
@@ -347,6 +357,7 @@ public class UserAutobiographyServiceImpl implements UserAutobiographyService{
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListUserAutobiography() {
 		
 		List<Object>list=Collections.emptyList();

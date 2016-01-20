@@ -26,6 +26,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.AccountGroupDAO;
 import com.dancosoft.socialcommunity.model.AccountGroup;
@@ -76,6 +77,7 @@ public class AccountGroupServiceImpl implements AccountGroupService {
 	 * 
 	 * @return Boolean
 	 */
+	@Transactional
 	public Boolean isBlockAccountGroup(Long idAccountGroup) {
 		
 		Boolean isBlockAccountGroup=null;
@@ -108,6 +110,7 @@ public class AccountGroupServiceImpl implements AccountGroupService {
 	 * 
 	 * @return String
 	 */
+	@Transactional
 	public String getAccountGroupBlockStatus(Long idAccount) {
 		
 		String blokStatus=null;
@@ -142,6 +145,7 @@ public class AccountGroupServiceImpl implements AccountGroupService {
 	 * 
 	 * @return List<AccountGroup>
 	 */
+	@Transactional
 	public List<AccountGroup> getListAccountGroupWithBlockStatusByIdAccount(Long idAccount,String blockStatus) {
 		
 		List<AccountGroup> list=Collections.emptyList();
@@ -176,6 +180,7 @@ public class AccountGroupServiceImpl implements AccountGroupService {
 	 * 
 	 * @return List<AccountGroup>
 	 */
+	@Transactional
 	public List<AccountGroup> searchAccountGroupByGroupNameAccountName(String groupName, String accountName) {
 		
 		List<AccountGroup> list=Collections.emptyList();
@@ -211,6 +216,7 @@ public class AccountGroupServiceImpl implements AccountGroupService {
 	 * 
 	 * @return List<AccountGroup>
 	 */
+	@Transactional
 	public List<AccountGroup> getListAccountGroupWithViewStatusByIdAccount(Long idAccount,String viewStatus){
 		
 		List<AccountGroup> list=Collections.emptyList();
@@ -247,6 +253,7 @@ public class AccountGroupServiceImpl implements AccountGroupService {
 	 * 
 	 * @return AccountGroup
 	 */
+	@Transactional
 	public AccountGroup getAccountGroupById(Long idAccountGroup) {
 		
 		AccountGroup accountGroup = null;
@@ -277,6 +284,7 @@ public class AccountGroupServiceImpl implements AccountGroupService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveAccountGroup(AccountGroup accountGroup) {
 		
 		if(accountGroup.equals(null)){
@@ -305,6 +313,7 @@ public class AccountGroupServiceImpl implements AccountGroupService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateAccountGroup(AccountGroup accountGroup) {
 		
 		if (accountGroup.equals(null)) {
@@ -333,6 +342,7 @@ public class AccountGroupServiceImpl implements AccountGroupService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteAccountGroupById(Long idAccountGroup) {
 		
 		if (idAccountGroup.equals(null) || idAccountGroup.equals("")) {
@@ -361,6 +371,7 @@ public class AccountGroupServiceImpl implements AccountGroupService {
 	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteAccountGroup(AccountGroup accountGroup) {
 		
 		if (accountGroup.equals(null)) {
@@ -385,6 +396,7 @@ public class AccountGroupServiceImpl implements AccountGroupService {
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListAccountGroup() {
 		
 		List<Object>list=Collections.emptyList();

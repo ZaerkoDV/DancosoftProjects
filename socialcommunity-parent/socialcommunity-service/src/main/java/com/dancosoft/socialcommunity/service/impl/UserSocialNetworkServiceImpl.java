@@ -28,6 +28,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.UserSocialNetworkDAO;
 import com.dancosoft.socialcommunity.model.UserSocialNetwork;
@@ -80,6 +81,7 @@ public class UserSocialNetworkServiceImpl implements UserSocialNetworkService{
 	 * 
 	 * @return List<UserSocialNetwork>
 	 */
+	@Transactional
 	public List<UserSocialNetwork> getListSocialNetworkWithStatusByIdUser(Long idUser,String viewStatus){
 		
 		List<UserSocialNetwork> list= Collections.emptyList();
@@ -116,6 +118,7 @@ public class UserSocialNetworkServiceImpl implements UserSocialNetworkService{
 	 * 
 	 * @return Boolean
 	 */
+	@Transactional
 	public Boolean isUniqueSkype(String skypeAddress){
 		
 		Boolean isUnique=false;
@@ -144,6 +147,7 @@ public class UserSocialNetworkServiceImpl implements UserSocialNetworkService{
 	 * 
 	 * @return Boolean
 	 */
+	@Transactional
 	public Boolean isUniqualFaceBook(String facebookAddress){
 		
 		Boolean isUnique=false;
@@ -173,6 +177,7 @@ public class UserSocialNetworkServiceImpl implements UserSocialNetworkService{
 	 * 
 	 * @return Long
 	 */
+	@Transactional
 	public Long getIdUserByFacebookAddress(String facebookAddress){
 		
 		Long idUser=null;
@@ -211,6 +216,7 @@ public class UserSocialNetworkServiceImpl implements UserSocialNetworkService{
 	 * 
 	 * @return UserSocialNetwork
 	 */
+	@Transactional
 	public UserSocialNetwork getUserSocialNetworkById(Long idUserSocialNetwork) {
 		
 		UserSocialNetwork userSocialNetwork = null;
@@ -241,6 +247,7 @@ public class UserSocialNetworkServiceImpl implements UserSocialNetworkService{
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveUserSocialNetwork(UserSocialNetwork userSocialNetwork) {
 		
 		if(userSocialNetwork.equals(null)){
@@ -269,6 +276,7 @@ public class UserSocialNetworkServiceImpl implements UserSocialNetworkService{
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateUserSocialNetwork(UserSocialNetwork userSocialNetwork) {
 		
 		if (userSocialNetwork.equals(null)) {
@@ -297,6 +305,7 @@ public class UserSocialNetworkServiceImpl implements UserSocialNetworkService{
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteUserSocialNetworkById(Long idUserSocialNetwork) {
 		
 		if (idUserSocialNetwork.equals(null) || idUserSocialNetwork.equals("")) {
@@ -325,6 +334,7 @@ public class UserSocialNetworkServiceImpl implements UserSocialNetworkService{
 	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteUserSocialNetwork(UserSocialNetwork userSocialNetwork) {
 		
 		if (userSocialNetwork.equals(null)) {
@@ -349,6 +359,7 @@ public class UserSocialNetworkServiceImpl implements UserSocialNetworkService{
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListUserSocialNetwork() {
 		
 		List<Object>list=Collections.emptyList();

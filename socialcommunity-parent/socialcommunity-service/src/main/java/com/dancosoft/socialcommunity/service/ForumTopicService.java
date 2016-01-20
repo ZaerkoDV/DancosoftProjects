@@ -150,7 +150,7 @@ public interface ForumTopicService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
-	public void deleteEntityById(Long idForumTopic);
+	public void deleteForumTopicById(Long idForumTopic);
 	
 	/**
 	 * This method is basic for all entities.The method is one of CRUD methods.

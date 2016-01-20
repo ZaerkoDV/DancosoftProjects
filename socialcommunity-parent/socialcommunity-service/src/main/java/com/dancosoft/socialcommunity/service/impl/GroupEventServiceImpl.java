@@ -30,6 +30,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.GroupEventDAO;
 import com.dancosoft.socialcommunity.dao.support.TimeConverter;
@@ -85,6 +86,7 @@ public class GroupEventServiceImpl implements GroupEventService {
 	 * 
 	 * @return Account
 	 */
+	@Transactional
 	public Account getMemberAccountByIdGroupEvent(Long idGroupEvent) {
 		
 		Account account= null;
@@ -122,6 +124,7 @@ public class GroupEventServiceImpl implements GroupEventService {
 	 * 
 	 * @return List<GroupEvent>
 	 */
+	@Transactional
 	public List<GroupEvent> getListGroupEventByIdAccountGroup(Long idAccountGroup) {
 		
 		List<GroupEvent> list=Collections.emptyList();
@@ -155,6 +158,7 @@ public class GroupEventServiceImpl implements GroupEventService {
 	 * 
 	 * @return List<GroupEvent>
 	 */
+	@Transactional
 	public List<GroupEvent> getListGroupEventBeetweenDateByIdAccountGroup(
 			Long idAccountGroup,LocalDateTime  minDateLDT, LocalDateTime maxDateLDT) {
 		
@@ -197,6 +201,7 @@ public class GroupEventServiceImpl implements GroupEventService {
 	 * 
 	 * @return int
 	 */
+	@Transactional
 	public int getCountGroupEventByIdAccountGroup(Long idAccountGroup) {
 		
 		int count=0;
@@ -230,6 +235,7 @@ public class GroupEventServiceImpl implements GroupEventService {
 	 * 
 	 * @return GroupEvent
 	 */
+	@Transactional
 	public GroupEvent getGroupEventById(Long idGroupEvent) {
 		
 		GroupEvent groupEvent = null;
@@ -260,6 +266,7 @@ public class GroupEventServiceImpl implements GroupEventService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveGroupEvent(GroupEvent groupEvent) {
 		
 		if(groupEvent.equals(null)){
@@ -288,6 +295,7 @@ public class GroupEventServiceImpl implements GroupEventService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateGroupEvent(GroupEvent groupEvent) {
 		
 		if (groupEvent.equals(null)) {
@@ -316,6 +324,7 @@ public class GroupEventServiceImpl implements GroupEventService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteGroupEventById(Long idGroupEvent) {
 		
 		if (idGroupEvent.equals(null) || idGroupEvent.equals("")) {
@@ -344,6 +353,7 @@ public class GroupEventServiceImpl implements GroupEventService {
 	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteGroupEvent(GroupEvent groupEvent) {
 		
 		if (groupEvent.equals(null)) {
@@ -368,6 +378,7 @@ public class GroupEventServiceImpl implements GroupEventService {
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListGroupEvent() {
 		
 		List<Object>list=Collections.emptyList();

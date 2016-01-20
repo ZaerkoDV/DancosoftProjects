@@ -26,6 +26,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.UserCorespondenceDAO;
 import com.dancosoft.socialcommunity.model.UserCorespondence;
@@ -75,6 +76,7 @@ public class UserCorespondenceServiceImpl implements UserCorespondenceService {
 	 * 
 	 * @return String
 	 */
+	@Transactional
 	public String getCorespondViewStatusByIdUserCorespond(Long idUserCorespondence) {
 		
 		String viewStatus=null;
@@ -105,6 +107,7 @@ public class UserCorespondenceServiceImpl implements UserCorespondenceService {
 	 * 
 	 * @return List<UserCorespondence>
 	 */
+	@Transactional
 	public List<UserCorespondence> getListUserCorespondenceForBroadcastInfo() {
 		
 		List<UserCorespondence> list=Collections.emptyList();
@@ -137,6 +140,7 @@ public class UserCorespondenceServiceImpl implements UserCorespondenceService {
 	 * 
 	 * @return UserCorespondence
 	 */
+	@Transactional
 	public UserCorespondence getUserCorespondenceById(Long idUserCorespondence) {
 		
 		UserCorespondence userCorespondence = null;
@@ -167,6 +171,7 @@ public class UserCorespondenceServiceImpl implements UserCorespondenceService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveUserCorespondence(UserCorespondence userCorespondence) {
 		
 		if(userCorespondence.equals(null)){
@@ -195,6 +200,7 @@ public class UserCorespondenceServiceImpl implements UserCorespondenceService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateUserCorespondence(UserCorespondence userCorespondence) {
 		
 		if (userCorespondence.equals(null)) {
@@ -223,6 +229,7 @@ public class UserCorespondenceServiceImpl implements UserCorespondenceService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteUserCorespondenceById(Long idUserCorespondence) {
 		
 		if (idUserCorespondence.equals(null) || idUserCorespondence.equals("")) {
@@ -250,6 +257,7 @@ public class UserCorespondenceServiceImpl implements UserCorespondenceService {
 	 * @param userCorespondence
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteUserCorespondence(UserCorespondence userCorespondence) {
 		
 		if (userCorespondence.equals(null)) {
@@ -274,6 +282,7 @@ public class UserCorespondenceServiceImpl implements UserCorespondenceService {
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListEntity() {
 		
 		List<Object>list=Collections.emptyList();

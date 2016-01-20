@@ -11,6 +11,9 @@
 package com.dancosoft.socialcommunity.model;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -124,21 +127,31 @@ public class Forum implements Serializable {
 		this.idForum = idForum;
 	}
 
-	/**
-	 * @return the dateCreateForum
-	 */
-	public Date getDateCreateForum() {
-		return dateCreateForum;
-	}
+//	/**
+//	 * @return the dateCreateForum
+//	 */
+//	public Date getDateCreateForum() {
+//		return dateCreateForum;
+//	}
+//
+//	/**
+//	 * @param dateCreateForum
+//	 *            the dateCreateForum to set
+//	 */
+//	public void setDateCreateForum(Date dateCreateForum) {
+//		this.dateCreateForum = dateCreateForum;
+//	}
 
-	/**
-	 * @param dateCreateForum
-	 *            the dateCreateForum to set
-	 */
-	public void setDateCreateForum(Date dateCreateForum) {
-		this.dateCreateForum = dateCreateForum;
+	public LocalDateTime getDateCreateForum() {
+		Instant instant = Instant.ofEpochMilli(dateCreateForum.getTime());
+		return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
 	}
-
+	
+	public void setDateCreateForum(LocalDateTime dateCreateForum) {
+		Instant instant = dateCreateForum.toInstant(ZoneOffset.UTC);		
+		this.dateCreateForum = Date.from(instant);
+	}
+	
 	/**
 	 * @return the forumName
 	 */

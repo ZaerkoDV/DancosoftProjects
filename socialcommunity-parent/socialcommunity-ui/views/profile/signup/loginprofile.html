@@ -11,14 +11,15 @@ input:valid {
 </style>
 
 <title>Login Sign Up</title>
-<div class="container">
-  <div class="col-lg-6 col-lg-offset-2">
-	<div class="well">
-	    <div class="container">
+<div ng-controller="IndexController">
+  <div class="container">
+  	<div class="col-lg-6 col-lg-offset-2">
+		<div class="well">
 		    <div class="row">
 			   <div class="col-lg-5">
 				<form name="myForm" class="form-horizontal">
 					<fieldset>
+					  <a ui-sref="signuplogin"></a>
 					  <legend>Login Sign Up Form</legend>
 					  
 					  <div class="form-group">
@@ -63,11 +64,11 @@ input:valid {
 					    </div>
 					  
 				    </fieldset>
-				</form>
-	          </div>
+				  </form>
+	           </div>
 	        </div>
 	     </div>
-      </div>
-   </div> 
+      </div> 
+  </div>  
 </div>
  

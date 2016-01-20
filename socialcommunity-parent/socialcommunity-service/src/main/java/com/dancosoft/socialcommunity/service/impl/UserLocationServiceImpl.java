@@ -26,6 +26,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.UserLocationDAO;
 import com.dancosoft.socialcommunity.model.City;
@@ -79,6 +80,7 @@ public class UserLocationServiceImpl implements UserLocationService{
 	 * 
 	 * @return UserLocation
 	 */
+	@Transactional
 	public UserLocation getUserLocationByIdUser(Long idUser) {
 		
 		UserLocation userLocation=null;
@@ -112,6 +114,7 @@ public class UserLocationServiceImpl implements UserLocationService{
 	 * 
 	 * @return Language
 	 */
+	@Transactional
 	public Language getUserLanguageByIdUser(Long idUser) {
 		
 		Language language=null;
@@ -145,6 +148,7 @@ public class UserLocationServiceImpl implements UserLocationService{
 	 * 
 	 * @return City
 	 */
+	@Transactional
 	public City getUserCityByIdUser(Long idUser) {
 		
 		City city=null;
@@ -178,6 +182,7 @@ public class UserLocationServiceImpl implements UserLocationService{
 	 * 
 	 * @return Country
 	 */
+	@Transactional
 	public Country getUserCountryByIdUser(Long idUser) {
 	
 		Country country=null;
@@ -212,6 +217,7 @@ public class UserLocationServiceImpl implements UserLocationService{
 	 * 
 	 * @return UserLocation
 	 */
+	@Transactional
 	public UserLocation getUserLocationById(Long idUserLocation) {
 		
 		UserLocation userLocation = null;
@@ -242,6 +248,7 @@ public class UserLocationServiceImpl implements UserLocationService{
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveUserLocation(UserLocation userLocation) {
 		
 		if(userLocation.equals(null)){
@@ -270,6 +277,7 @@ public class UserLocationServiceImpl implements UserLocationService{
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateUserLocation(UserLocation userLocation) {
 		
 		if (userLocation.equals(null)) {
@@ -298,6 +306,7 @@ public class UserLocationServiceImpl implements UserLocationService{
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteUserLocationById(Long idUserLocation) {
 		
 		if (idUserLocation.equals(null) || idUserLocation.equals("")) {
@@ -326,6 +335,7 @@ public class UserLocationServiceImpl implements UserLocationService{
 	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteUserLocation(UserLocation userLocation) {
 		
 		if (userLocation.equals(null)) {
@@ -350,6 +360,7 @@ public class UserLocationServiceImpl implements UserLocationService{
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListLocation() {
 		
 		List<Object>list=Collections.emptyList();

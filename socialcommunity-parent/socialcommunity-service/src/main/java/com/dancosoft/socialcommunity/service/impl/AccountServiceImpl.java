@@ -26,6 +26,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.AccountDAO;
 import com.dancosoft.socialcommunity.model.Account;
@@ -77,6 +78,7 @@ public class AccountServiceImpl implements AccountService {
 	 * 
 	 * @return List<Account>
 	 */
+	@Transactional
 	public List<Account> searchAccountByAccountNameUserLastName(String accountName, String lastName) {
 		
 		List<Account> list=Collections.emptyList();
@@ -109,6 +111,7 @@ public class AccountServiceImpl implements AccountService {
 	 * 
 	 * @return Long
 	 */
+	@Transactional
 	public Long getIdUserByIdAccount(Long idAccount) {
 		
 		Long idUser=null;
@@ -140,6 +143,7 @@ public class AccountServiceImpl implements AccountService {
 	 * 
 	 * @return Boolean
 	 */
+	@Transactional
 	public Boolean isAccountBlock(Long idAccount) {
 		
 		Boolean isAccountBlock=null;
@@ -172,6 +176,7 @@ public class AccountServiceImpl implements AccountService {
 	 * 
 	 * @return String
 	 */
+	@Transactional
 	public String getAccountStatus(Long idAccount) {
 		
 		String blokStatus=null;
@@ -205,6 +210,7 @@ public class AccountServiceImpl implements AccountService {
 	 * 
 	 * @return Account
 	 */
+	@Transactional
 	public Account getAccountById(Long idAccount) {
 		
 		Account account = null;
@@ -235,6 +241,7 @@ public class AccountServiceImpl implements AccountService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveAccount(Account account) {
 		
 		if(account.equals(null)){
@@ -263,6 +270,7 @@ public class AccountServiceImpl implements AccountService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateAccount(Account account) {
 		
 		if (account.equals(null)) {
@@ -290,6 +298,7 @@ public class AccountServiceImpl implements AccountService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteAccountById(Long idAccount) {
 		
 		if (idAccount.equals(null) || idAccount.equals("")) {
@@ -315,8 +324,10 @@ public class AccountServiceImpl implements AccountService {
 	 * 
 	 * @type Account
 	 * @param account
+	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteAccount(Account account) {
 		
 		if (account.equals(null)) {
@@ -341,6 +352,7 @@ public class AccountServiceImpl implements AccountService {
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListAccount() {
 		
 		List<Object>list=Collections.emptyList();

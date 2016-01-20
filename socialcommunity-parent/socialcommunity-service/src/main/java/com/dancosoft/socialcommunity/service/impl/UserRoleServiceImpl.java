@@ -26,6 +26,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.UserRoleDAO;
 import com.dancosoft.socialcommunity.model.User;
@@ -53,6 +54,7 @@ import com.dancosoft.socialcommunity.service.UserRoleService;
  * @version 1.0 05.01.2016
  * @author Zaerko Denis
  */
+
 @Service(value="userRoleService")
 public class UserRoleServiceImpl implements UserRoleService{
 	
@@ -77,6 +79,7 @@ public class UserRoleServiceImpl implements UserRoleService{
 	 * 
 	 * @return List<User>
 	 */
+	@Transactional
 	public List<User> getListUserByRole(String userRoleName) {
 		
 		List<User> list=Collections.emptyList();
@@ -109,6 +112,7 @@ public class UserRoleServiceImpl implements UserRoleService{
 	 * 
 	 * @return int
 	 */
+	@Transactional
 	public int getCountUserByRole(String userRoleName) {
 		
 		int count=0;
@@ -140,7 +144,8 @@ public class UserRoleServiceImpl implements UserRoleService{
 	 * 
 	 * @return UserRole
 	 */
-	public UserRole getEntityById(Long idUserRole) {
+	@Transactional
+	public UserRole getUserRoleById(Long idUserRole) {
 		
 		UserRole userRole = null;
 		if (idUserRole.equals(null) || idUserRole.equals("")) {
@@ -170,6 +175,7 @@ public class UserRoleServiceImpl implements UserRoleService{
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveUserRole(UserRole userRole) {
 		
 		if(userRole.equals(null)){
@@ -198,6 +204,7 @@ public class UserRoleServiceImpl implements UserRoleService{
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateUserRole(UserRole userRole) {
 		
 		if (userRole.equals(null)) {
@@ -226,6 +233,7 @@ public class UserRoleServiceImpl implements UserRoleService{
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteUserRoleById(Long idUserRole) {
 		
 		if (idUserRole.equals(null) || idUserRole.equals("")) {
@@ -254,6 +262,7 @@ public class UserRoleServiceImpl implements UserRoleService{
 	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteUserRoleService(UserRole userRole) {
 		
 		if (userRole.equals(null)) {
@@ -278,6 +287,7 @@ public class UserRoleServiceImpl implements UserRoleService{
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListUserRole() {
 		
 		List<Object>list=Collections.emptyList();

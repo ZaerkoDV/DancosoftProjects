@@ -34,6 +34,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.UserPhotoDAO;
 import com.dancosoft.socialcommunity.model.UserPhoto;
@@ -90,6 +91,7 @@ public class UserPhotoServiceImpl implements UserPhotoService {
 	 * 
 	 * @return UserPhoto
 	 */
+	@Transactional
 	public UserPhoto getUserPhotoByIdUser(Long idUser) {
 		
 		UserPhoto userPhoto=null;
@@ -122,6 +124,7 @@ public class UserPhotoServiceImpl implements UserPhotoService {
 	 * 
 	 * @return String
 	 */
+	@Transactional
 	public String getPhotoNameByIdUser(Long idUser) {
 		
 		String photoName=null;
@@ -160,6 +163,7 @@ public class UserPhotoServiceImpl implements UserPhotoService {
 	 * 
 	 * @return Boolean
 	 */
+	@Transactional
 	public Boolean savePhotoAsFormat(Long idUser,String format, String urlSource){
 		
 		Boolean localSave=false;
@@ -294,6 +298,7 @@ public class UserPhotoServiceImpl implements UserPhotoService {
 	 * 
 	 * @return UserPhoto
 	 */
+	@Transactional
 	public UserPhoto getUserPhotoById(Long idUserPhoto) {
 		
 		UserPhoto userPhoto = null;
@@ -324,6 +329,7 @@ public class UserPhotoServiceImpl implements UserPhotoService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveUserPhoto(UserPhoto userPhoto) {
 		
 		if(userPhoto.equals(null)){
@@ -352,6 +358,7 @@ public class UserPhotoServiceImpl implements UserPhotoService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateUserPhoto(UserPhoto userPhoto) {
 		
 		if (userPhoto.equals(null)) {
@@ -380,6 +387,7 @@ public class UserPhotoServiceImpl implements UserPhotoService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteUserPhotoById(Long idUserPhoto) {
 		
 		if (idUserPhoto.equals(null) || idUserPhoto.equals("")) {
@@ -408,6 +416,7 @@ public class UserPhotoServiceImpl implements UserPhotoService {
 	 * 
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteUserPhoto(UserPhoto userPhoto) {
 		
 		if (userPhoto.equals(null)) {
@@ -432,6 +441,7 @@ public class UserPhotoServiceImpl implements UserPhotoService {
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public <T> List<Object> getListUserPhoto() {
 		
 		List<Object>list=Collections.emptyList();

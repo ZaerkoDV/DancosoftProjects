@@ -28,6 +28,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.dao.ForumDAO;
 import com.dancosoft.socialcommunity.dao.support.TimeConverter;
@@ -82,6 +83,7 @@ public class ForumServiceImpl implements ForumService {
 	 * 
 	 * @return List<Forum>
 	 */
+	@Transactional
 	public List<Forum> getListForumCreatedBetweenDateByIdForum(LocalDateTime minDateLDT,LocalDateTime maxDateLDT) {
 		
 		List<Forum> list=Collections.emptyList();
@@ -116,6 +118,7 @@ public class ForumServiceImpl implements ForumService {
 	 * 
 	 * @return int
 	 */
+	@Transactional
 	public int getCountForum() {
 		
 		int count = 0;
@@ -140,6 +143,7 @@ public class ForumServiceImpl implements ForumService {
 	 * 
 	 * @return List<Forum>
 	 */
+	@Transactional
 	public List<Forum> searchForumByForumName(String forumName) {
 		
 		List<Forum> list=Collections.emptyList();
@@ -173,6 +177,7 @@ public class ForumServiceImpl implements ForumService {
 	 * 
 	 * @return List<Forum>
 	 */
+	@Transactional
 	public List<Forum> getListForumWithStatus(String viewStatus) {
 		
 		List<Forum> list=Collections.emptyList();
@@ -206,6 +211,7 @@ public class ForumServiceImpl implements ForumService {
 	 * 
 	 * @return Boolean
 	 */
+	@Transactional
 	public Boolean isPrivateForum(Long idForum) {
 		
 		Boolean isPrivateForum=null;
@@ -240,6 +246,7 @@ public class ForumServiceImpl implements ForumService {
 	 * 
 	 * @return Forum
 	 */
+	@Transactional
 	public Forum getForumById(Long idForum) {
 		
 		Forum forum = null;
@@ -270,6 +277,7 @@ public class ForumServiceImpl implements ForumService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void saveForum(Forum forum) {
 		
 		if(forum.equals(null)){
@@ -298,6 +306,7 @@ public class ForumServiceImpl implements ForumService {
 	 * @exception TypeMismatchDataAccessException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void updateForum(Forum forum) {
 		
 		if (forum.equals(null)) {
@@ -326,6 +335,7 @@ public class ForumServiceImpl implements ForumService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteForumById(Long idForum) {
 		
 		if (idForum.equals(null) || idForum.equals("")) {
@@ -353,6 +363,7 @@ public class ForumServiceImpl implements ForumService {
 	 * @param forum
 	 * @exception DataAccessException
 	 */
+	@Transactional
 	public void deleteForum(Forum forum) {
 		
 		if (forum.equals(null)) {
@@ -377,6 +388,7 @@ public class ForumServiceImpl implements ForumService {
 	 * 
 	 * @return List<Object>
 	 */
+	@Transactional
 	public List<Object> getListForum() {
 		
 		List<Object>list=Collections.emptyList();

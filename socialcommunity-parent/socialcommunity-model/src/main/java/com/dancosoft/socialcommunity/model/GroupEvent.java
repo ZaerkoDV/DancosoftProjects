@@ -11,6 +11,9 @@
 package com.dancosoft.socialcommunity.model;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -128,19 +131,29 @@ public class GroupEvent implements Serializable {
 		this.idGroupEvent = idGroupEvent;
 	}
 
-	/**
-	 * @return the dateCreateGroupEvent
-	 */
-	public Date getDateCreateGroupEvent() {
-		return dateCreateGroupEvent;
+//	/**
+//	 * @return the dateCreateGroupEvent
+//	 */
+//	public Date getDateCreateGroupEvent() {
+//		return dateCreateGroupEvent;
+//	}
+//
+//	/**
+//	 * @param dateCreateGroupEvent
+//	 *            the dateCreateGroupEvent to set
+//	 */
+//	public void setDateCreateGroupEvent(Date dateCreateGroupEvent) {
+//		this.dateCreateGroupEvent = dateCreateGroupEvent;
+//	}
+	
+	public LocalDateTime getDateCreateGroupEvent() {
+		Instant instant = Instant.ofEpochMilli(dateCreateGroupEvent.getTime());
+		return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
 	}
-
-	/**
-	 * @param dateCreateGroupEvent
-	 *            the dateCreateGroupEvent to set
-	 */
-	public void setDateCreateGroupEvent(Date dateCreateGroupEvent) {
-		this.dateCreateGroupEvent = dateCreateGroupEvent;
+	
+	public void setDateCreateGroupEvent(LocalDateTime dateCreateGroupEvent) {
+		Instant instant = dateCreateGroupEvent.toInstant(ZoneOffset.UTC);		
+		this.dateCreateGroupEvent = Date.from(instant);
 	}
 
 	/**
