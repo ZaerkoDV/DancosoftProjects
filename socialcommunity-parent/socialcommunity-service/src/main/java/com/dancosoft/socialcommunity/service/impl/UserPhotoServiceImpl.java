@@ -171,7 +171,7 @@ public class UserPhotoServiceImpl implements UserPhotoService {
 		if(idUser.equals(null)){
 			throw new RuntimeException("UserPhotoService:Id user must not null!");
 			
-		}else if(urlSource.equals(null)||urlSource.equals("") || !urlChecker.isValidURL(urlSource)){
+		}else if(urlSource==null||urlSource.equals("") || !urlChecker.isValidURL(urlSource)){
 			throw new RuntimeException("UserPhotoService:Url must not null or empty!");
 			
 		}else{
@@ -233,6 +233,7 @@ public class UserPhotoServiceImpl implements UserPhotoService {
 	 * 
 	 * @return String
 	 */
+	@Transactional
 	public String loadPathToUserPhoto(Long idUser){
 		
 		String path=null;

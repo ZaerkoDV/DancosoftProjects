@@ -5,40 +5,33 @@ import com.dancosoft.socialcommunity.model.UserAutobiography;
 import com.dancosoft.socialcommunity.model.UserEmail;
 import com.dancosoft.socialcommunity.model.UserLocation;
 import com.dancosoft.socialcommunity.model.UserPhoto;
+import com.dancosoft.socialcommunity.model.UserSocialNetwork;
 
-public class UserParlorData {
-	
-	private User user;
+public class UserExtendedData {
 	
 	private UserAutobiography userAutobiography;
 	
 	private UserEmail userEmail;
 	
+	private UserSocialNetwork userSocialNetwork;
+	
 	private UserPhoto userPhoto;
 	
 	private UserLocation userLocation;
 	
-	public UserParlorData(){
+	public UserExtendedData(){
 	}
 	
-	public UserParlorData(User user, UserAutobiography userAutobiography,UserEmail userEmail,
+	public UserExtendedData(UserAutobiography userAutobiography,UserEmail userEmail,UserSocialNetwork userSocialNetwork,
 			UserPhoto userPhoto,UserLocation userLocation){
 		
-		this.user=user;
 		this.userAutobiography=userAutobiography;
 		this.userEmail=userEmail;
+		this.userSocialNetwork=userSocialNetwork;
 		this.userPhoto=userPhoto;
 		this.userLocation=userLocation;
 	}
-	
-	public User getUser() {
-		return user;
-	}
-	
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
+		
 	public UserAutobiography getUserAutobiography() {
 		return userAutobiography;
 	}
@@ -55,6 +48,14 @@ public class UserParlorData {
 		this.userEmail = userEmail;
 	}
 
+	public UserSocialNetwork getUserSocialNetwork() {
+		return userSocialNetwork;
+	}
+	
+	public void setUserSocialNetwork(UserSocialNetwork userSocialNetwork) {
+		this.userSocialNetwork = userSocialNetwork;
+	}
+	
 	public UserPhoto getUserPhoto() {
 		return userPhoto;
 	}
@@ -70,4 +71,5 @@ public class UserParlorData {
 	public void setUserLocation(UserLocation userLocation) {
 		this.userLocation = userLocation;
 	}
+	
 }

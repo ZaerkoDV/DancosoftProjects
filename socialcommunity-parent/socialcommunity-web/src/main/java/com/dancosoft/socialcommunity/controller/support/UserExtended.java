@@ -44,13 +44,6 @@ public class UserExtended {
 	public void setUserSocialNetwork(UserSocialNetwork userSocialNetwork) {
 		this.userSocialNetwork = userSocialNetwork;
 	}
-
-//	@Override
-//	public String toString() {
-//		return "UserExtended [userAutobiography=" + userAutobiography
-//				+ ", userEmail=" + userEmail + ", socialNetwork="
-//				+ socialNetwork + "]";
-//	}
 	
 	@Override
 	public String toString() {

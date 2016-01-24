@@ -95,6 +95,9 @@ public class UserSocialNetworkServiceImpl implements UserSocialNetworkService{
 			try {
 				logger.info("UserSocialNetworkService:List user social network with status loaded.");
 				list= userSocialNetworkDAO.getListSocialNetworkWithStatusByIdUser(idUser, viewStatus);
+			
+			} catch (IndexOutOfBoundsException iob) {
+				logger.warn("UserSocialNetworkService: No object with this index " + iob);
 				
 			} catch (DataRetrievalFailureException rf) {
 				logger.warn("UserSocialNetworkService: List of user social network with view"

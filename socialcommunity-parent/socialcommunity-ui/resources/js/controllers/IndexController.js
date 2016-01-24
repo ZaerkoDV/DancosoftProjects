@@ -4,7 +4,7 @@
 'use strict';
 
 //angular.module('socialcommunity', ['ngAnimate', 'ui.bootstrap']);
-angular.module('socialcommunity').controller('IndexController',function ($scope,$state, $http) {
+angular.module('socialcommunity').controller('IndexController',function ($scope, $rootScope, $state, $http) {
 
 	$scope.id = $state.params.idUser;
 	
@@ -63,7 +63,8 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
 	
 													//sign in
 	$scope.userSignIn = function(securityPrompt){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/signin/userdata.json',securityPrompt).success(function(id) {
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/signin/userdata.json',securityPrompt)
+		.success(function(id) {
 			
 			if(id===null && id===''){
 				$scope.changeRoute('#/signin');	
@@ -89,12 +90,10 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/signin/userrole.json', id).success(function(userRole) {
 		
 			if(userRole.userRoleName==='user'){
-				//$state.go('userparlor', {idUser: id});
-				$scope.changeRoute('#/user/parlor');
+				$state.go('userparlor', {idUser: id});	
 				
 			}else if(userRole.userRoleName==='admin'){
 				//$state.go('adminparlor', {idUser: id});
-				$scope.changeRoute('#/admin/parlor');
 				
 			}else{
 				$scope.changeRoute('#/signin');

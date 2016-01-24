@@ -174,7 +174,6 @@ public class IndexController {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			userExtended = mapper.readValue(userExtendedJson, UserExtended.class);
-			logger.info(userExtended.getUserEmail().getUserEmail());
 			
 		} catch (JsonParseException e) {
 			logger.info("IndexController: error when json parse class UserExtended "+e);
@@ -185,8 +184,6 @@ public class IndexController {
 		} catch (IOException e) {
 			logger.info("IndexController: input output exeption when read json value of object userExtendedJson "+e);
 		}
-		
-		logger.info(userExtended.getUserEmail().getUserEmail());
 		
 		Boolean isUniqueEmail=userEmailService.isUniqueEmail(userExtended.getUserEmail().getUserEmail());
 		Boolean isValidEmail=userEmailService.isValidEmail(userExtended.getUserEmail().getUserEmail());
@@ -300,21 +297,18 @@ public class IndexController {
 			StandartAccountGroup accountGroup = new StandartAccountGroup();
 			StandartAccountGroup historyAccountGroup = new StandartAccountGroup();
 
-			
 			logger.info("IndexController: create base group family");
 			AccountGroup family = accountGroup.createAccountGroupFamily(account);
 			accountGroupService.saveAccountGroup(family);
 			AccountGroupHistory familyHistory = historyAccountGroup.createAccountGroupHistoryFamily(family);
 			accountGroupHistoryService.saveAccountGroupHistory(familyHistory);
 
-			
 			logger.info("IndexController: create base group friend");
 			AccountGroup friend = accountGroup.createAccountGroupFriend(account);
 			accountGroupService.saveAccountGroup(friend);
 			AccountGroupHistory friendHistory = historyAccountGroup.createAccountGroupHistoryFriend(friend);
 			accountGroupHistoryService.saveAccountGroupHistory(friendHistory);
 
-			
 			logger.info("IndexController: create base group work");
 			AccountGroup work = accountGroup.createAccountGroupWork(account);
 			accountGroupService.saveAccountGroup(work);
@@ -325,11 +319,10 @@ public class IndexController {
 			logger.info("IndexController: create new account and base groups for account failed! Id user must not null.");
 			idUser=null;
 		}
-		
 		return idUser;
 	}
-	
-	@RequestMapping(value="/views/profile/signin/userdata.json", method = RequestMethod.POST)//headers="Accept=application/json"
+	//headers="Accept=application/json"
+	@RequestMapping(value="/views/profile/signin/userdata.json", method = RequestMethod.POST)
 	public @ResponseBody Long signIn(@RequestBody SecurityPrompt prompt){
 		
 		Long idUser=null;
@@ -344,7 +337,6 @@ public class IndexController {
 		//email and password
 		Boolean isValidEmail=userEmailService.isValidEmail(loginOrEmail);
 		if(isValidEmail && password!=null){
-			
 			logger.info("IndexController: user sign in by user email and user password");
 			idUser=userEmailService.getIdUserByEmail(loginOrEmail);
 			UserSecurity userSecurity=userSecurityService.getLoginPasswordByIdUser(idUser);
@@ -354,31 +346,34 @@ public class IndexController {
 			
 		//email and answer	
 		}else if(isValidEmail && answer!=null){		
-			
 			logger.info("IndexController: user sign in by user email and user answer on question");
 			idUser=userEmailService.getIdUserByEmail(loginOrEmail);
 			securityPrompt=securityPromptService.getSecurityPromptByIdUser(idUser);
 			signin=securityPromptService.signInUserByPromptAnswer(securityPrompt.getIdSecurityPrompt(), answer);
+			
+			//generate new password with old login which send on email
+			//userSecurityService.updateLoginPasswordByIdUser(idUser);
 		}	
 		
 		//login and password
 		Boolean isLoginNotExist= userSecurityService.isUniqueLogin(loginOrEmail);
 		if(!isLoginNotExist && password!=null){
-			
 			logger.info("IndexController: user sign in by user login and password");
 			idUser=userSecurityService.getIdUserByLoginPassword(loginOrEmail, password);
 			signin=userSecurityService.signInUserByLoginPassword(loginOrEmail, password);
 			
 		//login and answer	
 		} else if(!isLoginNotExist && answer!=null){	
-			
 			logger.info("IndexController: user sign in by user login and answer on question.");
 			securityPrompt=securityPromptService.getSecurityPromptByLogin(loginOrEmail);
 			idUser=securityPromptService.getIdUserByPromptAnswer(securityPrompt.getIdSecurityPrompt(), answer);
 			signin=securityPromptService.signInUserByPromptAnswer(securityPrompt.getIdSecurityPrompt(), answer);
+			
+			//generate new password with old login which send on email
+			//userSecurityService.updateLoginPasswordByIdUser(idUser);
 		}
 		
-		//result user autorization
+		//result of user autorization
 		if(signin && !idUser.equals(null)){
 			logger.info("IndexController: user autorization is successfully");
 			return idUser;
@@ -399,7 +394,6 @@ public class IndexController {
 		//if user enter email
 		Boolean isValidEmail=userEmailService.isValidEmail(loginOrEmail);
 		if(isValidEmail){
-			
 			logger.info("IndexController: user sign in, get security answer for autorization by email");
 			Long idUser=userEmailService.getIdUserByEmail(loginOrEmail);
 			securityPrompt=securityPromptService.getSecurityPromptByIdUser(idUser);
@@ -409,7 +403,6 @@ public class IndexController {
 		//if user enter his login isLoginNotExist return false
 		Boolean isLoginNotExist= userSecurityService.isUniqueLogin(loginOrEmail);
 		if(!isLoginNotExist){
-			
 			logger.info("IndexController: user sign in, get security answer for autorization by login");
 			securityPrompt=securityPromptService.getSecurityPromptByLogin(loginOrEmail);
 			prompt.setSecurityPrompt(securityPrompt.getSecurityPrompt());

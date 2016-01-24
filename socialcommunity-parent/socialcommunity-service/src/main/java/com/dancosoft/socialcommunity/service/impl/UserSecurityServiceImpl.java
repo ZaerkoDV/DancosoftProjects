@@ -421,24 +421,29 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 		String fromeEmail="zaerko1991@mail.ru";
 		String toEmail;
 		List<UserEmail> list=Collections.emptyList();
-			
+		UserSecurity userSecurityOld=null;	
+		
 		if (idUser.equals(null)) {
 			throw new RuntimeException("UserSecurityService:Id user must not null.");
 		}else{
 			try {
-				//generate new security feature
-				newLogin=generator.generateNewSecutityRow();
+				//load old security login and password
+				userSecurityOld=userSecurityDAO.getLoginPasswordByIdUser(idUser);
+				logger.info("UserSecurityService:Old login and password load.");
+				
+				//generate new password with old login
+				newLogin=userSecurityOld.getUserLogin();
 				newPassword=generator.generateNewSecutityRow();
 				statusUpdate= userSecurityDAO.updateLoginPasswordByIdUser(idUser,newLogin,newPassword);
 				logger.info("UserSecurityService:Login and password update by id user.");
 				
-				//send login amd password on user email
+				//send login and password on user email
 				//list=userEmailDAO.getListEmailByIdUser(idUser);
 				//toEmail=list.get(0).getUserEmail();
 				
 				//contentEmail="\n Login:" + newLogin +"\n Password:" + newPassword;
 				//emailCreator.createSecurityEmail(fromeEmail, toEmail,contentEmail);
-				//logger.info("UserSecurityService:New login and password send to post.");
+				logger.info("UserSecurityService:New login and password send to post.");
 				
 				////sender.sendEmail(list,newLogin,newPassword);
 				

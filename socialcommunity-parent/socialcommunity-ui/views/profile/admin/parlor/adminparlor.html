@@ -1,3 +1,167 @@
 <div>
 Administrator page!
 </div>
+
+<style>
+	
+.sign {
+    float: left; /* Выравнивание по правому краю */
+    border: 1px solid #333; /* Параметры рамки */
+    padding: 7px; /* Поля внутри блока */
+    margin: 10px 0 5px 5px; /* Отступы вокруг */
+    background: #f0f0f0; /* Цвет фона */ 
+}
+.sign figcaption {
+    margin: 0 auto 5px; /* Отступы вокруг абзаца */
+}
+	
+</style>
+
+<!-- 
+
+<title>User parlor</title>
+
+<div class="col-md-2">
+  <ul class="nav nav-pills nav-stacked">
+  	<li>
+	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse1">Profile detail</a>
+			     </h4>
+			</div>
+			<div id="collapse1" class="panel-collapse collapse">
+			    <form>
+				  <div class="panel-body"> 
+					<p><a href="#">My Common Profile</a></p>
+					<p><a href="#">My Extended Profile</a></p>
+					<a href="#">My Autobiography</a>
+				  </div>
+			    </form>    
+			</div>
+	   </div>
+	</li>
+ 
+    <li>
+	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse2">Groups</a>
+			     </h4>
+			</div>
+			<div id="collapse2" class="panel-collapse collapse">
+			    <form>
+				  <div class="panel-body">
+					<p><a href="#">Menu 1</a></p>
+					<p><a href="#">Menu 1</a></p>
+					<a href="#">Menu 1</a>
+				  </div>
+			    </form>    
+			</div>
+	   </div>
+	 </li>
+
+     <li>
+	   <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse3">Forums</a>
+			     </h4>
+			</div>
+			<div id="collapse3" class="panel-collapse collapse">
+			    <form>
+				  <div class="panel-body">
+					<p><a href="#">Menu 1</a></p>
+					<p><a href="#">Menu 1</a></p>
+					<a href="#">Menu 1</a>
+				  </div>
+			    </form>    
+			</div>
+	    </div>
+	 </li>
+  </ul>
+</div>
+
+<div class="col-lg-8 col-lg-offset-0">
+	<div class="well">
+	    <div class="container">
+		    <div class="row">
+			   <div class="col-lg-8">
+				<form name="myForm" class="form-horizontal">
+					<fieldset>
+						<a ui-sref="userparlor"></a>
+						<legend>User Parlor Form</legend>
+						
+							<figure class="sign">
+							   <p><img src="images/helen.jpg" width="150" height="200" alt=""></p>
+							  	  <figcaption>
+							  		<div ng-show="userParlorData.userPhoto.photoNote != null ">
+							  			{{userParlorData.userPhoto.photoNote}} 
+							  		</div>
+							  	  </figcaption>
+							</figure>
+						 
+							<div class="form-group">
+								<div style="text-indent: 20px;">
+							    	<strong>First Name :</strong> {{userParlorData.user.firstName}}<br>
+							    </div>	
+							    <div style="text-indent: 20px;">
+						     		<strong>Last Name:</strong>{{userParlorData.user.lastName}} <br>
+						     	</div>
+						     	<div ng-show="userParlorData.user.middleName != null" style="text-indent: 20px;">
+							     	 <strong>Middle Name:</strong>{{userParlorData.user.middleName}}
+								</div>
+								<div style="text-indent: 20px;">
+									 <strong>Sex:</strong>{{userParlorData.user.sex}}
+								</div>
+								<div style="text-indent: 20px;">
+									 <strong>Birth:</strong>{{userParlorData.userAutobiography.birth | date: "yyyy-MM-dd" }}
+								</div>
+								<div ng-show="userParlorData.userLocation.city.cityName != null" style="text-indent: 20px;">
+										<strong>Location:</strong>{{userParlorData.userLocation.city.country.countryName}},
+							    	   	{{userParlorData.userLocation.city.cityName}}
+								</div>
+								<div style="text-indent: 20px;">
+									 <strong>Email:</strong>{{userParlorData.userEmail.userEmail}}
+								</div>
+								
+								<div ng-show="userParlorData.userAutobiography.hobby != null" style="text-indent: 20px;">
+										<strong>Hobby:</strong> {{userParlorData.userAutobiography.hobby}}
+								</div>
+								<div ng-show="userParlorData.userAutobiography.autobiography != null" style="text-indent: 20px;">	
+										<strong>My Autobiography:</strong>{{userParlorData.userAutobiography.autobiography}}
+								</div>
+							</div>
+				    	
+					 </fieldset>
+				</form>
+	          </div>
+	        </div>
+	     </div>
+      </div>
+   </div>
+ 
+<div class="col-md-2">
+	<ul class="nav nav-pills nav-stacked">
+	  <li>
+		  <div class="panel panel" style="background-color:#92A7B8">
+			   <div class="panel-heading">
+			        <h4 class="panel-title">
+			          <a data-toggle="collapse" data-target="#collapse">Account search form</a>
+			        </h4>
+			   </div>
+			   <div id="collapse" class="panel-collapse collapse">
+			     <form>
+				    <div class="panel-body">
+						<input type="text" id="accountName" class="form-control" placeholder="Enter Account" /><br>
+						<button type="submit" class="btn btn-xs btn-primary" style="float: right">Search</button>
+				    </div>
+				   
+				</form>    
+			 </div>
+	     </div>
+	  </li>
+	</ul>
+</div>
+
+-->

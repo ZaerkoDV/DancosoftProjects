@@ -1,10 +1,114 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<title>Forum</title>
+<div class="col-md-2">
+  <ul class="nav nav-pills nav-stacked">
+  	<li>
+	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse1">Profile Detail</a>
+			     </h4>
+			</div>
+			<div id="collapse1" class="panel-collapse collapse">
+			    <form>
+				  <div class="panel-body">
+				  	<p><a ng-click="returnToParlor(id)">My Profile</a></p> 
+					<p><a ng-click="loadCommonUserProfile(id)">My Common Profile</a></p>
+					<p><a ng-click="loadExtendedUserProfile(id)">My Extended Profile</a></p>
+					<a ng-click="loadUserAutobiography(id)">My Autobiography</a>
+				  </div>
+			    </form>    
+			</div>
+	   </div>
+	</li>
+ 
+    <li>
+	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" ng-click="getListAccountGroup(id)" data-target="#collapse2">Groups</a>
+			     </h4>
+			</div>
+			<div id="collapse2" class="panel-collapse collapse">
+			    <form>
+				  <div class="panel-body">
+				  	 <div ng-show="listAccountGroup.length > 0">
+						<div ng-repeat="accountGroup in listAccountGroup">
+							<p><a ng-click="getAccountGroup(id,accountGroup.idAccountGroup)">{{accountGroup.groupName}}</a></p>
+						</div>
+				 	 </div>
+				 	 <a ng-click="createAccountGroup(id)">+ new group</a>
+				  </div>
+			    </form>    
+			</div>
+	   </div>
+	 </li>
 
-</body>
-</html>
+     <li>
+	   <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" ng-click="getListForum(id)" data-target="#collapse3">Forums</a>
+			     </h4>
+			</div>
+			<div id="collapse3" class="panel-collapse collapse">
+			    <form>
+				  <div class="panel-body">
+				  	 <div ng-show="listForum.length > 0">
+						<div ng-repeat="forum in listForum">
+							<p><a ng-click="getForum(id, forum.idForum)">{{forum.forumName}}</a></p>
+						</div>
+				 	 </div>
+				  </div>
+			    </form>     
+			</div>
+	    </div>
+	 </li>
+	 
+  </ul>
+</div>
+
+<div class="col-lg-8 col-lg-offset-0">
+	<div class="well">
+	    <div class="container">
+		    <div class="row">
+			   <div class="col-lg-8">
+				<form name="myForm" class="form-horizontal">
+					<fieldset>
+						<a ui-sref="forumtopicmessages"></a>
+						<legend>Forum Messages</legend>
+						
+				    	
+					</fieldset>
+				</form>
+	          </div>
+	        </div>
+	     </div>
+      </div>
+   </div>
+ 
+<div class="col-md-2">
+	<ul class="nav nav-pills nav-stacked">
+	  <li>
+		  <div class="panel panel" style="background-color:#92A7B8">
+			   <div class="panel-heading">
+			        <h4 class="panel-title">
+			          <a data-toggle="collapse" data-target="#collapse">Search Account </a>
+			        </h4>
+			   </div>
+			   <div id="collapse" class="panel-collapse collapse">
+			     <form>
+				    <div class="panel-body">
+						<input type="text" id="accountName" class="form-control" placeholder="Enter Account" /><br>
+						<button type="submit" class="btn btn-xs btn-primary" style="float: right">Search</button>
+				    </div>
+				    <!--
+				    <div class="panel-footer">
+						<button type="submit" class="btn btn-xs btn-primary">Search</button>
+				    </div>
+				    -->
+				</form>    
+			 </div>
+	     </div>
+	  </li>
+	</ul>
+</div>
