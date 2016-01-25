@@ -1,3 +1,171 @@
+<style>
+
+a {
+ 	text-decoration: none;
+}
+
+h4, h5 {
+	line-height: 1.5em;
+	margin: 0;
+}
+
+hr {
+	background: #e9e9e9;
+    border: 0;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 1px;
+    margin: 0;
+    min-height: 1px;
+}
+
+input {
+	border: 0;
+	color: inherit;
+    font-family: inherit;
+    font-size: 100%;
+    line-height: normal;
+    margin: 0;
+}
+
+p {
+ 	margin: 0;
+}
+
+.clearfix {
+ 	*zoom: 1;
+}
+.clearfix:before, .clearfix:after {
+    content: "";
+    display: table;
+}
+.clearfix:after {
+ 	clear: both;
+}
+
+/* ---------- LIVE-CHAT ---------- */
+
+#live-chat {
+	font-size: 12px;
+	width: 780px;
+}
+
+#live-chat header {
+	background: #293239;
+	border-radius: 5px 5px 0 0;
+	color: #fff;
+	cursor: pointer;
+	padding: 16px 24px;
+}
+
+#live-chat h4:before {
+	background: #1a8a34;
+	border-radius: 50%;
+	content: "";
+	display: inline-block;
+	height: 8px;
+	margin: 0 8px 0 0;
+	width: 8px;
+}
+
+#live-chat h4 {
+	font-size: 12px;
+}
+
+#live-chat h5 {
+	font-size: 10px;
+}
+
+#live-chat form {
+	padding: 24px;
+}
+
+#live-chat input[type="text"] {
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	padding: 8px;
+	outline: none;
+	width: 680px;
+	margin: 10px 10px 10px 10px;
+}
+
+.chat-message-counter {
+	background: #e62727;
+	border: 1px solid #fff;
+	border-radius: 50%;
+	display: none;
+	font-size: 12px;
+	font-weight: bold;
+	height: 28px;
+	left: 0;
+	line-height: 28px;
+	margin: -15px 0 0 -15px;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	width: 28px;
+}
+
+.chat-close {
+	background: #1b2126;
+	border-radius: 50%;
+	color: #fff;
+	display: block;
+	float: right;
+	font-size: 10px;
+	height: 16px;
+	line-height: 16px;
+	margin: 2px 0 0 0;
+	text-align: center;
+	width: 16px;
+}
+
+.chat {
+	background: #fff;
+}
+
+.chat-delete {
+	background: #1b2126;
+	border-radius: 50%;
+	color: #fff;
+	display: block;
+	float: right;
+	font-size: 10px;
+	height: 16px;
+	line-height: 16px;
+	margin: 2px 0 0 0;
+	text-align: center;
+	width: 16px;
+}
+
+.chat-history {
+	height: 252px;
+	padding: 8px 24px;
+	overflow-y: scroll;
+}
+
+.chat-message img {
+	border-radius: 50%;
+	float: left;
+}
+
+.chat-message {
+	margin: 16px 0;
+}
+
+.chat-time {
+	float: right;
+	font-size: 10px;
+}
+
+.chat-feedback {
+	font-style: italic;	
+	margin: 0 0 0 80px;
+}
+
+</style>
+
+
 <title>Forum</title>
 <div class="col-md-2">
   <ul class="nav nav-pills nav-stacked">
@@ -20,7 +188,6 @@
 			</div>
 	   </div>
 	</li>
- 
     <li>
 	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
 			<div class="panel-heading">
@@ -42,7 +209,6 @@
 			</div>
 	   </div>
 	 </li>
-
      <li>
 	   <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
 			<div class="panel-heading">
@@ -62,29 +228,66 @@
 			    </form>     
 			</div>
 	    </div>
-	 </li>
-	 
+	 </li> 
   </ul>
 </div>
 
 <div class="col-lg-8 col-lg-offset-0">
-	<div class="well">
-	    <div class="container">
-		    <div class="row">
-			   <div class="col-lg-8">
-				<form name="myForm" class="form-horizontal">
-					<fieldset>
-						<a ui-sref="forumtopicmessages"></a>
-						<legend>Forum Messages</legend>
-						
-				    	
-					</fieldset>
-				</form>
-	          </div>
-	        </div>
-	     </div>
-      </div>
-   </div>
+   <div class="container">
+	   <div class="row">
+		  <div class="col-lg-8">   
+		     <form name="myForm" class="form-horizontal">
+		  	     <fieldset>
+				    <a ui-sref="forumtopicmessages"></a>
+					<div class="panel-heading">
+					   <h4 class="panel-title">
+						   <a data-toggle="collapse" ng-click="loadListTopicMessages(idForumTopic)" data-target="#collapse6">Show Last Dialog</a>
+					   </h4>
+					</div>  
+				    <div id="collapse6" class="panel-collapse collapse">
+					   <div class="panel-body">
+					     <div ng-show="listTopicMessages.length > 0">
+							 <div id="live-chat"><!--live-chat -->
+								<header class="clearfix">
+									<span class="chat-message-counter">3</span>
+								</header>
+								<div class="chat"><!--chat -->
+								   	  <div class="chat-history">
+								   	  	 <div ng-repeat="topicMessage in listTopicMessages">
+								   	  	 	 <div class="chat-message clearfix">
+								   	  	 <!--<img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">-->
+													<div class="chat-message-content clearfix">
+														<span class="chat-time">10:00<!--{{topicMessage.dateCreateForumMessage}}--></span>
+														<h5>{{topicMessage.authorAccount.accountName}}</h5>
+														<a class="chat-delete" ng-click="deleteForumMessages(idForumTopic,topicMessage.idForumMessage)">x</a>
+														<p>{{topicMessage.forumMessage}}</p>
+													</div>
+											  </div>
+										  </div>
+										  <hr>
+									  </div>
+								      <div style="display:inline-block;">
+										 <input type="hidden" id="idForumTopic" ng-model="newForumMessage.forumTopic.idForumTopic"
+						    	 			  ng-init="newForumMessage.forumTopic.idForumTopic=idForumTopic">
+						    	 		 <input type="hidden" id="idAccount" ng-model="newForumMessage.authorAccount.user.idUser"
+						    	 			  ng-init="newForumMessage.authorAccount.user.idUser=id">
+									     <input type="text" id="forumMessages" ng-model="newForumMessage.forumMessage"
+											  placeholder="Type your message" autofocus/>
+											   
+										 <button type="submit" class="btn btn-xs btn-primary" ng-disabled="!newForumMessage.forumMessage"
+								             ng-click="saveNewForumMessages(newForumMessage)">Send</button>
+						             </div>
+								</div>
+							 </div>
+				 		  </div>		
+				        </div>
+			         </div>	
+		       </fieldset>
+			</form>
+          </div>
+       </div>
+   </div>  
+</div>
  
 <div class="col-md-2">
 	<ul class="nav nav-pills nav-stacked">
@@ -110,5 +313,28 @@
 			 </div>
 	     </div>
 	  </li>
+	  <!--
+	  <li>
+	   <div class="panel panel" style="background-color:#92A7B8">
+			   <div class="panel-heading">
+			        <h4 class="panel-title">
+			          <a data-toggle="collapse"  data-target="#collapse5">Create New Topic</a>
+			        </h4>
+			   </div>
+			   <div id="collapse5" class="panel-collapse collapse">
+			     <form>
+				    <div class="panel-body">
+				    	<input type="hidden" id="idForum" ng-model="newForumTopic.forum.idForum"
+				    	 ng-init="newForumTopic.forum.idForum=idForum">
+				    	 
+						<input type="text" id="forumTopicName" ng-model="newForumTopic.forumTopic" class="form-control" placeholder="Name" /><br>
+						<button type="submit" class="btn btn-xs btn-primary" ng-disabled="!newForumTopic.forumTopic"
+						   style="float: right;" ng-click="saveNewForumTopic(id,newForumTopic)">Save</button>
+				    </div>
+				</form>    
+			 </div>
+	     </div>
+	  </li>
+	   -->
 	</ul>
 </div>

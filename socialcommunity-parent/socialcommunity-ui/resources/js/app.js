@@ -127,7 +127,6 @@ App.config(function($stateProvider,$routeProvider) {
 		   params: {idUser: null, idForum:null}
 	});
 	
-
 	$stateProvider.state('forumtopicmessages', {
 		  url: '/user/forum/forummessages/:idUser/:idForumTopic',
 		  views: {'': {

@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +32,7 @@ import com.dancosoft.socialcommunity.model.AccountHistory;
 import com.dancosoft.socialcommunity.model.City;
 import com.dancosoft.socialcommunity.model.Country;
 import com.dancosoft.socialcommunity.model.Forum;
+import com.dancosoft.socialcommunity.model.ForumMessage;
 import com.dancosoft.socialcommunity.model.ForumTopic;
 import com.dancosoft.socialcommunity.model.Language;
 import com.dancosoft.socialcommunity.model.User;
@@ -501,15 +503,6 @@ public class UserController {
 		return listForumTopic;
 	}
 	
-	@RequestMapping(value="/views/profile/user/forum/newforumtopic.json", method = RequestMethod.GET)
-	public @ResponseBody ForumTopic createForumTopicEmptyForm() {
-		
-		logger.info("UserController: Create new empty forum topic for forum.");
-		ForumTopic forumTopic= new ForumTopic();
-		
-		return forumTopic;
-	}
-	
 	@RequestMapping(value="/views/profile/user/forum/{id}/savenewforumtopic.json", method = RequestMethod.POST)
 	public @ResponseBody Long saveNewForumTopic(@RequestBody ForumTopic forumTopic, @PathVariable("id") Long id) {
 		
@@ -525,6 +518,49 @@ public class UserController {
 		
 		return idForum;
 	}
+	
+	@RequestMapping(value="/views/profile/user/forum/{idForumTopic}/listForumMessages.json", method = RequestMethod.GET)
+	public @ResponseBody List<ForumMessage> listTopicMessages(@PathVariable("idForumTopic") Long idForumTopic) {
+		
+		logger.info("UserController: Load topic messages from last week");
+		//load topic messages from last week
+		LocalDateTime minDateLDT=LocalDateTime.now().minusDays(7);
+		LocalDateTime maxDateLDT=LocalDateTime.now();
+		List<ForumMessage> listTopicMessages=forumMessageService
+				.getListForumMessageBetweenDateByIdForumTopic(idForumTopic, minDateLDT, maxDateLDT);
+		
+		return listTopicMessages;
+	}
+	
+	@RequestMapping(value="/views/profile/user/forum/saveForumMessages.json", method = RequestMethod.POST)
+	public @ResponseBody Long saveNewForumMessages(@RequestBody ForumMessage newForumMessage) {
+		
+		logger.info("UserController: Save new forum messages.");
+		Long idForumTopic=newForumMessage.getForumTopic().getIdForumTopic();
+		ForumTopic forumTopic= forumTopicService.getForumTopicById(idForumTopic);
+		Long idUser=newForumMessage.getAuthorAccount().getUser().getIdUser();
+		List<Account> listAccount= userService.getListAccountByUserId(idUser);
+		
+		newForumMessage.setForumTopic(forumTopic);
+		newForumMessage.setAuthorAccount(listAccount.get(0));
+		newForumMessage.setDateCreateForumMessage(LocalDateTime.now());
+		forumMessageService.saveForumMessage(newForumMessage);
+		
+		return idForumTopic;
+	}
+
+	@RequestMapping(value="/views/profile/user/forum/{idForumTopic}/deleteForumMessages.json", method = RequestMethod.POST)
+	public @ResponseBody Long deleteForumMessages(@RequestBody Long idForumMessage, @PathVariable("idForumTopic") Long idForumTopic) {
+		
+		logger.info("UserController: Delete forum message by id");
+		forumMessageService.deleteForumMessageById(idForumMessage);
+		
+		return idForumTopic;
+	}
+		
+	//group message
+	
+	
 	
 	
 	

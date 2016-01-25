@@ -6,7 +6,8 @@
 angular.module('socialcommunity').controller('UserController',function ($scope, $rootScope ,$state, $http) {
 	
 	$scope.id = $state.params.idUser;
-	$scope.idForum=$state.params.idForum;
+	$scope.idForum = $state.params.idForum;
+	$scope.idForumTopic = $state.params.idForumTopic;
 	
 	$scope.loadUserData = function(id){
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/parlor/accountdata.json',id).success(function(userParlorData) {
@@ -140,7 +141,7 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 	};
 	
 	
-															//forum
+															//forum topics
 	
 	$scope.getForum = function(id,idForum){
 		$state.go('editlistforumtopic', {idUser: id, idForum:idForum})
@@ -153,15 +154,7 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 		}).error(function(){
 		});
 	};
-	
-	$scope.createForumTopicEmptyForm = function(){
-		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/forum/newforumtopic.json')
-		.success(function(newForumTopic) {
-			$scope.newForumTopic=newForumTopic;
-		}).error(function(){
-		});
-	};
-	
+		
 	$scope.saveNewForumTopic = function(id,newForumTopic){
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/forum/'+id+'/savenewforumtopic.json',newForumTopic)
 		.success(function(idForum) {
@@ -169,21 +162,49 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 		}).error(function(){
 		});
 	};
+													//forum messages
 	
-	$scope.loadListForumMessages=function(id,idForumTopic){
+	$scope.getTopicMessages=function(id,idForumTopic){
 		$state.go('forumtopicmessages', {idUser: id, idForumTopic:idForumTopic})
 	};
 	
+	$scope.loadListTopicMessages = function(idForumTopic){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/forum/'+idForumTopic+'/listForumMessages.json')
+		.success(function(listTopicMessages) {
+			$scope.listTopicMessages=listTopicMessages;
+		}).error(function(){
+		});
+	};
+	
+	$scope.saveNewForumMessages=function(newForumMessage){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/forum/saveForumMessages.json',newForumMessage)
+		.success(function(idForumTopic) {
+			$scope.loadListTopicMessages(idForumTopic);
+		}).error(function(){
+		});
+	};
+	
+	$scope.deleteForumMessages=function(idForumTopic,idForumMessage){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/forum/'+idForumTopic+'/deleteForumMessages.json',idForumMessage)
+		.success(function(idForumTopic) {
+			$scope.loadListTopicMessages(idForumTopic);
+		}).error(function(){
+		});
+	};
 	
 	
-	
-	
-//	
-//	$scope.getAccountGroup = function(id,idAccountGroup){	
-//	};
-//	
 //	$scope.createAccountGroup = function(id){	
 //	};
+	
+//	$scope.getAccountGroup = function(id,idAccountGroup){	
+//	};
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	//search account

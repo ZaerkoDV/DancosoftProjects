@@ -70,7 +70,7 @@ public class UserAutobiography implements Serializable {
 	/**
 	 * User date birth in formate dd/mm/yyyy. This date must in past.
 	 * 
-	 * @type LocalDateTime
+	 * @type Date
 	 */
 	@Past
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -129,8 +129,8 @@ public class UserAutobiography implements Serializable {
 		this.hobby = hobby;
 		this.autobiography = autobiography;
 		this.user = user;
-	}
-
+	}	
+	
 	/**
 	 * @return the idUserAutobiography
 	 */
