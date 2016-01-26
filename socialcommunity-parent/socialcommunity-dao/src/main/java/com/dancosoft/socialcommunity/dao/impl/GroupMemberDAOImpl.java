@@ -104,8 +104,8 @@ public class GroupMemberDAOImpl extends CommonEntityDAOImpl implements GroupMemb
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory()
 				.getCurrentSession().createCriteria(GroupMember.class);
 		criteria.setProjection(Projections.property("memberAccount"));
-		criteria.createAlias("accountGroup", "cg");
-		criteria.add(Restrictions.eq("cg.idAccountGroup", idAccountGroup));
+		criteria.createAlias("accountGroup", "ag");
+		criteria.add(Restrictions.eq("ag.idAccountGroup", idAccountGroup));
 		criteria.add(Restrictions.eq("groupMemberStatus", friendStatus));
 		
 		logger.info("GroupMemberDAO:List members of group with"
@@ -113,4 +113,28 @@ public class GroupMemberDAOImpl extends CommonEntityDAOImpl implements GroupMemb
 	
 		return criteria.list();
 	}
+	
+	/**
+	 * Method return GroupMember by id account group and id accoun.
+	 * 
+	 * @type Long
+	 * @param idAccountGroup
+	 * @param idAccount
+	 * 
+	 * @return GroupMember
+	 */
+	public GroupMember getGroupMemberInAccountGroupByIdAccount(Long idAccountGroup,Long idAccount) {
+		
+		Criteria criteria = this.getHibernateTemplate().getSessionFactory()
+				.getCurrentSession().createCriteria(GroupMember.class);
+		criteria.createAlias("accountGroup", "ag");
+		criteria.createAlias("memberAccount", "a");
+		criteria.add(Restrictions.eq("ag.idAccountGroup", idAccountGroup));
+		criteria.add(Restrictions.eq("a.idAccount", idAccount));
+		
+		logger.info("GroupMemberDAO: Get group member by id account and id account group");
+		
+		return (GroupMember) criteria.uniqueResult();
+	}
+	
 }

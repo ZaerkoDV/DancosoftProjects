@@ -58,4 +58,15 @@ public interface GroupMemberDAO extends CommonEntityDAO {
 	 */
 	public List<Account> getListAccountWithStatusByIdAccountGroup(
 			Long idAccountGroup, String friendStatus);
+	
+	/**
+	 * Method return GroupMember by id account group and id accoun.
+	 * 
+	 * @type Long
+	 * @param idAccountGroup
+	 * @param idAccount
+	 * 
+	 * @return GroupMember
+	 */
+	public GroupMember getGroupMemberInAccountGroupByIdAccount(Long idAccountGroup,Long idAccount);
 }

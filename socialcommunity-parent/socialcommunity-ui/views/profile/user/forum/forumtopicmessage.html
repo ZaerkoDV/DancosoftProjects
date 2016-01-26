@@ -313,28 +313,27 @@ p {
 			 </div>
 	     </div>
 	  </li>
-	  <!--
-	  <li>
-	   <div class="panel panel" style="background-color:#92A7B8">
-			   <div class="panel-heading">
-			        <h4 class="panel-title">
-			          <a data-toggle="collapse"  data-target="#collapse5">Create New Topic</a>
-			        </h4>
-			   </div>
-			   <div id="collapse5" class="panel-collapse collapse">
-			     <form>
-				    <div class="panel-body">
-				    	<input type="hidden" id="idForum" ng-model="newForumTopic.forum.idForum"
-				    	 ng-init="newForumTopic.forum.idForum=idForum">
-				    	 
-						<input type="text" id="forumTopicName" ng-model="newForumTopic.forumTopic" class="form-control" placeholder="Name" /><br>
-						<button type="submit" class="btn btn-xs btn-primary" ng-disabled="!newForumTopic.forumTopic"
-						   style="float: right;" ng-click="saveNewForumTopic(id,newForumTopic)">Save</button>
-				    </div>
-				</form>    
-			 </div>
-	     </div>
-	  </li>
-	   -->
 	</ul>
 </div>
+
+<!--
+
+(function() {
+
+	$('#live-chat header').on('click', function() {
+
+		$('.chat').slideToggle(300, 'swing');
+		$('.chat-message-counter').fadeToggle(300, 'swing');
+
+	});
+
+	$('.chat-close').on('click', function(e) {
+
+		e.preventDefault();
+		$('#live-chat').fadeOut(300);
+
+	});
+
+}) ();
+ 
+ -->

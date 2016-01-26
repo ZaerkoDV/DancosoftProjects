@@ -139,6 +139,42 @@ public class GroupMemberServiceImpl implements GroupMemberService{
 	}
 	
 	/**
+	 * Method return GroupMember by id account group and id account.
+	 * If GroupMember not exist return null.
+	 * 
+	 * @type Long
+	 * @param idAccountGroup
+	 * @param idAccount
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return GroupMember
+	 */
+	@Transactional
+	public GroupMember getGroupMemberInAccountGroupByIdAccount(Long idAccountGroup,Long idAccount) {
+		
+		GroupMember groupMember=null;
+		if (idAccountGroup.equals(null) || idAccount.equals(null)) {
+			throw new RuntimeException("GroupMemberService:Group member must have id account and id account group not equals null.");
+			
+		}else{
+			try {
+				logger.info("GroupMemberService:List members of group with status friend load by id account group.");
+				groupMember= groupMemberDAO.getGroupMemberInAccountGroupByIdAccount(idAccountGroup, idAccount);
+				
+			} catch (DataRetrievalFailureException rf) {
+				logger.warn("GroupMemberService: Group member with id account and id account group not exist" + rf);
+				
+			}catch (DataAccessException da) {
+				logger.error("GroupMemberService: Exeption connect with data base or other error= "+da);
+			}
+	
+		}
+		return groupMember;
+	}
+	
+	/**
 	 * This method is basic for all entities.The method is one of CRUD methods.
 	 * Method return entity by idEntity. If entity not exist return null(use
 	 * hibernateTamplate method get)

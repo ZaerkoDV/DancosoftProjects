@@ -137,7 +137,35 @@ App.config(function($stateProvider,$routeProvider) {
 		   params: {idUser: null, idForumTopic:null}
 	});
 	
+	$stateProvider.state('addaccountgroup', {
+		  url: '/user/group/addaccountgroup/:idUser',
+		  views: {'': {
+		        templateUrl: '/socialcommunity/views/profile/user/group/addaccountgroup.html',
+		        controller: 'UserController'
+		      },
+		    },
+		   params: {idUser: null}
+	});
 	
+	$stateProvider.state('viewaccountgroup', {
+		  url: '/user/group/viewaccountgroup/:idUser:/idAccountGroupMember/:idAccountGroup',
+		  views: {'': {
+		        templateUrl: '/socialcommunity/views/profile/user/group/viewaccountgroup.html',
+		        controller: 'UserController'
+		      },
+		    },
+		   params: {idUser: null,idAccountGroupMember:null,idAccountGroup:null}
+	});
+	
+	$stateProvider.state('editaccountgroupmember', {
+		  url: '/user/group/editaccountgroupmember/:idUser:/idAccountGroupMember/:idAccountGroup',
+		  views: {'': {
+		        templateUrl: '/socialcommunity/views/profile/user/group/editaccountgroup.html',
+		        controller: 'UserController'
+		      },
+		    },
+		   params: {idUser: null,idAccountGroupMember:null,idAccountGroup:null}
+	});
 	
 	
 });

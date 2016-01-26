@@ -64,7 +64,7 @@ public class GroupMember implements Serializable {
 	private Long idGroupMember;
 
 	/**
-	 * Member of group status(friend/no friend)
+	 * Member of group status(friend/notfriend)
 	 * 
 	 * @type String
 	 */

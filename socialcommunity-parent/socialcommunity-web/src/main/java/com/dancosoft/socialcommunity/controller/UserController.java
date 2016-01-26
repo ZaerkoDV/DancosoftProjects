@@ -28,12 +28,16 @@ import com.dancosoft.socialcommunity.controller.support.UserParlorData;
 import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountGroup;
+import com.dancosoft.socialcommunity.model.AccountGroupHistory;
 import com.dancosoft.socialcommunity.model.AccountHistory;
 import com.dancosoft.socialcommunity.model.City;
 import com.dancosoft.socialcommunity.model.Country;
+import com.dancosoft.socialcommunity.model.EventPattern;
 import com.dancosoft.socialcommunity.model.Forum;
 import com.dancosoft.socialcommunity.model.ForumMessage;
 import com.dancosoft.socialcommunity.model.ForumTopic;
+import com.dancosoft.socialcommunity.model.GroupMember;
+import com.dancosoft.socialcommunity.model.GroupMessage;
 import com.dancosoft.socialcommunity.model.Language;
 import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserAutobiography;
@@ -49,9 +53,13 @@ import com.dancosoft.socialcommunity.service.AccountHistoryService;
 import com.dancosoft.socialcommunity.service.AccountService;
 import com.dancosoft.socialcommunity.service.CityService;
 import com.dancosoft.socialcommunity.service.CountryService;
+import com.dancosoft.socialcommunity.service.EventPatternService;
 import com.dancosoft.socialcommunity.service.ForumMessageService;
 import com.dancosoft.socialcommunity.service.ForumService;
 import com.dancosoft.socialcommunity.service.ForumTopicService;
+import com.dancosoft.socialcommunity.service.GroupEventService;
+import com.dancosoft.socialcommunity.service.GroupMemberService;
+import com.dancosoft.socialcommunity.service.GroupMessageService;
 import com.dancosoft.socialcommunity.service.LanguageService;
 import com.dancosoft.socialcommunity.service.UserAutobiographyService;
 import com.dancosoft.socialcommunity.service.UserCorespondenceService;
@@ -183,7 +191,38 @@ public class UserController {
 		this.accountGroupHistoryService = accountGroupHistoryService;
 	}
 	
-												//forum
+	@Autowired
+	@Qualifier(value="groupMemberService")
+	private GroupMemberService groupMemberService;
+	
+	public GroupMemberService getGroupMemberService() {
+		return groupMemberService;
+	}
+
+	@Autowired
+	@Qualifier(value="groupMessageService")
+	private GroupMessageService groupMessageService;
+	
+	public void setGroupMessageService(GroupMessageService groupMessageService) {
+		this.groupMessageService = groupMessageService;
+	}
+
+	@Autowired
+	@Qualifier(value="groupEventService")
+	private GroupEventService groupEventService;
+
+	public void setGroupEventService(GroupEventService groupEventService) {
+		this.groupEventService = groupEventService;
+	}
+	
+	@Autowired
+	@Qualifier(value="eventPatternService")
+	private EventPatternService eventPatternService;
+
+	public void setEventPatternService(EventPatternService eventPatternService) {
+		this.eventPatternService = eventPatternService;
+	}
+																	//forum
 	@Autowired
 	@Qualifier(value="accountForumService")
 	private AccountForumService accountForumService;
@@ -494,6 +533,8 @@ public class UserController {
 		return listCity;
 	}
 	
+														//forum
+	
 	@RequestMapping(value="/views/profile/user/forum/listforumtopic.json", method = RequestMethod.POST)
 	public @ResponseBody List<ForumTopic> loadListForumTopic(@RequestBody Long idForum) {
 		
@@ -520,7 +561,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/views/profile/user/forum/{idForumTopic}/listForumMessages.json", method = RequestMethod.GET)
-	public @ResponseBody List<ForumMessage> listTopicMessages(@PathVariable("idForumTopic") Long idForumTopic) {
+	public @ResponseBody List<ForumMessage> loadTopicMessages(@PathVariable("idForumTopic") Long idForumTopic) {
 		
 		logger.info("UserController: Load topic messages from last week");
 		//load topic messages from last week
@@ -557,19 +598,111 @@ public class UserController {
 		
 		return idForumTopic;
 	}
+													//group
+	
+	@RequestMapping(value="/views/profile/user/group/{id}/saveAccountGroup.json", method = RequestMethod.POST)
+	public @ResponseBody Long saveNewAccountGroup(@RequestBody AccountGroup newAccountGroup, @PathVariable("id") Long id) {
+	
+		logger.info("UserController: Save new account group and account group history.");
+		List<Account> listAccount= userService.getListAccountByUserId(id);
 		
-	//group message
+		AccountGroup accountGroup =new AccountGroup();
+		accountGroup.setAccount(listAccount.get(0));
+		accountGroup.setAccountGroupBlockStatus("unblock");
+		accountGroup.setGroupName(newAccountGroup.getGroupName());
+		accountGroup.setViewStatus(newAccountGroup.getViewStatus());
+		accountGroupService.saveAccountGroup(accountGroup);
+		
+		AccountGroupHistory accountGroupHistory = new AccountGroupHistory();
+		accountGroupHistory.setAccountGroup(accountGroup);
+		accountGroupHistory.setDateCreateGroup(LocalDateTime.now());
+		accountGroupHistory.setLastVisit(LocalDateTime.now());
+		accountGroupHistoryService.saveAccountGroupHistory(accountGroupHistory);
+		
+		logger.info("UserController: Author of account group create id member for yourself");
+		GroupMember groupMember=new GroupMember();
+		groupMember.setMemberAccount(listAccount.get(0));
+		groupMember.setAccountGroup(accountGroup);
+		groupMember.setGroupMemberStatus("friend");
+		
+		return id;
+	}
 	
+	@RequestMapping(value="/views/profile/user/group/{id}/{idAccountGroup}/accountGroupMember.json", method = RequestMethod.GET)
+	public @ResponseBody Long getAccountGroup(@PathVariable("id") Long id, @PathVariable("idAccountGroup") Long idAccountGroup){
 	
+		logger.info("UserController: Load id group member.");
+		List<Account> account= userService.getListAccountByUserId(id);
+		Long idAccount= account.get(0).getIdAccount();
+		GroupMember groupMember= groupMemberService.getGroupMemberInAccountGroupByIdAccount(idAccountGroup, idAccount);
+		
+		return groupMember.getIdGroupMember();
+	}
 	
+	@RequestMapping(value="/views/profile/user/group/{idAccountGroup}/listAccountGroupMessages.json", method = RequestMethod.GET)
+	public @ResponseBody List<GroupMessage> loadAccountGroupMessages(@PathVariable("idAccountGroup") Long idAccountGroup) {
+		logger.info("UserController: Load account group messages from last week");
+		List<GroupMessage> listGroupMessages=groupMessageService.getListGroupMessageByIdAccountGroup(idAccountGroup);
+		
+		return listGroupMessages;
+	}
 	
+	@RequestMapping(value="/views/profile/user/group/saveAccountGroupMessage.json", method = RequestMethod.POST)
+	public @ResponseBody Long saveNewAccountGroupMessage(@RequestBody GroupMessage newGroupMessage) {
+		
+		logger.info("UserController: Save new member message of account group.");
+		
+		GroupMessage groupMessage=new GroupMessage();
+		GroupMember groupMember= groupMemberService.getGroupMemberById(newGroupMessage.getGroupMember().getIdGroupMember());
+		groupMessage.setGroupMember(groupMember);
+		groupMessage.setGroupMessage(newGroupMessage.getGroupMessage());
+		groupMessage.setDateCreateGroupMessage(LocalDateTime.now());
+		groupMessageService.saveGroupMessage(groupMessage);
+		
+		logger.info("UserController: Get id account group after save member message.");
+		Long idAccountGroup =newGroupMessage.getGroupMember().getAccountGroup().getIdAccountGroup();
+		
+		return idAccountGroup;
+	}
 	
+	@RequestMapping(value="/views/profile/user/group/{idAccountGroup}/deleteAccountGroupMessage.json", method = RequestMethod.POST)
+	public @ResponseBody Long deleteNewAccountGroupMessage(@RequestBody Long idGroupMessage, @PathVariable("idAccountGroup") Long idAccountGroup) {
+		
+		logger.info("UserController: Delete group message by id");
+		groupMessageService.deleteGroupMessageById(idGroupMessage);
+		
+		return idAccountGroup;
+	}
 	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/views/profile/user/group/listEventPattern.json", method = RequestMethod.GET)
+	public @ResponseBody List<EventPattern> loadListEventPattern(){
+		logger.info("UserController: Load list event pattern.");
+		List<EventPattern> listEventPattern=(List)eventPatternService.getListEventPattern();
+		
+		return listEventPattern;
+	}
 	
+	@RequestMapping(value="/views/profile/user/group/{idAccountGroup}/listAccountGroupMembers.json", method = RequestMethod.GET)
+	public @ResponseBody List<GroupMember> loadListAccountGroupMember(@PathVariable("idAccountGroup") Long idAccountGroup){
+		logger.info("UserController: Load group members");
+		List<GroupMember> listAccountGroupMember= groupMemberService.getListGroupMemberByIdAccountGroup(idAccountGroup);
+		
+		return listAccountGroupMember;
+	}
 	
-	
-	
-	
-	
+	@RequestMapping(value="/views/profile/user/group/{idAccountGroupMember}/{idDeleteGroupMember}/deleteAccountGroupMember.json", method = RequestMethod.GET)
+	public @ResponseBody Long deleteMemberFromAccountGroup(@PathVariable("idAccountGroupMember") Long idAccountGroupMember,
+			@PathVariable("idDeleteGroupMember") Long idDeleteGroupMember){
+		
+		if(idAccountGroupMember.equals(idDeleteGroupMember)){
+			logger.warn("UserController:Delete account group member fail, becouse"
+					+ " try to delete author of this group!");
+		}else{
+			logger.info("UserController:Delete account group member from account group");
+			//groupMemberService.deleteGroupMemberById(idDeleteGroupMember);
+		}
+		return idAccountGroupMember;
+	}
 	
 }

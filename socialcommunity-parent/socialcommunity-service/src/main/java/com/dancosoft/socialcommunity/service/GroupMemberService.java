@@ -83,6 +83,21 @@ public interface GroupMemberService {
 	public GroupMember getGroupMemberById(Long idGroupMember);
 	
 	/**
+	 * Method return GroupMember by id account group and id account.
+	 * If GroupMember not exist return null.
+	 * 
+	 * @type Long
+	 * @param idAccountGroup
+	 * @param idAccount
+	 * 
+	 * @exception DataRetrievalFailureException
+	 * @exception DataAccessException
+	 * 
+	 * @return GroupMember
+	 */
+	public GroupMember getGroupMemberInAccountGroupByIdAccount(Long idAccountGroup,Long idAccount);
+	
+	/**
 	 * This method is basic for all entities.The method is one of CRUD methods.
 	 * Method save entity if entity not null.
 	 * 

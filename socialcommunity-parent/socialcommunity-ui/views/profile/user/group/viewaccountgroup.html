@@ -1,10 +1,369 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<style>
 
-</body>
-</html>
+a {
+ 	text-decoration: none;
+}
+
+h4, h5 {
+	line-height: 1.5em;
+	margin: 0;
+}
+
+hr {
+	background: #e9e9e9;
+    border: 0;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 1px;
+    margin: 0;
+    min-height: 1px;
+}
+
+input {
+	border: 0;
+	color: inherit;
+    font-family: inherit;
+    font-size: 100%;
+    line-height: normal;
+    margin: 0;
+}
+
+p {
+ 	margin: 0;
+}
+
+.clearfix {
+ 	*zoom: 1;
+}
+.clearfix:before, .clearfix:after {
+    content: "";
+    display: table;
+}
+.clearfix:after {
+ 	clear: both;
+}
+
+/* ---------- LIVE-CHAT ---------- */
+
+#live-chat {
+	font-size: 12px;
+	width: 820px;
+}
+
+#live-chat header {
+	background: #293239;
+	border-radius: 5px 5px 0 0;
+	color: #fff;
+	cursor: pointer;
+	padding: 16px 24px;
+}
+
+#live-chat h4:before {
+	background: #1a8a34;
+	border-radius: 50%;
+	content: "";
+	display: inline-block;
+	height: 8px;
+	margin: 0 8px 0 0;
+	width: 8px;
+}
+
+#live-chat h4 {
+	font-size: 12px;
+}
+
+#live-chat h5 {
+	font-size: 10px;
+}
+
+#live-chat form {
+	padding: 24px;
+}
+
+#live-chat input[type="text"] {
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	padding: 8px;
+	outline: none;
+	width: 620px;
+	margin: 10px 10px 10px 10px;
+}
+
+.chat-message-counter {
+	background: #e62727;
+	border: 1px solid #fff;
+	border-radius: 50%;
+	display: none;
+	font-size: 12px;
+	font-weight: bold;
+	height: 28px;
+	left: 0;
+	line-height: 28px;
+	margin: -15px 0 0 -15px;
+	position: absolute;
+	text-align: center;
+	top: 0;
+	width: 28px;
+}
+
+.chat-close {
+	background: #1b2126;
+	border-radius: 50%;
+	color: #fff;
+	display: block;
+	float: right;
+	font-size: 10px;
+	height: 16px;
+	line-height: 16px;
+	margin: 2px 0 0 0;
+	text-align: center;
+	width: 16px;
+}
+
+.chat {
+	background: #fff;
+}
+
+.chat-delete {
+	background: #1b2126;
+	border-radius: 50%;
+	color: #fff;
+	display: block;
+	float: right;
+	font-size: 10px;
+	height: 16px;
+	line-height: 16px;
+	margin: 2px 0 0 0;
+	text-align: center;
+	width: 16px;
+}
+
+.chat-history {
+	height: 252px;
+	padding: 8px 24px;
+	overflow-y: scroll;
+}
+
+.chat-message img {
+	border-radius: 50%;
+	float: left;
+}
+
+.chat-message {
+	margin: 16px 0;
+}
+
+.chat-time {
+	float: right;
+	font-size: 10px;
+}
+
+.chat-feedback {
+	font-style: italic;	
+	margin: 0 0 0 80px;
+}
+
+</style>
+
+
+<title>Forum</title>
+<div class="col-md-2">
+  <ul class="nav nav-pills nav-stacked">
+  	<li>
+	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse1">Profile Detail</a>
+			     </h4>
+			</div>
+			<div id="collapse1" class="panel-collapse collapse">
+			    <form>
+				  <div class="panel-body">
+				  	<p><a ng-click="returnToParlor(id)">My Profile</a></p> 
+					<p><a ng-click="loadCommonUserProfile(id)">My Common Profile</a></p>
+					<p><a ng-click="loadExtendedUserProfile(id)">My Extended Profile</a></p>
+					<a ng-click="loadUserAutobiography(id)">My Autobiography</a>
+				  </div>
+			    </form>    
+			</div>
+	   </div>
+	</li>
+    <li>
+	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" ng-click="getListAccountGroup(id)" data-target="#collapse2">Groups</a>
+			     </h4>
+			</div>
+			<div id="collapse2" class="panel-collapse collapse">
+			    <form>
+				  <div class="panel-body">
+				  	 <div ng-show="listAccountGroup.length > 0">
+						<div ng-repeat="accountGroup in listAccountGroup">
+							<p><a ng-click="getAccountGroup(id,accountGroup.idAccountGroup)">{{accountGroup.groupName}}</a></p>
+						</div>
+				 	 </div>
+				 	 <a ng-click="createAccountGroup(id)">+ new group</a>
+				  </div>
+			    </form>    
+			</div>
+	   </div>
+	 </li>
+     <li>
+	   <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" ng-click="getListForum(id)" data-target="#collapse3">Forums</a>
+			     </h4>
+			</div>
+			<div id="collapse3" class="panel-collapse collapse">
+			    <form>
+				  <div class="panel-body">
+				  	 <div ng-show="listForum.length > 0">
+						<div ng-repeat="forum in listForum">
+							<p><a ng-click="getForum(id, forum.idForum)">{{forum.forumName}}</a></p>
+						</div>
+				 	 </div>
+				  </div>
+			    </form>     
+			</div>
+	    </div>
+	 </li> 
+  </ul>
+</div>
+
+<div class="col-lg-8 col-lg-offset-0">
+   <div class="container">
+	   <div class="row">
+		  <div class="col-lg-8">   
+		     <form name="myForm" class="form-horizontal">
+		  	     <fieldset>
+				    <a ui-sref="viewaccountgroup"></a>
+					<div class="panel-heading">
+					   <h4 class="panel-title">
+						   <a data-toggle="collapse" ng-click="loadListAccountGroupMessages(idAccountGroup)" data-target="#collapse6">Show Last Dialog</a>
+					   </h4>
+					</div>  
+				    <div id="collapse6" class="panel-collapse collapse">
+					   <div class="panel-body">
+					     <div ng-show="listAccountGroupMessages.length > 0">
+							 <div id="live-chat">
+								<header class="clearfix">
+									<span class="chat-message-counter">3</span>
+								</header>
+								<div class="chat">
+								   	  <div class="chat-history">
+								   	  	 <div ng-repeat="accountGroupMessage in listAccountGroupMessages">
+								   	  	 	 <div class="chat-message clearfix">
+								   	  		  <!--<img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">-->
+													<div class="chat-message-content clearfix">
+														<span class="chat-time">10:00<!--{{accountGroupMessage.dateCreateGroupMessage}}--></span>
+														<h5>{{accountGroupMessage.groupMember.memberAccount.accountName}}</h5>
+														<a class="chat-delete" ng-click="deleteAccountGroupMessage(idAccountGroup,accountGroupMessage.idGroupMessage)">x</a>
+														<p>{{accountGroupMessage.groupMessage}}</p>
+													</div>
+											  </div>
+										  </div>
+										  <hr>
+									  </div>
+								      <div style="display:inline-block;">
+								      	<input type="hidden" id="idAccount" ng-model="newAccountGroupMessage.groupMember.accountGroup.idAccountGroup"
+						    	 			  ng-init="newAccountGroupMessage.groupMember.accountGroup.idAccountGroup=idAccountGroup">
+										 <input type="hidden" id="idAccountGroupMember" ng-model="newAccountGroupMessage.groupMember.idGroupMember"
+						    	 			  ng-init="newAccountGroupMessage.groupMember.idGroupMember=idAccountGroupMember">  
+									     <input type="text" id="message" ng-model="newAccountGroupMessage.groupMessage"
+											  placeholder="Type your message" autofocus/>
+											   
+										 <button type="submit" class="btn btn-xs btn-primary" ng-disabled="!newAccountGroupMessage.groupMessage"
+								             ng-click="saveNewAccountGroupMessage(newAccountGroupMessage)">Send</button>
+								             
+								             <!--ng-change="getListCityByIdCountry(userExtendedData.userLocation.city.country.idCountry)"-->
+								    	<select style="width:120px;height:22px" class="btn btn-xs btn-primary" ng-model="newAccountGroupMessage.groupMessage"
+								    	ng-click="loadListEventPattern()">
+			
+										    <option ng-selected="eventPattern.eventPattern == newAccountGroupMessage.groupMessage" 
+										            ng-repeat="eventPattern in listEventPattern"
+										            value="{{eventPattern.eventPattern}}">
+											  		{{eventPattern.eventPattern}}							  		
+										    </option>		         	
+										</select>
+					              </div>
+								</div>
+							 </div>
+				 		  </div>		 	
+				        </div>
+			         </div>	
+		       </fieldset>
+			</form>
+          </div>
+       </div>
+   </div>  
+</div>
+ 
+<div class="col-md-2">
+	<ul class="nav nav-pills nav-stacked">
+	  <li>
+		  <div class="panel panel" style="background-color:#92A7B8">
+			   <div class="panel-heading">
+			        <h4 class="panel-title">
+			          <a data-toggle="collapse" data-target="#collapse">Search Account </a>
+			        </h4>
+			   </div>
+			   <div id="collapse" class="panel-collapse collapse">
+			     <form>
+				    <div class="panel-body">
+						<input type="text" id="accountName" class="form-control" placeholder="Enter Account" /><br>
+						<button type="submit" class="btn btn-xs btn-primary" style="float: right">Search</button>
+				    </div>
+				    <!--
+				    <div class="panel-footer">
+						<button type="submit" class="btn btn-xs btn-primary">Search</button>
+				    </div>
+				    -->
+				</form>    
+			 </div>
+	     </div>
+	  </li>
+	  
+	  <li>
+	   <div class="panel panel" style="background-color:#92A7B8">
+			   <div class="panel-heading">
+			        <h4 class="panel-title">
+			          <a data-toggle="collapse"  data-target="#collapse5">Edit Account Group</a>
+			        </h4>
+			   </div>
+			   <div id="collapse5" class="panel-collapse collapse">
+			     <form>
+				    <div class="panel-body">
+						<p><a ng-click="editGroupSettings(idAccountGroup)">Edit Group Settings</a></p> 
+						<a ng-click="editAccountGroupMember(id,idAccountGroupMember,idAccountGroup)">Edit Group Member</a>
+				    </div>
+				</form>    
+			 </div>
+	     </div>
+	  </li>
+	  
+	</ul>
+</div>
+
+<!--
+
+(function() {
+
+	$('#live-chat header').on('click', function() {
+
+		$('.chat').slideToggle(300, 'swing');
+		$('.chat-message-counter').fadeToggle(300, 'swing');
+
+	});
+
+	$('.chat-close').on('click', function(e) {
+
+		e.preventDefault();
+		$('#live-chat').fadeOut(300);
+
+	});
+
+}) ();
+ 
+ -->

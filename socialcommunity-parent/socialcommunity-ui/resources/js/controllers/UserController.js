@@ -8,6 +8,8 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 	$scope.id = $state.params.idUser;
 	$scope.idForum = $state.params.idForum;
 	$scope.idForumTopic = $state.params.idForumTopic;
+	$scope.idAccountGroup= $state.params.idAccountGroup;
+	$scope.idAccountGroupMember=$state.params.idAccountGroupMember;
 	
 	$scope.loadUserData = function(id){
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/parlor/accountdata.json',id).success(function(userParlorData) {
@@ -86,7 +88,7 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 		}).error(function(){
 		});
 	};
-	
+														//editAutoboigraphy
 	
 	$scope.loadUserAutobiography = function(id){
 		//$scope.changeRoute('#/user/parlor/editautobiography');
@@ -193,11 +195,95 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 	};
 	
 	
-//	$scope.createAccountGroup = function(id){	
-//	};
+														  //group save
+	$scope.createAccountGroup = function(id){	
+		$state.go('addaccountgroup', {idUser: id});
+	};
 	
-//	$scope.getAccountGroup = function(id,idAccountGroup){	
-//	};
+	$scope.saveNewAccountGroup=function(id,accountGroup){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+id+'/saveAccountGroup.json',accountGroup)
+		.success(function(id) {
+			$state.go('userparlor', {idUser: id});
+		}).error(function(){
+		});
+	};
+														//get id group member
+	
+	$scope.getAccountGroup = function(id,idAccountGroup){	
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+id+'/'+idAccountGroup+'/accountGroupMember.json')
+		.success(function(idAccountGroupMember){
+			$state.go('viewaccountgroup', {idUser: id, idAccountGroupMember:idAccountGroupMember,idAccountGroup:idAccountGroup});
+		}).error(function(){
+		});
+	};
+														//group messages & pattern
+	
+	$scope.loadListAccountGroupMessages = function(idAccountGroup){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/listAccountGroupMessages.json')
+		.success(function(listAccountGroupMessages) {
+			$scope.listAccountGroupMessages=listAccountGroupMessages;
+		}).error(function(){
+		});
+	};
+	
+	$scope.saveNewAccountGroupMessage=function(newAccountGroupMessage){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/group/saveAccountGroupMessage.json',newAccountGroupMessage)
+		.success(function(idAccountGroup) {
+			$scope.loadListAccountGroupMessages(idAccountGroup);
+		}).error(function(){
+		});
+	};
+	
+	$scope.deleteAccountGroupMessage=function(idAccountGroup,idGroupMessage){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/deleteAccountGroupMessage.json',idGroupMessage)
+		.success(function(idAccountGroup) {
+			$scope.loadListAccountGroupMessages(idAccountGroup);
+		}).error(function(){
+		});
+	};
+	
+	$scope.loadListEventPattern=function(){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/group/listEventPattern.json')
+		.success(function(listEventPattern) {
+			$scope.listEventPattern=listEventPattern;
+			
+		}).error(function(){
+		});
+	};
+	
+	$scope.editAccountGroupMember=function(id,idAccountGroupMember,idAccountGroup){
+		$state.go('editaccountgroupmember', {
+			idUser: id,
+			idAccountGroupMember:idAccountGroupMember,
+			idAccountGroup:idAccountGroup
+		});
+	};
+	
+	$scope.loadListAccountGroupMember=function(idAccountGroup){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/listAccountGroupMembers.json')
+		.success(function(listAccountGroupMember) {
+			$scope.listAccountGroupMember=listAccountGroupMember;
+			
+		}).error(function(){
+		});
+	};
+	
+	$scope.deleteMemberFromAccountGroup=function(id,idAccountGroupMember,idAccountGroup,idDeleteGroupMember){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroupMember+'/'+idDeleteGroupMember+'/deleteAccountGroupMember.json')
+		.success(function(idAccountGroupMember) {
+			$state.go('editaccountgroupmember', {
+				idUser: id,
+				idAccountGroupMember:idAccountGroupMember,
+				idAccountGroup:idAccountGroup
+			});
+		}).error(function(){
+		});	
+	};
+	
+	
+	
+	
+	
 	
 	
 	
