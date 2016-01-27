@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.dancosoft.socialcommunity.controller.support.SearchPatternData;
 import com.dancosoft.socialcommunity.controller.support.UserExtended;
 import com.dancosoft.socialcommunity.controller.support.UserExtendedData;
 import com.dancosoft.socialcommunity.controller.support.UserParlorData;
@@ -704,5 +705,45 @@ public class UserController {
 		}
 		return idAccountGroupMember;
 	}
+
+
+	
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/views/profile/user/group/{idAccountGroup}/listaccount.json", method = RequestMethod.POST)
+	public @ResponseBody List<Account> searchAccountForAccountGroup(@RequestBody SearchPatternData searchPattern,@PathVariable("idAccountGroup") Long idAccountGroup){
+		
+		logger.info("UserController: Search account by account name or user last name for include in account group.");
+		List<Account> listAccount=(List)accountService
+				.searchAccountByAccountNameUserLastName(searchPattern.getAccountName(), searchPattern.getUserLastName());
+		
+		return listAccount;
+	}
+	
+	
+	@RequestMapping(value="/views/profile/user/group/{idAccountGroup}/{idAccountNewMember}/newmember.json", method = RequestMethod.POST)
+	public @ResponseBody Long addToAccountGroup(@RequestBody String friendStatus, @PathVariable("idAccountGroup") Long idAccountGroup,
+			@PathVariable("idAccountNewMember") Long idAccountNewMember){
+		
+		logger.info("UserController: Save new account group member.");
+		GroupMember groupMember=new GroupMember();
+		Account memberAccount= accountService.getAccountById(idAccountNewMember);
+		groupMember.setMemberAccount(memberAccount);
+		AccountGroup accountGroup=accountGroupService.getAccountGroupById(idAccountGroup);
+		groupMember.setAccountGroup(accountGroup);
+		
+		if(friendStatus.equals("true")){
+			groupMember.setGroupMemberStatus("friend");	
+		}else{
+			groupMember.setGroupMemberStatus("notfriend");	
+		}
+		groupMemberService.saveGroupMember(groupMember);
+		
+		return idAccountGroup;
+	}
+	
+	
+	
+	
 	
 }

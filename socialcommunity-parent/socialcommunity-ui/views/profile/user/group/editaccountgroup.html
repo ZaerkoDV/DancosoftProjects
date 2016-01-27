@@ -1,178 +1,24 @@
 <style>
 
-a {
- 	text-decoration: none;
-}
-
-h4, h5 {
-	line-height: 1.5em;
-	margin: 0;
-}
-
-hr {
-	background: #e9e9e9;
-    border: 0;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    height: 1px;
-    margin: 0;
-    min-height: 1px;
-}
-
-input {
-	border: 0;
-	color: inherit;
-    font-family: inherit;
-    font-size: 100%;
-    line-height: normal;
-    margin: 0;
-}
-
-p {
- 	margin: 0;
-}
-
-.clearfix {
- 	*zoom: 1;
-}
-.clearfix:before, .clearfix:after {
-    content: "";
-    display: table;
-}
-.clearfix:after {
- 	clear: both;
-}
-
-/* ---------- LIVE-CHAT ---------- */
-
-#live-chat {
-	font-size: 12px;
-	width: 820px;
-}
-
-#live-chat header {
-	background: #293239;
-	border-radius: 5px 5px 0 0;
-	color: #fff;
-	cursor: pointer;
-	padding: 16px 24px;
-}
-
-#live-chat h4:before {
-	background: #1a8a34;
-	border-radius: 50%;
-	content: "";
-	display: inline-block;
-	height: 8px;
-	margin: 0 8px 0 0;
-	width: 8px;
-}
-
-#live-chat h4 {
-	font-size: 12px;
-}
-
-#live-chat h5 {
-	font-size: 10px;
-}
-
-#live-chat form {
-	padding: 24px;
-}
-
-#live-chat input[type="text"] {
-	border: 1px solid #ccc;
-	border-radius: 3px;
-	padding: 8px;
-	outline: none;
-	width: 620px;
-	margin: 10px 10px 10px 10px;
-}
-
-.chat-message-counter {
-	background: #e62727;
-	border: 1px solid #fff;
-	border-radius: 50%;
-	display: none;
-	font-size: 12px;
-	font-weight: bold;
-	height: 28px;
-	left: 0;
-	line-height: 28px;
-	margin: -15px 0 0 -15px;
-	position: absolute;
-	text-align: center;
-	top: 0;
-	width: 28px;
-}
-
-.chat-close {
-	background: #1b2126;
-	border-radius: 50%;
-	color: #fff;
-	display: block;
-	float: right;
-	font-size: 10px;
-	height: 16px;
-	line-height: 16px;
-	margin: 2px 0 0 0;
-	text-align: center;
-	width: 16px;
-}
-
-.chat {
-	background: #fff;
-}
-
-.chat-delete {
-	background: #1b2126;
-	border-radius: 50%;
-	color: #fff;
-	display: block;
-	float: right;
-	font-size: 10px;
-	height: 16px;
-	line-height: 16px;
-	margin: 2px 0 0 0;
-	text-align: center;
-	width: 16px;
-}
-
-.chat-history {
-	height: 252px;
-	padding: 8px 24px;
-	overflow-y: scroll;
-}
-
-.chat-message img {
-	border-radius: 50%;
-	float: left;
-}
-
-.chat-message {
-	margin: 16px 0;
-}
-
-.chat-time {
-	float: right;
-	font-size: 10px;
-}
-
-.chat-feedback {
-	font-style: italic;	
-	margin: 0 0 0 80px;
-}
-
 tbody {
     height: 100px;       
     overflow-y: auto;   
     overflow-x: hidden;
 }
 
+input[type="text"] {
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	padding: 5px;
+	outline: none;
+	width: 200px;
+	margin: 10px 10px 10px 10px;
+}
+
 </style>
 
 
-<title>Forum</title>
+<title>Edit Forum Group member.</title>
 <div class="col-md-2">
   <ul class="nav nav-pills nav-stacked">
   	<li>
@@ -285,22 +131,51 @@ tbody {
 							</div>
 				         </div>
 			         </div>	
-			               
-			         <!--
+			             
 			         <div class="panel-heading">
 					   <h4 class="panel-title">
-						   <a data-toggle="collapse" ng-click="searchAccountr(idAccountGroup)" data-target="#collapse7">Show Group Members</a>
+						   <a data-toggle="collapse" data-target="#collapse7">Search New Members</a>
 					   </h4>
-					</div>  
-				    <div id="collapse7" class="panel-collapse collapse">
+					 </div>  
+				     <div id="collapse7" class="panel-collapse collapse">
 					   <div class="panel-body">
-							<div ng-show=".length > 0">
- 	
-						 	</div>
-				       </div>
-			         </div>	
-			         -->
-			             
+						 <div style="display:inline-block; outline: 2px solid #000;">
+						     <div>Please enter account name or last name!</div>
+							 <input type="text" id="accountName" ng-model="searchPattern.accountName" placeholder="Enter account name.">      
+						     <input type="text" id="userLastName" ng-model="searchPattern.userLastName" placeholder="Enter last name.">						 
+						 	 <button type="submit" class="btn btn-xs btn-primary"
+						 	  ng-click="searchAccountForAccountGroup(idAccountGroup, searchPattern)">Search..</button>
+						 </div>
+					   	 <div ng-show="listAccount.length > 0">
+						   <table class="table table-bordered" style="background-color:#ffffff">
+							   <thead>
+								  <tr>
+									<th>Account Name</th>
+								    <th>Last Name</th>
+									<th>First Name</th>
+									<th>Friend Status</th>
+									<td>More Info/Add To Group</td>
+								  </tr>
+							  </thead>
+							  <tbody> 
+								  <tr ng-repeat="account in listAccount">
+								  
+									 <td>{{account.accountName}}</td>
+									 <td>{{account.user.lastName}}</td>
+									 <td>{{account.user.firstName}}</td>
+									 <td ng-if="id != account.user.idUser">
+									 	<input type="checkbox" id="prompt" class="btn btn-primary" ng-click="friendStatus=true"> 
+									 </td>
+									 <td ng-if="id != account.user.idUser">
+										<a type="submit" ng-click="">Info </a>
+									    <a type="submit" ng-click="addToAccountGroup(idAccountGroup,account.idAccount,friendStatus)">Add</a>
+									 </td>
+								   </tr>	 
+							   </tbody>
+							</table>
+						 </div>
+				      </div>
+			        </div>	            
 		       </fieldset>
 			</form>
           </div>

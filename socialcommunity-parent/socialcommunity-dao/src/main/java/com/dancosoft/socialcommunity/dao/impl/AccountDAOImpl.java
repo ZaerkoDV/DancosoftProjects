@@ -83,12 +83,17 @@ public class AccountDAOImpl extends CommonEntityDAOImpl implements AccountDAO {
 				.getCurrentSession().createCriteria(Account.class);
 
 		criteria.createAlias("user", "u");
-		if (!accountName.equals(null) && !accountName.equals("")) {
+		if((!accountName.equals(null) && !accountName.equals("")) && (!lastName.equals(null) && !lastName.equals(""))){
 			criteria.add(Restrictions.eq("accountName", accountName));
-		}
-		if (!lastName.equals(null) && !lastName.equals("")) {
+			criteria.add(Restrictions.eq("u.lastName", lastName));
+			
+		}if (!accountName.equals(null) && !accountName.equals("")) {
+			criteria.add(Restrictions.eq("accountName", accountName));
+			
+		}else if (!lastName.equals(null) && !lastName.equals("")) {
 			criteria.add(Restrictions.eq("u.lastName", lastName));
 		}
+			
 		criteria.addOrder(Order.desc("u.lastName"));
 		criteria.setMaxResults(20);
 		criteria.setFirstResult(0);

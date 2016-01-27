@@ -268,14 +268,31 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 		});
 	};
 	
-	$scope.deleteMemberFromAccountGroup=function(id,idAccountGroupMember,idAccountGroup,idDeleteGroupMember){
+	$scope.deleteMemberFromAccountGroup=function(idAccountGroupMember,idAccountGroup,idDeleteGroupMember){
 		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroupMember+'/'+idDeleteGroupMember+'/deleteAccountGroupMember.json')
 		.success(function(idAccountGroupMember) {
-			$state.go('editaccountgroupmember', {
-				idUser: id,
-				idAccountGroupMember:idAccountGroupMember,
-				idAccountGroup:idAccountGroup
-			});
+			$scope.loadListAccountGroupMember(idAccountGroup);
+			
+		}).error(function(){
+		});	
+	};
+	
+	$scope.searchAccountForAccountGroup=function(idAccountGroup,searchPattern){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/listaccount.json',searchPattern)
+		.success(function(listAccount) {
+			$scope.friendStatus=false;
+			$scope.listAccount=listAccount;
+			
+		}).error(function(){
+		});	
+	};
+	
+	
+	$scope.addToAccountGroup=function(idAccountGroup,idAccountNewMember,friendStatus){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/'+idAccountNewMember+'/newmember.json',friendStatus)
+		.success(function(idAccountGroup) {
+			$scope.loadListAccountGroupMember(idAccountGroup);
+			
 		}).error(function(){
 		});	
 	};

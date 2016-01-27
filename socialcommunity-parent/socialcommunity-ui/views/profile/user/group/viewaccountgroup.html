@@ -277,10 +277,8 @@ p {
 										 <button type="submit" class="btn btn-xs btn-primary" ng-disabled="!newAccountGroupMessage.groupMessage"
 								             ng-click="saveNewAccountGroupMessage(newAccountGroupMessage)">Send</button>
 								             
-								             <!--ng-change="getListCityByIdCountry(userExtendedData.userLocation.city.country.idCountry)"-->
 								    	<select style="width:120px;height:22px" class="btn btn-xs btn-primary" ng-model="newAccountGroupMessage.groupMessage"
-								    	ng-click="loadListEventPattern()">
-			
+								    		ng-click="loadListEventPattern()">
 										    <option ng-selected="eventPattern.eventPattern == newAccountGroupMessage.groupMessage" 
 										            ng-repeat="eventPattern in listEventPattern"
 										            value="{{eventPattern.eventPattern}}">
