@@ -659,6 +659,7 @@ public class UserController {
 		groupMessage.setGroupMessage(newGroupMessage.getGroupMessage());
 		groupMessage.setDateCreateGroupMessage(LocalDateTime.now());
 		groupMessageService.saveGroupMessage(groupMessage);
+		//not use group member event
 		
 		logger.info("UserController: Get id account group after save member message.");
 		Long idAccountGroup =newGroupMessage.getGroupMember().getAccountGroup().getIdAccountGroup();
@@ -701,14 +702,12 @@ public class UserController {
 					+ " try to delete author of this group!");
 		}else{
 			logger.info("UserController:Delete account group member from account group");
-			//groupMemberService.deleteGroupMemberById(idDeleteGroupMember);
+			groupMemberService.deleteGroupMemberById(idDeleteGroupMember);
 		}
 		return idAccountGroupMember;
 	}
 
-
-	
-	
+																//add new member
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/views/profile/user/group/{idAccountGroup}/listaccount.json", method = RequestMethod.POST)
 	public @ResponseBody List<Account> searchAccountForAccountGroup(@RequestBody SearchPatternData searchPattern,@PathVariable("idAccountGroup") Long idAccountGroup){
@@ -719,7 +718,6 @@ public class UserController {
 		
 		return listAccount;
 	}
-	
 	
 	@RequestMapping(value="/views/profile/user/group/{idAccountGroup}/{idAccountNewMember}/newmember.json", method = RequestMethod.POST)
 	public @ResponseBody Long addToAccountGroup(@RequestBody String friendStatus, @PathVariable("idAccountGroup") Long idAccountGroup,
@@ -740,6 +738,77 @@ public class UserController {
 		groupMemberService.saveGroupMember(groupMember);
 		
 		return idAccountGroup;
+	}
+															//account 
+	
+	@RequestMapping(value="/views/profile/user/{id}/account/listaccountgroup.json", method = RequestMethod.GET)
+	public @ResponseBody List<AccountGroup> getListAccountGroupForAccount(@PathVariable("id") Long id){
+		
+		List<Account> listAccount= userService.getListAccountByUserId(id);
+		Long idAccount=listAccount.get(0).getIdAccount();
+		logger.info("UserController: Load list account group for account.");
+		List<AccountGroup> listAccountGroup = accountGroupService
+				.getListAccountGroupWithBlockStatusByIdAccount(idAccount,"unblock");
+		
+		return listAccountGroup;
+	}
+	
+	@RequestMapping(value="/views/profile/user/{id}/account/searchaccount.json", method = RequestMethod.POST)
+	public @ResponseBody List<Account> searchAccountByAccountName(@RequestBody SearchPatternData searchPattern,@PathVariable("id") Long id){
+		
+		logger.info("UserController: Search accounts by name or user last name.");
+		List<Account> listAccount= accountService.searchAccountByAccountNameUserLastName(searchPattern.getAccountName(),
+				searchPattern.getUserLastName());
+		
+		return listAccount;	
+	}
+	
+	@RequestMapping(value="/views/profile/user/account/{idAccountGroupSelected}/{idAccount}/newaccountgroupmember.json", method = RequestMethod.POST)
+	public @ResponseBody void addToAccountGroupAfterSearch(@RequestBody String friendStatus,@PathVariable("idAccount") Long idAccount,
+			@PathVariable("idAccountGroupSelected") Long idAccountGroupSelected){
+	
+		logger.info("UserController:Add new member to account group.");
+		AccountGroup accountGroup=accountGroupService.getAccountGroupById(idAccountGroupSelected);
+		Account memberAccount= accountService.getAccountById(idAccount); 
+		
+		GroupMember groupMember=new GroupMember();
+		groupMember.setAccountGroup(accountGroup);
+		groupMember.setMemberAccount(memberAccount);
+		
+		if(friendStatus.equals("true")){
+			groupMember.setGroupMemberStatus("friend");	
+		}else{
+			groupMember.setGroupMemberStatus("notfriend");	
+		}
+		groupMemberService.saveGroupMember(groupMember);	
+	}
+	
+	
+	@RequestMapping(value="/views/profile/user/account/{searchIdAccount}/accountinfo.json", method = RequestMethod.GET)
+	public @ResponseBody UserParlorData getAccountSearchInfo(@PathVariable("searchIdAccount") Long searchIdAccount){
+		
+		logger.info("UserController: Load info about searching account.");
+		//data for user account
+		Account accountSearch= accountService.getAccountById(searchIdAccount);
+		User user =accountSearch.getUser();
+		Long idUserSearch=user.getIdUser();
+		
+		UserParlorData userParlorData=new UserParlorData();
+		userParlorData.setUser(user);
+		
+		UserAutobiography userAutobiography=userAutobiographyService.getUserAutobiographyByIdUser(idUserSearch);
+		userParlorData.setUserAutobiography(userAutobiography);
+		
+		List<UserEmail> listUserEmail=userEmailService.getListEmailByIdUser(idUserSearch);
+		userParlorData.setUserEmail(listUserEmail.get(0));
+		
+		UserPhoto userPhoto=userPhotoService.getUserPhotoByIdUser(idUserSearch);
+		userParlorData.setUserPhoto(userPhoto);
+		
+		UserLocation userLocation= userLocationService.getUserLocationByIdUser(idUserSearch);
+		userParlorData.setUserLocation(userLocation);
+		
+		return userParlorData;
 	}
 	
 	

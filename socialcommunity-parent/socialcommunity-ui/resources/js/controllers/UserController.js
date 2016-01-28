@@ -38,7 +38,6 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 		}).error(function() {
 		});
 	};
-	
 														//edit common profile
 		
 	$scope.loadCommonUserProfile = function(id){
@@ -113,7 +112,6 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 		}).error(function(){
 		});
 	};
-					
 															//support data
 	
 	$scope.getListLanguage = function(){
@@ -141,8 +139,6 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 		}).error(function() {
 		});
 	};
-	
-	
 															//forum topics
 	
 	$scope.getForum = function(id,idForum){
@@ -281,20 +277,60 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/listaccount.json',searchPattern)
 		.success(function(listAccount) {
 			$scope.friendStatus=false;
-			$scope.listAccount=listAccount;
-			
+			$scope.listAccount=listAccount;	
 		}).error(function(){
 		});	
 	};
-	
 	
 	$scope.addToAccountGroup=function(idAccountGroup,idAccountNewMember,friendStatus){
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/'+idAccountNewMember+'/newmember.json',friendStatus)
 		.success(function(idAccountGroup) {
 			$scope.loadListAccountGroupMember(idAccountGroup);
-			
 		}).error(function(){
 		});	
+	};
+	
+																//search account
+	
+	$scope.getPageSearchAccount=function(id){
+		$state.go('searchaccount', {idUser: id});
+	};
+	
+	$scope.getListAccountGroupForAccount=function(id){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/account/listaccountgroup.json')
+		.success(function(listAccountGroup) {
+			$scope.friendStatus=false;
+			$scope.listAccountGroup=listAccountGroup;
+		}).error(function(){
+		});	
+	};
+	
+	$scope.searchAccountByAccountName=function(id, searchPattern){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/account/searchaccount.json',searchPattern)
+		.success(function(listAccount) {
+			$scope.listAccount=listAccount;
+		}).error(function(){
+		});	
+	};
+	
+	$scope.addToAccountGroupAfterSearch=function(idAccountGroupSelected,idAccount,friendStatus){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/account/'+idAccountGroupSelected
+				+'/'+idAccount+'/newaccountgroupmember.json',friendStatus).success(function() {
+		}).error(function(){
+		});	
+	};
+
+	$scope.searchIdAccount=$state.params.searchIdAccount;
+	$scope.getAccountInfo=function(id,searchIdAccount){
+		$state.go('accountinfo', {idUser: id,searchIdAccount:searchIdAccount});
+	};
+	
+	$scope.loadAccountInfo=function(searchIdAccount){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/account/'+searchIdAccount+'/accountinfo.json')
+		.success(function(accountDataSearchResult) {
+			$scope.accountDataSearchResult=accountDataSearchResult;
+		}).error(function() {
+		});
 	};
 	
 	
@@ -310,7 +346,16 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 	
 	
 	
-	//search account
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

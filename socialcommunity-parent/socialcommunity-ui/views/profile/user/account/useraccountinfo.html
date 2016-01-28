@@ -1,10 +1,177 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<style>
 
-</body>
-</html>
+tbody {
+    height: 100px;       
+    overflow-y: auto;   
+    overflow-x: hidden;
+}
+
+input[type="text"] {
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	padding: 5px;
+	outline: none;
+	width: 200px;
+	margin: 10px 10px 10px 10px;
+}
+
+.sign {
+    float: left; /* Выравнивание по правому краю */
+    border: 1px solid #333; /* Параметры рамки */
+    padding: 7px; /* Поля внутри блока */
+    margin: 10px 0 5px 5px; /* Отступы вокруг */
+    background: #f0f0f0; /* Цвет фона */ 
+}
+.sign figcaption {
+    margin: 0 auto 5px; /* Отступы вокруг абзаца */
+}
+
+</style>
+
+
+<title>Edit Forum Group member.</title>
+<div class="col-md-2">
+  <ul class="nav nav-pills nav-stacked">
+  	<li>
+	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse1">Profile Detail</a>
+			     </h4>
+			</div>
+			<div id="collapse1" class="panel-collapse collapse">
+			    <form>
+				  <div class="panel-body">
+				  	<p><a ng-click="returnToParlor(id)">My Profile</a></p> 
+					<p><a ng-click="loadCommonUserProfile(id)">My Common Profile</a></p>
+					<p><a ng-click="loadExtendedUserProfile(id)">My Extended Profile</a></p>
+					<a ng-click="loadUserAutobiography(id)">My Autobiography</a>
+				  </div>
+			    </form>    
+			</div>
+	   </div>
+	</li>
+    <li>
+	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" ng-click="getListAccountGroup(id)" data-target="#collapse2">Groups</a>
+			     </h4>
+			</div>
+			<div id="collapse2" class="panel-collapse collapse">
+			    <form>
+				  <div class="panel-body">
+				  	 <div ng-show="listAccountGroup.length > 0">
+						<div ng-repeat="accountGroup in listAccountGroup">
+							<p><a ng-click="getAccountGroup(id,accountGroup.idAccountGroup)">{{accountGroup.groupName}}</a></p>
+						</div>
+				 	 </div>
+				 	 <a ng-click="createAccountGroup(id)">+ new group</a>
+				  </div>
+			    </form>    
+			</div>
+	   </div>
+	 </li>
+     <li>
+	   <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" ng-click="getListForum(id)" data-target="#collapse3">Forums</a>
+			     </h4>
+			</div>
+			<div id="collapse3" class="panel-collapse collapse">
+			    <form>
+				  <div class="panel-body">
+				  	 <div ng-show="listForum.length > 0">
+						<div ng-repeat="forum in listForum">
+							<p><a ng-click="getForum(id, forum.idForum)">{{forum.forumName}}</a></p>
+						</div>
+				 	 </div>
+				  </div>
+			    </form>     
+			</div>
+	    </div>
+	 </li> 
+  </ul>
+</div>
+
+<div class="col-lg-8 col-lg-offset-0">
+ <div class="well">
+   <div class="container">
+	   <div class="row">
+		  <div class="col-lg-8">   
+		     <form name="myForm" class="form-horizontal">
+		  	   <fieldset>
+				  <a ui-sref="accountinfo"></a>
+					<legend style="text-align: center;">Account Info Form</legend>
+			
+					   <div class="panel-heading">
+						     <h4 class="panel-title">
+						       <a data-toggle="collapse" ng-click="loadAccountInfo(searchIdAccount)" data-target="#collapse5">Show Account Info</a>
+						     </h4>
+					   </div>
+					   <div id="collapse5" class="panel-collapse collapse">
+							<figure class="sign">
+							   <p><img src="" width="150" height="200" alt=""></p>
+							  	  <figcaption>
+							  		<div ng-show="accountDataSearchResult.userPhoto.photoNote != null ">
+							  			{{accountDataSearchResult.userPhoto.photoNote}} 
+							  		</div>
+							  	  </figcaption>
+							</figure>
+							<div class="form-group">
+								<div style="text-indent: 20px;">
+							    	<strong>First Name :</strong> {{accountDataSearchResult.user.firstName}}<br>
+							    </div>	
+							    <div style="text-indent: 20px;">
+						     		<strong>Last Name:</strong>{{accountDataSearchResult.user.lastName}} <br>
+						     	</div>
+							    <div ng-show="accountDataSearchResult.user.middleName != null" style="text-indent: 20px;">
+							     	 <strong>Middle Name:</strong>{{accountDataSearchResult.user.middleName}}
+								</div>
+								<div style="text-indent: 20px;">
+									 <strong>Sex:</strong>{{accountDataSearchResult.user.sex}}
+								</div>
+								<div style="text-indent: 20px;">
+									 <strong>Birth:</strong><!--{{accountDataSearchResult.userAutobiography.birth}}-->
+								</div>
+								<div ng-show="accountDataSearchResult.userLocation.city.cityName != null" style="text-indent: 20px;">
+										<strong>Location:</strong>{{accountDataSearchResult.userLocation.city.country.countryName}},
+							    	   	{{accountDataSearchResult.userLocation.city.cityName}}
+								</div>
+								<div ng-show="accountDataSearchResult.userAutobiography.hobby != null" style="text-indent: 20px;">
+										<strong>Hobby:</strong> {{accountDataSearchResult.userAutobiography.hobby}}
+								</div>
+								<div ng-show="accountDataSearchResult.userAutobiography.autobiography != null" style="text-indent: 20px;">	
+										<strong>My Autobiography:</strong>{{accountDataSearchResult.userAutobiography.autobiography}}
+								</div>
+							</div>	
+						</div>	    
+		       </fieldset>
+			 </form>
+          </div>
+       </div>
+   </div> 
+  </div>
+</div>
+ 
+<div class="col-md-2">
+	<ul class="nav nav-pills nav-stacked">
+	  <li>
+		  <div class="panel panel" style="background-color:#92A7B8">
+			   <div class="panel-heading">
+			        <h4 class="panel-title">
+			          <a data-toggle="collapse" data-target="#collapse">Search</a>
+			        </h4>
+			   </div>
+			   <div id="collapse" class="panel-collapse collapse">
+			     <form>
+				    <div class="panel-body">
+				       <a ng-click="getPageSearchAccount(id)">Search Account</a>
+				    </div>
+				</form>    
+			 </div>
+	     </div>
+	  </li>
+	</ul>
+</div>

@@ -124,7 +124,7 @@ App.config(function($stateProvider,$routeProvider) {
 		        controller: 'UserController'
 		      },
 		    },
-		   params: {idUser: null, idForum:null}
+		  params: {idUser: null, idForum:null}
 	});
 	
 	$stateProvider.state('forumtopicmessages', {
@@ -134,7 +134,7 @@ App.config(function($stateProvider,$routeProvider) {
 		        controller: 'UserController'
 		      },
 		    },
-		   params: {idUser: null, idForumTopic:null}
+		  params: {idUser: null, idForumTopic:null}
 	});
 	
 	$stateProvider.state('addaccountgroup', {
@@ -144,7 +144,7 @@ App.config(function($stateProvider,$routeProvider) {
 		        controller: 'UserController'
 		      },
 		    },
-		   params: {idUser: null}
+		  params: {idUser: null}
 	});
 	
 	$stateProvider.state('viewaccountgroup', {
@@ -166,6 +166,33 @@ App.config(function($stateProvider,$routeProvider) {
 		    },
 		   params: {idUser: null,idAccountGroupMember:null,idAccountGroup:null}
 	});
+	
+	$stateProvider.state('searchaccount', {
+		  url: '/user/account/search/listaccounts/:idUser',
+		  views: {'': {
+		        templateUrl: '/socialcommunity/views/profile/user/account/listaccounts.html',
+		        controller: 'UserController'
+		      },
+		    },
+		   params: {idUser: null}
+	});
+	
+	$stateProvider.state('accountinfo', {
+		  url: '/user/account/search/accountinfo/:idUser/:searchIdAccount',
+		  views: {'': {
+		        templateUrl: '/socialcommunity/views/profile/user/account/useraccountinfo.html',
+		        controller: 'UserController'
+		      },
+		    },
+		  params: {idUser: null,searchIdAccount:null}
+	});
+	
+	
+	
+	
+	
+	
+	
 	
 	
 });

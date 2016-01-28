@@ -140,7 +140,7 @@ input[type="text"] {
 				     <div id="collapse7" class="panel-collapse collapse">
 					   <div class="panel-body">
 						 <div style="display:inline-block; outline: 2px solid #000;">
-						     <div>Please enter account name or last name!</div>
+						     <div><strong>Please enter account name or last name!</strong></div>
 							 <input type="text" id="accountName" ng-model="searchPattern.accountName" placeholder="Enter account name.">      
 						     <input type="text" id="userLastName" ng-model="searchPattern.userLastName" placeholder="Enter last name.">						 
 						 	 <button type="submit" class="btn btn-xs btn-primary"
@@ -164,7 +164,7 @@ input[type="text"] {
 									 <td>{{account.user.lastName}}</td>
 									 <td>{{account.user.firstName}}</td>
 									 <td ng-if="id != account.user.idUser">
-									 	<input type="checkbox" id="prompt" class="btn btn-primary" ng-click="friendStatus=true"> 
+									 	<input type="checkbox" class="btn btn-primary" ng-click="friendStatus=true"> 
 									 </td>
 									 <td ng-if="id != account.user.idUser">
 										<a type="submit" ng-click="">Info </a>
@@ -190,24 +190,18 @@ input[type="text"] {
 		  <div class="panel panel" style="background-color:#92A7B8">
 			   <div class="panel-heading">
 			        <h4 class="panel-title">
-			          <a data-toggle="collapse" data-target="#collapse">Search Account </a>
+			          <a data-toggle="collapse" data-target="#collapse">Search</a>
 			        </h4>
 			   </div>
 			   <div id="collapse" class="panel-collapse collapse">
 			     <form>
 				    <div class="panel-body">
-						<input type="text" id="accountName" class="form-control" placeholder="Enter Account" /><br>
-						<button type="submit" class="btn btn-xs btn-primary" style="float: right">Search</button>
+				       <a ng-click="getPageSearchAccount(id)">Search Account</a>
 				    </div>
-				    <!--
-				    <div class="panel-footer">
-						<button type="submit" class="btn btn-xs btn-primary">Search</button>
-				    </div>
-				    -->
 				</form>    
 			 </div>
 	     </div>
-	  </li>
+	  </li>	
 	  <li>
 	   <div class="panel panel" style="background-color:#92A7B8">
 			   <div class="panel-heading">
@@ -224,7 +218,6 @@ input[type="text"] {
 				</form>    
 			 </div>
 	     </div>
-	  </li>
-	  
+	  </li>  
 	</ul>
 </div>

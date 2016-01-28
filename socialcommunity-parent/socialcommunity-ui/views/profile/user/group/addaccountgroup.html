@@ -129,24 +129,18 @@ input:valid {
 		  <div class="panel panel" style="background-color:#92A7B8">
 			   <div class="panel-heading">
 			        <h4 class="panel-title">
-			          <a data-toggle="collapse" data-target="#collapse">Account search form</a>
+			          <a data-toggle="collapse" data-target="#collapse">Search</a>
 			        </h4>
 			   </div>
 			   <div id="collapse" class="panel-collapse collapse">
 			     <form>
 				    <div class="panel-body">
-						<input type="text" id="accountName" class="form-control" placeholder="Enter Account" /><br>
-						<button type="submit" class="btn btn-xs btn-primary" style="float: right">Search</button>
+				       <a ng-click="getPageSearchAccount(id)">Search Account</a>
 				    </div>
-				    <!--
-				    <div class="panel-footer">
-						<button type="submit" class="btn btn-xs btn-primary">Search</button>
-				    </div>
-				    -->
 				</form>    
 			 </div>
 	     </div>
-	  </li>
+	  </li>	
 	</ul>
 </div>
 
