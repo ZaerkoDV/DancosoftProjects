@@ -17,8 +17,7 @@ input[type="text"] {
 
 </style>
 
-
-<title>Edit Forum Group member.</title>
+<title>Search Account Form.</title>
 <div class="col-md-2">
   <ul class="nav nav-pills nav-stacked">
   	<li>
@@ -124,8 +123,8 @@ input[type="text"] {
 					       	    <td ng-if="id != account.user.idUser">      	    	
 					       	    	<a type="submit" ng-click="getAccountInfo(id,account.idAccount)">Info</a>
 								</td>
-								<td>
-									<a type="submit" ng-click="">Dialog</a>
+								<td ng-if="id != account.user.idUser">
+									<a type="submit" ng-click="getAccountSingleDialog(id,account.idAccount)">Dialog</a>
 								</td>
 					       	    <td ng-if="id != account.user.idUser">
 					       	   		<input type="checkbox" class="btn btn-primary" ng-click="friendStatus=true"> 

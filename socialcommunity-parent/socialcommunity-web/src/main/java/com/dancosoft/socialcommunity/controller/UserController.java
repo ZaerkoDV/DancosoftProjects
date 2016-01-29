@@ -40,6 +40,7 @@ import com.dancosoft.socialcommunity.model.ForumTopic;
 import com.dancosoft.socialcommunity.model.GroupMember;
 import com.dancosoft.socialcommunity.model.GroupMessage;
 import com.dancosoft.socialcommunity.model.Language;
+import com.dancosoft.socialcommunity.model.SingleMessage;
 import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserAutobiography;
 import com.dancosoft.socialcommunity.model.UserCorespondence;
@@ -62,6 +63,7 @@ import com.dancosoft.socialcommunity.service.GroupEventService;
 import com.dancosoft.socialcommunity.service.GroupMemberService;
 import com.dancosoft.socialcommunity.service.GroupMessageService;
 import com.dancosoft.socialcommunity.service.LanguageService;
+import com.dancosoft.socialcommunity.service.SingleMessageService;
 import com.dancosoft.socialcommunity.service.UserAutobiographyService;
 import com.dancosoft.socialcommunity.service.UserCorespondenceService;
 import com.dancosoft.socialcommunity.service.UserEmailService;
@@ -175,7 +177,15 @@ public class UserController {
 	public void setAccountHistoryService(AccountHistoryService accountHistoryService) {
 		this.accountHistoryService = accountHistoryService;
 	}
-											  //group
+														//single message
+	@Autowired
+	@Qualifier(value="singleMessageService")
+	private SingleMessageService singleMessageService;
+	
+	public void setSingleMessageService(SingleMessageService singleMessageService) {
+		this.singleMessageService = singleMessageService;
+	}
+															//group
 	@Autowired
 	@Qualifier(value="accountGroupService")
 	private AccountGroupService accountGroupService;
@@ -811,8 +821,50 @@ public class UserController {
 		return userParlorData;
 	}
 	
+	@RequestMapping(value="/views/profile/user/{id}/account/{searchIdAccount}/listAccountSingleMessage.json", method = RequestMethod.GET)
+	public @ResponseBody List<SingleMessage> getAccountSearchInfo(@PathVariable("id") Long id,
+			@PathVariable("searchIdAccount") Long searchIdAccount){
+		
+		logger.info("UserControlleer: Load list account single message by id user and id interlocutor account");
+		List<Account> listAccount =userService.getListAccountByUserId(id);
+		Long idAccount= listAccount.get(0).getIdAccount();
+		LocalDateTime minDateLDT=LocalDateTime.now().minusDays(7);
+		LocalDateTime maxDateLDT=LocalDateTime.now();
+		List<SingleMessage> listSingleMessage=singleMessageService.getListIntrlocutorSingleMessageBeetweenDateByIdAccount(
+				idAccount, searchIdAccount, minDateLDT, maxDateLDT);
+		
+		return listSingleMessage;
+	}
 	
+	@RequestMapping(value="/views/profile/user/{id}/account/saveAccountSingleMessage.json", method = RequestMethod.POST)
+	public @ResponseBody Long saveNewAccountSingleMessage(@RequestBody SingleMessage newAccountSingleMessage,@PathVariable("id") Long id){
+		
+		logger.info("UserController:Save new single account message.");
+		SingleMessage singleMessage=new SingleMessage();
+		
+		logger.info("UserController:Load user account for save new single account message.");
+		Long idUser=newAccountSingleMessage.getAccount().getUser().getIdUser();
+		List<Account> listAccount=userService.getListAccountByUserId(idUser);
+		singleMessage.setAccount(listAccount.get(0));
+		
+		logger.info("UserController:Load interlocutor account for save new single account message.");
+		Long idInterlocutorAccount=newAccountSingleMessage.getInterlocutorAccount().getIdAccount();
+		Account interlocutorAccount= accountService.getAccountById(idInterlocutorAccount);
+		singleMessage.setInterlocutorAccount(interlocutorAccount);
+		
+		singleMessage.setDateCreateSingleMessage(LocalDateTime.now());
+		singleMessage.setSingleMessage(newAccountSingleMessage.getSingleMessage());
+		singleMessageService.saveSingleMessage(singleMessage);
+		
+		return id;
+	}
 	
-	
-	
+	@RequestMapping(value="/views/profile/user/account/{id}/deleteAccountSingleMessage.json", method = RequestMethod.POST)
+	public @ResponseBody Long deleteAccountSingleMessage(@RequestBody Long idAccountSingleMessage,@PathVariable("id") Long id){
+		
+		logger.info("UserController:Delete account single message.");
+		singleMessageService.deleteSingleMessageById(idAccountSingleMessage);		
+		
+		return id;
+	}
 }

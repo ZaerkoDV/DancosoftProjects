@@ -10,6 +10,7 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 	$scope.idForumTopic = $state.params.idForumTopic;
 	$scope.idAccountGroup= $state.params.idAccountGroup;
 	$scope.idAccountGroupMember=$state.params.idAccountGroupMember;
+	$scope.searchIdAccount=$state.params.searchIdAccount;
 	
 	$scope.loadUserData = function(id){
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/parlor/accountdata.json',id).success(function(userParlorData) {
@@ -38,10 +39,14 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 		}).error(function() {
 		});
 	};
-														//edit common profile
+													//return to user parlor
+	
+	$scope.returnToParlor = function(id){
+		$state.go('userparlor', {idUser: id});	
+	};
+													//edit common profile
 		
 	$scope.loadCommonUserProfile = function(id){
-		//$scope.changeRoute('#/user/parlor/editcommonprofile');
 		$state.go('editcommonprofile', {idUser: id});
 	};
 	
@@ -55,17 +60,13 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 	
 	$scope.editCommonUserProfile = function(id,user){
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/parlor/'+id+'/editcommonprofile.json',user).success(function(id) {
-			//$scope.changeRoute('#/user/parlor');
-			$state.go('userparlor', {idUser: id});
-			
+			$state.go('userparlor', {idUser: id});		
 		}).error(function(){
 		});
 	};
 														//edit extended profile
 
-	
 	$scope.loadExtendedUserProfile = function(id){
-		//$scope.changeRoute('#/user/parlor/editextendedprofile');
 		$state.go('editextendedprofile', {idUser: id});
 	};
 	
@@ -81,7 +82,6 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 	$scope.editExtendedUserProfile = function(id,userExtendedData){
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/parlor/'+id+'/editextendedprofile.json',userExtendedData)
 		.success(function(id) {
-			//$scope.changeRoute('#/user/parlor');
 			$state.go('userparlor', {idUser: id});
 			
 		}).error(function(){
@@ -90,7 +90,6 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 														//editAutoboigraphy
 	
 	$scope.loadUserAutobiography = function(id){
-		//$scope.changeRoute('#/user/parlor/editautobiography');
 		$state.go('editautobiography', {idUser: id});
 	};
 	
@@ -106,9 +105,7 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 	$scope.editUserAutobiography = function(id,userAutobiography){
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/parlor/'+id+'/editautobiographyprofile.json',userAutobiography)
 		.success(function(id) {
-			//$scope.changeRoute('#/user/parlor');
 			$state.go('userparlor', {idUser: id});
-			
 		}).error(function(){
 		});
 	};
@@ -118,7 +115,6 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 		$http.get('http://localhost:8080/socialcommunity-web/views/listlanguage.json').success(function(listLanguage) {
 			$scope.listLanguage=listLanguage;		
 			//$state.go('editextendedprofile', {idUser: id});
-			
 		}).error(function() {
 		});
 	};
@@ -189,8 +185,6 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 		}).error(function(){
 		});
 	};
-	
-	
 														  //group save
 	$scope.createAccountGroup = function(id){	
 		$state.go('addaccountgroup', {idUser: id});
@@ -291,7 +285,6 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 	};
 	
 																//search account
-	
 	$scope.getPageSearchAccount=function(id){
 		$state.go('searchaccount', {idUser: id});
 	};
@@ -317,10 +310,10 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/account/'+idAccountGroupSelected
 				+'/'+idAccount+'/newaccountgroupmember.json',friendStatus).success(function() {
 		}).error(function(){
-		});	
+		});
 	};
-
-	$scope.searchIdAccount=$state.params.searchIdAccount;
+												 //get account info
+	
 	$scope.getAccountInfo=function(id,searchIdAccount){
 		$state.go('accountinfo', {idUser: id,searchIdAccount:searchIdAccount});
 	};
@@ -332,46 +325,51 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 		}).error(function() {
 		});
 	};
+													//single messege
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	$scope.returnToParlor = function(id){
-		$state.go('userparlor', {idUser: id});	
+	$scope.getAccountSingleDialog=function(id,searchIdAccount){
+		$state.go('accountsinglemessage', {idUser: id,searchIdAccount:searchIdAccount});
 	};
 	
+	$scope.loadListAccountSingleMessages=function(id,searchIdAccount){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/account/'+searchIdAccount+'/listAccountSingleMessage.json')
+		.success(function(listAccountSingleMessage) {
+			$scope.listAccountSingleMessage=listAccountSingleMessage;
+		}).error(function() {
+		});
+	};
+													//save new single messege
+	
+	$scope.saveNewAccountSingleMessage=function(id,searchIdAccount,newAccountSingleMessage){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/account/saveAccountSingleMessage.json',newAccountSingleMessage)
+		.success(function(id) {
+			$scope.loadListAccountSingleMessages(id,searchIdAccount);
+		}).error(function(){
+		});
+	};
+													//delete single message
+	
+	$scope.deleteAccountSingleMessage=function(id,searchIdAccount,idAccountSingleMessage){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/account/'+id+'/deleteAccountSingleMessage.json',idAccountSingleMessage)
+		.success(function(id) {
+			$scope.loadListAccountSingleMessages(id,searchIdAccount);
+		}).error(function(){
+		});
+	};
+	
+	
+	
+	
+	
 	//route change
-	$scope.changeRoute = function(url, forceReload) {
-        $scope = $scope || angular.element(document).scope();
-        if(forceReload || $scope.$$phase) { 
-            window.location = url;
-        } else {
-            $location.path(url);
-            $scope.$apply();
-        }
-    };
+//	$scope.changeRoute = function(url, forceReload) {
+//        $scope = $scope || angular.element(document).scope();
+//        if(forceReload || $scope.$$phase) { 
+//            window.location = url;
+//        } else {
+//            $location.path(url);
+//            $scope.$apply();
+//        }
+//    };
     
 });

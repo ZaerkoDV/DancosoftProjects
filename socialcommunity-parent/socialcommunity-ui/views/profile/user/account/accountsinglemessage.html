@@ -238,59 +238,61 @@ p {
 		  <div class="col-lg-8">   
 		     <form name="myForm" class="form-horizontal">
 		  	     <fieldset>
-				    <a ui-sref="viewaccountgroup"></a>
+				    <a ui-sref="accountsinglemessage"></a>
 					<div class="panel-heading">
 					   <h4 class="panel-title">
-						   <a data-toggle="collapse" ng-click="loadListAccountSingleMessages(idAccountGroup)" data-target="#collapse6">Show Last Dialog</a>
+						   <a data-toggle="collapse" ng-click="loadListAccountSingleMessages(id,searchIdAccount)"
+						    data-target="#collapse6">Show Last Dialog</a>
 					   </h4>
 					</div>  
 				    <div id="collapse6" class="panel-collapse collapse">
 					   <div class="panel-body">
-					   <!--
-					     <div ng-show="listAccountGroupMessages.length > 0">
+					  
+					  <!-- <div ng-show="listAccountSingleMessage.length > 0">--> 
 							 <div id="live-chat">
 								<header class="clearfix">
 									<span class="chat-message-counter">3</span>
 								</header>
 								<div class="chat">
 								   	  <div class="chat-history">
-								   	  	 <div ng-repeat="accountGroupMessage in listAccountGroupMessages">
+								   	  	 <div ng-repeat="accountSingleMessage in listAccountSingleMessage">
 								   	  	 	 <div class="chat-message clearfix">
-								   	  		  <img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">
+								   	  		  <!--<img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">-->
 													<div class="chat-message-content clearfix">
-														<span class="chat-time">10:00{{accountGroupMessage.dateCreateGroupMessage}}</span>
-														<h5>{{accountGroupMessage.groupMember.memberAccount.accountName}}</h5>
-														<a class="chat-delete" ng-click="deleteAccountGroupMessage(idAccountGroup,accountGroupMessage.idGroupMessage)">x</a>
-														<p>{{accountGroupMessage.groupMessage}}</p>
+														<span class="chat-time">10:00<!--{{accountSingleMessage.dateCreateSingleMessage}}--></span>
+														<h5>{{accountSingleMessage.account.accountName}}</h5>
+														<a class="chat-delete" ng-click="deleteAccountSingleMessage(id,searchIdAccount,accountSingleMessage.idSingleMessage)">x</a>
+														<p>{{accountSingleMessage.singleMessage}}</p>
 													</div>
 											  </div>
 										  </div>
 										  <hr>
 									  </div>
 								      <div style="display:inline-block;">
-								      	<input type="hidden" id="idAccount" ng-model="newAccountGroupMessage.groupMember.accountGroup.idAccountGroup"
-						    	 			  ng-init="newAccountGroupMessage.groupMember.accountGroup.idAccountGroup=idAccountGroup">
-										 <input type="hidden" id="idAccountGroupMember" ng-model="newAccountGroupMessage.groupMember.idGroupMember"
-						    	 			  ng-init="newAccountGroupMessage.groupMember.idGroupMember=idAccountGroupMember">  
-									     <input type="text" id="message" ng-model="newAccountGroupMessage.groupMessage"
+								      	<input type="hidden" id="idUser" ng-model="newAccountSingleMessage.account.user.idUser"
+						    	 			  ng-init="newAccountSingleMessage.account.user.idUser=id">
+						    	 			  
+										 <input type="hidden" id="idInterlocutorAccount" ng-model="newAccountSingleMessage.interlocutorAccount.idAccount"
+						    	 			  ng-init="newAccountSingleMessage.interlocutorAccount.idAccount=searchIdAccount">  
+						    	 			  
+									     <input type="text" id="message" ng-model="newAccountSingleMessage.singleMessage"
 											  placeholder="Type your message" autofocus/>
 											   
-										 <button type="submit" class="btn btn-xs btn-primary" ng-disabled="!newAccountGroupMessage.groupMessage"
-								             ng-click="saveNewAccountGroupMessage(newAccountGroupMessage)">Send</button>
-								             
-								    	<select style="width:120px;height:22px" class="btn btn-xs btn-primary" ng-model="newAccountGroupMessage.groupMessage"
+										 <button type="submit" class="btn btn-xs btn-primary" ng-disabled="!newAccountSingleMessage.singleMessage"
+								             ng-click="saveNewAccountSingleMessage(id,searchIdAccount,newAccountSingleMessage)">Send</button>
+								        
+								    	<select style="width:120px;height:22px" class="btn btn-xs btn-primary" ng-model="newAccountSingleMessage.singleMessage"
 								    		ng-click="loadListEventPattern()">
-										    <option ng-selected="eventPattern.eventPattern == newAccountGroupMessage.groupMessage" 
+										    <option ng-selected="eventPattern.eventPattern == newAccountSingleMessage.singleMessage" 
 										            ng-repeat="eventPattern in listEventPattern"
 										            value="{{eventPattern.eventPattern}}">
 											  		{{eventPattern.eventPattern}}							  		
 										    </option>		         	
 										</select>
+										
 					              </div>
 								</div>
-							 </div>
-				 		  </div>
-				 		  -->		 	
+							 </div>	 	
 				        </div>
 			         </div>	
 		       </fieldset>

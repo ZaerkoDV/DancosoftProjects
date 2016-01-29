@@ -187,9 +187,15 @@ App.config(function($stateProvider,$routeProvider) {
 		  params: {idUser: null,searchIdAccount:null}
 	});
 	
-	
-	
-	
+	$stateProvider.state('accountsinglemessage', {
+		  url: '/user/account/search/accountsinglemessage/:idUser/:searchIdAccount',
+		  views: {'': {
+		        templateUrl: '/socialcommunity/views/profile/user/account/accountsinglemessage.html',
+		        controller: 'UserController'
+		      },
+		    },
+		  params: {idUser: null,searchIdAccount:null}
+	});
 	
 	
 	
