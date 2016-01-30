@@ -383,13 +383,14 @@ public class UserController {
 		logger.info("UserController: load user location to update");
 		UserLocation userLocation=userLocationService.getUserLocationByIdUser(id);
 		
-		Language language= userLocationService.getUserLanguageByIdUser(id);
-		userLocation.setLanguage(language);
-		Country country= userLocationService.getUserCountryByIdUser(id);
-		City city =userLocationService.getUserCityByIdUser(id);
-		city.setCountry(country);		
-		userLocation.setCity(city);
-			
+		if(userLocation!=null){
+			Language language= userLocationService.getUserLanguageByIdUser(id);
+			userLocation.setLanguage(language);
+			Country country= userLocationService.getUserCountryByIdUser(id);
+			City city =userLocationService.getUserCityByIdUser(id);
+			city.setCountry(country);		
+			userLocation.setCity(city);
+		}
 		userExtendedData.setUserLocation(userLocation);
 		
 		return userExtendedData;
@@ -822,7 +823,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/views/profile/user/{id}/account/{searchIdAccount}/listAccountSingleMessage.json", method = RequestMethod.GET)
-	public @ResponseBody List<SingleMessage> getAccountSearchInfo(@PathVariable("id") Long id,
+	public @ResponseBody List<SingleMessage> listAccountSingleMessage(@PathVariable("id") Long id,
 			@PathVariable("searchIdAccount") Long searchIdAccount){
 		
 		logger.info("UserControlleer: Load list account single message by id user and id interlocutor account");

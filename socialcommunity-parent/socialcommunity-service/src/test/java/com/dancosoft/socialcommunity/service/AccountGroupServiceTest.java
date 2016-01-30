@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountGroup;
-import com.dancosoft.socialcommunity.service.testsupport.TestObjectServiceCreator;
+import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 
 /**
@@ -29,30 +29,77 @@ public class AccountGroupServiceTest {//extends TestStarter {
 //	private static final Logger logger = LoggerFactory.getLogger(AccountGroupServiceTest.class);
 //
 //	@Autowired
-//	@Qualifier("accountGroupService")
-//	private AccountGroupService accountGroupService;
+//	@Qualifier(value="userService")
+//	private UserService userService;
+//
+//	public void setUserService(UserService userService) {
+//		this.userService = userService;
+//	}
 //
 //	@Autowired
-//	@Qualifier("testObjectServiceCreator")
-//	private TestObjectServiceCreator testObjectServiceCreator;
+//	@Qualifier(value="accountService")
+//	private AccountService accountService; 
 //
-//	public void setAccountGroupService(AccountGroupService accountGroupService) {
-//		this.accountGroupService = accountGroupService;
+//	public void setAccountService(AccountService accountService) {
+//		this.accountService = accountService;
+//	}
+//	
+//	@Autowired
+//	@Qualifier(value="accountGroupService")
+//	private AccountGroupService accountGroupService;
+//
+//	public void setAccountGroup(AccountGroup accountGroup) {
+//		this.accountGroup = accountGroup;
 //	}
 //
-//	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
-//		this.testObjectServiceCreator = testObjectServiceCreator;
-//	}
-//
+//	public User user;
 //	public Account account;
 //	public AccountGroup accountGroup;
 //
+//	public User createUserForTest() {
+//		
+//		User testUser = new User();
+//		testUser.setFirstName("testFirstName");
+//		testUser.setLastName("testLastName");
+//		testUser.setMiddleName("testMiddleName");
+//		testUser.setSex("F");
+//		userService.saveUser(testUser);
+//		
+//		return testUser;
+//	}
+//
+//	public Account createAccountForTest() {
+//		
+//		User testUser = createUserForTest();
+//		Account testAccount = new Account();
+//		testAccount.setAccountName("TestAccount");
+//		testAccount.setAccountBlockStatus("unblock");
+//		testAccount.setUser(testUser);
+//		accountService.saveAccount(testAccount);
+//
+//		return testAccount;
+//	}
+//
+//	public AccountGroup createAccountGroupForTest() {
+//
+//		Account testAccount = createAccountForTest();
+//		AccountGroup testAccountGroup = new AccountGroup();
+//		testAccountGroup.setGroupName("TestAccountGroup");
+//		testAccountGroup.setViewStatus("private");
+//		testAccountGroup.setAccountGroupBlockStatus("unblock");
+//		testAccountGroup.setAccount(testAccount);
+//		accountGroupService.saveAccountGroup(testAccountGroup);
+//
+//		return testAccountGroup;
+//	}
+//	
 //	@Before
 //	public void initObjectsBeforeTest() {
-//		this.accountGroup = testObjectServiceCreator.createAccountGroupForTest();
+//		this.accountGroup = createAccountGroupForTest();
 //		this.account = accountGroup.getAccount();
 //	}
 //
+//	
 //	@Transactional
 //	@Rollback(true)
 //	@Test

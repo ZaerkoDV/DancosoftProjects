@@ -16,8 +16,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.Forum;
-import com.dancosoft.socialcommunity.service.testsupport.TestObjectServiceCreator;
+import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 
 /**
@@ -29,28 +30,30 @@ public class ForumServiceTest {//extends TestStarter{
 //	private static final Logger logger = LoggerFactory.getLogger(ForumServiceTest.class);
 //
 //	@Autowired
-//	@Qualifier("forumService")
+//	@Qualifier(value="forumService")
 //	private ForumService forumService;
-//
-//	@Autowired
-//	@Qualifier("testObjectServiceCreator")
-//	private TestObjectServiceCreator testObjectServiceCreator;
-//
+//	
 //	public void setForumService(ForumService forumService) {
 //		this.forumService = forumService;
 //	}
-//
-//	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
-//		this.testObjectServiceCreator = testObjectServiceCreator;
-//	}
 //	
 //	public Forum forum;
+//	
+//	public Forum createForumForTest() {
+//		Forum testForum = new Forum();
+//		testForum.setForumName("TestForum");
+//		testForum.setViewStatus("public");
+//		testForum.setDateCreateForum(LocalDateTime.of(2015, 12, 17,00, 00));
+//		forumService.saveForum(testForum);
 //
+//		return testForum;
+//	}
+//	
 //	@Before
 //	public void initObjectsBeforeTest() {
-//		this.forum = testObjectServiceCreator.createForumForTest();
+//		this.forum = createForumForTest();
 //	}
-//
+//	
 //	@Transactional
 //	@Rollback(true)
 //	@Test

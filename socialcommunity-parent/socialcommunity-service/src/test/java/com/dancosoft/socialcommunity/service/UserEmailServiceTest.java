@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserCorespondence;
 import com.dancosoft.socialcommunity.model.UserEmail;
-import com.dancosoft.socialcommunity.service.testsupport.TestObjectServiceCreator;
 import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 
 /**
@@ -30,28 +29,70 @@ public class UserEmailServiceTest {//extends TestStarter {
 //	private static final Logger logger = LoggerFactory.getLogger(UserEmailServiceTest.class);
 //
 //	@Autowired
-//	@Qualifier("userEmailService")
-//	private UserEmailService userEmailService;
+//	@Qualifier("userService")
+//	private UserService userService;
+//	
+//	public void setUserService(UserService userService) {
+//		this.userService = userService;
+//	}
+//	
+//	@Autowired
+//	@Qualifier("userCorespondenceService")
+//	private UserCorespondenceService userCorespondenceService;
+//
+//	public void setUserCorespondenceService(UserCorespondenceService userCorespondenceService) {
+//		this.userCorespondenceService = userCorespondenceService;
+//	}
 //
 //	@Autowired
-//	@Qualifier("testObjectServiceCreator")
-//	private TestObjectServiceCreator testObjectServiceCreator;
+//	@Qualifier("userEmailService")
+//	private UserEmailService userEmailService;
 //
 //	public void setUserEmailService(UserEmailService userEmailService) {
 //		this.userEmailService = userEmailService;
 //	}
 //
-//	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
-//		this.testObjectServiceCreator = testObjectServiceCreator;
-//	}
 //	
 //	public User user;
 //	public UserCorespondence userCorespondence;
 //	public UserEmail userEmail;
 //	
+//	public User createUserForTest() {
+//		User testUser = new User();
+//		testUser.setFirstName("testFirstName");
+//		testUser.setLastName("testLastName");
+//		testUser.setMiddleName("testMiddleName");
+//		testUser.setSex("F");
+//		userService.saveUser(testUser);
+//
+//		return testUser;
+//	}
+//	
+//	public UserCorespondence createUserCorespondenceForTest() {
+//		User testUser = createUserForTest();
+//		UserCorespondence testUserCorespondence = new UserCorespondence();
+//		testUserCorespondence.setCorespondenceViewStatus("public");
+//		testUserCorespondence.setUser(testUser);
+//		userCorespondenceService.saveUserCorespondence(testUserCorespondence);
+//
+//		return testUserCorespondence;
+//	}
+//	
+//	public UserEmail createUserEmailForTest() {
+//
+//		UserCorespondence testUserCorespondence = createUserCorespondenceForTest();
+//		UserEmail testUserEmail = new UserEmail();
+//
+//		testUserEmail.setUserEmail("zaerko1991@gmail.com");
+//		testUserEmail.setUserCorespondence(testUserCorespondence);
+//		userEmailService.saveUserEmail(testUserEmail);
+//
+//		return testUserEmail;
+//	}
+//	
 //	@Before
 //	public void initObjectsBeforeTest() {
-//		this.userEmail=testObjectServiceCreator.createUserEmailForTest();
+//		this.userEmail=createUserEmailForTest();
 //		this.userCorespondence = userEmail.getUserCorespondence();
 //		this.user = userCorespondence.getUser();
 //	}

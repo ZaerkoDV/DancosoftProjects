@@ -16,7 +16,6 @@ tbody {
 
 </style>
 
-<title>Forum Topics</title>
 <div class="col-md-2">
   <ul class="nav nav-pills nav-stacked">
   	<li>
@@ -82,55 +81,57 @@ tbody {
   </ul>
 </div>
 
-<div class="col-lg-7 col-lg-offset-1">
-	<div class="well">
-	    <div class="container">
-		    <div class="row">
-			   <div class="col-lg-7">
-				<form name="myForm" class="form-horizontal">
-				   <fieldset>
-				   	<legend style="text-align: center;">Welcome To Forum</legend>
-						<a ui-sref="editlistforumtopic"></a>
-						   <div class="panel-heading">
-						      <h4 class="panel-title">
-						          <a data-toggle="collapse" class="glyphicon glyphicon-triangle-bottom"
-						           ng-click="loadListForumTopic(idForum)" data-target="#collapse6">Topics By Name</a>
-						      </h4>
-						   </div>
-						   <div id="collapse6" class="panel-collapse collapse">
-							  <div class="panel-body">
-									<div ng-show="listForumTopic.length > 0">
-										<table class="table table-bordered" style="background-color:#ffffff">
-										   <thead>
-											<tr>
-											   <th>Topic Name</th>
-										       <th>Date</th>
-											   <th>Author</th>
-											   <th>Link</th>
-											 </tr>
-										   </thead>
-										   <tbody> 
-										     <tr ng-repeat="topic in listForumTopic">
-											    <td>{{topic.forumTopic}}</td>
-												<td><!--{{topic.dateCreateForumTopic}}--></td>
-												<td>{{topic.authorAccount.accountName}}</td>
-												<td>
-										     		<a type="submit" ng-click="getTopicMessages(id,topic.idForumTopic)">Dialog...</a>
-												</td>
-											  </tr>	 
-											</tbody>
-										</table>
-									 </div>
+<title>Forum Topics</title>
+<div ng-controller="UserController">
+	<div class="col-lg-7 col-lg-offset-1">
+		<div class="well">
+		    <div class="container">
+			    <div class="row">
+				   <div class="col-lg-7">
+					<form name="myForm" class="form-horizontal">
+					   <fieldset>
+					   	<legend style="text-align: center;">Welcome To Forum</legend>
+							<a ui-sref="editlistforumtopic"></a>
+							   <div class="panel-heading">
+							      <h4 class="panel-title">
+							          <a data-toggle="collapse" class="glyphicon glyphicon-triangle-bottom"
+							           ng-click="loadListForumTopic(idForum)" data-target="#collapse6">Topics By Name</a>
+							      </h4>
 							   </div>
-						 </div>	
-				   </fieldset>
-				</form>
-	        </div>
-	     </div>
+							   <div id="collapse6" class="panel-collapse collapse">
+								  <div class="panel-body">
+										<div ng-show="listForumTopic.length > 0">
+											<table class="table table-bordered" style="background-color:#ffffff">
+											   <thead>
+												<tr>
+												   <th>Topic Name</th>
+											       <th>Date</th>
+												   <th>Author</th>
+												   <th>Link</th>
+												 </tr>
+											   </thead>
+											   <tbody> 
+											     <tr ng-repeat="topic in listForumTopic">
+												    <td>{{topic.forumTopic}}</td>
+													<td><!--{{topic.dateCreateForumTopic}}--></td>
+													<td>{{topic.authorAccount.accountName}}</td>
+													<td>
+											     		<a type="submit" ng-click="getTopicMessages(id,topic.idForumTopic)">Dialog...</a>
+													</td>
+												  </tr>	 
+												</tbody>
+											</table>
+										 </div>
+								   </div>
+							 </div>	
+					   </fieldset>
+					</form>
+		        </div>
+		     </div>
+		 </div>
 	 </div>
-   </div>
+  </div>
 </div>
- 
  
 <div class="col-md-2 col-lg-offset-0">
 	<ul class="nav nav-pills nav-stacked">

@@ -17,7 +17,6 @@ input[type="text"] {
 
 </style>
 
-<title>Search Account Form.</title>
 <div class="col-md-2">
   <ul class="nav nav-pills nav-stacked">
   	<li>
@@ -83,71 +82,74 @@ input[type="text"] {
   </ul>
 </div>
 
-<div class="col-lg-8 col-lg-offset-0">
- <div class="well">
-   <div class="container">
-	   <div class="row">
-		  <div class="col-lg-8">   
-		     <form name="myForm" class="form-horizontal">
-		  	     <fieldset>
-				    <a ui-sref="searchaccount"></a>
-				    <legend style="text-align: center;">Search Account Form</legend>
-				    <div style="display:inline-block; outline: 2px solid #000;">
-						<div>
-							<strong>Please enter account name or last name!</strong>
-						</div>
-					    <input type="text" id="accountName" ng-model="searchPattern.accountName" placeholder="Enter account name.">      
-						<input type="text" id="userLastName" ng-model="searchPattern.userLastName" placeholder="Enter last name.">						 
-						<button type="submit" class="btn btn-xs btn-primary"
-						 ng-click="searchAccountByAccountName(id, searchPattern); getListAccountGroupForAccount(id)">Search..</button>
-				    </div>
-					<div ng-show="listAccount.length > 0">
-						<table class="table table-bordered"	style="background-color: #ffffff">
-						  <thead>
-							  <tr>
-								<th>Account Name</th>
-								<th>Last Name</th>
-								<th>First Name</th>
-								<th>Sex</th>
-								<td>More</td>
-								<th>Friend</th>
-								<th>Select Group</th>
-							  </tr>
-						  </thead>
-						  <tbody>
-		      			      <tr ng-repeat="account in listAccount">
-								<td>{{account.accountName}}</td>
-								<td>{{account.user.lastName}}</td>
-							    <td>{{account.user.firstName}}</td>
-					       	    <td>{{account.user.sex}}</td>
-					       	    <td ng-if="id != account.user.idUser">      	    	
-					       	    	<a type="submit" ng-click="getAccountInfo(id,account.idAccount)">Info</a>
-								</td>
-								<td ng-if="id != account.user.idUser">
-									<a type="submit" ng-click="getAccountSingleDialog(id,account.idAccount)">Dialog</a>
-								</td>
-					       	    <td ng-if="id != account.user.idUser">
-					       	   		<input type="checkbox" class="btn btn-primary" ng-click="friendStatus=true"> 
-					       	    </td>
-							    <td ng-if="id != account.user.idUser">
-								   <select style="width:150px" class="form-control" ng-model="idAccountGroupSelected"
-								  	 ng-change="addToAccountGroupAfterSearch(idAccountGroupSelected,account.idAccount,friendStatus)">		
-								  	  <option ng-selected="accountGroup.idAccountGroup == idAccountGroupSelected"
-										      ng-repeat="accountGroup in listAccountGroup"
-										      value="{{accountGroup.idAccountGroup}}">
-										  	{{accountGroup.groupName}}
-									  </option>		         	
-								   </select>
-							    </td>
-							 </tr>
-						  </tbody>
-		 			    </table>
-					 </div>          
-		       </fieldset>
-			</form>
-          </div>
-       </div>
-   </div> 
- </div>  
+<title>Search Account Form.</title>
+<div ng-controller="UserController">
+   <div class="col-lg-8 col-lg-offset-0">
+	 <div class="well">
+	   <div class="container">
+		   <div class="row">
+			  <div class="col-lg-8">   
+			     <form name="myForm" class="form-horizontal">
+			  	     <fieldset>
+					    <a ui-sref="searchaccount"></a>
+					    <legend style="text-align: center;">Search Account Form</legend>
+					    <div style="display:inline-block; outline: 2px solid #000;">
+							<div>
+								<strong>Please enter account name or last name!</strong>
+							</div>
+						    <input type="text" id="accountName" ng-model="searchPattern.accountName" placeholder="Enter account name.">      
+							<input type="text" id="userLastName" ng-model="searchPattern.userLastName" placeholder="Enter last name.">						 
+							<button type="submit" class="btn btn-xs btn-primary"
+							 ng-click="searchAccountByAccountName(id, searchPattern); getListAccountGroupForAccount(id)">Search..</button>
+					    </div>
+						<div ng-show="listAccount.length > 0">
+							<table class="table table-bordered"	style="background-color: #ffffff">
+							  <thead>
+								  <tr>
+									<th>Account Name</th>
+									<th>Last Name</th>
+									<th>First Name</th>
+									<th>Sex</th>
+									<td>More</td>
+									<td>Dialog</td>
+									<th>Friend</th>
+									<th>Select Group</th>
+								  </tr>
+							  </thead>
+							  <tbody>
+			      			      <tr ng-repeat="account in listAccount">
+									<td>{{account.accountName}}</td>
+									<td>{{account.user.lastName}}</td>
+								    <td>{{account.user.firstName}}</td>
+						       	    <td>{{account.user.sex}}</td>
+						       	    <td ng-if="id != account.user.idUser">      	    	
+						       	    	<a type="submit" ng-click="getAccountInfo(id,account.idAccount)">Info</a>
+									</td>
+									<td ng-if="id != account.user.idUser">
+										<a type="submit" ng-click="getAccountSingleDialog(id,account.idAccount)">Dialog</a>
+									</td>
+						       	    <td ng-if="id != account.user.idUser">
+						       	   		<input type="checkbox" class="btn btn-primary" ng-click="friendStatus=true"> 
+						       	    </td>
+								    <td ng-if="id != account.user.idUser">
+									   <select style="width:150px" class="form-control" ng-model="idAccountGroupSelected"
+									  	 ng-change="addToAccountGroupAfterSearch(idAccountGroupSelected,account.idAccount,friendStatus)">		
+									  	  <option ng-selected="accountGroup.idAccountGroup == idAccountGroupSelected"
+											      ng-repeat="accountGroup in listAccountGroup"
+											      value="{{accountGroup.idAccountGroup}}">
+											  	{{accountGroup.groupName}}
+										  </option>		         	
+									   </select>
+								    </td>
+								 </tr>
+							  </tbody>
+			 			    </table>
+						 </div>          
+			       </fieldset>
+				</form>
+	          </div>
+	       </div>
+	     </div> 
+	  </div>  
+   </div>
 </div>
- 

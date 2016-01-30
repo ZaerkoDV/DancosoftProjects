@@ -4,18 +4,25 @@
 'use strict';
 
 //angular.module('socialcommunity', ['ngAnimate', 'ui.bootstrap']);
-angular.module('socialcommunity').controller('IndexController',function ($scope, $rootScope, $state, $http) {
+angular.module('socialcommunity').controller('IndexController',function ($scope, $state, $http) {
 
 	$scope.id = $state.params.idUser;
+
+//	$scope.getSignUpCommonPage=function(){
+//		$state.go('signupcommon');
+//	};
+	
+//	$scope.getSignInPage=function(){
+//		$state.go('signin');
+//};
 	
 	$scope.saveCommonUser = function(user){
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/signup/savecommon/user.json',user).success(function(id) {
 					
 			if(id===null || id===''){
 				$scope.changeRoute('#/signup');
-				
+				//$state.go('signupcommon');
 			}else{
-				$scope.changeRoute('#/signup/extended');
 				$state.go('signupextended', {idUser: id});
 			}
 		}).error(function() {
@@ -27,10 +34,8 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
 		.success(function(id) {								  
 			
 			if(id===null || id===''){
-				$scope.changeRoute('#/signup/extended');
-			
+				$state.go('signupextended', {idUser: id});
 			}else{
-				$scope.changeRoute('#/signup/login');
 				$state.go('signuplogin', {idUser: id});
 			}
 		}).error(function() {
@@ -42,8 +47,7 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
 		.success(function(id) {
 			
 			if(id===null || id===''){
-				$scope.changeRoute('#/signup/login');
-				
+				$state.go('signuplogin', {idUser: id});
 			}else{
 				$scope.createUserAccount(id);
 				$scope.changeRoute('/socialcommunity');
@@ -54,12 +58,10 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
 	
 	$scope.createUserAccount = function(id){
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/signup/createaccount/useraccount.json',id)
-		.success(function(id) {
-			
+		.success(function(id) {		
 		}).error(function() {
 		});
 	};	
-	
 	
 													//sign in
 	$scope.userSignIn = function(securityPrompt){
@@ -68,7 +70,7 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
 			
 			if(id===null && id===''){
 				$scope.changeRoute('#/signin');	
-				
+				//$state.go('signin');
 			}else{
 				$scope.redirectToUserPage(id);	
 			}
@@ -93,7 +95,7 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
 				$state.go('userparlor', {idUser: id});	
 				
 			}else if(userRole.userRoleName==='admin'){
-				//$state.go('adminparlor', {idUser: id});
+			  //$state.go('adminparlor', {idUser: id});
 				
 			}else{
 				$scope.changeRoute('#/signin');
@@ -101,16 +103,7 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
 		}).error(function() {		
 		});
 	};	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	//route change
 	$scope.changeRoute = function(url, forceReload) {
         $scope = $scope || angular.element(document).scope();
@@ -122,26 +115,34 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
         }
     };
 	
+    
+    
+    
+    
+    
+    
+    
+    
     //datekeaper
-    $scope.today = function() {
-	      $scope.dt = new Date();
-	};
-	$scope.today();
-
-    $scope.clear = function() {
-        $scope.dt = null;
-    };
-
-	$scope.setDate = function(year, month, day) {
-	    $scope.dt = new Date(year, month, day);
-	};  
-	    
-	$scope.open = function() {
-	    $scope.popup.opened = true;
-	};
-	      
-	$scope.popup = {
-	    opened: false
-	};
+//    $scope.today = function() {
+//	      $scope.dt = new Date();
+//	};
+//	$scope.today();
+//
+//    $scope.clear = function() {
+//        $scope.dt = null;
+//    };
+//
+//	$scope.setDate = function(year, month, day) {
+//	    $scope.dt = new Date(year, month, day);
+//	};  
+//	    
+//	$scope.open = function() {
+//	    $scope.popup.opened = true;
+//	};
+//	      
+//	$scope.popup = {
+//	    opened: false
+//	};
 
 });

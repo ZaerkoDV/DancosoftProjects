@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.SingleMessage;
-import com.dancosoft.socialcommunity.service.testsupport.TestObjectServiceCreator;
+import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 
 /**
@@ -30,30 +30,73 @@ public class SingleMessageServiceTest {//extends TestStarter {
 //	private static final Logger logger = LoggerFactory.getLogger(SingleMessageServiceTest.class);
 //
 //	@Autowired
+//	@Qualifier(value="userService")
+//	private UserService userService;
+//
+//	public void setUserService(UserService userService) {
+//		this.userService = userService;
+//	}
+//
+//	@Autowired
+//	@Qualifier(value="accountService")
+//	private AccountService accountService; 
+//
+//	public void setAccountService(AccountService accountService) {
+//		this.accountService = accountService;
+//	}
+//	
+//	@Autowired
 //	@Qualifier("singleMessageService")
 //	private SingleMessageService singleMessageService;
 //
-//	@Autowired
-//	@Qualifier("testObjectServiceCreator")
-//	private TestObjectServiceCreator testObjectServiceCreator;
-//
 //	public void setSingleMessageService(SingleMessageService singleMessageService) {
 //		this.singleMessageService = singleMessageService;
-//	}
-//
-//	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
-//		this.testObjectServiceCreator = testObjectServiceCreator;
 //	}
 //	
 //	public SingleMessage singleMessage;
 //	public Account account;
 //
-//	@Before
-//	public void initObjectsBeforeTest() {
-//		this.singleMessage = testObjectServiceCreator.createSingleMessageForTest();
-//		this.account = singleMessage.getAccount();
+//	public User createUserForTest() {
+//		User testUser = new User();
+//		testUser.setFirstName("testFirstName");
+//		testUser.setLastName("testLastName");
+//		testUser.setMiddleName("testMiddleName");
+//		testUser.setSex("F");
+//		userService.saveUser(testUser);
+//		
+//		return testUser;
 //	}
 //
+//	public Account createAccountForTest() {
+//		User testUser = createUserForTest();
+//		Account testAccount = new Account();
+//		testAccount.setAccountName("TestAccount");
+//		testAccount.setAccountBlockStatus("unblock");
+//		testAccount.setUser(testUser);
+//		accountService.saveAccount(testAccount);
+//
+//		return testAccount;
+//	}
+//	
+//	public SingleMessage createSingleMessageForTest() {
+//
+//		Account testAccount = createAccountForTest();
+//		SingleMessage testSingleMessage = new SingleMessage();
+//		testSingleMessage.setSingleMessage("Same test message");
+//		testSingleMessage.setDateCreateSingleMessage(LocalDateTime.of(2015, 12,	17, 00, 00));
+//		testSingleMessage.setAccount(testAccount);
+//		testSingleMessage.setInterlocutorAccount(testAccount);
+//		singleMessageService.saveSingleMessage(testSingleMessage);
+//
+//		return testSingleMessage;
+//	}
+//	
+//	@Before
+//	public void initObjectsBeforeTest() {
+//		this.singleMessage = createSingleMessageForTest();
+//		this.account = singleMessage.getAccount();
+//	}
+//	
 //	@Transactional
 //	@Rollback(true)
 //	@Test

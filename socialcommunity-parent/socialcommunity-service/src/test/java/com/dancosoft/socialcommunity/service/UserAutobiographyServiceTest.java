@@ -3,6 +3,7 @@
  */
 package com.dancosoft.socialcommunity.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.junit.Assert;
@@ -17,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserAutobiography;
-import com.dancosoft.socialcommunity.service.testsupport.TestObjectServiceCreator;
 import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 
 /**
@@ -29,27 +29,52 @@ public class UserAutobiographyServiceTest {//extends TestStarter {
 //	private static final Logger logger = LoggerFactory.getLogger(UserAutobiographyServiceTest.class);
 //
 //	@Autowired
+//	@Qualifier("userService")
+//	private UserService userService;
+//	
+//	public void setUserService(UserService userService) {
+//		this.userService = userService;
+//	}
+//	
+//	@Autowired
 //	@Qualifier("userAutobiographyService")
 //	private UserAutobiographyService userAutobiographyService;
-//
-//	@Autowired
-//	@Qualifier("testObjectServiceCreator")
-//	private TestObjectServiceCreator testObjectServiceCreator;
 //
 //	public void setUserAutobiographyService(UserAutobiographyService userAutobiographyService) {
 //		this.userAutobiographyService = userAutobiographyService;
 //	}
 //
-//	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
-//		this.testObjectServiceCreator = testObjectServiceCreator;
-//	}
-//	
 //	public User user;
 //	public UserAutobiography userAutobiography;
 //
+//	public User createUserForTest() {
+//
+//		User testUser = new User();
+//		testUser.setFirstName("testFirstName");
+//		testUser.setLastName("testLastName");
+//		testUser.setMiddleName("testMiddleName");
+//		testUser.setSex("F");
+//		userService.saveUser(testUser);
+//
+//		return testUser;
+//	}
+//
+//	public UserAutobiography createUserAutobiographyForTest() {
+//
+//		User testUser = createUserForTest();
+//		UserAutobiography testUserAutobiography = new UserAutobiography();
+//		testUserAutobiography.setBirth(LocalDateTime.of(1990, 12, 31, 0, 0));
+//		testUserAutobiography.setHobby("Test Hobby");
+//		testUserAutobiography.setAutobiography("Test User Autobiography");
+//		testUserAutobiography.setUser(testUser);
+//		userAutobiographyService.saveUserAutobiographyService(testUserAutobiography);
+//
+//		return testUserAutobiography;
+//	}
+//	
 //	@Before
 //	public void initObjectsBeforeTest() {
-//		this.userAutobiography = testObjectServiceCreator.createUserAutobiographyForTest();
+//		this.userAutobiography = createUserAutobiographyForTest();
 //		this.user = userAutobiography.getUser();
 //	}
 //

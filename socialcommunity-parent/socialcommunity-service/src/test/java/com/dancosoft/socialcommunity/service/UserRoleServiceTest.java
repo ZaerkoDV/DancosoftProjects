@@ -16,8 +16,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.model.User;
+import com.dancosoft.socialcommunity.model.UserRole;
 import com.dancosoft.socialcommunity.model.UserSecurity;
-import com.dancosoft.socialcommunity.service.testsupport.TestObjectServiceCreator;
 import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 
 /**
@@ -29,27 +29,67 @@ public class UserRoleServiceTest {//extends TestStarter {
 //	private static final Logger logger = LoggerFactory.getLogger(UserRoleServiceTest.class);
 //
 //	@Autowired
+//	@Qualifier("userService")
+//	private UserService userService;
+//	
+//	public void setUserService(UserService userService) {
+//		this.userService = userService;
+//	}
+//	
+//	@Autowired
+//	@Qualifier("userSecurityService")
+//	private UserSecurityService userSecurityService;
+//
+//	public void setUserSecurityService(UserSecurityService userSecurityService) {
+//		this.userSecurityService = userSecurityService;
+//	}
+//	
+//	@Autowired
 //	@Qualifier("userRoleService")
 //	private UserRoleService userRoleService;
-//
-//	@Autowired
-//	@Qualifier("testObjectServiceCreator")
-//	private TestObjectServiceCreator testObjectServiceCreator;
 //
 //	public void setUserRoleService(UserRoleService userRoleService) {
 //		this.userRoleService = userRoleService;
 //	}
 //
-//	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
-//		this.testObjectServiceCreator = testObjectServiceCreator;
-//	}
-//	
 //	public User user;
 //	public UserSecurity userSecurity;
 //
+//	public User createUserForTest() {
+//		User testUser = new User();
+//		testUser.setFirstName("testFirstName");
+//		testUser.setLastName("testLastName");
+//		testUser.setMiddleName("testMiddleName");
+//		testUser.setSex("F");
+//		userService.saveUser(testUser);
+//
+//		return testUser;
+//	}
+//
+//	public UserRole createUserRoleForTest() {
+//		UserRole testUserRole = new UserRole();
+//		testUserRole.setUserRoleName("User");
+//		userRoleService.saveUserRole(testUserRole);
+//		return testUserRole;
+//	}
+//
+//	public UserSecurity createUserSecurityForTest() {
+//
+//		User testUser = createUserForTest();
+//		UserRole userRole = createUserRoleForTest();
+//		UserSecurity testUserSecurity = new UserSecurity();
+//		testUserSecurity.setUserLogin("testLogin");
+//		testUserSecurity.setUserPassword("testPassword");
+//		testUserSecurity.setUser(testUser);
+//		testUserSecurity.setUserRole(userRole);
+//		userSecurityService.saveUserSecurity(testUserSecurity);
+//
+//		return testUserSecurity;
+//	}
+//	
 //	@Before
 //	public void initObjectsBeforeTest() {
-//		this.userSecurity = testObjectServiceCreator.createUserSecurityForTest();
+//		this.userSecurity = createUserSecurityForTest();
 //		this.user = userSecurity.getUser();
 //	}
 //	

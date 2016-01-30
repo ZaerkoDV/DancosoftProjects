@@ -15,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.model.SecurityPrompt;
 import com.dancosoft.socialcommunity.model.User;
+import com.dancosoft.socialcommunity.model.UserRole;
 import com.dancosoft.socialcommunity.model.UserSecurity;
-import com.dancosoft.socialcommunity.service.testsupport.TestObjectServiceCreator;
 import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 
 /**
@@ -28,29 +28,90 @@ public class SecurityPromptServiceTest {//extends TestStarter{
 //	private static final Logger logger = LoggerFactory.getLogger(SecurityPromptServiceTest.class);
 //
 //	@Autowired
+//	@Qualifier("userService")
+//	private UserService userService;
+//
+//	public void setUserService(UserService userService) {
+//		this.userService = userService;
+//	}
+//
+//	@Autowired
+//	@Qualifier("userSecurityService")
+//	private UserSecurityService userSecurityService;
+//
+//	public void setUserSecurityService(UserSecurityService userSecurityService) {
+//		this.userSecurityService = userSecurityService;
+//	}
+//
+//	@Autowired
+//	@Qualifier("userRoleService")
+//	private UserRoleService userRoleService;
+//	
+//	public void setUserRoleService(UserRoleService userRoleService) {
+//		this.userRoleService = userRoleService;
+//	}
+//
+//	@Autowired
 //	@Qualifier("securityPromptService")
 //	private SecurityPromptService securityPromptService;
 //
-//	@Autowired
-//	@Qualifier("testObjectServiceCreator")
-//	private TestObjectServiceCreator testObjectServiceCreator;
-//
 //	public void setSecurityPromptService(SecurityPromptService securityPromptService) {
 //		this.securityPromptService = securityPromptService;
-//	}
-//
-//	public void setTestObjectServiceCreator(
-//			TestObjectServiceCreator testObjectServiceCreator) {
-//		this.testObjectServiceCreator = testObjectServiceCreator;
 //	}
 //	
 //	public User user;
 //	public UserSecurity userSecurity;
 //	public SecurityPrompt securityPrompt;
 //
+//	public User createUserForTest() {
+//
+//		User testUser = new User();
+//		testUser.setFirstName("testFirstName");
+//		testUser.setLastName("testLastName");
+//		testUser.setMiddleName("testMiddleName");
+//		testUser.setSex("F");
+//		userService.saveUser(testUser);
+//
+//		return testUser;
+//	}
+//
+//	public UserRole createUserRoleForTest() {
+//		UserRole testUserRole = new UserRole();
+//		testUserRole.setUserRoleName("User");
+//		userRoleService.saveUserRole(testUserRole);
+//		return testUserRole;
+//	}
+//	
+//	public UserSecurity createUserSecurityForTest() {
+//
+//		User testUser = createUserForTest();
+//		UserRole userRole = createUserRoleForTest();
+//		UserSecurity testUserSecurity = new UserSecurity();
+//		testUserSecurity.setUserLogin("testLogin");
+//		testUserSecurity.setUserPassword("testPassword");
+//		testUserSecurity.setUser(testUser);
+//		testUserSecurity.setUserRole(userRole);
+//		userSecurityService.saveUserSecurity(testUserSecurity);
+//
+//		return testUserSecurity;
+//	}
+//	
+//	public SecurityPrompt createSecurityPromptForTest() {
+//
+//		UserSecurity testUserSecurity = createUserSecurityForTest();
+//		SecurityPrompt testSecurityPrompt = new SecurityPrompt();
+//
+//		testSecurityPrompt.setSecurityPrompt("My test prompt");
+//		testSecurityPrompt.setUserAnswer("Prompt answer");
+//		testSecurityPrompt.setUserSecurity(testUserSecurity);
+//		securityPromptService.saveSecurityPrompt(testSecurityPrompt);
+//
+//		return testSecurityPrompt;
+//	}
+//	
 //	@Before
 //	public void initObjectsBeforeTest() {
-//		this.securityPrompt = testObjectServiceCreator.createSecurityPromptForTest();
+//		this.securityPrompt = createSecurityPromptForTest();
 //		this.userSecurity = securityPrompt.getUserSecurity();
 //		this.user = userSecurity.getUser();
 //	}

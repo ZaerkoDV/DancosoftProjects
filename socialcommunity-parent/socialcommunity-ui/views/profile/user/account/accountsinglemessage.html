@@ -166,7 +166,6 @@ p {
 </style>
 
 
-<title>Forum</title>
 <div class="col-md-2">
   <ul class="nav nav-pills nav-stacked">
   	<li>
@@ -232,75 +231,78 @@ p {
   </ul>
 </div>
 
-<div class="col-lg-8 col-lg-offset-0">
-   <div class="container">
-	   <div class="row">
-		  <div class="col-lg-8">   
-		     <form name="myForm" class="form-horizontal">
-		  	     <fieldset>
-				    <a ui-sref="accountsinglemessage"></a>
-					<div class="panel-heading">
-					   <h4 class="panel-title">
-						   <a data-toggle="collapse" ng-click="loadListAccountSingleMessages(id,searchIdAccount)"
-						    data-target="#collapse6">Show Last Dialog</a>
-					   </h4>
-					</div>  
-				    <div id="collapse6" class="panel-collapse collapse">
-					   <div class="panel-body">
-					  
-					  <!-- <div ng-show="listAccountSingleMessage.length > 0">--> 
-							 <div id="live-chat">
-								<header class="clearfix">
-									<span class="chat-message-counter">3</span>
-								</header>
-								<div class="chat">
-								   	  <div class="chat-history">
-								   	  	 <div ng-repeat="accountSingleMessage in listAccountSingleMessage">
-								   	  	 	 <div class="chat-message clearfix">
-								   	  		  <!--<img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">-->
-													<div class="chat-message-content clearfix">
-														<span class="chat-time">10:00<!--{{accountSingleMessage.dateCreateSingleMessage}}--></span>
-														<h5>{{accountSingleMessage.account.accountName}}</h5>
-														<a class="chat-delete" ng-click="deleteAccountSingleMessage(id,searchIdAccount,accountSingleMessage.idSingleMessage)">x</a>
-														<p>{{accountSingleMessage.singleMessage}}</p>
-													</div>
+<title>Forum</title>
+<div ng-controller="UserController">
+	<div class="col-lg-8 col-lg-offset-0">
+	   <div class="container">
+		   <div class="row">
+			  <div class="col-lg-8">   
+			     <form name="myForm" class="form-horizontal">
+			  	     <fieldset>
+					    <a ui-sref="accountsinglemessage"></a>
+						<div class="panel-heading">
+						   <h4 class="panel-title">
+							   <a data-toggle="collapse" ng-click="loadListAccountSingleMessages(id,searchIdAccount)"
+							    data-target="#collapse6">Show Last Dialog</a>
+						   </h4>
+						</div>  
+					    <div id="collapse6" class="panel-collapse collapse">
+						   <div class="panel-body">
+						  
+						  <!-- <div ng-show="listAccountSingleMessage.length > 0">--> 
+								 <div id="live-chat">
+									<header class="clearfix">
+										<span class="chat-message-counter">3</span>
+									</header>
+									<div class="chat">
+									   	  <div class="chat-history">
+									   	  	 <div ng-repeat="accountSingleMessage in listAccountSingleMessage">
+									   	  	 	 <div class="chat-message clearfix">
+									   	  		  <!--<img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">-->
+														<div class="chat-message-content clearfix">
+															<span class="chat-time">10:00<!--{{accountSingleMessage.dateCreateSingleMessage}}--></span>
+															<h5>{{accountSingleMessage.account.accountName}}</h5>
+															<a class="chat-delete" ng-click="deleteAccountSingleMessage(id,searchIdAccount,accountSingleMessage.idSingleMessage)">x</a>
+															<p>{{accountSingleMessage.singleMessage}}</p>
+														</div>
+												  </div>
 											  </div>
+											  <hr>
 										  </div>
-										  <hr>
-									  </div>
-								      <div style="display:inline-block;">
-								      	<input type="hidden" id="idUser" ng-model="newAccountSingleMessage.account.user.idUser"
-						    	 			  ng-init="newAccountSingleMessage.account.user.idUser=id">
-						    	 			  
-										 <input type="hidden" id="idInterlocutorAccount" ng-model="newAccountSingleMessage.interlocutorAccount.idAccount"
-						    	 			  ng-init="newAccountSingleMessage.interlocutorAccount.idAccount=searchIdAccount">  
-						    	 			  
-									     <input type="text" id="message" ng-model="newAccountSingleMessage.singleMessage"
-											  placeholder="Type your message" autofocus/>
-											   
-										 <button type="submit" class="btn btn-xs btn-primary" ng-disabled="!newAccountSingleMessage.singleMessage"
-								             ng-click="saveNewAccountSingleMessage(id,searchIdAccount,newAccountSingleMessage)">Send</button>
-								        
-								    	<select style="width:120px;height:22px" class="btn btn-xs btn-primary" ng-model="newAccountSingleMessage.singleMessage"
-								    		ng-click="loadListEventPattern()">
-										    <option ng-selected="eventPattern.eventPattern == newAccountSingleMessage.singleMessage" 
-										            ng-repeat="eventPattern in listEventPattern"
-										            value="{{eventPattern.eventPattern}}">
-											  		{{eventPattern.eventPattern}}							  		
-										    </option>		         	
-										</select>
-										
-					              </div>
-								</div>
-							 </div>	 	
-				        </div>
-			         </div>	
-		       </fieldset>
-			</form>
-          </div>
-       </div>
-   </div>  
-</div>
+									      <div style="display:inline-block;">
+									      	<input type="hidden" id="idUser" ng-model="newAccountSingleMessage.account.user.idUser"
+							    	 			  ng-init="newAccountSingleMessage.account.user.idUser=id">
+							    	 			  
+											 <input type="hidden" id="idInterlocutorAccount" ng-model="newAccountSingleMessage.interlocutorAccount.idAccount"
+							    	 			  ng-init="newAccountSingleMessage.interlocutorAccount.idAccount=searchIdAccount">  
+							    	 			  
+										     <input type="text" id="message" ng-model="newAccountSingleMessage.singleMessage"
+												  placeholder="Type your message" autofocus/>
+												   
+											 <button type="submit" class="btn btn-xs btn-primary" ng-disabled="!newAccountSingleMessage.singleMessage"
+									             ng-click="saveNewAccountSingleMessage(id,searchIdAccount,newAccountSingleMessage)">Send</button>
+									        
+									    	<select style="width:120px;height:22px" class="btn btn-xs btn-primary" ng-model="newAccountSingleMessage.singleMessage"
+									    		ng-click="loadListEventPattern()">
+											    <option ng-selected="eventPattern.eventPattern == newAccountSingleMessage.singleMessage" 
+											            ng-repeat="eventPattern in listEventPattern"
+											            value="{{eventPattern.eventPattern}}">
+												  		{{eventPattern.eventPattern}}							  		
+											    </option>		         	
+											</select>
+											
+						              </div>
+									</div>
+								 </div>	 	
+					        </div>
+				         </div>	
+			       </fieldset>
+				</form>
+	          </div>
+	       </div>
+	   </div>  
+	</div>
+ </div>
  
 <div class="col-md-2">
 	<ul class="nav nav-pills nav-stacked">

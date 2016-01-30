@@ -17,8 +17,6 @@ input[type="text"] {
 
 </style>
 
-
-<title>Edit Forum Group member.</title>
 <div class="col-md-2">
   <ul class="nav nav-pills nav-stacked">
   	<li>
@@ -84,105 +82,107 @@ input[type="text"] {
   </ul>
 </div>
 
-<div class="col-lg-8 col-lg-offset-0">
- <div class="well">
-   <div class="container">
-	   <div class="row">
-		  <div class="col-lg-8">   
-		     <form name="myForm" class="form-horizontal">
-		  	     <fieldset>
-				    <a ui-sref="editaccountgroupmember"></a>
-				    
-					<div class="panel-heading">
-					   <h4 class="panel-title">
-						   <a data-toggle="collapse" ng-click="loadListAccountGroupMember(idAccountGroup)" data-target="#collapse6">Show Group Members</a>
-					   </h4>
-					</div>  
-				    <div id="collapse6" class="panel-collapse collapse">
-					   <div class="panel-body">
-							<div ng-show="listAccountGroupMember.length > 0">
-							    <table class="table table-bordered"	style="background-color: #ffffff">
-								     <thead>
-										<tr>
-											<th>Account Name</th>
-											<th>Last Name</th>
-											<th>First Name</th>
-											<th>Sex</th>
-											<th>Status Friend</th>
-											<th>Operation</th>
-										</tr>
-									</thead>
-									<tbody>
-				         				<tr ng-repeat="accountGroupMember in listAccountGroupMember">
-										   <td>{{accountGroupMember.memberAccount.accountName}}</td>
-										   <td>{{accountGroupMember.memberAccount.user.lastName}}</td>
-										   <td>{{accountGroupMember.memberAccount.user.firstName}}</td>
-										   <td>{{accountGroupMember.memberAccount.user.sex}}</td>
-										   <td>{{accountGroupMember.groupMemberStatus}}</td>
-										   <td ng-if="idAccountGroupMember != accountGroupMember.idGroupMember">
-											   <a type="submit" ng-click="getAccountGroupMemberInfo(id,idAccountGroupMember,
-											   	 idAccountGroup,accountGroupMember.idGroupMember)">More info</a>
-											    <a type="submit" ng-click="deleteMemberFromAccountGroup(id,idAccountGroupMember,
-												   idAccountGroup,accountGroupMember.idGroupMember)">Delete</a>
-										   </td>
-										</tr>	
-									</tbody>
-							   </table>
-							</div>
-				         </div>
-			         </div>	
-			             
-			         <div class="panel-heading">
-					   <h4 class="panel-title">
-						   <a data-toggle="collapse" data-target="#collapse7">Search New Members</a>
-					   </h4>
-					 </div>  
-				     <div id="collapse7" class="panel-collapse collapse">
-					   <div class="panel-body">
-						 <div style="display:inline-block; outline: 2px solid #000;">
-						     <div><strong>Please enter account name or last name!</strong></div>
-							 <input type="text" id="accountName" ng-model="searchPattern.accountName" placeholder="Enter account name.">      
-						     <input type="text" id="userLastName" ng-model="searchPattern.userLastName" placeholder="Enter last name.">						 
-						 	 <button type="submit" class="btn btn-xs btn-primary"
-						 	  ng-click="searchAccountForAccountGroup(idAccountGroup, searchPattern)">Search..</button>
-						 </div>
-					   	 <div ng-show="listAccount.length > 0">
-						   <table class="table table-bordered" style="background-color:#ffffff">
-							   <thead>
-								  <tr>
-									<th>Account Name</th>
-								    <th>Last Name</th>
-									<th>First Name</th>
-									<th>Friend Status</th>
-									<td>More Info/Add To Group</td>
-								  </tr>
-							  </thead>
-							  <tbody> 
-								  <tr ng-repeat="account in listAccount">
-								  
-									 <td>{{account.accountName}}</td>
-									 <td>{{account.user.lastName}}</td>
-									 <td>{{account.user.firstName}}</td>
-									 <td ng-if="id != account.user.idUser">
-									 	<input type="checkbox" class="btn btn-primary" ng-click="friendStatus=true"> 
-									 </td>
-									 <td ng-if="id != account.user.idUser">
-										<a type="submit" ng-click="">Info </a>
-									    <a type="submit" ng-click="addToAccountGroup(idAccountGroup,account.idAccount,friendStatus)">Add</a>
-									 </td>
-								   </tr>	 
-							   </tbody>
-							</table>
-						 </div>
-				      </div>
-			        </div>	            
-		       </fieldset>
-			</form>
-          </div>
-       </div>
-   </div> 
- </div>  
-</div>
+<title>Edit Forum Group member.</title>
+<div ng-controller="UserController">
+  <div class="col-lg-8 col-lg-offset-0">
+	 <div class="well">
+	   <div class="container">
+		   <div class="row">
+			  <div class="col-lg-8">   
+			     <form name="myForm" class="form-horizontal">
+			  	     <fieldset>
+					    <a ui-sref="editaccountgroupmember"></a>
+						<div class="panel-heading">
+						   <h4 class="panel-title">
+							   <a data-toggle="collapse" ng-click="loadListAccountGroupMember(idAccountGroup)" data-target="#collapse6">Show Group Members</a>
+						   </h4>
+						</div>  
+					    <div id="collapse6" class="panel-collapse collapse">
+						   <div class="panel-body">
+								<div ng-show="listAccountGroupMember.length > 0">
+								    <table class="table table-bordered"	style="background-color: #ffffff">
+									     <thead>
+											<tr>
+												<th>Account Name</th>
+												<th>Last Name</th>
+												<th>First Name</th>
+												<th>Sex</th>
+												<th>Status Friend</th>
+												<th>Operation</th>
+											</tr>
+										</thead>
+										<tbody>
+					         				<tr ng-repeat="accountGroupMember in listAccountGroupMember">
+											   <td>{{accountGroupMember.memberAccount.accountName}}</td>
+											   <td>{{accountGroupMember.memberAccount.user.lastName}}</td>
+											   <td>{{accountGroupMember.memberAccount.user.firstName}}</td>
+											   <td>{{accountGroupMember.memberAccount.user.sex}}</td>
+											   <td>{{accountGroupMember.groupMemberStatus}}</td>
+											   <td ng-if="idAccountGroupMember != accountGroupMember.idGroupMember">
+												   <a type="submit" ng-click="getAccountGroupMemberInfo(id,idAccountGroupMember,
+												   	 idAccountGroup,accountGroupMember.idGroupMember)">More info</a>
+												    <a type="submit" ng-click="deleteMemberFromAccountGroup(id,idAccountGroupMember,
+													   idAccountGroup,accountGroupMember.idGroupMember)">Delete</a>
+											   </td>
+											</tr>	
+										</tbody>
+								   </table>
+								</div>
+					         </div>
+				         </div>	
+				             
+				         <div class="panel-heading">
+						   <h4 class="panel-title">
+							   <a data-toggle="collapse" data-target="#collapse7">Search New Members</a>
+						   </h4>
+						 </div>  
+					     <div id="collapse7" class="panel-collapse collapse">
+						   <div class="panel-body">
+							 <div style="display:inline-block; outline: 2px solid #000;">
+							     <div><strong>Please enter account name or last name!</strong></div>
+								 <input type="text" id="accountName" ng-model="searchPattern.accountName" placeholder="Enter account name.">      
+							     <input type="text" id="userLastName" ng-model="searchPattern.userLastName" placeholder="Enter last name.">						 
+							 	 <button type="submit" class="btn btn-xs btn-primary"
+							 	  ng-click="searchAccountForAccountGroup(idAccountGroup, searchPattern)">Search..</button>
+							 </div>
+						   	 <div ng-show="listAccount.length > 0">
+							   <table class="table table-bordered" style="background-color:#ffffff">
+								   <thead>
+									  <tr>
+										<th>Account Name</th>
+									    <th>Last Name</th>
+										<th>First Name</th>
+										<th>Friend Status</th>
+										<td>More Info/Add To Group</td>
+									  </tr>
+								  </thead>
+								  <tbody> 
+									  <tr ng-repeat="account in listAccount">
+									  
+										 <td>{{account.accountName}}</td>
+										 <td>{{account.user.lastName}}</td>
+										 <td>{{account.user.firstName}}</td>
+										 <td ng-if="id != account.user.idUser">
+										 	<input type="checkbox" class="btn btn-primary" ng-click="friendStatus=true"> 
+										 </td>
+										 <td ng-if="id != account.user.idUser">
+											<a type="submit" ng-click="">Info </a>
+										    <a type="submit" ng-click="addToAccountGroup(idAccountGroup,account.idAccount,friendStatus)">Add</a>
+										 </td>
+									   </tr>	 
+								   </tbody>
+								</table>
+							 </div>
+					      </div>
+				        </div>	            
+			       </fieldset>
+				</form>
+	          </div>
+	       </div>
+	    </div> 
+	</div>  
+  </div>
+</div> 
  
 <div class="col-md-2">
 	<ul class="nav nav-pills nav-stacked">

@@ -15,47 +15,30 @@ App.config(function($stateProvider,$routeProvider) {
 		controller: 'IndexController'
 	});
 	
-	$routeProvider.when('/signup/extended', {
-		templateUrl:'/socialcommunity/views/profile/signup/extendedprofile.html',
-		controller: 'IndexController'
-	});
-	
-	$routeProvider.when('/signup/login', {
-		templateUrl:'/socialcommunity/views/profile/signup/loginprofile.html',
-		controller: 'IndexController'
-	});
-	
-//	$routeProvider.when('/user/parlor', {
-//		templateUrl: '/socialcommunity/views/profile/user/parlor/userparlor.html',
-//		controller: 'UserController'
-//	});
-//	
-//	$routeProvider.when('/user/parlor/editcommonprofile', {
-//		templateUrl: '/socialcommunity/views/profile/user/parlor/editcommonprofile.html',
-//		controller: 'UserController'
-//	});
-//	
-//	$routeProvider.when('/user/parlor/editextendedprofile', {
-//		templateUrl: '/socialcommunity/views/profile/user/parlor/editextendedprofile.html',
-//		controller: 'UserController'
-//	});
-//	
-//	$routeProvider.when('/user/parlor/editautobiography', {
-//		templateUrl: '/socialcommunity/views/profile/user/parlor/editautobiography.html',
-//		controller: 'UserController'
-//	});
-
-//	$routeProvider.when('/admin/parlor', {
-//		templateUrl: '/socialcommunity/views/profile/admin/parlor/adminparlor.html',
-//		controller: 'AdminController'
-//	});
-	
 	$routeProvider.otherwise({
 		 redirectTo: '/'
 	});
 	
 	
 														//state
+	
+//	$stateProvider.state('signupcommon', {
+//        url: '/signup',
+//        views: {'': {
+//              templateUrl: '/socialcommunity/views/profile/signup/commonprofile.html',
+//              controller: 'IndexController'
+//            },
+//          }
+//    });
+	
+//	$stateProvider.state('signin', {
+//  url: '/signin',
+//  views: {'': {
+//        templateUrl: '/socialcommunity/views/profile/signin.html',
+//        controller: 'IndexController'
+//      },
+//    }
+//});
 	
 	$stateProvider.state('signupextended', {
         url: '/signup/extended/:idUser',
@@ -196,7 +179,6 @@ App.config(function($stateProvider,$routeProvider) {
 		    },
 		  params: {idUser: null,searchIdAccount:null}
 	});
-	
 	
 	
 	

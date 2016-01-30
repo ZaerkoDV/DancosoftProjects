@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserCorespondence;
-import com.dancosoft.socialcommunity.service.testsupport.TestObjectServiceCreator;
 import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 
 /**
@@ -29,27 +28,48 @@ public class UserCorespondenceServiceTest {//extends TestStarter{
 //	private static final Logger logger = LoggerFactory.getLogger(UserCorespondenceServiceTest.class);
 //
 //	@Autowired
+//	@Qualifier("userService")
+//	private UserService userService;
+//	
+//	public void setUserService(UserService userService) {
+//		this.userService = userService;
+//	}
+//	
+//	@Autowired
 //	@Qualifier("userCorespondenceService")
 //	private UserCorespondenceService userCorespondenceService;
-//
-//	@Autowired
-//	@Qualifier("testObjectServiceCreator")
-//	private TestObjectServiceCreator testObjectServiceCreator;
 //
 //	public void setUserCorespondenceService(UserCorespondenceService userCorespondenceService) {
 //		this.userCorespondenceService = userCorespondenceService;
 //	}
 //
-//	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
-//		this.testObjectServiceCreator = testObjectServiceCreator;
-//	}
-//	
 //	public User user;
 //	public UserCorespondence userCorespondence;
 //
+//	public User createUserForTest() {
+//		User testUser = new User();
+//		testUser.setFirstName("testFirstName");
+//		testUser.setLastName("testLastName");
+//		testUser.setMiddleName("testMiddleName");
+//		testUser.setSex("F");
+//		userService.saveUser(testUser);
+//
+//		return testUser;
+//	}
+//	
+//	public UserCorespondence createUserCorespondenceForTest() {
+//		User testUser = createUserForTest();
+//		UserCorespondence testUserCorespondence = new UserCorespondence();
+//		testUserCorespondence.setCorespondenceViewStatus("public");
+//		testUserCorespondence.setUser(testUser);
+//		userCorespondenceService.saveUserCorespondence(testUserCorespondence);
+//
+//		return testUserCorespondence;
+//	}
+//
 //	@Before
 //	public void initObjectsBeforeTest() {
-//		this.userCorespondence = testObjectServiceCreator.createUserCorespondenceForTest();
+//		this.userCorespondence = createUserCorespondenceForTest();
 //		this.user = userCorespondence.getUser();
 //	}
 //

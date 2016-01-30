@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Conjunction;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -140,14 +141,25 @@ public class SingleMessageDAOImpl extends CommonEntityDAOImpl implements SingleM
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
 				.createCriteria(SingleMessage.class);
 
-		Conjunction and = Restrictions.conjunction();
-		//message belong to group
-		and.add(Restrictions.eq("account.idAccount", idAccount));
-		and.add(Restrictions.eq("interlocutorAccount.idAccount", idInterlocutorAccount));
+//		Conjunction and = Restrictions.conjunction();
+//		//message belong to group
+//		and.add(Restrictions.eq("account.idAccount", idAccount));
+//		and.add(Restrictions.eq("interlocutorAccount.idAccount", idInterlocutorAccount));
+//		// The date must be >= 17-04-2011 - 00h00
+//		and.add( Restrictions.ge("dateCreateSingleMessage", minDate));
+//		// And date must be < 18-04-2011 - 00h00
+//		and.add( Restrictions.lt("dateCreateSingleMessage", maxDate)); 
+		
+		Criterion rest1= Restrictions.and(Restrictions.eq("account.idAccount", idAccount));
+		Criterion rest2= Restrictions.and(Restrictions.eq("interlocutorAccount.idAccount", idInterlocutorAccount)); 
+		Criterion rest3= Restrictions.and(Restrictions.eq("account.idAccount",idInterlocutorAccount));
+		Criterion rest4= Restrictions.and(Restrictions.eq("interlocutorAccount.idAccount", idAccount)); 
+		
+		criteria.add(Restrictions.or(Restrictions.and(rest1, rest2),Restrictions.and(rest3, rest4)));
 		// The date must be >= 17-04-2011 - 00h00
-		and.add( Restrictions.ge("dateCreateSingleMessage", minDate));
+		criteria.add( Restrictions.ge("dateCreateSingleMessage", minDate));
 		// And date must be < 18-04-2011 - 00h00
-		and.add( Restrictions.lt("dateCreateSingleMessage", maxDate)); 
+		criteria.add( Restrictions.lt("dateCreateSingleMessage", maxDate)); 
 		
 		logger.info("SingleMessageDAO: List dialog message which create between"
 					+ " data load by id account and id interlocutor.");

@@ -43,7 +43,6 @@ input:valid {
 			</div>
 	   </div>
 	</li>
- 
     <li>
 	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
 			<div class="panel-heading">
@@ -65,7 +64,6 @@ input:valid {
 			</div>
 	   </div>
 	 </li>
-
      <li>
 	   <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
 			<div class="panel-heading">
@@ -86,11 +84,12 @@ input:valid {
 			</div>
 	    </div>
 	 </li>
-	 
   </ul>
 </div>
 
-<div class="col-lg-8 col-lg-offset-0">
+<title>Edit Extended Profile Form</title>
+<div ng-controller="UserController">
+  <div class="col-lg-8 col-lg-offset-0">
 	<div class="well">
 	    <div class="container">
 		    <div class="row">
@@ -100,7 +99,7 @@ input:valid {
 						<a ui-sref="editextendedprofile"></a>
 						<legend style="text-align: center;">Edit User Extended Info</legend>
 						
-							<div style="display:inline-block;">
+							<!--<div style="display:inline-block;">-->
 								<figure class="sign"><!--userExtendedData.userPhoto.photoName-->
 								   <p><img src=""  width="150" height="200" alt=""></p>
 								  	  <figcaption>
@@ -109,17 +108,17 @@ input:valid {
 								  		</div>
 								  	  </figcaption>
 								</figure>
-							</div>
+							<!--</div>-->
 							
 							<div>
 								<div>
-									<div style="display:inline-block; margin: 10px 0 0 20px;">
+									<div style="display:inline-block; margin: 10px 5px 0 20px;">
 										<label style="width: 120 px;" for="language" class="col-lg-3 control-label">
 										Language
 										</label>
 									</div>
 									<div style="display:inline-block; margin: 10px 0 0 5px;">	
-										<select style="width:180px" class="form-control" ng-model="userExtendedData.userLocation.language.idLanguage">		
+										<select style="width:200px" class="form-control" ng-model="userExtendedData.userLocation.language.idLanguage">		
 										    <option ng-selected="language.idLanguage == userExtendedData.userLocation.language.idLanguage"
 										            ng-repeat="language in listLanguage"
 										            value="{{language.idLanguage}}">
@@ -155,7 +154,8 @@ input:valid {
 								        placeholder="May be empty">
 								     </div>       				 
 								  </div>
-							</div>					
+							</div>	
+											
 					</fieldset>
 					 
 					 <div class="form-group">
@@ -176,6 +176,7 @@ input:valid {
 							</select>
 						</div>
 					</div>
+					
 					<div class="form-group" ng-show="listCity.length > 0">					 
 						<div>
 							<div style="display:inline-block; margin: 10px 0 5px 5px;">
@@ -194,6 +195,7 @@ input:valid {
 							</div>	
 						</div>			 
 					 </div>
+					 
 					 <div class="form-group">
 						<div class="controls">  
 						     <button type="button" class="btn btn-primary" ng-disabled="!userExtendedData.userEmail.userEmail "
@@ -207,10 +209,10 @@ input:valid {
 				</form>
 	        </div>
 	     </div>
-	 </div>
-   </div>
-</div>
- 
+	   </div>
+    </div>
+  </div>
+</div> 
  
 <div class="col-md-2">
 	<ul class="nav nav-pills nav-stacked">

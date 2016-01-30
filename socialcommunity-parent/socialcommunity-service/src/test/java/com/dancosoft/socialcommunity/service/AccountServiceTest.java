@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.User;
-import com.dancosoft.socialcommunity.service.testsupport.TestObjectServiceCreator;
 import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 
 /**
@@ -27,27 +26,51 @@ public class AccountServiceTest {//extends TestStarter {
 //	private static final Logger logger = LoggerFactory.getLogger(AccountServiceTest.class);
 //	
 //	@Autowired
-//	@Qualifier("accountService")
-//	private AccountService accountService;
+//	@Qualifier(value="userService")
+//	private UserService userService;
+//
+//	public void setUserService(UserService userService) {
+//		this.userService = userService;
+//	}
 //
 //	@Autowired
-//	@Qualifier("testObjectServiceCreator")
-//	private TestObjectServiceCreator testObjectServiceCreator;
+//	@Qualifier(value="accountService")
+//	private AccountService accountService; 
 //
 //	public void setAccountService(AccountService accountService) {
 //		this.accountService = accountService;
 //	}
 //
-//	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
-//		this.testObjectServiceCreator = testObjectServiceCreator;
-//	}
-//
 //	public User user;
 //	public Account account;
 //
+//	public User createUserForTest() {
+//
+//		User testUser = new User();
+//		testUser.setFirstName("testFirstName");
+//		testUser.setLastName("testLastName");
+//		testUser.setMiddleName("testMiddleName");
+//		testUser.setSex("F");
+//		userService.saveUser(testUser);
+//
+//		return testUser;
+//	}
+//
+//	public Account createAccountForTest() {
+//
+//		User testUser = createUserForTest();
+//		Account testAccount = new Account();
+//		testAccount.setAccountName("TestAccount");
+//		testAccount.setAccountBlockStatus("unblock");
+//		testAccount.setUser(testUser);
+//		accountService.saveAccount(testAccount);
+//
+//		return testAccount;
+//	}
+//	
 //	@Before
 //	public void initObjectsBeforeTest() {
-//		this.account = testObjectServiceCreator.createAccountForTest();
+//		this.account = createAccountForTest();
 //		this.user = account.getUser();
 //	}
 //	

@@ -73,11 +73,12 @@ input:valid {
 			</div>
 	    </div>
 	 </li>
-	 
   </ul>
 </div>
 
-<div class="col-lg-8 col-lg-offset-0">
+<title>Edit Common Profile Form</title>
+<div ng-controller="UserController">
+  <div class="col-lg-8 col-lg-offset-0">
 	<div class="well">
 	    <div class="container">
 		    <div class="row">
@@ -86,7 +87,6 @@ input:valid {
 					<fieldset>
 						<a ui-sref="editcommonprofile"></a>
 						<legend style="text-align: center;">Edit User Common Info</legend>
-	
 						<div class="form-group">
 					        <label for="userFirstName" class="col-lg-3 control-label">First Name</label>
 					        <div class="col-lg-8">
@@ -95,7 +95,6 @@ input:valid {
 					            onkeypress='return !(event.charCode >= 47 && event.charCode <= 57)'>
 					        </div>
 					    </div>
-					    
 					    <div class="form-group">
 					        <label for="lastName" class="col-lg-3 control-label">Last Name</label>
 					        <div class="col-lg-8">
@@ -104,14 +103,12 @@ input:valid {
 					            onkeypress='return !(event.charCode >= 47 && event.charCode <= 57)'>
 					        </div>
 					    </div>
-					    
 					    <div class="form-group">
 					        <label for="middleName" class="col-lg-3 control-label">Middle Name</label>
 					        <div class="col-lg-8">
 					            <input type="text" class="form-control" id="middleName" ng-model="user.middleName" placeholder="May be empty">					 
 					        </div>
 					    </div>
-					
 						<div class="form-group">
 							<label for="sex" class="col-lg-3 control-label">Sex </label>
 							<div class="col-lg-8">
@@ -121,7 +118,6 @@ input:valid {
 								</select>
 							</div>
 						</div>
-						
 						<div class="form-group">
 							<div class="controls">  
 						         <button type="button" class="btn btn-primary" ng-disabled="!user.firstName || !user.lastName || !user.sex"
@@ -131,7 +127,6 @@ input:valid {
 							      style="float: right;" ng-click="returnToParlor(id)">Back</button>     
 						    </div>
 						</div>
-						
 				   </fieldset>
 				</form>
 	          </div>
@@ -139,7 +134,8 @@ input:valid {
 	     </div>
       </div>
    </div>
- 
+</div>
+
 <div class="col-md-2">
 	<ul class="nav nav-pills nav-stacked">
 	  <li>

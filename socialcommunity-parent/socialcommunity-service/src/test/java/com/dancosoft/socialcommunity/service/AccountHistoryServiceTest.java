@@ -15,10 +15,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountHistory;
-import com.dancosoft.socialcommunity.service.testsupport.TestObjectServiceCreator;
+import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 
 /**
@@ -28,31 +27,76 @@ import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 public class AccountHistoryServiceTest {//extends TestStarter {
 
 //	private static final Logger logger = LoggerFactory.getLogger(AccountHistoryServiceTest.class);
+//
+//	@Autowired
+//	@Qualifier(value="userService")
+//	private UserService userService;
+//
+//	public void setUserService(UserService userService) {
+//		this.userService = userService;
+//	}
+//
+//	@Autowired
+//	@Qualifier(value="accountService")
+//	private AccountService accountService; 
+//
+//	public void setAccountService(AccountService accountService) {
+//		this.accountService = accountService;
+//	}
 //	
 //	@Autowired
 //	@Qualifier("accountHistoryService")
 //	private AccountHistoryService accountHistoryService;
 //
-//	@Autowired
-//	@Qualifier("testObjectServiceCreator")
-//	private TestObjectServiceCreator testObjectServiceCreator;
-//
 //	public void setAccountHistoryService(AccountHistoryService accountHistoryService) {
 //		this.accountHistoryService = accountHistoryService;
 //	}
 //
-//	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
-//		this.testObjectServiceCreator = testObjectServiceCreator;
-//	}
-//	
+//	public User user;
 //	public Account account;
 //	public AccountHistory accountHistory;
-//	
-//	TimeConverter converter=new TimeConverter();
 //
+//	public User createUserForTest() {
+//		
+//		User testUser = new User();
+//		testUser.setFirstName("testFirstName");
+//		testUser.setLastName("testLastName");
+//		testUser.setMiddleName("testMiddleName");
+//		testUser.setSex("F");
+//		userService.saveUser(testUser);
+//		
+//		return testUser;
+//	}
+//
+//	public Account createAccountForTest() {
+//		
+//		User testUser = createUserForTest();
+//		Account testAccount = new Account();
+//		testAccount.setAccountName("TestAccount");
+//		testAccount.setAccountBlockStatus("unblock");
+//		testAccount.setUser(testUser);
+//		accountService.saveAccount(testAccount);
+//
+//		return testAccount;
+//	}
+//
+//	public AccountHistory createAccountHistoryForTest() {
+//
+//		Account testAccount = createAccountForTest();
+//		AccountHistory testAccountHistory = new AccountHistory();
+//		
+//		testAccountHistory.setDateCreateAccount(LocalDateTime.of(2015, 12, 16,00, 00));
+//		testAccountHistory.setLastVisit(LocalDateTime.of(2015, 12, 17, 00, 00));
+//		testAccountHistory.setAccount(testAccount);
+//		accountHistoryService.saveAccountHistory(testAccountHistory);
+//
+//		return testAccountHistory;
+//	}
+//	
+//	
 //	@Before
 //	public void initObjectsBeforeTest() {
-//		this.accountHistory = testObjectServiceCreator.createAccountHistoryForTest();
+//		this.accountHistory = createAccountHistoryForTest();
 //		this.account = accountHistory.getAccount();
 //	}
 //
@@ -72,7 +116,7 @@ public class AccountHistoryServiceTest {//extends TestStarter {
 //
 //		logger.info("AccountHistoryServiceTest: test method GetLastVisitAccountByIdAccount");
 //		LocalDateTime actual = accountHistoryService.getLastVisitAccountByIdAccount(account.getIdAccount());
-//		LocalDateTime expected= converter.convertDateToLocalDateTime(accountHistory.getLastVisit());
+//		LocalDateTime expected= accountHistory.getLastVisit();
 //		Assert.assertEquals(expected, actual);
 //	}
 }

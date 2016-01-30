@@ -165,8 +165,6 @@ p {
 
 </style>
 
-
-<title>Forum</title>
 <div class="col-md-2">
   <ul class="nav nav-pills nav-stacked">
   	<li>
@@ -232,61 +230,64 @@ p {
   </ul>
 </div>
 
-<div class="col-lg-8 col-lg-offset-0">
-   <div class="container">
-	   <div class="row">
-		  <div class="col-lg-8">   
-		     <form name="myForm" class="form-horizontal">
-		  	     <fieldset>
-				    <a ui-sref="forumtopicmessages"></a>
-					<div class="panel-heading">
-					   <h4 class="panel-title">
-						   <a data-toggle="collapse" ng-click="loadListTopicMessages(idForumTopic)" data-target="#collapse6">Show Last Dialog</a>
-					   </h4>
-					</div>  
-				    <div id="collapse6" class="panel-collapse collapse">
-					   <div class="panel-body">
-					     <div ng-show="listTopicMessages.length > 0">
-							 <div id="live-chat"><!--live-chat -->
-								<header class="clearfix">
-									<span class="chat-message-counter">3</span>
-								</header>
-								<div class="chat"><!--chat -->
-								   	  <div class="chat-history">
-								   	  	 <div ng-repeat="topicMessage in listTopicMessages">
-								   	  	 	 <div class="chat-message clearfix">
-								   	  	 <!--<img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">-->
-													<div class="chat-message-content clearfix">
-														<span class="chat-time">10:00<!--{{topicMessage.dateCreateForumMessage}}--></span>
-														<h5>{{topicMessage.authorAccount.accountName}}</h5>
-														<a class="chat-delete" ng-click="deleteForumMessages(idForumTopic,topicMessage.idForumMessage)">x</a>
-														<p>{{topicMessage.forumMessage}}</p>
-													</div>
+<title>Forum</title>
+<div ng-controller="UserController">
+	<div class="col-lg-8 col-lg-offset-0">
+	   <div class="container">
+		   <div class="row">
+			  <div class="col-lg-8">   
+			     <form name="myForm" class="form-horizontal">
+			  	     <fieldset>
+					    <a ui-sref="forumtopicmessages"></a>
+						<div class="panel-heading">
+						   <h4 class="panel-title">
+							   <a data-toggle="collapse" ng-click="loadListTopicMessages(idForumTopic)" data-target="#collapse6">Show Last Dialog</a>
+						   </h4>
+						</div>  
+					    <div id="collapse6" class="panel-collapse collapse">
+						   <div class="panel-body">
+						     <div ng-show="listTopicMessages.length > 0">
+								 <div id="live-chat"><!--live-chat -->
+									<header class="clearfix">
+										<span class="chat-message-counter">3</span>
+									</header>
+									<div class="chat"><!--chat -->
+									   	  <div class="chat-history">
+									   	  	 <div ng-repeat="topicMessage in listTopicMessages">
+									   	  	 	 <div class="chat-message clearfix">
+									   	  	 <!--<img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">-->
+														<div class="chat-message-content clearfix">
+															<span class="chat-time">10:00<!--{{topicMessage.dateCreateForumMessage}}--></span>
+															<h5>{{topicMessage.authorAccount.accountName}}</h5>
+															<a class="chat-delete" ng-click="deleteForumMessages(idForumTopic,topicMessage.idForumMessage)">x</a>
+															<p>{{topicMessage.forumMessage}}</p>
+														</div>
+												  </div>
 											  </div>
+											  <hr>
 										  </div>
-										  <hr>
-									  </div>
-								      <div style="display:inline-block;">
-										 <input type="hidden" id="idForumTopic" ng-model="newForumMessage.forumTopic.idForumTopic"
-						    	 			  ng-init="newForumMessage.forumTopic.idForumTopic=idForumTopic">
-						    	 		 <input type="hidden" id="idAccount" ng-model="newForumMessage.authorAccount.user.idUser"
-						    	 			  ng-init="newForumMessage.authorAccount.user.idUser=id">
-									     <input type="text" id="forumMessages" ng-model="newForumMessage.forumMessage"
-											  placeholder="Type your message" autofocus/>
-											   
-										 <button type="submit" class="btn btn-xs btn-primary" ng-disabled="!newForumMessage.forumMessage"
-								             ng-click="saveNewForumMessages(newForumMessage)">Send</button>
-						             </div>
-								</div>
-							 </div>
-				 		  </div>		
-				        </div>
-			         </div>	
-		       </fieldset>
-			</form>
-          </div>
-       </div>
-   </div>  
+									      <div style="display:inline-block;">
+											 <input type="hidden" id="idForumTopic" ng-model="newForumMessage.forumTopic.idForumTopic"
+							    	 			  ng-init="newForumMessage.forumTopic.idForumTopic=idForumTopic">
+							    	 		 <input type="hidden" id="idAccount" ng-model="newForumMessage.authorAccount.user.idUser"
+							    	 			  ng-init="newForumMessage.authorAccount.user.idUser=id">
+										     <input type="text" id="forumMessages" ng-model="newForumMessage.forumMessage"
+												  placeholder="Type your message" autofocus/>
+												   
+											 <button type="submit" class="btn btn-xs btn-primary" ng-disabled="!newForumMessage.forumMessage"
+									             ng-click="saveNewForumMessages(newForumMessage)">Send</button>
+							             </div>
+									</div>
+								 </div>
+					 		  </div>		
+					        </div>
+				         </div>	
+			       </fieldset>
+				</form>
+	        </div>
+	     </div>
+	  </div>  
+   </div>
 </div>
  
 <div class="col-md-2">

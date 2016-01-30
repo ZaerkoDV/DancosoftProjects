@@ -16,10 +16,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountGroup;
 import com.dancosoft.socialcommunity.model.GroupMember;
 import com.dancosoft.socialcommunity.model.GroupMessage;
-import com.dancosoft.socialcommunity.service.testsupport.TestObjectServiceCreator;
+import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 
 /**
@@ -31,28 +32,110 @@ public class GroupMessageServiceTest {//extends TestStarter{
 //	private static final Logger logger = LoggerFactory.getLogger(GroupMessageServiceTest.class);
 //
 //	@Autowired
-//	@Qualifier("groupMessageService")
-//	private GroupMessageService groupMessageService;
+//	@Qualifier(value="userService")
+//	private UserService userService;
+//
+//	public void setUserService(UserService userService) {
+//		this.userService = userService;
+//	}
 //
 //	@Autowired
-//	@Qualifier("testObjectServiceCreator")
-//	private TestObjectServiceCreator testObjectServiceCreator;
+//	@Qualifier(value="accountService")
+//	private AccountService accountService; 
+//
+//	public void setAccountService(AccountService accountService) {
+//		this.accountService = accountService;
+//	}
+//	
+//	@Autowired
+//	@Qualifier(value="accountGroupService")
+//	private AccountGroupService accountGroupService;
+//
+//	public void setAccountGroup(AccountGroup accountGroup) {
+//		this.accountGroup = accountGroup;
+//	}
+//
+//	@Autowired
+//	@Qualifier("groupMemberService")
+//	private GroupMemberService groupMemberService;
+//
+//	public void setGroupMemberService(GroupMemberService groupMemberService) {
+//		this.groupMemberService = groupMemberService;
+//	}
+//
+//	@Autowired
+//	@Qualifier("groupMessageService")
+//	private GroupMessageService groupMessageService;
 //
 //	public void setGroupMessageService(GroupMessageService groupMessageService) {
 //		this.groupMessageService = groupMessageService;
 //	}
 //
-//	public void setTestObjectServiceCreator(TestObjectServiceCreator testObjectServiceCreator) {
-//		this.testObjectServiceCreator = testObjectServiceCreator;
-//	}
-//	
 //	public AccountGroup accountGroup;
 //	public GroupMember groupMember;
 //	public GroupMessage groupMessage;
 //
+//	public User createUserForTest() {
+//		User testUser = new User();
+//		testUser.setFirstName("testFirstName");
+//		testUser.setLastName("testLastName");
+//		testUser.setMiddleName("testMiddleName");
+//		testUser.setSex("F");
+//		userService.saveUser(testUser);
+//		
+//		return testUser;
+//	}
+//
+//	public Account createAccountForTest() {
+//		User testUser = createUserForTest();
+//		Account testAccount = new Account();
+//		testAccount.setAccountName("TestAccount");
+//		testAccount.setAccountBlockStatus("unblock");
+//		testAccount.setUser(testUser);
+//		accountService.saveAccount(testAccount);
+//
+//		return testAccount;
+//	}
+//
+//	public AccountGroup createAccountGroupForTest() {
+//		Account testAccount = createAccountForTest();
+//		AccountGroup testAccountGroup = new AccountGroup();
+//		testAccountGroup.setGroupName("TestAccountGroup");
+//		testAccountGroup.setViewStatus("private");
+//		testAccountGroup.setAccountGroupBlockStatus("unblock");
+//		testAccountGroup.setAccount(testAccount);
+//		accountGroupService.saveAccountGroup(testAccountGroup);
+//
+//		return testAccountGroup;
+//	}
+//	
+//	public GroupMember createGroupMemberForTest() {
+//
+//		AccountGroup testAccountGroup = createAccountGroupForTest();
+//		GroupMember testGroupMember = new GroupMember();
+//		testGroupMember.setMemberAccount(testAccountGroup.getAccount());
+//		testGroupMember.setGroupMemberStatus("friend");
+//		testGroupMember.setAccountGroup(testAccountGroup);
+//		groupMemberService.saveGroupMember(testGroupMember);
+//
+//		return testGroupMember;
+//	}
+//	
+//	public GroupMessage createGroupMessageForTest() {
+//
+//		GroupMember testGroupMember = createGroupMemberForTest();
+//		GroupMessage testGroupMessage = new GroupMessage();
+//		testGroupMessage.setGroupMessage("Test Group Message");
+//		testGroupMessage.setDateCreateGroupMessage(LocalDateTime.of(2015, 12, 17,00, 00));
+//		testGroupMessage.setGroupMember(testGroupMember);
+//		groupMessageService.saveGroupMessage(testGroupMessage);
+//
+//		return testGroupMessage;
+//	}
+//
 //	@Before
 //	public void initObjectsBeforeTest() {
-//		this.groupMessage = testObjectServiceCreator.createGroupMessageForTest();
+//		this.groupMessage = createGroupMessageForTest();
 //		this.groupMember = groupMessage.getGroupMember();
 //		this.accountGroup = groupMember.getAccountGroup();
 //	}
