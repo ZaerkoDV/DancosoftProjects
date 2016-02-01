@@ -296,8 +296,7 @@ public class UserController {
 		//history last visit account
 		logger.info("UserController: Create date last visit account.");
 		List<Account> listUserAccount=userService.getListAccountByUserId(id);
-		AccountHistory accountHistory =accountHistoryService
-				.getAccountHistoryByIdAccount(listUserAccount.get(0).getIdAccount());
+		AccountHistory accountHistory =accountHistoryService.getAccountHistoryByIdAccount(listUserAccount.get(0).getIdAccount());
 		accountHistory.setLastVisit(LocalDateTime.now());
 		accountHistoryService.updateAccountHistory(accountHistory);	
 		
@@ -410,10 +409,10 @@ public class UserController {
 			logger.info("UserController: error when json parse class UserExtendedData "+e);
 			
 		} catch (JsonMappingException e) {
-			logger.info("IndexController: error in json mapping for class UserExtendedData "+e);
+			logger.info("UserController: error in json mapping for class UserExtendedData "+e);
 			
 		} catch (IOException e) {
-			logger.info("IndexController: input output exeption when read json value of object"
+			logger.info("UserController: input output exeption when read json value of object"
 					+ " userExtendedDataJson "+e);
 		}
 
@@ -480,7 +479,6 @@ public class UserController {
 		
 		logger.info("UserController: load user autobiography to update.");
 		UserAutobiography userAutobiography=userAutobiographyService.getUserAutobiographyByIdUser(id);
-		
 		userAutobiography.setBirth(null);
 		
 		return userAutobiography;

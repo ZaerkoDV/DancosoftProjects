@@ -1,6 +1,3 @@
-<div>
-Administrator page!
-</div>
 
 <style>
 	
@@ -17,9 +14,6 @@ Administrator page!
 	
 </style>
 
-<!-- 
-
-<title>User parlor</title>
 
 <div class="col-md-2">
   <ul class="nav nav-pills nav-stacked">
@@ -27,112 +21,116 @@ Administrator page!
 	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
 			<div class="panel-heading">
 			     <h4 class="panel-title">
-			       <a data-toggle="collapse" data-target="#collapse1">Profile detail</a>
+			       <a data-toggle="collapse" data-target="#collapse1">Profile Detail</a>
 			     </h4>
 			</div>
 			<div id="collapse1" class="panel-collapse collapse">
 			    <form>
 				  <div class="panel-body"> 
-					<p><a href="#">My Common Profile</a></p>
-					<p><a href="#">My Extended Profile</a></p>
-					<a href="#">My Autobiography</a>
+					<p><a ng-click="loadCommonAdminProfile(idAdmin)">My Common Profile</a></p>
+					<a ng-click="loadExtendedAdminProfile(idAdmin)">My Extended Profile</a>
 				  </div>
 			    </form>    
 			</div>
 	   </div>
 	</li>
- 
     <li>
 	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
 			<div class="panel-heading">
 			     <h4 class="panel-title">
-			       <a data-toggle="collapse" data-target="#collapse2">Groups</a>
+			       <a data-toggle="collapse" data-target="#collapse2">Group</a>
 			     </h4>
 			</div>
 			<div id="collapse2" class="panel-collapse collapse">
 			    <form>
-				  <div class="panel-body">
-					<p><a href="#">Menu 1</a></p>
-					<p><a href="#">Menu 1</a></p>
-					<a href="#">Menu 1</a>
-				  </div>
+				    <div class="panel-body">
+				       <a ng-click="getSearchAccountGroupPage()">Search Group</a>
+				    </div>
 			    </form>    
 			</div>
 	   </div>
 	 </li>
-
      <li>
 	   <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
 			<div class="panel-heading">
 			     <h4 class="panel-title">
-			       <a data-toggle="collapse" data-target="#collapse3">Forums</a>
+			       <a data-toggle="collapse" ng-click="getListForum()" data-target="#collapse3">Forum</a>
 			     </h4>
 			</div>
 			<div id="collapse3" class="panel-collapse collapse">
 			    <form>
-				  <div class="panel-body">
-					<p><a href="#">Menu 1</a></p>
-					<p><a href="#">Menu 1</a></p>
-					<a href="#">Menu 1</a>
+				  <div ng-show="listForum.length > 0">
+				  	 <div ng-repeat="forum in listForum">
+						<p><a ng-click="getForum(idAdmin, forum.idForum)">{{forum.forumName}}</a></p>
+					 </div>
+					 <a ng-click="createNewForum(idAdmin)">+ new forum</a>
 				  </div>
 			    </form>    
+			</div>
+	    </div>
+	 </li>
+	  <li>
+	   <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse8">Event Pattern</a>
+			     </h4>
+			</div>
+			<div id="collapse8" class="panel-collapse collapse">
+			    <form>
+				    <div class="panel-body">
+				       <a ng-click="getEventPatternPage(idAdmin)">Edit Event Pattern</a>
+				    </div>
+				</form>   
 			</div>
 	    </div>
 	 </li>
   </ul>
 </div>
 
-<div class="col-lg-8 col-lg-offset-0">
+<title>Admin parlor</title>
+<div ng-controller="AdministratorController">
+  <div class="col-lg-8 col-lg-offset-0">
 	<div class="well">
 	    <div class="container">
 		    <div class="row">
 			   <div class="col-lg-8">
 				<form name="myForm" class="form-horizontal">
 					<fieldset>
-						<a ui-sref="userparlor"></a>
-						<legend>User Parlor Form</legend>
-						
+						<a ui-sref="adminparlor"></a>
+						<legend>Admin Parlor Form</legend>
 							<figure class="sign">
-							   <p><img src="images/helen.jpg" width="150" height="200" alt=""></p>
+							   <p><img src="" width="150" height="200" alt=""></p>
 							  	  <figcaption>
-							  		<div ng-show="userParlorData.userPhoto.photoNote != null ">
-							  			{{userParlorData.userPhoto.photoNote}} 
+							  		<div ng-show="adminParlorData.userPhoto.photoNote != null ">
+							  			{{adminParlorData.userPhoto.photoNote}} 
 							  		</div>
 							  	  </figcaption>
 							</figure>
-						 
 							<div class="form-group">
 								<div style="text-indent: 20px;">
-							    	<strong>First Name :</strong> {{userParlorData.user.firstName}}<br>
+							    	<strong>First Name :</strong> {{adminParlorData.user.firstName}}<br>
 							    </div>	
 							    <div style="text-indent: 20px;">
-						     		<strong>Last Name:</strong>{{userParlorData.user.lastName}} <br>
+						     		<strong>Last Name:</strong>{{adminParlorData.user.lastName}} <br>
 						     	</div>
-						     	<div ng-show="userParlorData.user.middleName != null" style="text-indent: 20px;">
-							     	 <strong>Middle Name:</strong>{{userParlorData.user.middleName}}
+						     	<div ng-show="adminParlorData.user.middleName != null" style="text-indent: 20px;">
+							     	 <strong>Middle Name:</strong>{{adminParlorData.user.middleName}}
 								</div>
 								<div style="text-indent: 20px;">
-									 <strong>Sex:</strong>{{userParlorData.user.sex}}
+									 <strong>Sex:</strong>{{adminParlorData.user.sex}}
 								</div>
 								<div style="text-indent: 20px;">
-									 <strong>Birth:</strong>{{userParlorData.userAutobiography.birth | date: "yyyy-MM-dd" }}
+									 <strong>Birth:</strong><!--{{adminParlorData.userAutobiography.birth | date: "yyyy-MM-dd" }}-->
 								</div>
-								<div ng-show="userParlorData.userLocation.city.cityName != null" style="text-indent: 20px;">
-										<strong>Location:</strong>{{userParlorData.userLocation.city.country.countryName}},
-							    	   	{{userParlorData.userLocation.city.cityName}}
+								<div ng-show="adminParlorData.userLocation.city.cityName != null" style="text-indent: 20px;">
+										<strong>Location:</strong>{{adminParlorData.userLocation.city.country.countryName}},
+							    	   	{{adminParlorData.userLocation.city.cityName}}
 								</div>
 								<div style="text-indent: 20px;">
-									 <strong>Email:</strong>{{userParlorData.userEmail.userEmail}}
-								</div>
-								
-								<div ng-show="userParlorData.userAutobiography.hobby != null" style="text-indent: 20px;">
-										<strong>Hobby:</strong> {{userParlorData.userAutobiography.hobby}}
-								</div>
-								<div ng-show="userParlorData.userAutobiography.autobiography != null" style="text-indent: 20px;">	
-										<strong>My Autobiography:</strong>{{userParlorData.userAutobiography.autobiography}}
+									 <strong>Email:</strong>{{adminParlorData.userEmail.userEmail}}
 								</div>
 							</div>
-				    	
 					 </fieldset>
 				</form>
 	          </div>
@@ -140,6 +138,7 @@ Administrator page!
 	     </div>
       </div>
    </div>
+</div>
  
 <div class="col-md-2">
 	<ul class="nav nav-pills nav-stacked">
@@ -147,16 +146,14 @@ Administrator page!
 		  <div class="panel panel" style="background-color:#92A7B8">
 			   <div class="panel-heading">
 			        <h4 class="panel-title">
-			          <a data-toggle="collapse" data-target="#collapse">Account search form</a>
+			          <a data-toggle="collapse" data-target="#collapse">Account</a>
 			        </h4>
 			   </div>
 			   <div id="collapse" class="panel-collapse collapse">
 			     <form>
 				    <div class="panel-body">
-						<input type="text" id="accountName" class="form-control" placeholder="Enter Account" /><br>
-						<button type="submit" class="btn btn-xs btn-primary" style="float: right">Search</button>
+				       <a ng-click="getPageSearchAccount(id)">Search Account</a>
 				    </div>
-				   
 				</form>    
 			 </div>
 	     </div>
@@ -164,4 +161,3 @@ Administrator page!
 	</ul>
 </div>
 
--->

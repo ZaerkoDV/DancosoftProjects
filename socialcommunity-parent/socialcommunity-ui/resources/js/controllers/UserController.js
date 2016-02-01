@@ -3,7 +3,7 @@
  */
 'use strict';
 
-angular.module('socialcommunity').controller('UserController',function ($scope, $rootScope ,$state, $http) {
+angular.module('socialcommunity').controller('UserController',function ($scope,$state, $http) {// $rootScope
 	
 	$scope.id = $state.params.idUser;
 	$scope.idForum = $state.params.idForum;
@@ -236,7 +236,6 @@ angular.module('socialcommunity').controller('UserController',function ($scope, 
 		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/group/listEventPattern.json')
 		.success(function(listEventPattern) {
 			$scope.listEventPattern=listEventPattern;
-			
 		}).error(function(){
 		});
 	};

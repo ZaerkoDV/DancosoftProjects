@@ -180,6 +180,56 @@ App.config(function($stateProvider,$routeProvider) {
 		  params: {idUser: null,searchIdAccount:null}
 	});
 	
+	//admin states
+	
+	$stateProvider.state('adminparlor', {
+        url: '/admin/parlor/:idAdmin',
+        views: {'': {
+              templateUrl: '/socialcommunity/views/profile/admin/parlor/adminparlor.html',
+              controller: 'AdministratorController'
+            },
+          },
+        params: {idAdmin: null}
+    });
+	
+	$stateProvider.state('editadmincommonprofile', {
+        url: '/admin/parlor/editadmincommonpofile/:idAdmin',
+        views: {'': {
+              templateUrl: '/socialcommunity/views/profile/admin/parlor/editcommonprofile.html',
+              controller: 'AdministratorController'
+            },
+          },
+        params: {idAdmin: null}
+    });
+
+	$stateProvider.state('editextendedadminprofile', {
+        url: '/admin/parlor/editextendedadminprofile/:idAdmin',
+        views: {'': {
+              templateUrl: '/socialcommunity/views/profile/admin/parlor/editextendedprofile.html',
+              controller: 'AdministratorController'
+            },
+          },
+        params: {idAdmin: null}
+    });
+	
+	
+	$stateProvider.state('editeventpattern', {
+        url: '/admin/event/editeventpattern/:idAdmin',
+        views: {'': {
+              templateUrl: '/socialcommunity/views/profile/admin/event/editeventpattern.html',
+              controller: 'AdministratorController'
+            },
+          },
+        params: {idAdmin: null}
+    });
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

@@ -95,7 +95,7 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
 				$state.go('userparlor', {idUser: id});	
 				
 			}else if(userRole.userRoleName==='admin'){
-			  //$state.go('adminparlor', {idUser: id});
+				$state.go('adminparlor', {idAdmin: id});
 				
 			}else{
 				$scope.changeRoute('#/signin');

@@ -7,6 +7,6 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath*:*service-config.xml"})
-@TransactionConfiguration(transactionManager="transactionManager", defaultRollback=false)
+@TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
 public abstract class TestStarter {
 }

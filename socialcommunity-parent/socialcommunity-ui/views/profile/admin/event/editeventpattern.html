@@ -1,10 +1,183 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<style>
 
-</body>
-</html>
+
+input:invalid {
+  border: 1px solid red;
+}
+
+input:valid {
+  border: 1px solid green;
+}
+	
+</style>
+
+
+<div class="col-md-2">
+  <ul class="nav nav-pills nav-stacked">
+  	<li>
+	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse1">Profile Detail</a>
+			     </h4>
+			</div>
+			<div id="collapse1" class="panel-collapse collapse">
+			    <form>
+				  <div class="panel-body"> 
+					<p><a ng-click="loadCommonAdminProfile(idAdmin)">My Common Profile</a></p>
+					<a ng-click="loadExtendedAdminProfile(idAdmin)">My Extended Profile</a>
+				  </div>
+			    </form>    
+			</div>
+	   </div>
+	</li>
+    <li>
+	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse2">Group</a>
+			     </h4>
+			</div>
+			<div id="collapse2" class="panel-collapse collapse">
+			    <form>
+				    <div class="panel-body">
+				       <a ng-click="getSearchAccountGroupPage()">Search Group</a>
+				    </div>
+			    </form>    
+			</div>
+	   </div>
+	 </li>
+     <li>
+	   <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" ng-click="getListForum()" data-target="#collapse3">Forum</a>
+			     </h4>
+			</div>
+			<div id="collapse3" class="panel-collapse collapse">
+			    <form>
+				  <div ng-show="listForum.length > 0">
+				  	 <div ng-repeat="forum in listForum">
+						<p><a ng-click="getForum(idAdmin, forum.idForum)">{{forum.forumName}}</a></p>
+					 </div>
+					 <a ng-click="createNewForum(idAdmin)">+ new forum</a>
+				  </div>
+			    </form>    
+			</div>
+	    </div>
+	 </li>
+	  <li>
+	   <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse8">Event Pattern</a>
+			     </h4>
+			</div>
+			<div id="collapse8" class="panel-collapse collapse">
+			    <form>
+				    <div class="panel-body">
+				       <a ng-click="getEventPatternPage()">Edit Event Pattern</a>
+				    </div>
+				</form>   
+			</div>
+	    </div>
+	 </li>
+  </ul>
+</div>
+
+<title>Event pattern Form</title>
+<div ng-controller="AdministratorController">
+  <div class="col-lg-8 col-lg-offset-0">
+	<div class="well">
+	    <div class="container">
+		    <div class="row">
+			   <div class="col-lg-8">
+				<form name="myForm" class="form-horizontal">
+					<fieldset>
+						<a ui-sref="editeventpattern"></a>
+						<legend>Event Pattern Form</legend>
+							
+							
+						<div class="panel-heading">
+						   <h4 class="panel-title">
+							   <a data-toggle="collapse" data-target="#collapse6">Create New Pattern</a>
+						   </h4>
+						</div>  
+					    <div id="collapse6" class="panel-collapse collapse">
+						   <div class="panel-body" style="outline: 2px solid #000;">
+								<div class="form-group">
+							        <label for="newEventPattern" class="col-lg-3 control-label">New Event Pattern</label>
+							        <div class="col-lg-6">
+							            <input type="text" class="form-control" id="securityPrompt" ng-model="eventPattern.eventPattern"
+							             placeholder="Enter Event Pattern">				 
+							        </div>
+							    </div>	
+								<button type="submit" class="btn btn-xs btn-primary" ng-disabled="!eventPattern.eventPattern"
+								 style="float:right;" ng-click="saveEventPattern(eventPattern)">Save</button>   
+							</div>	
+						</div>
+						
+						<div class="panel-heading">
+						   <h4 class="panel-title">
+							   <a data-toggle="collapse" ng-click="loadListEventPattern()"  data-target="#collapse7">Show Event Pattern</a>
+						   </h4>
+						</div>  
+					    <div id="collapse7" class="panel-collapse collapse">
+						   <div class="panel-body">
+							   <div ng-show="listEventPattern.length > 0">
+								<table class="table table-bordered" style="background-color: #ffffff">
+								  <thead>
+									  <tr>
+										<th>EventPattern</th>
+									    <th>Delete</th>
+									    <th>Update</th>
+									  </tr>
+								  </thead>
+								  <tbody>
+				      			      <tr ng-repeat="eventPattern in listEventPattern">
+				      			      	 <td>
+				      			      	 	<input type="text" class="form-control" id="eventPatternName"
+				      			      	 	 ng-model="eventPattern.eventPattern" placeholder="Must not empty.">      
+				      			      	 </td>
+				      			      	 <td>
+				      			      	 	<a type="submit" ng-click="deleteEventPattern(eventPattern.idEventPattern)">Delete</a>
+				      			      	 </td>
+				      			      	 <td>
+				      			      	 	<a type="submit" ng-click="editEventPattern(eventPattern.idEventPattern)">Update</a>
+				      			      	 </td>
+						   			  </tr>
+						   		   </tbody>
+						   	      </table>	  
+							    </div>	
+						     </div>
+					  	  </div>
+					</fieldset>
+				</form>
+	          </div>
+	        </div>
+	     </div>
+      </div>
+   </div>
+</div>
+ 
+<div class="col-md-2">
+	<ul class="nav nav-pills nav-stacked">
+	  <li>
+		  <div class="panel panel" style="background-color:#92A7B8">
+			   <div class="panel-heading">
+			        <h4 class="panel-title">
+			          <a data-toggle="collapse" data-target="#collapse">Account</a>
+			        </h4>
+			   </div>
+			   <div id="collapse" class="panel-collapse collapse">
+			     <form>
+				    <div class="panel-body">
+				       <a ng-click="getPageSearchAccount(id)">Search Account</a>
+				    </div>
+				</form>    
+			 </div>
+	     </div>
+	  </li>
+	</ul>
+</div>
+
