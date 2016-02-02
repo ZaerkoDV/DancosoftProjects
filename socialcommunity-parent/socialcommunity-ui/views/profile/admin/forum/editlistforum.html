@@ -1,10 +1,167 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<style>
+		
+input:invalid {
+  border: 1px solid red;
+}
 
-</body>
-</html>
+input:valid {
+  border: 1px solid green;
+}	
+</style>
+
+<div class="col-md-2">
+  <ul class="nav nav-pills nav-stacked">
+  	<li>
+	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse1">Profile Detail</a>
+			     </h4>
+			</div>
+			<div id="collapse1" class="panel-collapse collapse">
+			    <form>
+				  <div class="panel-body"> 
+				  	<p><a ng-click="returnToParlor(idAdmin)">My Profile</a></p>
+					<p><a ng-click="loadCommonAdminProfile(idAdmin)">My Common Profile</a></p>
+					<a ng-click="loadExtendedAdminProfile(idAdmin)">My Extended Profile</a>
+				  </div>
+			    </form>    
+			</div>
+	   </div>
+	</li>
+    <li>
+	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse2">Group</a>
+			     </h4>
+			</div>
+			<div id="collapse2" class="panel-collapse collapse">
+			    <form>
+				    <div class="panel-body">
+				       <a ng-click="getSearchAccountGroupPage()">Search Group</a>
+				    </div>
+			    </form>    
+			</div>
+	   </div>
+	 </li>
+     <li>
+	   <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse3">Forum</a>
+			     </h4>
+			</div>
+			<div id="collapse3" class="panel-collapse collapse">
+			    <form>
+				   <a ng-click="createNewForum(idAdmin)">+ New Forum</a>
+			    </form>    
+			</div>
+	    </div>
+	 </li>
+	  <li>
+	   <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse8">Event Pattern</a>
+			     </h4>
+			</div>
+			<div id="collapse8" class="panel-collapse collapse">
+			    <form>
+				    <div class="panel-body">
+				       <a ng-click="getEventPatternPage(idAdmin)">Edit Event Pattern</a>
+				    </div>
+				</form>   
+			</div>
+	    </div>
+	 </li>
+  </ul>
+</div>
+
+<title>Edit List Forum</title>
+<div ng-controller="AdministratorController">
+  <div class="col-lg-8 col-lg-offset-0">
+	<div class="well">
+	    <div class="container">
+		    <div class="row">
+			   <div class="col-lg-7">
+				<form name="myForm" class="form-horizontal">
+					<fieldset>
+						<a ui-sref="editlistforum"></a>
+						<legend  style="text-align: center;">Edit Forum Form</legend>
+							<div class="panel-heading">
+						   <h4 class="panel-title">
+							   <a data-toggle="collapse" ng-click="getListForum()"  data-target="#collapse7">Show List Forum To Edit</a>
+						   </h4>
+						</div>  
+					    <div id="collapse7" class="panel-collapse collapse">
+						   <div class="panel-body">
+							   <div ng-show="listForum.length > 0">
+								<table class="table table-bordered" style="background-color: #ffffff">
+								  <thead>
+									  <tr>
+										<th>Name</th>
+									    <th>Date</th>
+									    <th>View Status</th>
+									    <th>Delete</th>
+									    <th>Update</th>
+									    <th>Topics</th>
+									  </tr>
+								  </thead>
+								  <tbody>
+				      			      <tr ng-repeat="forum in listForum">
+				      			      	 <td>
+				      			      	 	<input type="text" class="form-control" ng-model="forum.forumName" placeholder="Must not empty.">      
+				      			      	 </td>
+				      			      	 <td><!--{{forum.dateCreateForum}}--></td>
+				      			      	 <td>
+					      			      	 <select class="form-control" id="viewStatus" ng-model="forum.viewStatus" placeholder="Must select" >
+										   	 	<option value="public">public</option>
+										     	<option value="private">private</option>
+											 </select>
+				      			      	 </td>
+				      			      	 <td>
+				      			      	 	<a type="submit" ng-click="deleteForum(forum.idForum)">Delete</a>
+				      			      	 </td>
+				      			      	 <td>
+				      			      	 	<!--<a type="submit" ng-click="editForum(idAdmin,forum)">Update</a>-->
+				      			      	 </td>
+				      			      	 <td>
+				      			      	 	<a type="submit" ng-click="editForumTopic(idAdmin,forum.idForum)">Edit</a>
+				      			      	 </td>
+						   			  </tr>
+						   		   </tbody>
+						   	      </table>	  
+							    </div>	
+						     </div>
+					  	  </div>
+					 </fieldset>
+				</form>
+	          </div>
+	        </div>
+	     </div>
+      </div>
+   </div>
+</div>
+ 
+<div class="col-md-2">
+	<ul class="nav nav-pills nav-stacked">
+	  <li>
+		  <div class="panel panel" style="background-color:#92A7B8">
+			   <div class="panel-heading">
+			        <h4 class="panel-title">
+			          <a data-toggle="collapse" data-target="#collapse">Account</a>
+			        </h4>
+			   </div>
+			   <div id="collapse" class="panel-collapse collapse">
+			     <form>
+				    <div class="panel-body">
+				       <a ng-click="getPageSearchAccount(idAdmin)">Search Account</a>
+				    </div>
+				</form>    
+			 </div>
+	     </div>
+	  </li>
+	</ul>
+</div>
+

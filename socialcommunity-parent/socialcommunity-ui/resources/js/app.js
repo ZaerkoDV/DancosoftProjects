@@ -180,7 +180,7 @@ App.config(function($stateProvider,$routeProvider) {
 		  params: {idUser: null,searchIdAccount:null}
 	});
 	
-	//admin states
+												//admin states
 	
 	$stateProvider.state('adminparlor', {
         url: '/admin/parlor/:idAdmin',
@@ -212,7 +212,6 @@ App.config(function($stateProvider,$routeProvider) {
         params: {idAdmin: null}
     });
 	
-	
 	$stateProvider.state('editeventpattern', {
         url: '/admin/event/editeventpattern/:idAdmin',
         views: {'': {
@@ -223,8 +222,35 @@ App.config(function($stateProvider,$routeProvider) {
         params: {idAdmin: null}
     });
 	
+	$stateProvider.state('newforum', {
+        url: '/admin/forum/addforum/:idAdmin',
+        views: {'': {
+              templateUrl: '/socialcommunity/views/profile/admin/forum/addforum.html',
+              controller: 'AdministratorController'
+            },
+          },
+        params: {idAdmin: null}
+    });
 	
+	$stateProvider.state('editlistforum', {
+        url: '/admin/forum/search/editlistforum/:idAdmin',
+        views: {'': {
+              templateUrl: '/socialcommunity/views/profile/admin/forum/editlistforum.html',
+              controller: 'AdministratorController'
+            },
+          },
+        params: {idAdmin: null}
+    });
 	
+	$stateProvider.state('editforumtopic', {
+        url: '/admin/forum/search/editlisttopic/:idAdmin/:idForum',
+        views: {'': {
+              templateUrl: '/socialcommunity/views/profile/admin/forum/editlistforumtopic.html',
+              controller: 'AdministratorController'
+            },
+          },
+        params: {idAdmin: null, idForum:null}
+    });
 	
 	
 	

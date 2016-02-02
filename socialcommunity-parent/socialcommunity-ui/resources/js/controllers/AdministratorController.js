@@ -7,6 +7,7 @@
 angular.module('socialcommunity').controller('AdministratorController',function ($scope,$state, $http) {
 	
 	$scope.idAdmin = $state.params.idAdmin;
+	$scope.idForum = $state.params.idForum;
 	
 	$scope.loadAdminData = function(idAdmin){
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/parlor/accountdata.json',idAdmin)
@@ -16,18 +17,7 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 		});
 	};	
 	$scope.loadAdminData($scope.idAdmin);
-	
-	$scope.getListForum = function(){
-		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/parlor/listforum.json')
-		.success(function(listForum) {
-			$scope.listForum=listForum;		
-		}).error(function() {
-		});
-	};
-	
-	
-	
-	
+													//edit common profile
 	
 	$scope.loadCommonAdminProfile = function(idAdmin){
 		$state.go('editadmincommonprofile', {idAdmin: idAdmin});
@@ -49,14 +39,11 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 		}).error(function(){
 		});
 	};
-
-	
 													//edit extended profile
 
 	$scope.loadExtendedAdminProfile = function(idAdmin){
 		$state.go('editextendedadminprofile', {idAdmin: idAdmin});
 	};
-	
 	
 	$scope.loadExtendedAdminProfileData = function(idAdmin){
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/parlor/extendedadminprofile.json',idAdmin)
@@ -100,6 +87,8 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 		});
 	};
 	
+													//event pattern
+	
 	$scope.getEventPatternPage = function(idAdmin){
 		$state.go('editeventpattern', {idAdmin: idAdmin});
 	};
@@ -115,17 +104,99 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 	$scope.saveEventPattern=function(eventPattern){
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/event/neweventpattern.json',eventPattern)
 		.success(function() {
+			$scope.loadListEventPattern();
 		}).error(function(){
 		});
 	};
 	
-	//deleteEventPattern(eventPattern.idEventPattern)
+	$scope.deleteEventPattern=function(idEventPattern){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/event/'+idEventPattern+'/deletedeventpattern.json')
+		.success(function() {
+			$scope.loadListEventPattern();
+		}).error(function(){
+		});
+	};
 	
-	//editEventPattern(eventPattern.idEventPattern)
+	$scope.updateEventPattern=function(eventPattern){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/event/updatedeventpattern.json',eventPattern)
+		.success(function() {
+			$scope.loadListEventPattern();
+		}).error(function(){
+		});
+	};
+													//forum
+
+	$scope.getListForum = function(){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/parlor/listforum.json')
+		.success(function(listForum) {
+			$scope.listForum=listForum;		
+		}).error(function() {
+		});
+	};
+	
+	$scope.getListForumToEdit=function(idAdmin){
+		$state.go('editlistforum', {idAdmin: idAdmin});
+	};
+	
+	$scope.createNewForum = function(idAdmin){
+		$state.go('newforum', {idAdmin: idAdmin});
+	};
+	
+	$scope.saveNewForum=function(idAdmin,forum){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/forum/newforum.json',forum)
+		.success(function() {
+			$state.go('adminparlor', {idAdmin: idAdmin});
+		}).error(function(){
+		});
+	};
+	
+	$scope.editForum=function(idAdmin,forum){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/forum/editforum.json',forum)
+		.success(function() {
+			$scope.getListForum();
+		}).error(function(){
+		});
+	};
+	
+	$scope.deleteForum=function(idForum){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/forum/'+idForum+'/deletedforum.json')
+		.success(function() {
+			$scope.getListForum();
+		}).error(function(){
+		});
+	};
+													//forum topic
+	
+	$scope.editForumTopic=function(idAdmin,idForum){
+		$state.go('editforumtopic', {idAdmin: idAdmin, idForum:idForum});
+	};
+	
+	$scope.loadListForumTopic = function(idForum){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/forum/listforumtopic.json',idForum)
+		.success(function(listForumTopic) {
+			$scope.listForumTopic=listForumTopic;
+		}).error(function(){
+		});
+	};
+	
+	$scope.saveNewForumTopic=function(idForum,forumTopic){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/forum/newtopic.json',forumTopic)
+		.success(function(idForum) {
+			$scope.loadListForumTopic(idForum);
+		}).error(function(){
+		});
+	};
+	
+	$scope.deleteForumTopic=function(idForum,idForumTopic){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/forum/deleteforumtopic/'+idForumTopic+'/forumtopic.json')
+		.success(function() {
+			$scope.loadListForumTopic(idForum);
+		}).error(function(){
+		});
+	};
 	
 	
-	
-	
+	//updateForumTopic(idForum,forumTopic)
 	
 	
 	

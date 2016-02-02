@@ -24,6 +24,7 @@ input:valid {
 			<div id="collapse1" class="panel-collapse collapse">
 			    <form>
 				  <div class="panel-body"> 
+				 	<p><a ng-click="returnToParlor(idAdmin)">My Profile</a></p>
 					<p><a ng-click="loadCommonAdminProfile(idAdmin)">My Common Profile</a></p>
 					<a ng-click="loadExtendedAdminProfile(idAdmin)">My Extended Profile</a>
 				  </div>
@@ -85,7 +86,7 @@ input:valid {
   </ul>
 </div>
 
-<title>Event pattern Form</title>
+<title>Event Pattern Form</title>
 <div ng-controller="AdministratorController">
   <div class="col-lg-8 col-lg-offset-0">
 	<div class="well">
@@ -95,9 +96,8 @@ input:valid {
 				<form name="myForm" class="form-horizontal">
 					<fieldset>
 						<a ui-sref="editeventpattern"></a>
-						<legend>Event Pattern Form</legend>
-							
-							
+						<legend style="text-align: center;">Event Pattern Form</legend>
+										
 						<div class="panel-heading">
 						   <h4 class="panel-title">
 							   <a data-toggle="collapse" data-target="#collapse6">Create New Pattern</a>
@@ -108,7 +108,7 @@ input:valid {
 								<div class="form-group">
 							        <label for="newEventPattern" class="col-lg-3 control-label">New Event Pattern</label>
 							        <div class="col-lg-6">
-							            <input type="text" class="form-control" id="securityPrompt" ng-model="eventPattern.eventPattern"
+							            <input type="text" class="form-control" id="eventPattern" ng-model="eventPattern.eventPattern"
 							             placeholder="Enter Event Pattern">				 
 							        </div>
 							    </div>	
@@ -143,7 +143,7 @@ input:valid {
 				      			      	 	<a type="submit" ng-click="deleteEventPattern(eventPattern.idEventPattern)">Delete</a>
 				      			      	 </td>
 				      			      	 <td>
-				      			      	 	<a type="submit" ng-click="editEventPattern(eventPattern.idEventPattern)">Update</a>
+				      			      	 	<a type="submit" ng-click="updateEventPattern(eventPattern)">Update</a>
 				      			      	 </td>
 						   			  </tr>
 						   		   </tbody>

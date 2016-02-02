@@ -54,21 +54,17 @@
 	   <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
 			<div class="panel-heading">
 			     <h4 class="panel-title">
-			       <a data-toggle="collapse" ng-click="getListForum()" data-target="#collapse3">Forum</a>
+			       <a data-toggle="collapse" data-target="#collapse3">Forum</a>
 			     </h4>
 			</div>
 			<div id="collapse3" class="panel-collapse collapse">
 			    <form>
-				  <div ng-show="listForum.length > 0">
-				  	 <div ng-repeat="forum in listForum">
-						<p><a ng-click="getForum(idAdmin, forum.idForum)">{{forum.forumName}}</a></p>
-					 </div>
-					 <a ng-click="createNewForum(idAdmin)">+ new forum</a>
-				  </div>
+				  <p><a ng-click="getListForumToEdit(idAdmin)">Edit Forum</a></p>
+				  <a ng-click="createNewForum(idAdmin)">+ New Forum</a>
 			    </form>    
 			</div>
 	    </div>
-	 </li>
+	  </li>
 	  <li>
 	   <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
 			<div class="panel-heading">
@@ -152,7 +148,7 @@
 			   <div id="collapse" class="panel-collapse collapse">
 			     <form>
 				    <div class="panel-body">
-				       <a ng-click="getPageSearchAccount(id)">Search Account</a>
+				       <a ng-click="getPageSearchAccount(idAdmin)">Search Account</a>
 				    </div>
 				</form>    
 			 </div>

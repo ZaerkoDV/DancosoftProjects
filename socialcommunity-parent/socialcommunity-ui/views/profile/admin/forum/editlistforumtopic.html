@@ -1,10 +1,186 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<style>
+	
+input:invalid {
+  border: 1px solid red;
+}
 
-</body>
-</html>
+input:valid {
+  border: 1px solid green;
+}
+	
+</style>
+
+<div class="col-md-2">
+  <ul class="nav nav-pills nav-stacked">
+  	<li>
+	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse1">Profile Detail</a>
+			     </h4>
+			</div>
+			<div id="collapse1" class="panel-collapse collapse">
+			    <form>
+				  <div class="panel-body"> 
+				 	<p><a ng-click="returnToParlor(idAdmin)">My Profile</a></p>
+					<p><a ng-click="loadCommonAdminProfile(idAdmin)">My Common Profile</a></p>
+					<a ng-click="loadExtendedAdminProfile(idAdmin)">My Extended Profile</a>
+				  </div>
+			    </form>    
+			</div>
+	   </div>
+	</li>
+    <li>
+	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse2">Group</a>
+			     </h4>
+			</div>
+			<div id="collapse2" class="panel-collapse collapse">
+			    <form>
+				    <div class="panel-body">
+				       <a ng-click="getSearchAccountGroupPage()">Search Group</a>
+				    </div>
+			    </form>    
+			</div>
+	   </div>
+	 </li>
+     <li>
+	   <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse3">Forum</a>
+			     </h4>
+			</div>
+			<div id="collapse3" class="panel-collapse collapse">
+			    <form>
+				  <p><a ng-click="getListForumToEdit(idAdmin)">Edit Forum</a></p>
+				  <a ng-click="createNewForum(idAdmin)">+ New Forum</a>
+			    </form>    
+			</div>
+	    </div>
+	  </li>
+	  <li>
+	   <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse4">Event Pattern</a>
+			     </h4>
+			</div>
+			<div id="collapse4" class="panel-collapse collapse">
+			    <form>
+				    <div class="panel-body">
+				       <a ng-click="getEventPatternPage(idAdmin)">Edit Event Pattern</a>
+				    </div>
+				</form>   
+			</div>
+	    </div>
+	 </li>
+  </ul>
+</div>
+
+<title>Forum Topic</title>
+<div ng-controller="AdministratorController">
+  <div class="col-lg-8 col-lg-offset-0">
+	<div class="well">
+	    <div class="container">
+		    <div class="row">
+			   <div class="col-lg-8">
+				<form name="myForm" class="form-horizontal">
+					<fieldset>
+						<a ui-sref="editforumtopic"></a>
+						<legend style="text-align: center;">Edit Forum Topic Form</legend>
+							<div class="panel-heading">
+							   <h4 class="panel-title">
+								   <a data-toggle="collapse" ng-click="loadListForumTopic(idForum)"  data-target="#collapse5">List Forum Topic</a>
+							   </h4>
+							</div>  
+						    <div id="collapse5" class="panel-collapse collapse">
+							   <div class="panel-body">
+							   	  <div ng-show="listForumTopic.length > 0">
+									<table class="table table-bordered" style="background-color: #ffffff">
+									  <thead>
+										  <tr>
+											<th>Topic Name</th>
+										    <th>Date</th>
+										    <th>Messages</th>
+										    <th>Delete</th>
+										    <th>Update</th>
+										  </tr>
+									  </thead>
+									  <tbody>
+					      			      <tr ng-repeat="forumTopic in listForumTopic">
+					      			      	 <td>
+					      			      	 	<input type="text" class="form-control" id="forumTopic"
+					      			      	 	 ng-model="forumTopic.forumTopic" placeholder="Must not empty.">      
+					      			      	 </td>
+					      			      	 <td><!--{{forumTopic.dateCreateForumTopic}}--></td>
+					      			      	 <td></td>
+					      			      	 <td>
+					      			      	 	<a type="submit" ng-click="deleteForumTopic(idForum, forumTopic.idForumTopic)">Delete</a>
+					      			      	 </td>
+					      			      	 <td>
+					      			      	 	<!--<a type="submit" ng-click="updateForumTopic(idForum,forumTopic)">Update</a>-->
+					      			      	 </td>
+							   			  </tr>
+							   		  </tbody>
+							   	    </table>	  
+								  </div>	
+							   </div>
+							</div>
+					 </fieldset>
+				</form>
+	          </div>
+	        </div>
+	     </div>
+      </div>
+   </div>
+</div>
+ 
+<div class="col-md-2">
+	<ul class="nav nav-pills nav-stacked">
+	  <li>
+		  <div class="panel panel" style="background-color:#92A7B8">
+			   <div class="panel-heading">
+			        <h4 class="panel-title">
+			          <a data-toggle="collapse" data-target="#collapse">Account</a>
+			        </h4>
+			   </div>
+			   <div id="collapse" class="panel-collapse collapse">
+			     <form>
+				    <div class="panel-body">
+				       <a ng-click="getPageSearchAccount(idAdmin)">Search Account</a>
+				    </div>
+				</form>    
+			 </div>
+	     </div>
+	  </li>
+	  <li>
+	   <div class="panel panel" style="background-color:#92A7B8">
+			   <div class="panel-heading">
+			        <h4 class="panel-title">
+			          <a data-toggle="collapse"  data-target="#collapse6">Create New Topic</a>
+			        </h4>
+			   </div>
+			   <div id="collapse6" class="panel-collapse collapse">
+			     <form>
+				    <div class="panel-body">
+				    	<input type="hidden" id="idForum" ng-model="newForumTopic.forum.idForum" 
+				    	 ng-init="newForumTopic.forum.idForum=idForum">
+				    	 
+				    	<input type="hidden" id="idUser" ng-model="newForumTopic.authorAccount.user.idUser" 
+				    	 ng-init="newForumTopic.authorAccount.user.idUser=idAdmin">
+				    	 
+						<input type="text" id="forumTopicName" ng-model="newForumTopic.forumTopic" class="form-control" placeholder="Name" /><br>
+						<button type="submit" class="btn btn-xs btn-primary" ng-disabled="!newForumTopic.forumTopic"
+						   style="float: right;" ng-click="saveNewForumTopic(idForum,newForumTopic)">Save</button>
+				    </div>
+				</form>    
+			 </div>
+	     </div>
+	  </li>
+	</ul>
+</div>
+
+

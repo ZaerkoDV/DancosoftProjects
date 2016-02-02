@@ -29,6 +29,7 @@ import com.dancosoft.socialcommunity.model.City;
 import com.dancosoft.socialcommunity.model.Country;
 import com.dancosoft.socialcommunity.model.EventPattern;
 import com.dancosoft.socialcommunity.model.Forum;
+import com.dancosoft.socialcommunity.model.ForumTopic;
 import com.dancosoft.socialcommunity.model.Language;
 import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserAutobiography;
@@ -290,16 +291,7 @@ public class AdministratorController {
 		
 		return userParlorData;
 	}
-	
-	@RequestMapping(value="views/profile/admin/parlor/listforum.json", method = RequestMethod.GET)
-	public @ResponseBody List<Forum> getListForum() {
-		logger.info("AdminController: Load list forum for admin account");
-		List<Forum> listForum= (List) forumService.getListForum();
-		
-		return listForum;
-	}
-	
-										// edit user profile
+										// edit common profile
 
 	@RequestMapping(value = "/views/profile/admin/parlor/commonadminprofile.json", method = RequestMethod.POST)
 	public @ResponseBody User loadCommonAdminProfile(@RequestBody Long idAdmin) {
@@ -315,6 +307,8 @@ public class AdministratorController {
 		userService.updateUser(admin);
 		return admin.getIdUser();
 	}
+	
+										// edit extended profile
 	
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/views/profile/admin/parlor/extendedadminprofile.json", method = RequestMethod.POST)
@@ -423,19 +417,80 @@ public class AdministratorController {
 		return idAdmin;
 	}
 	
+												//event pattern
 	
-
 	@RequestMapping(value="/views/profile/admin/event/neweventpattern.json", method = RequestMethod.POST)
 	public @ResponseBody void saveEventPattern(@RequestBody EventPattern eventPattern) {
 		logger.info("AdminController: save new event pattern");
 		eventPatternService.saveEventPattern(eventPattern);
 	}
 	
+	@RequestMapping(value="/views/profile/admin/event/{idEventPattern}/deletedeventpattern", method = RequestMethod.GET)
+	public @ResponseBody void deleteEventPattern(@PathVariable("idEventPattern") Long idEventPattern) {
+		logger.info("AdminController: delete event pattern by id event pattern");
+		eventPatternService.deleteEventPatternById(idEventPattern);
+	}
 	
+	@RequestMapping(value="/views/profile/admin/event/updatedeventpattern.json", method = RequestMethod.POST)
+	public @ResponseBody void updateEventPattern(@RequestBody EventPattern eventPattern) {
+		logger.info("AdminController: update event pattern");
+		eventPatternService.updateEventPattern(eventPattern);
+	}
 	
+													//forum
 	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/views/profile/admin/parlor/listforum.json", method = RequestMethod.GET)
+	public @ResponseBody List<Forum> getListForum() {
+		logger.info("AdminController: Load list forum for admin account");
+		List<Forum> listForum= (List) forumService.getListForum();
+		
+		return listForum;
+	}
 	
+	@RequestMapping(value="/views/profile/admin/forum/newforum.json", method = RequestMethod.POST)
+	public @ResponseBody void saveNewForum(@RequestBody Forum forum) {
+		logger.info("AdminController: save new forum");
+		forum.setDateCreateForum(LocalDateTime.now());
+		forumService.saveForum(forum);
+	}
 	
+//not convert date	
+	@RequestMapping(value="/views/profile/admin/forum/editforum.json", method = RequestMethod.POST)
+	public @ResponseBody void updateForum(@RequestBody Forum forum) {
+		logger.info("AdminController: update forum");
+		forumService.updateForum(forum);
+	}
+	
+	@RequestMapping(value="/views/profile/admin/forum/{idForum}/deletedforum.json", method = RequestMethod.GET)
+	public @ResponseBody void deleteForum(@PathVariable Long idForum) {
+		logger.info("AdminController: Load list forum for admin account");
+		forumService.deleteForumById(idForum);
+	}
+	
+	@RequestMapping(value="/views/profile/admin/forum/newtopic.json", method = RequestMethod.POST)
+	public @ResponseBody Long saveNewForumTopic(@RequestBody ForumTopic forumTopic) {
+		
+		logger.info("AdminController: Save new forum topic for forum.");
+		Long idUser=forumTopic.getAuthorAccount().getUser().getIdUser();
+		List<Account> listUserAccount=userService.getListAccountByUserId(idUser);
+		
+		Long idForum=forumTopic.getForum().getIdForum();
+		Forum forum = forumService.getForumById(idForum);
+		
+		forumTopic.setAuthorAccount(listUserAccount.get(0));
+		forumTopic.setForum(forum);
+		forumTopic.setDateCreateForumTopic(LocalDateTime.now());
+		forumTopicService.saveForumTopic(forumTopic);
+		
+		return idForum;
+	}
+	
+	@RequestMapping(value="/views/profile/admin/forum/deleteforumtopic/{idForumTopic}/forumtopic.json", method = RequestMethod.GET)
+	public @ResponseBody void deleteForumTopic(@PathVariable Long idForumTopic) {
+		logger.info("AdminController: Delete forum topic by id");
+		forumTopicService.deleteForumTopicById(idForumTopic);
+	}
 	
 	
 }
