@@ -66,16 +66,15 @@ public class UserDAOImpl extends CommonEntityDAOImpl implements UserDAO {
 	}
 	
 	/**
-	 * Method return list of user accounts. If user accounts are
-	 * not exist return empty list.
+	 * Method return user account. If user account is
+	 * not exist return null.
 	 * 
 	 * @type Long
 	 * @param idUser
 	 * 
-	 * @return List<Account>
+	 * @return Account
 	 */
-	@SuppressWarnings("unchecked")
-	public List<Account> getListAccountByUserId(Long idUser) {
+	public Account getAccountByUserId(Long idUser) {
 
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory()
 				.getCurrentSession().createCriteria(Account.class);
@@ -87,7 +86,7 @@ public class UserDAOImpl extends CommonEntityDAOImpl implements UserDAO {
 		
 		logger.info("UserDAO: Accounts by user id load.");
 
-		return criteria.list();
+		return (Account) criteria.uniqueResult();
 	}
 
 	/**

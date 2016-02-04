@@ -51,15 +51,15 @@ public interface UserCorespondenceService {
 	public String getCorespondViewStatusByIdUserCorespond(Long idUserCorespondence);
 
 	/**
-	 * Method return list of users corespondence with view status public. If user
-	 * corspondence are not exist return empty list.
+	 * Method return  user corespondence with view status public. If user
+	 * corspondence are not exist return null.
 	 * 
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
-	 * @return List<UserCorespondence>
+	 * @return UserCorespondence
 	 */
-	public List<UserCorespondence> getListUserCorespondenceForBroadcastInfo();
+	public UserCorespondence getUserCorespondenceForBroadcastInfo();
 	
 	/**
 	 * This method is basic for all entities.The method is one of CRUD methods.

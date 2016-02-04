@@ -39,8 +39,8 @@ import com.dancosoft.socialcommunity.model.User;
 public interface UserService {
 
 	/**
-	 * Method return list of user accounts. If user accounts are
-	 * not exist return empty list.
+	 * Method return user accounts. If user account is
+	 * not exist return null.
 	 * 
 	 * @type Long
 	 * @param idUser
@@ -48,9 +48,9 @@ public interface UserService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
-	 * @return List<Account>
+	 * @return Account
 	 */
-	public List<Account> getListAccountByUserId(Long idUser);
+	public Account getAccountByUserId(Long idUser);
 
 	/**
 	 * Method return list of user which belong to sex. If list

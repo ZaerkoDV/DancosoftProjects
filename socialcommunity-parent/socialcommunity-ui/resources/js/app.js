@@ -1,44 +1,36 @@
 'use strict';
 
 var socialcommunity = {};
-var App = angular.module('socialcommunity',['ui.router','ngRoute']);
+var App = angular.module('socialcommunity',['ui.router']);
 
-App.config(function($stateProvider,$routeProvider) {
+App.config(function($stateProvider) {
 		 
-	$routeProvider.when('/signin', {
-		templateUrl: '/socialcommunity/views/profile/signin.html',
-		controller: 'IndexController'
+	$stateProvider.state('index', {
+        url: 'index',
+        views: {'': {
+              templateUrl: '/socialcommunity/index.html',
+              controller: 'IndexController'
+            },
+          }
+    });
+	
+	$stateProvider.state('signupcommon', {
+        url: '/signup',
+        views: {'': {
+              templateUrl: '/socialcommunity/views/profile/signup/commonprofile.html',
+              controller: 'IndexController'
+            },
+          }
+    });
+	
+	$stateProvider.state('signin', {
+	  url: '/signin',
+	  views: {'': {
+	        templateUrl: '/socialcommunity/views/profile/signin.html',
+	        controller: 'IndexController'
+	      },
+	    }
 	});
-	
-	$routeProvider.when('/signup', {
-		templateUrl:'/socialcommunity/views/profile/signup/commonprofile.html',
-		controller: 'IndexController'
-	});
-	
-	$routeProvider.otherwise({
-		 redirectTo: '/'
-	});
-	
-	
-														//state
-	
-//	$stateProvider.state('signupcommon', {
-//        url: '/signup',
-//        views: {'': {
-//              templateUrl: '/socialcommunity/views/profile/signup/commonprofile.html',
-//              controller: 'IndexController'
-//            },
-//          }
-//    });
-	
-//	$stateProvider.state('signin', {
-//  url: '/signin',
-//  views: {'': {
-//        templateUrl: '/socialcommunity/views/profile/signin.html',
-//        controller: 'IndexController'
-//      },
-//    }
-//});
 	
 	$stateProvider.state('signupextended', {
         url: '/signup/extended/:idUser',

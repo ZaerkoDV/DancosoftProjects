@@ -18,6 +18,8 @@ package com.dancosoft.socialcommunity.service.impl;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.NonUniqueResultException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,32 +101,35 @@ public class UserCorespondenceServiceImpl implements UserCorespondenceService {
 	}
 	
 	/**
-	 * Method return list of users corespondence with view status public. If user
-	 * corspondence are not exist return empty list.
+	 * Method return  user corespondence with view status public. If user
+	 * corspondence are not exist return null.
 	 * 
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
-	 * @return List<UserCorespondence>
+	 * @return UserCorespondence
 	 */
 	@Transactional
-	public List<UserCorespondence> getListUserCorespondenceForBroadcastInfo() {
+	public UserCorespondence getUserCorespondenceForBroadcastInfo() {
 		
-		List<UserCorespondence> list=Collections.emptyList();
+		UserCorespondence userCorespondence=null;
 		try {
-			logger.info("UserCorespondenceService: List users corespondence"
+			logger.info("UserCorespondenceService: Users corespondence"
 					+ " with public view status loaded.");
-			list=userCorespondenceDAO.getListUserCorespondenceForBroadcastInfo();
+			userCorespondence=userCorespondenceDAO.getUserCorespondenceForBroadcastInfo();
 			
+		} catch (NonUniqueResultException nu) {
+			logger.warn("UserService:User corespondence by id is not uniqual." + nu);
+				
 		} catch (DataRetrievalFailureException rf) {
-			logger.warn("UserCorespondenceService: List users corespondence"
+			logger.warn("UserCorespondenceService: Users corespondence"
 					+ " with public view status load but is empty." + rf);
 			
 		} catch (DataAccessException da) {
 			logger.error("UserCorespondenceService:Exeption connect with data base"
 					+ " or other error= "+da);
 		}
-		return list;
+		return userCorespondence;
 	}
 	
 	/**

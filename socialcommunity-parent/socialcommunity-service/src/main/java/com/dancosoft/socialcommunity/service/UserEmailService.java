@@ -40,7 +40,7 @@ import com.dancosoft.socialcommunity.model.UserEmail;
 public interface UserEmailService {
 
 	/**
-	 * Method return list of user email with view status. If list is not exist return empty list.
+	 * Method return user email with view status. If email is not exist return null.
 	 * 
 	 * @type Long
 	 * @type String
@@ -50,13 +50,13 @@ public interface UserEmailService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
-	 * @return List<UserEmail>
+	 * @return UserEmail
 	 */
-	public List<UserEmail> getListEmailWithStatusByIdUser(Long idUser,String viewStatus);
+	public UserEmail getEmailWithStatusByIdUser(Long idUser,String viewStatus);
 	
 	/**
-	 * Method return list of user email by user id. If list
-	 * is not exist return empty list.
+	 * Method return user email by user id. If email
+	 * is not exist return null.
 	 * 
 	 * @type Long
 	 * @param idUser
@@ -64,9 +64,9 @@ public interface UserEmailService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
-	 * @return List<UserEmail>
+	 * @return UserEmail
 	 */
-	public List<UserEmail> getListEmailByIdUser(Long idUser);
+	public UserEmail getEmailByIdUser(Long idUser);
 	
 	/**
 	 * Method check user email on unique value. If user email

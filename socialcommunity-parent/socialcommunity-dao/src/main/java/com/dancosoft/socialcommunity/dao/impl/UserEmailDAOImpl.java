@@ -65,17 +65,16 @@ public class UserEmailDAOImpl extends CommonEntityDAOImpl implements UserEmailDA
 	}
 	
 	/**
-	 * Method return list of user email with view status. If list is not exist return empty list.
+	 * Method return user email with view status. If email is not exist return null.
 	 * 
 	 * @type Long
 	 * @type String
 	 * @param idUser
 	 * @param viewStatus
 	 * 
-	 * @return List<UserEmail>
+	 * @return UserEmail
 	 */
-	@SuppressWarnings("unchecked")
-	public List<UserEmail> getListEmailWithStatusByIdUser(Long idUser,String viewStatus){
+	public UserEmail getEmailWithStatusByIdUser(Long idUser,String viewStatus){
 		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
 				.createCriteria(UserEmail.class);
@@ -84,22 +83,21 @@ public class UserEmailDAOImpl extends CommonEntityDAOImpl implements UserEmailDA
 		criteria.add(Restrictions.eq("u.idUser", idUser));
 		criteria.add(Restrictions.eq("c.corespondenceViewStatus", viewStatus));
 	
-		logger.info("UserEmailDAO:List user email with status loaded.");
+		logger.info("UserEmailDAO:User email with status loaded.");
 
-		return criteria.list();
+		return (UserEmail) criteria.uniqueResult();
 	}
 	
 	/**
-	 * Method return list of user email by user id. If list
-	 * is not exist return empty list.
+	 * Method return email by user id. If email
+	 * is not exist return null.
 	 * 
 	 * @type Long
 	 * @param idUser
 	 * 
-	 * @return List<UserEmail>
+	 * @return UserEmail
 	 */
-	@SuppressWarnings("unchecked")
-	public List<UserEmail> getListEmailByIdUser(Long idUser){
+	public UserEmail getEmailByIdUser(Long idUser){
 		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
 				.createCriteria(UserEmail.class);
@@ -107,9 +105,9 @@ public class UserEmailDAOImpl extends CommonEntityDAOImpl implements UserEmailDA
 		criteria.createAlias("c.user", "u");
 		criteria.add(Restrictions.eq("u.idUser", idUser));
 		
-		logger.info("UserEmailDAO:List user email loaded.");
+		logger.info("UserEmailDAO: User email loaded.");
 	
-		return criteria.list();
+		return (UserEmail) criteria.uniqueResult();
 	}
 	
 	/**

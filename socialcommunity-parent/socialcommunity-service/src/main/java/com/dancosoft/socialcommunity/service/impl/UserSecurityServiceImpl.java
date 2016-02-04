@@ -420,7 +420,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 		String contentEmail;
 		String fromeEmail="zaerko1991@mail.ru";
 		String toEmail;
-		List<UserEmail> list=Collections.emptyList();
+		UserEmail email=null;
 		UserSecurity userSecurityOld=null;	
 		
 		if (idUser.equals(null)) {
@@ -438,8 +438,8 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 				logger.info("UserSecurityService:Login and password update by id user.");
 				
 				//send login and password on user email
-				//list=userEmailDAO.getListEmailByIdUser(idUser);
-				//toEmail=list.get(0).getUserEmail();
+				//email=userEmailDAO.getEmailByIdUser(idUser);
+				//toEmail=email.getUserEmail();
 				
 				//contentEmail="\n Login:" + newLogin +"\n Password:" + newPassword;
 				//emailCreator.createSecurityEmail(fromeEmail, toEmail,contentEmail);

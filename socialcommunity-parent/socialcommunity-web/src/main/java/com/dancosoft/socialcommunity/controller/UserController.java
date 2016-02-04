@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,10 +22,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dancosoft.socialcommunity.controller.support.SearchPatternData;
-import com.dancosoft.socialcommunity.controller.support.UserExtended;
 import com.dancosoft.socialcommunity.controller.support.UserExtendedData;
 import com.dancosoft.socialcommunity.controller.support.UserParlorData;
-import com.dancosoft.socialcommunity.dao.support.TimeConverter;
+import com.dancosoft.socialcommunity.controller.support.constants.BlockStatus;
+import com.dancosoft.socialcommunity.controller.support.constants.FriendStatus;
+import com.dancosoft.socialcommunity.controller.support.constants.ViewStatus;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountGroup;
 import com.dancosoft.socialcommunity.model.AccountGroupHistory;
@@ -43,7 +43,6 @@ import com.dancosoft.socialcommunity.model.Language;
 import com.dancosoft.socialcommunity.model.SingleMessage;
 import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserAutobiography;
-import com.dancosoft.socialcommunity.model.UserCorespondence;
 import com.dancosoft.socialcommunity.model.UserEmail;
 import com.dancosoft.socialcommunity.model.UserLocation;
 import com.dancosoft.socialcommunity.model.UserPhoto;
@@ -269,8 +268,6 @@ public class UserController {
 	
 												//user account
 
-
-
 	@RequestMapping(value="/views/profile/user/parlor/accountdata.json", method = RequestMethod.POST)
 	public @ResponseBody UserParlorData loadUserAccount(@RequestBody Long id) {
 	
@@ -284,8 +281,8 @@ public class UserController {
 		UserAutobiography userAutobiography=userAutobiographyService.getUserAutobiographyByIdUser(id);
 		userParlorData.setUserAutobiography(userAutobiography);
 		
-		List<UserEmail> listUserEmail=userEmailService.getListEmailByIdUser(id);
-		userParlorData.setUserEmail(listUserEmail.get(0));
+		UserEmail userEmail=userEmailService.getEmailByIdUser(id);
+		userParlorData.setUserEmail(userEmail);
 		
 		UserPhoto userPhoto=userPhotoService.getUserPhotoByIdUser(id);
 		userParlorData.setUserPhoto(userPhoto);
@@ -295,8 +292,8 @@ public class UserController {
 		
 		//history last visit account
 		logger.info("UserController: Create date last visit account.");
-		List<Account> listUserAccount=userService.getListAccountByUserId(id);
-		AccountHistory accountHistory =accountHistoryService.getAccountHistoryByIdAccount(listUserAccount.get(0).getIdAccount());
+		Account userAccount=userService.getAccountByUserId(id);
+		AccountHistory accountHistory =accountHistoryService.getAccountHistoryByIdAccount(userAccount.getIdAccount());
 		accountHistory.setLastVisit(LocalDateTime.now());
 		accountHistoryService.updateAccountHistory(accountHistory);	
 		
@@ -307,9 +304,9 @@ public class UserController {
 	public @ResponseBody List<AccountGroup> getListAccountGroup(@RequestBody Long id) {
 		
 		logger.info("UserController: Load list of user account groups.");
-		List<Account> listUserAccount=userService.getListAccountByUserId(id);
+		Account userAccount=userService.getAccountByUserId(id);
 		List<AccountGroup> listAccountGroup=accountGroupService
-				.getListAccountGroupWithBlockStatusByIdAccount(listUserAccount.get(0).getIdAccount(), "unblock");
+				.getListAccountGroupWithBlockStatusByIdAccount(userAccount.getIdAccount(), BlockStatus.UNBLOCK.toString());
 		
 		return listAccountGroup;
 	}
@@ -328,7 +325,7 @@ public class UserController {
 			
 		}else{
 			logger.info("UserController: Check user on adult. User is not adult.");
-			listForum= (List)forumService.getListForumWithStatus("public");
+			listForum= (List)forumService.getListForumWithStatus(ViewStatus.PUBLIC.toString());
 		}
 		return listForum;
 	}
@@ -351,7 +348,6 @@ public class UserController {
 		return id;
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/views/profile/user/parlor/extendeduserprofile.json", method = RequestMethod.POST)
 	public @ResponseBody UserExtendedData loadExtendedUserProfile (@RequestBody Long id) {
 		
@@ -359,14 +355,13 @@ public class UserController {
 		UserExtendedData userExtendedData =new UserExtendedData();
 		
 		logger.info("UserController: load user email to update");
-		List<UserEmail> userEmailList=(List) userEmailService.getListEmailByIdUser(id);
-		userExtendedData.setUserEmail(userEmailList.get(0));
+		UserEmail userEmail = userEmailService.getEmailByIdUser(id);
+		userExtendedData.setUserEmail(userEmail);
 		
 		logger.info("UserController: load user social network to update");
-		List<UserSocialNetwork> userSocialNetworkList=(List) userSocialNetworkService
-				.getListSocialNetworkWithStatusByIdUser(id, "private");
-		if(userSocialNetworkList.size()>0){
-			userExtendedData.setUserSocialNetwork(userSocialNetworkList.get(0));
+		UserSocialNetwork userSocialNetwork=userSocialNetworkService.getSocialNetworkWithStatusByIdUser(id,ViewStatus.PRIVATE.toString());
+		if(userSocialNetwork!=null){
+			userExtendedData.setUserSocialNetwork(userSocialNetwork);
 		}
 			
 		logger.info("UserController: load user photo to update");
@@ -438,11 +433,11 @@ public class UserController {
 		logger.info("UserController:Create new social network (or update old if exist) and"
 				+ " update skype and facebook corespondence");
 		UserSocialNetwork userSocialNetwork;
-		List<UserSocialNetwork> userSocialNetworkList=userSocialNetworkService
-				.getListSocialNetworkWithStatusByIdUser(id, "private");
-
-		if(userSocialNetworkList.size()>0){
-			userSocialNetwork=userSocialNetworkList.get(0);
+		UserSocialNetwork userSocialNetworkOld = userSocialNetworkService
+				.getSocialNetworkWithStatusByIdUser(id,ViewStatus.PRIVATE.toString());
+		
+		if(userSocialNetworkOld !=null){
+			userSocialNetwork=userSocialNetworkOld;
 			
 		}else{
 			userSocialNetwork= new UserSocialNetwork();
@@ -472,7 +467,6 @@ public class UserController {
 		
 		return id;
 	}
-	
 	
 	@RequestMapping(value="/views/profile/user/parlor/userautobiographyprofile.json", method = RequestMethod.POST)
 	public @ResponseBody UserAutobiography loadUserAutobiographyProfile (@RequestBody Long id) {
@@ -513,41 +507,36 @@ public class UserController {
 		return id;
 	}
 		
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/views/listlanguage.json", method = RequestMethod.GET)
 	public @ResponseBody List<Language> loadListLanguage() {
-		
 		logger.info("UserController: load list language.");
 		List<Language> listlanguage=(List)languageService.getListLanguage();
 		
 		return listlanguage;
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/views/listcountry.json", method = RequestMethod.GET)
 	public @ResponseBody List<Country> loadListCountry() {
-		
 		logger.info("UserController: load list country.");
 		List<Country>  listCountry= (List)countryService.getListCountry();
 		
 		return listCountry;
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/views/listcity.json", method = RequestMethod.POST)
 	public @ResponseBody List<City> loadListCity(@RequestBody Long idCountry) {
-		
 		logger.info("UserController: load list city by id country.");
 		List<City>  listCity= (List)cityService.getListCityByIdCountry(idCountry);
 		
 		return listCity;
 	}
-	
 														//forum
 	
 	@RequestMapping(value="/views/profile/user/forum/listforumtopic.json", method = RequestMethod.POST)
 	public @ResponseBody List<ForumTopic> loadListForumTopic(@RequestBody Long idForum) {
-		
 		logger.info("UserController: load list forum topic by id forum.");
 		List<ForumTopic> listForumTopic= forumTopicService.getListForumTopicByIdForum(idForum);
 		
@@ -558,11 +547,11 @@ public class UserController {
 	public @ResponseBody Long saveNewForumTopic(@RequestBody ForumTopic forumTopic, @PathVariable("id") Long id) {
 		
 		logger.info("UserController: Save new forum topic for forum.");
-		List<Account> listUserAccount=userService.getListAccountByUserId(id);
+		Account userAccount=userService.getAccountByUserId(id);
 		Long idForum=forumTopic.getForum().getIdForum();
 		Forum forum = forumService.getForumById(idForum);
 		
-		forumTopic.setAuthorAccount(listUserAccount.get(0));
+		forumTopic.setAuthorAccount(userAccount);
 		forumTopic.setForum(forum);
 		forumTopic.setDateCreateForumTopic(LocalDateTime.now());
 		forumTopicService.saveForumTopic(forumTopic);
@@ -590,10 +579,10 @@ public class UserController {
 		Long idForumTopic=newForumMessage.getForumTopic().getIdForumTopic();
 		ForumTopic forumTopic= forumTopicService.getForumTopicById(idForumTopic);
 		Long idUser=newForumMessage.getAuthorAccount().getUser().getIdUser();
-		List<Account> listAccount= userService.getListAccountByUserId(idUser);
+		Account account= userService.getAccountByUserId(idUser);
 		
 		newForumMessage.setForumTopic(forumTopic);
-		newForumMessage.setAuthorAccount(listAccount.get(0));
+		newForumMessage.setAuthorAccount(account);
 		newForumMessage.setDateCreateForumMessage(LocalDateTime.now());
 		forumMessageService.saveForumMessage(newForumMessage);
 		
@@ -602,7 +591,6 @@ public class UserController {
 
 	@RequestMapping(value="/views/profile/user/forum/{idForumTopic}/deleteForumMessages.json", method = RequestMethod.POST)
 	public @ResponseBody Long deleteForumMessages(@RequestBody Long idForumMessage, @PathVariable("idForumTopic") Long idForumTopic) {
-		
 		logger.info("UserController: Delete forum message by id");
 		forumMessageService.deleteForumMessageById(idForumMessage);
 		
@@ -614,11 +602,11 @@ public class UserController {
 	public @ResponseBody Long saveNewAccountGroup(@RequestBody AccountGroup newAccountGroup, @PathVariable("id") Long id) {
 	
 		logger.info("UserController: Save new account group and account group history.");
-		List<Account> listAccount= userService.getListAccountByUserId(id);
+		Account account= userService.getAccountByUserId(id);
 		
 		AccountGroup accountGroup =new AccountGroup();
-		accountGroup.setAccount(listAccount.get(0));
-		accountGroup.setAccountGroupBlockStatus("unblock");
+		accountGroup.setAccount(account);
+		accountGroup.setAccountGroupBlockStatus(BlockStatus.UNBLOCK.toString());
 		accountGroup.setGroupName(newAccountGroup.getGroupName());
 		accountGroup.setViewStatus(newAccountGroup.getViewStatus());
 		accountGroupService.saveAccountGroup(accountGroup);
@@ -631,9 +619,9 @@ public class UserController {
 		
 		logger.info("UserController: Author of account group create id member for yourself");
 		GroupMember groupMember=new GroupMember();
-		groupMember.setMemberAccount(listAccount.get(0));
+		groupMember.setMemberAccount(account);
 		groupMember.setAccountGroup(accountGroup);
-		groupMember.setGroupMemberStatus("friend");
+		groupMember.setGroupMemberStatus(FriendStatus.FRIEND.toString());
 		
 		return id;
 	}
@@ -642,8 +630,8 @@ public class UserController {
 	public @ResponseBody Long getAccountGroup(@PathVariable("id") Long id, @PathVariable("idAccountGroup") Long idAccountGroup){
 	
 		logger.info("UserController: Load id group member.");
-		List<Account> account= userService.getListAccountByUserId(id);
-		Long idAccount= account.get(0).getIdAccount();
+		Account account= userService.getAccountByUserId(id);
+		Long idAccount= account.getIdAccount();
 		GroupMember groupMember= groupMemberService.getGroupMemberInAccountGroupByIdAccount(idAccountGroup, idAccount);
 		
 		return groupMember.getIdGroupMember();
@@ -677,7 +665,8 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/views/profile/user/group/{idAccountGroup}/deleteAccountGroupMessage.json", method = RequestMethod.POST)
-	public @ResponseBody Long deleteNewAccountGroupMessage(@RequestBody Long idGroupMessage, @PathVariable("idAccountGroup") Long idAccountGroup) {
+	public @ResponseBody Long deleteNewAccountGroupMessage(@RequestBody Long idGroupMessage,
+			@PathVariable("idAccountGroup") Long idAccountGroup) {
 		
 		logger.info("UserController: Delete group message by id");
 		groupMessageService.deleteGroupMessageById(idGroupMessage);
@@ -685,7 +674,7 @@ public class UserController {
 		return idAccountGroup;
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/views/profile/user/group/listEventPattern.json", method = RequestMethod.GET)
 	public @ResponseBody List<EventPattern> loadListEventPattern(){
 		logger.info("UserController: Load list event pattern.");
@@ -717,9 +706,10 @@ public class UserController {
 	}
 
 																//add new member
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/views/profile/user/group/{idAccountGroup}/listaccount.json", method = RequestMethod.POST)
-	public @ResponseBody List<Account> searchAccountForAccountGroup(@RequestBody SearchPatternData searchPattern,@PathVariable("idAccountGroup") Long idAccountGroup){
+	public @ResponseBody List<Account> searchAccountForAccountGroup(@RequestBody SearchPatternData searchPattern,
+			@PathVariable("idAccountGroup") Long idAccountGroup){
 		
 		logger.info("UserController: Search account by account name or user last name for include in account group.");
 		List<Account> listAccount=(List)accountService
@@ -740,9 +730,9 @@ public class UserController {
 		groupMember.setAccountGroup(accountGroup);
 		
 		if(friendStatus.equals("true")){
-			groupMember.setGroupMemberStatus("friend");	
+			groupMember.setGroupMemberStatus(FriendStatus.FRIEND.toString());	
 		}else{
-			groupMember.setGroupMemberStatus("notfriend");	
+			groupMember.setGroupMemberStatus(FriendStatus.NOTFRIEND.toString());	
 		}
 		groupMemberService.saveGroupMember(groupMember);
 		
@@ -753,17 +743,18 @@ public class UserController {
 	@RequestMapping(value="/views/profile/user/{id}/account/listaccountgroup.json", method = RequestMethod.GET)
 	public @ResponseBody List<AccountGroup> getListAccountGroupForAccount(@PathVariable("id") Long id){
 		
-		List<Account> listAccount= userService.getListAccountByUserId(id);
-		Long idAccount=listAccount.get(0).getIdAccount();
+		Account account= userService.getAccountByUserId(id);
+		Long idAccount=account.getIdAccount();
 		logger.info("UserController: Load list account group for account.");
 		List<AccountGroup> listAccountGroup = accountGroupService
-				.getListAccountGroupWithBlockStatusByIdAccount(idAccount,"unblock");
+				.getListAccountGroupWithBlockStatusByIdAccount(idAccount,BlockStatus.UNBLOCK.toString());
 		
 		return listAccountGroup;
 	}
 	
 	@RequestMapping(value="/views/profile/user/{id}/account/searchaccount.json", method = RequestMethod.POST)
-	public @ResponseBody List<Account> searchAccountByAccountName(@RequestBody SearchPatternData searchPattern,@PathVariable("id") Long id){
+	public @ResponseBody List<Account> searchAccountByAccountName(@RequestBody SearchPatternData searchPattern,
+			@PathVariable("id") Long id){
 		
 		logger.info("UserController: Search accounts by name or user last name.");
 		List<Account> listAccount= accountService.searchAccountByAccountNameUserLastName(searchPattern.getAccountName(),
@@ -785,9 +776,9 @@ public class UserController {
 		groupMember.setMemberAccount(memberAccount);
 		
 		if(friendStatus.equals("true")){
-			groupMember.setGroupMemberStatus("friend");	
+			groupMember.setGroupMemberStatus(FriendStatus.FRIEND.toString());	
 		}else{
-			groupMember.setGroupMemberStatus("notfriend");	
+			groupMember.setGroupMemberStatus(FriendStatus.NOTFRIEND.toString());	
 		}
 		groupMemberService.saveGroupMember(groupMember);	
 	}
@@ -808,8 +799,8 @@ public class UserController {
 		UserAutobiography userAutobiography=userAutobiographyService.getUserAutobiographyByIdUser(idUserSearch);
 		userParlorData.setUserAutobiography(userAutobiography);
 		
-		List<UserEmail> listUserEmail=userEmailService.getListEmailByIdUser(idUserSearch);
-		userParlorData.setUserEmail(listUserEmail.get(0));
+		UserEmail userEmail=userEmailService.getEmailByIdUser(idUserSearch);
+		userParlorData.setUserEmail(userEmail);
 		
 		UserPhoto userPhoto=userPhotoService.getUserPhotoByIdUser(idUserSearch);
 		userParlorData.setUserPhoto(userPhoto);
@@ -825,8 +816,8 @@ public class UserController {
 			@PathVariable("searchIdAccount") Long searchIdAccount){
 		
 		logger.info("UserControlleer: Load list account single message by id user and id interlocutor account");
-		List<Account> listAccount =userService.getListAccountByUserId(id);
-		Long idAccount= listAccount.get(0).getIdAccount();
+		Account account =userService.getAccountByUserId(id);
+		Long idAccount= account.getIdAccount();
 		LocalDateTime minDateLDT=LocalDateTime.now().minusDays(7);
 		LocalDateTime maxDateLDT=LocalDateTime.now();
 		List<SingleMessage> listSingleMessage=singleMessageService.getListIntrlocutorSingleMessageBeetweenDateByIdAccount(
@@ -836,15 +827,16 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/views/profile/user/{id}/account/saveAccountSingleMessage.json", method = RequestMethod.POST)
-	public @ResponseBody Long saveNewAccountSingleMessage(@RequestBody SingleMessage newAccountSingleMessage,@PathVariable("id") Long id){
+	public @ResponseBody Long saveNewAccountSingleMessage(@RequestBody SingleMessage newAccountSingleMessage,
+			@PathVariable("id") Long id){
 		
 		logger.info("UserController:Save new single account message.");
 		SingleMessage singleMessage=new SingleMessage();
 		
 		logger.info("UserController:Load user account for save new single account message.");
 		Long idUser=newAccountSingleMessage.getAccount().getUser().getIdUser();
-		List<Account> listAccount=userService.getListAccountByUserId(idUser);
-		singleMessage.setAccount(listAccount.get(0));
+		Account account=userService.getAccountByUserId(idUser);
+		singleMessage.setAccount(account);
 		
 		logger.info("UserController:Load interlocutor account for save new single account message.");
 		Long idInterlocutorAccount=newAccountSingleMessage.getInterlocutorAccount().getIdAccount();
@@ -860,7 +852,6 @@ public class UserController {
 	
 	@RequestMapping(value="/views/profile/user/account/{id}/deleteAccountSingleMessage.json", method = RequestMethod.POST)
 	public @ResponseBody Long deleteAccountSingleMessage(@RequestBody Long idAccountSingleMessage,@PathVariable("id") Long id){
-		
 		logger.info("UserController:Delete account single message.");
 		singleMessageService.deleteSingleMessageById(idAccountSingleMessage);		
 		

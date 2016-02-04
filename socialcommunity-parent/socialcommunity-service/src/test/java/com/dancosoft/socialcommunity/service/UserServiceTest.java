@@ -78,9 +78,9 @@ public class UserServiceTest {//extends TestStarter {
 //	@Rollback(true)
 //	@Test
 //	public void testGettingListAccountByUserId(){
-//		List<Account> listAccount =userService.getListAccountByUserId(user.getIdUser());
+//		Account account =userService.getAccountByUserId(user.getIdUser());
 //		logger.info("UserServiceTest: test method testGettingListAccountByUserId");
-//		Assert.assertFalse(listAccount.isEmpty());
+//		Assert.assertNotNull(account);
 //	}
 //	
 //	@Transactional

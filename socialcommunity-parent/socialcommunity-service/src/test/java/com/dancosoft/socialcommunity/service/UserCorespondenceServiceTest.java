@@ -89,7 +89,7 @@ public class UserCorespondenceServiceTest {//extends TestStarter{
 //	@Test
 //	public void testGettingListUserCorespondenceForBroadcastInfo() {
 //		logger.info("UserCorespondenceServiceTest: test method GetListUserCorespondenceForBroadcastInfo");
-//		List<UserCorespondence> list=userCorespondenceService.getListUserCorespondenceForBroadcastInfo();
-//		Assert.assertFalse(list.isEmpty());
+//		UserCorespondence userCorespondence=userCorespondenceService.getUserCorespondenceForBroadcastInfo();
+//		Assert.assertNotNull(userCorespondence);
 //	}
 }

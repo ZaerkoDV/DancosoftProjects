@@ -45,10 +45,10 @@ public interface UserCorespondenceDAO extends CommonEntityDAO {
 			Long idUserCorespondence);
 
 	/**
-	 * Method return list of users corespondence with view status public. If user
-	 * corspondence are not exist return empty list.
+	 * Method return user corespondence with view status public. If user
+	 * corspondence are not exist return null.
 	 * 
-	 * @return List<UserCorespondence>
+	 * @return UserCorespondence
 	 */
-	public List<UserCorespondence> getListUserCorespondenceForBroadcastInfo();
+	public UserCorespondence getUserCorespondenceForBroadcastInfo();
 }

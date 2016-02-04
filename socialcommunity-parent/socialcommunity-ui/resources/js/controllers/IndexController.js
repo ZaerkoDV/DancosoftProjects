@@ -8,20 +8,11 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
 
 	$scope.id = $state.params.idUser;
 
-//	$scope.getSignUpCommonPage=function(){
-//		$state.go('signupcommon');
-//	};
-	
-//	$scope.getSignInPage=function(){
-//		$state.go('signin');
-//};
-	
 	$scope.saveCommonUser = function(user){
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/signup/savecommon/user.json',user).success(function(id) {
 					
 			if(id===null || id===''){
-				$scope.changeRoute('#/signup');
-				//$state.go('signupcommon');
+				$state.go('signupcommon');
 			}else{
 				$state.go('signupextended', {idUser: id});
 			}
@@ -50,7 +41,7 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
 				$state.go('signuplogin', {idUser: id});
 			}else{
 				$scope.createUserAccount(id);
-				$scope.changeRoute('/socialcommunity');
+				$state.go('index');
 			}
 		}).error(function() {
 		});
@@ -62,15 +53,13 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
 		}).error(function() {
 		});
 	};	
-	
 													//sign in
 	$scope.userSignIn = function(securityPrompt){
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/signin/userdata.json',securityPrompt)
 		.success(function(id) {
 			
 			if(id===null && id===''){
-				$scope.changeRoute('#/signin');	
-				//$state.go('signin');
+				$state.go('signin');
 			}else{
 				$scope.redirectToUserPage(id);	
 			}
@@ -98,22 +87,22 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
 				$state.go('adminparlor', {idAdmin: id});
 				
 			}else{
-				$scope.changeRoute('#/signin');
+				$state.go('signin');
 			}	
 		}).error(function() {		
 		});
 	};	
 
 	//route change
-	$scope.changeRoute = function(url, forceReload) {
-        $scope = $scope || angular.element(document).scope();
-        if(forceReload || $scope.$$phase) { 
-            window.location = url;
-        } else {
-            $location.path(url);
-            $scope.$apply();
-        }
-    };
+//	$scope.changeRoute = function(url, forceReload) {
+//        $scope = $scope || angular.element(document).scope();
+//        if(forceReload || $scope.$$phase) { 
+//            window.location = url;
+//        } else {
+//            $location.path(url);
+//            $scope.$apply();
+//        }
+//    };
 	
     
     

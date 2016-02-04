@@ -85,21 +85,20 @@ public class UserCorespondenceDAOImpl extends CommonEntityDAOImpl implements Use
 	}
 
 	/**
-	 * Method return list of users corespondence with view status public. If user
-	 * corspondence are not exist return empty list.
+	 * Method return user corespondence with view status public. If user
+	 * corspondence are not exist return null.
 	 * 
-	 * @return List<UserCorespondence>
+	 * @return UserCorespondence
 	 */
-	@SuppressWarnings("unchecked")
-	public List<UserCorespondence> getListUserCorespondenceForBroadcastInfo() {
+	public UserCorespondence getUserCorespondenceForBroadcastInfo() {
 
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory()
 				.getCurrentSession().createCriteria(UserCorespondence.class);
 		criteria.add(Restrictions.eq("corespondenceViewStatus", "public"));
 		criteria.setMaxResults(20);
 		criteria.setFirstResult(0);
-		logger.info("UserCorespondenceDAO: List users corespondence loaded.");
+		logger.info("UserCorespondenceDAO: User corespondence loaded.");
 
-		return criteria.list();
+		return (UserCorespondence) criteria.uniqueResult();
 	}
 }

@@ -5,7 +5,7 @@
 		 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 
 	<display-name>socialcommunity-web</display-name>
-
+	
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -18,21 +18,15 @@
 	      <param-name>contextConfigLocation</param-name>
 	      <param-value>/WEB-INF/config/context-config.xml</param-value>
 	    </init-param>
-	    
-		<load-on-startup>1</load-on-startup>
+	    <load-on-startup>1</load-on-startup>
+	  
 	</servlet>
-
+  
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/config/context-config.xml</param-value>
 	</context-param>
-
-<!--
-	<welcome-file-list>
-	 	<welcome-file>http://localhost:8080/socialcommunity/views/index.html</welcome-file>
-	</welcome-file-list>
- -->
-
+  
 	<servlet-mapping>
 		<servlet-name>socialcommunity-web</servlet-name>
 		<url-pattern>/</url-pattern>

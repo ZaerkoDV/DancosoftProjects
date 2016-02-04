@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.dancosoft.socialcommunity.controller.support.UserExtended;
 import com.dancosoft.socialcommunity.controller.support.base.StandartAccountGroup;
+import com.dancosoft.socialcommunity.controller.support.constants.BlockStatus;
+import com.dancosoft.socialcommunity.controller.support.constants.ViewStatus;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountGroup;
 import com.dancosoft.socialcommunity.model.AccountGroupHistory;
@@ -196,7 +198,7 @@ public class IndexController {
 			logger.info("IndexController: create new autobiography feature of user");
 			UserAutobiography userAutobiography =new UserAutobiography();
 			
-	//LocalDateTime birth=userExtended.getUserAutobiography().getBirth();
+			//LocalDateTime birth=userExtended.getUserAutobiography().getBirth();
 			userAutobiography.setBirth(LocalDateTime.of(1990, 12, 31, 0, 0));
 			
 			userAutobiography.setUser(user);
@@ -204,7 +206,7 @@ public class IndexController {
 			
 			logger.info("IndexController: create new user corespondence view status(private)");
 			UserCorespondence userCorespondence=new UserCorespondence();
-			userCorespondence.setCorespondenceViewStatus("private");		
+			userCorespondence.setCorespondenceViewStatus(ViewStatus.PRIVATE.toString());		
 			userCorespondence.setUser(user);
 			userCorespondenceService.saveUserCorespondence(userCorespondence);
 			
@@ -280,7 +282,7 @@ public class IndexController {
 			
 			logger.info("IndexController: create new user account completed.");
 			Account account = new Account();
-			account.setAccountBlockStatus("public");
+			account.setAccountBlockStatus(BlockStatus.UNBLOCK.toString());
 			account.setAccountName(userSecurity.getUserLogin());
 			account.setUser(user);
 			accountService.saveAccount(account);
@@ -292,7 +294,6 @@ public class IndexController {
 			accountHistory.setAccount(account);
 			accountHistoryService.saveAccountHistory(accountHistory);
 
-			
 			// create base groups for empty account and group history
 			StandartAccountGroup accountGroup = new StandartAccountGroup();
 			StandartAccountGroup historyAccountGroup = new StandartAccountGroup();

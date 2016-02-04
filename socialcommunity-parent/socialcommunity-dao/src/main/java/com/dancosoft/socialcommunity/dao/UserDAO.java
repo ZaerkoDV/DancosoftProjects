@@ -35,15 +35,15 @@ import com.dancosoft.socialcommunity.model.User;
 public interface UserDAO extends CommonEntityDAO {
 	
 	/**
-	 * Method return list of user accounts. If user accounts are not exist
-	 * return empty list.
+	 * Method return user accounts. If user accounts is not exist
+	 * return null.
 	 * 
 	 * @type Long
 	 * @param idUser
 	 * 
-	 * @return List<Account>
+	 * @return Account
 	 */
-	public List<Account> getListAccountByUserId(Long idUser);
+	public Account getAccountByUserId(Long idUser);
 
 	/**
 	 * Method return list of user which belong to sex. If list of user is not

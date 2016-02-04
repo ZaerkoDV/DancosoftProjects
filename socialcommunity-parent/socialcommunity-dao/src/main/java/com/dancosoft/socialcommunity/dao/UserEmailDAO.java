@@ -11,8 +11,6 @@
  */
 package com.dancosoft.socialcommunity.dao;
 
-import java.util.List;
-
 import com.dancosoft.socialcommunity.model.UserEmail;
 
 /**
@@ -34,29 +32,27 @@ import com.dancosoft.socialcommunity.model.UserEmail;
 public interface UserEmailDAO extends CommonEntityDAO {
 
 	/**
-	 * Method return list of user email with view status. If list is not exist
-	 * return empty list.
+	 * Method return user email with view status. If email is not exist return null.
 	 * 
 	 * @type Long
 	 * @type String
 	 * @param idUser
 	 * @param viewStatus
 	 * 
-	 * @return List<UserEmail>
+	 * @return UserEmail
 	 */
-	public List<UserEmail> getListEmailWithStatusByIdUser(Long idUser,
-			String viewStatus);
+	public UserEmail getEmailWithStatusByIdUser(Long idUser,String viewStatus);
 
 	/**
-	 * Method return list of user email by user id. If list is not exist return
-	 * empty list.
+	 * Method return email by user id. If email
+	 * is not exist return null.
 	 * 
 	 * @type Long
 	 * @param idUser
 	 * 
-	 * @return List<UserEmail>
+	 * @return UserEmail
 	 */
-	public List<UserEmail> getListEmailByIdUser(Long idUser);
+	public UserEmail getEmailByIdUser(Long idUser);
 
 	/**
 	 * Method check user email on unique value. If user email is not unique

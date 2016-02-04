@@ -77,7 +77,7 @@ public class UserEmailServiceImpl implements UserEmailService {
 	}
 	
 	/**
-	 * Method return list of user email with view status. If list is not exist return empty list.
+	 * Method return user email with view status. If email is not exist return null.
 	 * 
 	 * @type Long
 	 * @type String
@@ -87,12 +87,12 @@ public class UserEmailServiceImpl implements UserEmailService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
-	 * @return List<UserEmail>
+	 * @return UserEmail
 	 */
 	@Transactional
-	public List<UserEmail> getListEmailWithStatusByIdUser(Long idUser,String viewStatus){
+	public UserEmail getEmailWithStatusByIdUser(Long idUser,String viewStatus){
 		
-		List<UserEmail> list=Collections.emptyList();
+		UserEmail userEmail=null;
 		if (idUser.equals(null)) {
 			throw new RuntimeException("UserEmailService:Id user must not null");
 			
@@ -101,22 +101,22 @@ public class UserEmailServiceImpl implements UserEmailService {
 			
 		}else{
 			try {
-				logger.info("UserEmailService:List of user email with status loaded by id user.");
-				list= userEmailDAO.getListEmailWithStatusByIdUser(idUser, viewStatus);
+				logger.info("UserEmailService:User email with status loaded by id user.");
+				userEmail = userEmailDAO.getEmailWithStatusByIdUser(idUser, viewStatus);
 				
 			} catch (DataRetrievalFailureException rf) {
-				logger.warn("UserEmailService: List of user email with status loaded by id user.But list is empty." + rf);
+				logger.warn("UserEmailService: User email with status loaded by id user.But list is empty." + rf);
 				
 			} catch (DataAccessException da) {
 				logger.error("UserEmailService:Exeption connect with data base or other error= "+da);
 			}
 		}
-		return list;
+		return userEmail;
 	}
 	
 	/**
-	 * Method return list of user email by user id. If list
-	 * is not exist return empty list.
+	 * Method return user email by user id. If email
+	 * is not exist return null.
 	 * 
 	 * @type Long
 	 * @param idUser
@@ -124,28 +124,28 @@ public class UserEmailServiceImpl implements UserEmailService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
-	 * @return List<UserEmail>
+	 * @return UserEmail
 	 */
 	@Transactional
-	public List<UserEmail> getListEmailByIdUser(Long idUser){
+	public UserEmail getEmailByIdUser(Long idUser){
 		
-		List<UserEmail> list=Collections.emptyList();
+		UserEmail userEmail=null;
 		if (idUser.equals(null)) {
 			throw new RuntimeException("UserEmailService:Id user must not null");
 			
 		}else{
 			try {
-				logger.info("UserEmailService:List of user email loaded by id user.");
-				list= userEmailDAO.getListEmailByIdUser(idUser);
+				logger.info("UserEmailService: User email loaded by id user.");
+				userEmail= userEmailDAO.getEmailByIdUser(idUser);
 				
 			} catch (DataRetrievalFailureException rf) {
-				logger.warn("UserEmailService:List of user email loaded by id user.But list is empty." + rf);
+				logger.warn("UserEmailService: User email loaded by id user.But list is empty." + rf);
 				
 			} catch (DataAccessException da) {
 				logger.error("UserEmailService:Exeption connect with data base or other error= "+da);
 			}
 		}
-		return list;
+		return userEmail;
 	}
 	
 	/**

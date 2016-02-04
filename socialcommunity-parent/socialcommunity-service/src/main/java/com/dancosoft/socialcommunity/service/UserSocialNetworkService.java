@@ -23,6 +23,7 @@ import javax.persistence.NonUniqueResultException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.model.UserSocialNetwork;
 
@@ -40,8 +41,8 @@ import com.dancosoft.socialcommunity.model.UserSocialNetwork;
 public interface UserSocialNetworkService {
 
 	/**
-	 * Method return list of social community with wiev status which use user.
-	 * If social community not exist return empty list
+	 * Method return user social nettwork with view status which use user.
+	 * If social community not exist return null.
 	 * 
 	 * @type Long
 	 * @type String
@@ -51,10 +52,9 @@ public interface UserSocialNetworkService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException 
 	 * 
-	 * @return List<UserSocialNetwork>
+	 * @return UserSocialNetwork
 	 */
-	public List<UserSocialNetwork> getListSocialNetworkWithStatusByIdUser(
-			Long idUser, String viewStatus);
+	public UserSocialNetwork getSocialNetworkWithStatusByIdUser(Long idUser,String viewStatus);
 
 	/**
 	 * Method cheak user skype address on uniqule value. If user

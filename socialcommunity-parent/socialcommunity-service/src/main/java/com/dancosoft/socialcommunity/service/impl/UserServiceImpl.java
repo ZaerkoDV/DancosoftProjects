@@ -18,6 +18,8 @@ package com.dancosoft.socialcommunity.service.impl;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.NonUniqueResultException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,8 +68,8 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	/**
-	 * Method return list of user accounts. If user accounts are
-	 * not exist return empty list.
+	 * Method return user account. If user account is
+	 * not exist return null.
 	 * 
 	 * @type Long
 	 * @param idUser
@@ -75,28 +77,31 @@ public class UserServiceImpl implements UserService{
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
-	 * @return List<Account>
+	 * @return Account
 	 */
 	@Transactional
-	public List<Account> getListAccountByUserId(Long idUser) {
+	public Account getAccountByUserId(Long idUser) {
 		
-		List<Account> list=Collections.emptyList();
+		Account account=null;
 		if (idUser.equals(null)) {
 			throw new RuntimeException("UserService:Id user must not null");
 			
 		} else{
 			try {
 				logger.info("UserService: Accounts by user id load.");
-				list= userDAO.getListAccountByUserId(idUser);
+				account= userDAO.getAccountByUserId(idUser);
+		
+			} catch (NonUniqueResultException nu) {
+				logger.warn("UserService:Account by id is not uniqual." + nu);
 				
-			} catch (DataRetrievalFailureException rf) {
-				logger.warn("UserService:Accounts not belong to user with id "+idUser+".List is empty." + rf);
+			}  catch (DataRetrievalFailureException rf) {
+				logger.warn("UserService:Account not belong to user with id "+idUser+".List is empty." + rf);
 				
 			} catch (DataAccessException da) {
 				logger.error("UserService: Exeption connect with data base or other error= "+da);
 			}
 		}
-		return list;
+		return account;
 	}
 	
 	/**

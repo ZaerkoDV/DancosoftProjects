@@ -34,18 +34,17 @@ import com.dancosoft.socialcommunity.model.UserSocialNetwork;
 public interface UserSocialNetworkDAO extends CommonEntityDAO {
 
 	/**
-	 * Method return list of social community with wiev status which use user.
-	 * If social community not exist return empty list
+	 * Method return user social nettwork with view status which use user.
+	 * If social community not exist return null.
 	 * 
 	 * @type Long
 	 * @type String
 	 * @param idUser
 	 * @param viewStatus
 	 * 
-	 * @return List<UserSocialNetwork>
+	 * @return UserSocialNetwork
 	 */
-	public List<UserSocialNetwork> getListSocialNetworkWithStatusByIdUser(
-			Long idUser, String viewStatus);
+	public UserSocialNetwork getSocialNetworkWithStatusByIdUser(Long idUser,String viewStatus);
 
 	/**
 	 * Method cheak user skype address on uniqule value. If user

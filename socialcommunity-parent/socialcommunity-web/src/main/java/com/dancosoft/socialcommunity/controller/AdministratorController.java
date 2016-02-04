@@ -272,8 +272,8 @@ public class AdministratorController {
 		UserAutobiography userAutobiography=userAutobiographyService.getUserAutobiographyByIdUser(idAdmin);
 		userParlorData.setUserAutobiography(userAutobiography);
 		
-		List<UserEmail> listUserEmail=userEmailService.getListEmailByIdUser(idAdmin);
-		userParlorData.setUserEmail(listUserEmail.get(0));
+		UserEmail userEmail=userEmailService.getEmailByIdUser(idAdmin);
+		userParlorData.setUserEmail(userEmail);
 		
 		UserPhoto userPhoto=userPhotoService.getUserPhotoByIdUser(idAdmin);
 		userParlorData.setUserPhoto(userPhoto);
@@ -283,9 +283,9 @@ public class AdministratorController {
 		
 		//history last visit account
 		logger.info("UserController: Create date last visit account.");
-		List<Account> listUserAccount=userService.getListAccountByUserId(idAdmin);
+		Account userAccount=userService.getAccountByUserId(idAdmin);
 		AccountHistory accountHistory =accountHistoryService
-				.getAccountHistoryByIdAccount(listUserAccount.get(0).getIdAccount());
+				.getAccountHistoryByIdAccount(userAccount.getIdAccount());
 		accountHistory.setLastVisit(LocalDateTime.now());
 		accountHistoryService.updateAccountHistory(accountHistory);	
 		
@@ -310,7 +310,6 @@ public class AdministratorController {
 	
 										// edit extended profile
 	
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/views/profile/admin/parlor/extendedadminprofile.json", method = RequestMethod.POST)
 	public @ResponseBody UserExtendedData loadExtendedAdminProfile (@RequestBody Long idAdmin) {
 		
@@ -318,8 +317,8 @@ public class AdministratorController {
 		UserExtendedData userExtendedData = new UserExtendedData();
 		
 		logger.info("AdminController: load admin email to update");
-		List<UserEmail> userEmailList=(List) userEmailService.getListEmailByIdUser(idAdmin);
-		userExtendedData.setUserEmail(userEmailList.get(0));
+		UserEmail userEmail=userEmailService.getEmailByIdUser(idAdmin);
+		userExtendedData.setUserEmail(userEmail);
 		
 //		logger.info("AdminComtroller: load admin autobiography");
 //		UserAutobiography userAutobiography = userAutobiographyService.getUserAutobiographyByIdUser(idAdmin);
@@ -439,7 +438,7 @@ public class AdministratorController {
 	
 													//forum
 	
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/views/profile/admin/parlor/listforum.json", method = RequestMethod.GET)
 	public @ResponseBody List<Forum> getListForum() {
 		logger.info("AdminController: Load list forum for admin account");
@@ -473,12 +472,12 @@ public class AdministratorController {
 		
 		logger.info("AdminController: Save new forum topic for forum.");
 		Long idUser=forumTopic.getAuthorAccount().getUser().getIdUser();
-		List<Account> listUserAccount=userService.getListAccountByUserId(idUser);
+		Account userAccount=userService.getAccountByUserId(idUser);
 		
 		Long idForum=forumTopic.getForum().getIdForum();
 		Forum forum = forumService.getForumById(idForum);
 		
-		forumTopic.setAuthorAccount(listUserAccount.get(0));
+		forumTopic.setAuthorAccount(userAccount);
 		forumTopic.setForum(forum);
 		forumTopic.setDateCreateForumTopic(LocalDateTime.now());
 		forumTopicService.saveForumTopic(forumTopic);
@@ -491,6 +490,11 @@ public class AdministratorController {
 		logger.info("AdminController: Delete forum topic by id");
 		forumTopicService.deleteForumTopicById(idForumTopic);
 	}
+	
+	
+	
+	
+	
 	
 	
 }

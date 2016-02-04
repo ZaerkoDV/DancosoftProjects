@@ -67,18 +67,17 @@ public class UserSocialNetworkDAOImpl extends CommonEntityDAOImpl implements Use
 	}
 	
 	/**
-	 * Method return list of social community with wiev status which use user.
-	 * If social community not exist return empty list
+	 * Method return user social nettwork with view status which use user.
+	 * If social community not exist return null.
 	 * 
 	 * @type Long
 	 * @type String
 	 * @param idUser
 	 * @param viewStatus
 	 * 
-	 * @return List<UserSocialNetwork>
+	 * @return UserSocialNetwork
 	 */
-	@SuppressWarnings("unchecked")
-	public List<UserSocialNetwork> getListSocialNetworkWithStatusByIdUser(Long idUser,String viewStatus){
+	public UserSocialNetwork getSocialNetworkWithStatusByIdUser(Long idUser,String viewStatus){
 		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
 				.createCriteria(UserSocialNetwork.class);
@@ -88,7 +87,7 @@ public class UserSocialNetworkDAOImpl extends CommonEntityDAOImpl implements Use
 		criteria.add(Restrictions.eq("c.corespondenceViewStatus", viewStatus));		
 		logger.info("UserSocialNetworkDAO:List user social network with status loaded.");
 
-		return criteria.list();
+		return (UserSocialNetwork) criteria.uniqueResult();
 	}
 	
 	/**

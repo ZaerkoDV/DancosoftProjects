@@ -68,8 +68,8 @@ public class UserSocialNetworkServiceImpl implements UserSocialNetworkService{
 	}
 	
 	/**
-	 * Method return list of social community with wiev status which use user.
-	 * If social community not exist return empty list
+	 * Method return user social nettwork with view status which use user.
+	 * If social community not exist return null.
 	 * 
 	 * @type Long
 	 * @type String
@@ -79,12 +79,12 @@ public class UserSocialNetworkServiceImpl implements UserSocialNetworkService{
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException 
 	 * 
-	 * @return List<UserSocialNetwork>
+	 * @return UserSocialNetwork
 	 */
 	@Transactional
-	public List<UserSocialNetwork> getListSocialNetworkWithStatusByIdUser(Long idUser,String viewStatus){
+	public UserSocialNetwork getSocialNetworkWithStatusByIdUser(Long idUser,String viewStatus){
 		
-		List<UserSocialNetwork> list= Collections.emptyList();
+		UserSocialNetwork userSocialNetwork = null;
 		if (idUser.equals(null)) {
 			throw new RuntimeException("UserSocialNetworkService:Id user must not null");
 			
@@ -93,21 +93,21 @@ public class UserSocialNetworkServiceImpl implements UserSocialNetworkService{
 			
 		}else{
 			try {
-				logger.info("UserSocialNetworkService:List user social network with status loaded.");
-				list= userSocialNetworkDAO.getListSocialNetworkWithStatusByIdUser(idUser, viewStatus);
+				logger.info("UserSocialNetworkService:User social network with status loaded.");
+				userSocialNetwork = userSocialNetworkDAO.getSocialNetworkWithStatusByIdUser(idUser, viewStatus);
 			
-			} catch (IndexOutOfBoundsException iob) {
-				logger.warn("UserSocialNetworkService: No object with this index " + iob);
+			} catch (NonUniqueResultException nu) {
+				logger.warn("UserSocialNetworkService:Social network by id user is not uniqual." + nu);
 				
-			} catch (DataRetrievalFailureException rf) {
-				logger.warn("UserSocialNetworkService: List of user social network with view"
+			}  catch (DataRetrievalFailureException rf) {
+				logger.warn("UserSocialNetworkService: User social network with view"
 						+ " status"+viewStatus+" load, but list is empty." + rf);
 				
 			} catch (DataAccessException da) {
 				logger.error("UserSocialNetworkService:Exeption connect with data base or other error= "+da);
 			}
 		}
-		return list;
+		return userSocialNetwork;
 	}
 	
 	/**
