@@ -1,7 +1,13 @@
-package com.dancosoft.socialcommunity.controller;
+package com.dancosoft.socialcommunity.controller.controllers;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Date;
+
+
+
+
+
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -17,10 +23,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 
+
+
+
+
+
+
+
 import com.dancosoft.socialcommunity.controller.support.UserExtended;
 import com.dancosoft.socialcommunity.controller.support.base.StandartAccountGroup;
 import com.dancosoft.socialcommunity.controller.support.constants.BlockStatus;
+import com.dancosoft.socialcommunity.controller.support.constants.UserRoleName;
 import com.dancosoft.socialcommunity.controller.support.constants.ViewStatus;
+import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountGroup;
 import com.dancosoft.socialcommunity.model.AccountGroupHistory;
@@ -166,8 +181,9 @@ public class IndexController {
 		return idUser;
 	}
 		
-	@RequestMapping(value="/views/profile/signup/saveextended/{id}/userextended.json", method = RequestMethod.POST)
-	public @ResponseBody Long saveExtendedUser(@RequestBody String userExtendedJson, @PathVariable("id") Long id) {
+	@RequestMapping(value="/views/profile/signup/saveextended/{id}/{birth}/userextended.json", method = RequestMethod.POST)//{birth}
+	public @ResponseBody Long saveExtendedUser(@RequestBody String userExtendedJson, @PathVariable("id") Long id,
+			@PathVariable("birth") Date birth) {
 		
 		logger.info("IndexController: create new user with extended information");
 		Long idUser= null;
@@ -176,7 +192,7 @@ public class IndexController {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			userExtended = mapper.readValue(userExtendedJson, UserExtended.class);
-			
+	
 		} catch (JsonParseException e) {
 			logger.info("IndexController: error when json parse class UserExtended "+e);
 			
@@ -198,8 +214,8 @@ public class IndexController {
 			logger.info("IndexController: create new autobiography feature of user");
 			UserAutobiography userAutobiography =new UserAutobiography();
 			
-			//LocalDateTime birth=userExtended.getUserAutobiography().getBirth();
-			userAutobiography.setBirth(LocalDateTime.of(1990, 12, 31, 0, 0));
+			TimeConverter converter=new TimeConverter();
+			userAutobiography.setBirth(converter.convertDateToLocalDateTime(birth));
 			
 			userAutobiography.setUser(user);
 			userAutobiographyService.saveUserAutobiographyService(userAutobiography);
@@ -224,7 +240,6 @@ public class IndexController {
 				userSocialNetwork.setUserCorespondence(userCorespondence);
 				userSocialNetworkService.saveUserSocialNetwork(userSocialNetwork);
 			}
-			
 		}else{
 			logger.info("IndexController: falied when save extended information about user becouse id user is null");
 		}
@@ -246,8 +261,8 @@ public class IndexController {
 			idUser=user.getIdUser();
 			
 			logger.info("IndexController: create new user role");
-			UserRole userRole =new UserRole();
-			userRole.setUserRoleName("user");
+			UserRole userRole = new UserRole();
+			userRole.setUserRoleName(UserRoleName.USER.toString());
 			userRoleService.saveUserRole(userRole); 
 			
 			logger.info("IndexController: create new user security login and password");

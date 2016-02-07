@@ -3,7 +3,7 @@
  */
 'use strict';
 
-angular.module('socialcommunity').controller('UserController',function ($scope,$state, $http) {// $rootScope
+angular.module('socialcommunity').controller('UserController',function ($scope,$state, $http) {
 	
 	$scope.id = $state.params.idUser;
 	$scope.idForum = $state.params.idForum;
@@ -359,16 +359,25 @@ angular.module('socialcommunity').controller('UserController',function ($scope,$
 	
 	
 	
-	
-	//route change
-//	$scope.changeRoute = function(url, forceReload) {
-//        $scope = $scope || angular.element(document).scope();
-//        if(forceReload || $scope.$$phase) { 
-//            window.location = url;
-//        } else {
-//            $location.path(url);
-//            $scope.$apply();
-//        }
-//    };
-    
+	$scope.today = function() {
+	    $scope.birth = new Date();
+	};
+	$scope.today();
+
+    $scope.open1 = function() {
+	    $scope.popup1.opened = true;
+	};
+
+	$scope.setDate = function(year, month, day) {
+	    $scope.birth = new Date(year, month, day);
+	};
+
+	$scope.dateOptions = {
+	    formatYear: 'yy',
+	    startingDay: 1
+	};
+
+	$scope.popup1 = {
+	   opened: false
+	};
 });

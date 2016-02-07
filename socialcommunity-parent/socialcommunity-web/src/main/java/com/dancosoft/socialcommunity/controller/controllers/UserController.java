@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.dancosoft.socialcommunity.controller;
+package com.dancosoft.socialcommunity.controller.controllers;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -27,6 +27,9 @@ import com.dancosoft.socialcommunity.controller.support.UserParlorData;
 import com.dancosoft.socialcommunity.controller.support.constants.BlockStatus;
 import com.dancosoft.socialcommunity.controller.support.constants.FriendStatus;
 import com.dancosoft.socialcommunity.controller.support.constants.ViewStatus;
+//import com.dancosoft.socialcommunity.controller.support.constants.BlockStatus;
+//import com.dancosoft.socialcommunity.controller.support.constants.FriendStatus;
+//import com.dancosoft.socialcommunity.controller.support.constants.ViewStatus;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountGroup;
 import com.dancosoft.socialcommunity.model.AccountGroupHistory;
@@ -79,6 +82,8 @@ import com.dancosoft.socialcommunity.service.UserSocialNetworkService;
 public class UserController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	
+	private final Long adultValue=(long)18;
 	
 	@Autowired
 	@Qualifier(value = "userService")
@@ -306,7 +311,7 @@ public class UserController {
 		logger.info("UserController: Load list of user account groups.");
 		Account userAccount=userService.getAccountByUserId(id);
 		List<AccountGroup> listAccountGroup=accountGroupService
-				.getListAccountGroupWithBlockStatusByIdAccount(userAccount.getIdAccount(), BlockStatus.UNBLOCK.toString());
+				.getListAccountGroupWithBlockStatusByIdAccount(userAccount.getIdAccount(),BlockStatus.UNBLOCK.toString());
 		
 		return listAccountGroup;
 	}
@@ -317,7 +322,7 @@ public class UserController {
 		
 		logger.info("UserController: Load list forum for user account");
 		List<Forum> listForum;	
-		Boolean isUserAdult=userAutobiographyService.isUserAdult(id, (long)18);
+		Boolean isUserAdult=userAutobiographyService.isUserAdult(id, adultValue);
 		
 		if(isUserAdult){
 			logger.info("UserController: Check user on adult. User is adult.");
@@ -359,7 +364,8 @@ public class UserController {
 		userExtendedData.setUserEmail(userEmail);
 		
 		logger.info("UserController: load user social network to update");
-		UserSocialNetwork userSocialNetwork=userSocialNetworkService.getSocialNetworkWithStatusByIdUser(id,ViewStatus.PRIVATE.toString());
+		UserSocialNetwork userSocialNetwork=userSocialNetworkService
+				.getSocialNetworkWithStatusByIdUser(id,ViewStatus.PRIVATE.toString());
 		if(userSocialNetwork!=null){
 			userExtendedData.setUserSocialNetwork(userSocialNetwork);
 		}

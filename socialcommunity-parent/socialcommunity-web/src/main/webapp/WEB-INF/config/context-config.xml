@@ -18,6 +18,9 @@
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 
 	<beans:import resource="classpath*:/service-config.xml" />
+	
+	
+
 
 <!--
 	<bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
@@ -54,7 +57,7 @@
  -->
 
 	<context:component-scan base-package="com.dancosoft.socialcommunity">
-		<context:include-filter type="regex" expression="com.dancosoft.socialcommunity.controller.*"/>
+		<context:include-filter type="regex" expression="com.dancosoft.socialcommunity.controller.controllers*"/>
 	</context:component-scan>
 	
 </beans:beans>

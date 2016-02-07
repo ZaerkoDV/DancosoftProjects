@@ -8,6 +8,13 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 	
 	$scope.idAdmin = $state.params.idAdmin;
 	$scope.idForum = $state.params.idForum;
+	$scope.idForumTopic=$state.params.idForumTopic;
+	$scope.searchIdAccount=$state.params.searchIdAccount;
+	$scope.idAccountGroup=$state.params.idAccountGroup;
+	
+	$scope.returnToParlor = function(idAdmin){
+		$state.go('adminparlor', {idAdmin: idAdmin});	
+	};
 	
 	$scope.loadAdminData = function(idAdmin){
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/parlor/accountdata.json',idAdmin)
@@ -175,6 +182,7 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/forum/listforumtopic.json',idForum)
 		.success(function(listForumTopic) {
 			$scope.listForumTopic=listForumTopic;
+			
 		}).error(function(){
 		});
 	};
@@ -195,14 +203,228 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 		});
 	};
 	
+	$scope.updateForumTopic=function(idForum,forumTopic){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/forum/updateforumtopic.json',forumTopic)
+		.success(function(idForum) {
+			$scope.loadListForumTopic(idForum);
+		}).error(function(){
+		});
+	};
+											// forum messages
 	
-	//updateForumTopic(idForum,forumTopic)
+	$scope.getForumMessagePage=function(idAdmin,idForum,idForumTopic){
+		$state.go('forummessage', {idAdmin:idAdmin,idForum:idForum,idForumTopic:idForumTopic});
+	};
+
 	
+	$scope.searchForumMessagesBetweenDate=function(idForumTopic,from,to){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/forum/'+idForumTopic+'/'+from+'/'+to+'/topicmessages.json')
+		.success(function(listTopicMessages) {
+			$scope.listTopicMessages=listTopicMessages;
+		}).error(function(){
+		});
+	};
 	
+	$scope.saveNewForumMessages=function(idForumTopic,from,to,newForumMessage){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/forum/saveForumMessages.json',newForumMessage)
+		.success(function(idForumTopic) {
+			$scope.searchForumMessagesBetweenDate(idForumTopic,from,to);
+		}).error(function(){
+		});
+	};
 	
-	$scope.returnToParlor = function(idAdmin){
-		$state.go('adminparlor', {idAdmin: idAdmin});	
+	$scope.deleteForumMessages=function(idForumTopic,from,to,idForumMessage){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/forum/'+idForumTopic+'/deleteForumMessages.json',idForumMessage)
+		.success(function(idForumTopic) {
+			$scope.searchForumMessagesBetweenDate(idForumTopic,from,to);
+		}).error(function(){
+		});
+	};
+	
+													//account
+	
+	$scope.getPageSearchAccount=function(idAdmin){
+		$state.go('editlistaccount', {idAdmin:idAdmin});
+	};
+	
+	$scope.searchAccount=function(account){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/account/searchaccount.json',account)
+		.success(function(accountList) {
+			$scope.blockStatus='';
+			$scope.accountList=accountList;
+		}).error(function(){
+		});
+	};
+	
+	$scope.changeAccountBlockStatus=function(account,blockStatus){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/account/'+blockStatus+'/newblockstatus.json',account)
+		.success(function(account) {
+			$scope.searchAccount(account)
+		}).error(function(){
+		});
+	}
+	
+	$scope.deleteAccount=function(idAdmin,idAccount){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/account/'+idAccount+'/deleteaccount.json')
+		.success(function() {
+			$scope.accountList='';
+		}).error(function(){
+		});
+	};
+												//account info
+	
+	$scope.getAccountInfo=function(idAdmin,searchIdAccount){
+		$state.go('useraccountinfo', {idAdmin: idAdmin,searchIdAccount:searchIdAccount});
+	};
+	
+	$scope.loadAccountInfo=function(searchIdAccount){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/account/'+searchIdAccount+'/accountinfo.json')
+		.success(function(accountDataSearchResult) {
+			$scope.accountDataSearchResult=accountDataSearchResult;
+		}).error(function() {
+		});
+	};
+	
+	$scope.getAccountSingleMessagesPage=function(idAdmin,searchIdAccount){
+		$state.go('useraccountsinglemessage', {idAdmin: idAdmin,searchIdAccount:searchIdAccount});
+	};
+	
+	$scope.searchSingleMessagesBetweenDate=function(searchIdAccount,fromDate,toDate){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/account/'+searchIdAccount+'/'+fromDate+'/'+toDate+'/singlemessages.json')
+		.success(function(listAccountSingleMessage) {
+			$scope.listAccountSingleMessage = listAccountSingleMessage;
+		}).error(function(){
+		});
+	};
+	
+	$scope.saveNewAccountSingleMessage=function(idAdmin,searchIdAccount,newAccountSingleMessage,fromDate,toDate){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/'+idAdmin+'/account/saveAccountSingleMessage.json',newAccountSingleMessage)
+		.success(function(idAdmin) {
+			$scope.searchSingleMessagesBetweenDate(searchIdAccount,fromDate,toDate);
+		}).error(function(){
+		});
+	};
+	
+	$scope.deleteAccountSingleMessage=function(idAdmin,searchIdAccount,idAccountSingleMessage,fromDate,toDate){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/account/'+idAdmin+'/deleteAccountSingleMessage.json',idAccountSingleMessage)
+		.success(function() {
+			$scope.searchSingleMessagesBetweenDate(searchIdAccount,fromDate,toDate);
+		}).error(function(){
+		});
+	};
+													//edit user account group
+	
+	$scope.getSearchAccountGroupPage=function(idAdmin){
+		$state.go('searchaccountgrouppage', {idAdmin:idAdmin});
+	};
+	
+	$scope.searchAccountGroup=function(groupName,accountName){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/group/'+groupName+'/'+accountName+'/searchAccountGroup.json')
+		.success(function(listAccountGroup) {
+			$scope.blockStatus='';
+			$scope.listAccountGroup = listAccountGroup;
+		}).error(function(){
+		});
+	};
+	
+	$scope.changeAccountGroupBlockStatus=function(accountGroup,blockStatus,groupName,accountName){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/group/'+blockStatus+'/newblockstatus.json',accountGroup)
+		.success(function() {		
+			if(groupName===''){
+				groupName=null;
+			}
+			if(accountName===''){
+				accountName=null;
+			}
+			$scope.searchAccountGroup(groupName,accountName);	
+		}).error(function(){
+		});
+	};
+	
+	$scope.deleteAccountGroup=function(idAccountGroup){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/group/'+idAccountGroup+'/deleteaccountgroup.json')
+		.success(function() {
+			$scope.listAccountGroup='';
+		}).error(function(){
+		});
+	};
+	
+	$scope.getAccountGroupMessages=function(idAdmin, idAccountGroup){
+		$state.go('listusergroupmessages', {idAdmin: idAdmin, idAccountGroup:idAccountGroup});
+	};
+	
+	$scope.searchGroupMessagesBetweenDate=function(idAccountGroup,fromDate,toDate){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/group/'+idAccountGroup+'/'+fromDate+'/'+toDate+'/groupmessages.json')
+		.success(function(listAccountGroupMessage) {
+			$scope.listAccountGroupMessage = listAccountGroupMessage;
+		}).error(function(){
+		});
+	};
+	
+	$scope.saveNewAccountGroupMessage=function(idAdmin,idAccountGroup,newAccountGroupMessage,fromDate,toDate){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/'+
+				idAdmin+'/group/'+idAccountGroup+'/saveAccountGroupMessage.json',newAccountGroupMessage)
+		.success(function() {
+			$scope.searchGroupMessagesBetweenDate(idAccountGroup,fromDate,toDate);
+		}).error(function(){
+		});
+	};
+	
+	$scope.deleteAccountGroupMessage=function(idAccountGroup,idGroupMessage,fromDate,toDate){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/deleteAccountGroupMessage.json',idGroupMessage)
+		.success(function(idAccountGroup) {
+			$scope.searchGroupMessagesBetweenDate(idAccountGroup,fromDate,toDate);
+		}).error(function(){
+		});
+	};
+	
+	$scope.getAccountGroupMembers=function(idAdmin,idAccountGroup){
+		$state.go('editlistgroupmembers', {idAdmin:idAdmin, idAccountGroup:idAccountGroup});
+	};
+	
+	$scope.loadListAccountGroupMembers=function(idAccountGroup){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/group/'+idAccountGroup+'/listgroupmembers.json')
+		.success(function(listAccountGroupMembers) {
+			$scope.listAccountGroupMembers = listAccountGroupMembers;
+		}).error(function(){
+		});
 	};
 	
 	
+	
+	
+	
+	
+	$scope.today = function() {
+	    $scope.from = new Date();
+	    $scope.to=new Date();
+	};
+	$scope.today();
+
+    $scope.open1 = function() {
+	    $scope.popup1.opened = true;
+	};
+	
+	$scope.open2 = function() {
+	    $scope.popup2.opened = true;
+	};
+
+	$scope.setDate = function(year, month, day) {
+	    $scope.from = new Date(year, month, day);
+	    $scope.to = new Date(year, month, day);
+	};
+
+	$scope.dateOptions = {
+	    formatYear: 'yy',
+	    startingDay: 1
+	};
+
+	$scope.popup1 = {
+	   opened: false
+	};
+	
+	$scope.popup2 = {
+	   opened: false
+	};
+			
 });

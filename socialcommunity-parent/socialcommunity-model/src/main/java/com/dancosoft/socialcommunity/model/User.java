@@ -88,7 +88,6 @@ public class User implements Serializable {
 	 * 
 	 * @type String
 	 */
-	@Size(min = 0, max = 25)
 	@Column(name = "middle_name")
 	private String middleName;
 

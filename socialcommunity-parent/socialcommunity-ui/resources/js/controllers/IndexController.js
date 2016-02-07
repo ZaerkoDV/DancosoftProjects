@@ -3,7 +3,6 @@
  */
 'use strict';
 
-//angular.module('socialcommunity', ['ngAnimate', 'ui.bootstrap']);
 angular.module('socialcommunity').controller('IndexController',function ($scope, $state, $http) {
 
 	$scope.id = $state.params.idUser;
@@ -20,8 +19,8 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
 		});
 	};	
 	
-	$scope.saveExtendedUser = function(id,userExtended){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/signup/saveextended/'+id+'/userextended.json',userExtended)
+	$scope.saveExtendedUser = function(id,userExtended,birth){
+		$http.post('http://localhost:8080/socialcommunity-web/views/profile/signup/saveextended/'+id+'/'+birth+'/userextended.json',userExtended)
 		.success(function(id) {								  
 			
 			if(id===null || id===''){
@@ -93,16 +92,6 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
 		});
 	};	
 
-	//route change
-//	$scope.changeRoute = function(url, forceReload) {
-//        $scope = $scope || angular.element(document).scope();
-//        if(forceReload || $scope.$$phase) { 
-//            window.location = url;
-//        } else {
-//            $location.path(url);
-//            $scope.$apply();
-//        }
-//    };
 	
     
     
@@ -112,26 +101,26 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
     
     
     
-    //datekeaper
-//    $scope.today = function() {
-//	      $scope.dt = new Date();
-//	};
-//	$scope.today();
-//
-//    $scope.clear = function() {
-//        $scope.dt = null;
-//    };
-//
-//	$scope.setDate = function(year, month, day) {
-//	    $scope.dt = new Date(year, month, day);
-//	};  
-//	    
-//	$scope.open = function() {
-//	    $scope.popup.opened = true;
-//	};
-//	      
-//	$scope.popup = {
-//	    opened: false
-//	};
+	$scope.today = function() {
+	    $scope.birth = new Date();
+	};
+	$scope.today();
+
+    $scope.open1 = function() {
+	    $scope.popup1.opened = true;
+	};
+
+	$scope.setDate = function(year, month, day) {
+		$scope.birth = new Date(year, month, day);
+	};
+
+	$scope.dateOptions = {
+	    formatYear: 'yy',
+	    startingDay: 1
+	};
+
+	$scope.popup1 = {
+	   opened: false
+	};
 
 });

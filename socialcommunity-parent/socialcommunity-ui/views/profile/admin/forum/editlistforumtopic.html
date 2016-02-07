@@ -40,7 +40,7 @@ input:valid {
 			<div id="collapse2" class="panel-collapse collapse">
 			    <form>
 				    <div class="panel-body">
-				       <a ng-click="getSearchAccountGroupPage()">Search Group</a>
+				       <a ng-click="getSearchAccountGroupPage(idAdmin)">Search Group</a>
 				    </div>
 			    </form>    
 			</div>
@@ -116,9 +116,12 @@ input:valid {
 					      			      	 	 ng-model="forumTopic.forumTopic" placeholder="Must not empty.">      
 					      			      	 </td>
 					      			      	 <td><!--{{forumTopic.dateCreateForumTopic}}--></td>
-					      			      	 <td></td>
 					      			      	 <td>
-					      			      	 	<a type="submit" ng-click="deleteForumTopic(idForum, forumTopic.idForumTopic)">Delete</a>
+					      			      	 	<a type="submit" ng-click="getForumMessagePage(idAdmin,idForum, forumTopic.idForumTopic)">
+					      			      	 	Message</a>
+					      			      	 </td>
+					      			      	 <td>
+					      			      	 	 <a type="submit" ng-click="deleteForumTopic(idForum, forumTopic.idForumTopic)">Delete</a>
 					      			      	 </td>
 					      			      	 <td>
 					      			      	 	<!--<a type="submit" ng-click="updateForumTopic(idForum,forumTopic)">Update</a>-->

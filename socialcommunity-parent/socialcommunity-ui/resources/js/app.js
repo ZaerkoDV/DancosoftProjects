@@ -1,7 +1,8 @@
 'use strict';
 
 var socialcommunity = {};
-var App = angular.module('socialcommunity',['ui.router']);
+var App = angular.module('socialcommunity',['ui.router','ui.bootstrap','ui.bootstrap.tpls']);
+		  
 
 App.config(function($stateProvider) {
 		 
@@ -244,12 +245,75 @@ App.config(function($stateProvider) {
         params: {idAdmin: null, idForum:null}
     });
 	
+	$stateProvider.state('forummessage', {
+        url: '/admin/forum/search/editlistmessage/:idAdmin/:idForum/:idForumTopic',
+        views: {'': {
+              templateUrl: '/socialcommunity/views/profile/admin/forum/editlistforummessage.html',
+              controller: 'AdministratorController'
+            },
+          },
+        params: {idAdmin: null, idForum:null, idForumTopic:null}
+    });
 	
+	$stateProvider.state('editlistaccount', {
+        url: '/admin/account/search/editlistaccount/:idAdmin',
+        views: {'': {
+              templateUrl: '/socialcommunity/views/profile/admin/account/editlistaccount.html',
+              controller: 'AdministratorController'
+            },
+          },
+        params: {idAdmin: null}
+    });
 	
+	$stateProvider.state('useraccountinfo', {
+		  url: '/admin/account/search/accountinfo/:idAdmin/:searchIdAccount',
+		  views: {'': {
+		        templateUrl: '/socialcommunity/views/profile/admin/account/useraccountinfo.html',
+		        controller: 'AdministratorController'
+		      },
+		    },
+		  params: {idAdmin: null,searchIdAccount:null}
+	});
 	
+	$stateProvider.state('useraccountsinglemessage', {
+		  url: '/admin/account/search/showsinglemessage/:idAdmin/:searchIdAccount',
+		  views: {'': {
+		        templateUrl: '/socialcommunity/views/profile/admin/account/showsinglemessage.html',
+		        controller: 'AdministratorController'
+		      },
+		    },
+		  params: {idAdmin: null,searchIdAccount:null}
+	});
 	
+	$stateProvider.state('searchaccountgrouppage', {
+		  url: '/admin/group/search/editlistgroup/:idAdmin',
+		  views: {'': {
+		        templateUrl: '/socialcommunity/views/profile/admin/group/editlistgroup.html',
+		        controller: 'AdministratorController'
+		      },
+		    },
+		  params: {idAdmin: null}
+	});
 	
+	$stateProvider.state('listusergroupmessages', {
+		  url: '/admin/group/search/listgroupmessages/:idAdmin/:idAccountGroup',
+		  views: {'': {
+		        templateUrl: '/socialcommunity/views/profile/admin/group/editlistgroupmessages.html',
+		        controller: 'AdministratorController'
+		      },
+		    },
+		  params: {idAdmin: null, idAccountGroup:null}
+	});
 	
+	$stateProvider.state('editlistgroupmembers', {
+		  url: '/admin/group/search/editlistgroupmembers/:idAdmin/:idAccountGroup',
+		  views: {'': {
+		        templateUrl: '/socialcommunity/views/profile/admin/group/editlistgroupmembers.html',
+		        controller: 'AdministratorController'
+		      },
+		    },
+		  params: {idAdmin: null, idAccountGroup:null}
+	});
 	
 });
 

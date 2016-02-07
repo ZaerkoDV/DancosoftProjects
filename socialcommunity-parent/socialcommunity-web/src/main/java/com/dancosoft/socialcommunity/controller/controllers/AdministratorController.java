@@ -1,10 +1,12 @@
 /**
  * 
  */
-package com.dancosoft.socialcommunity.controller;
+package com.dancosoft.socialcommunity.controller.controllers;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.codehaus.jackson.JsonParseException;
@@ -23,20 +25,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dancosoft.socialcommunity.controller.support.UserExtendedData;
 import com.dancosoft.socialcommunity.controller.support.UserParlorData;
+import com.dancosoft.socialcommunity.controller.support.constants.FriendStatus;
+import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
+import com.dancosoft.socialcommunity.model.AccountGroup;
 import com.dancosoft.socialcommunity.model.AccountHistory;
 import com.dancosoft.socialcommunity.model.City;
 import com.dancosoft.socialcommunity.model.Country;
 import com.dancosoft.socialcommunity.model.EventPattern;
 import com.dancosoft.socialcommunity.model.Forum;
+import com.dancosoft.socialcommunity.model.ForumMessage;
 import com.dancosoft.socialcommunity.model.ForumTopic;
+import com.dancosoft.socialcommunity.model.GroupMember;
+import com.dancosoft.socialcommunity.model.GroupMessage;
 import com.dancosoft.socialcommunity.model.Language;
+import com.dancosoft.socialcommunity.model.SingleMessage;
 import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserAutobiography;
 import com.dancosoft.socialcommunity.model.UserEmail;
 import com.dancosoft.socialcommunity.model.UserLocation;
 import com.dancosoft.socialcommunity.model.UserPhoto;
-import com.dancosoft.socialcommunity.model.UserSocialNetwork;
 import com.dancosoft.socialcommunity.service.AccountForumService;
 import com.dancosoft.socialcommunity.service.AccountGroupHistoryService;
 import com.dancosoft.socialcommunity.service.AccountGroupService;
@@ -60,6 +68,8 @@ import com.dancosoft.socialcommunity.service.UserLocationService;
 import com.dancosoft.socialcommunity.service.UserPhotoService;
 import com.dancosoft.socialcommunity.service.UserService;
 import com.dancosoft.socialcommunity.service.UserSocialNetworkService;
+
+import edu.emory.mathcs.backport.java.util.Collections;
 
 /**
  * @author Zaerko_DV
@@ -256,9 +266,6 @@ public class AdministratorController {
 	}
 
 	
-	
-	
-	
 	@RequestMapping(value="/views/profile/admin/parlor/accountdata.json", method = RequestMethod.POST)
 	public @ResponseBody UserParlorData loadAdminAccount(@RequestBody Long idAdmin) {
 		
@@ -295,7 +302,6 @@ public class AdministratorController {
 
 	@RequestMapping(value = "/views/profile/admin/parlor/commonadminprofile.json", method = RequestMethod.POST)
 	public @ResponseBody User loadCommonAdminProfile(@RequestBody Long idAdmin) {
-
 		logger.info("AdminController: load common admin profile.");
 		User user = userService.getUserById(idAdmin);
 		return user;
@@ -351,7 +357,8 @@ public class AdministratorController {
 	}
 	
 	@RequestMapping(value="/views/profile/admin/parlor/{idAdmin}/editextendedadminprofile.json", method = RequestMethod.POST)
-	public @ResponseBody Long editExtendedAdminProfile(@RequestBody String adminExtendedDataJson, @PathVariable("idAdmin") Long idAdmin) {
+	public @ResponseBody Long editExtendedAdminProfile(@RequestBody String adminExtendedDataJson,
+			@PathVariable("idAdmin") Long idAdmin) {
 		
 		logger.info("AdminController: update user extended profile.");
 		UserExtendedData adminExtendedData =null;
@@ -415,7 +422,6 @@ public class AdministratorController {
 			
 		return idAdmin;
 	}
-	
 												//event pattern
 	
 	@RequestMapping(value="/views/profile/admin/event/neweventpattern.json", method = RequestMethod.POST)
@@ -491,7 +497,162 @@ public class AdministratorController {
 		forumTopicService.deleteForumTopicById(idForumTopic);
 	}
 	
+	@RequestMapping(value="/views/profile/admin/forum/updateforumtopic.json", method = RequestMethod.POST)
+	public @ResponseBody void updateForumTopic(@RequestBody ForumTopic forumTopic) {
+		logger.info("AdminController: Update forum topic.");
+		forumTopicService.updateForumTopic(forumTopic);
+	}
 	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/views/profile/admin/forum/{idForumTopic}/{fromDate}/{toDate}/topicmessages.json", method = RequestMethod.GET)
+	public @ResponseBody List<ForumMessage> loadForumTopicMessages(@PathVariable("idForumTopic") Long idForumTopic,
+			@PathVariable("fromDate") Date fromDate,@PathVariable("toDate") Date toDate) {
+		
+		logger.info("AdminController: Load Forum Messages which created between date.");
+		TimeConverter converter = new TimeConverter();
+		LocalDateTime fromLDT = converter.convertDateToLocalDateTime(fromDate);
+		LocalDateTime toLDT = converter.convertDateToLocalDateTime(toDate);
+		
+		List<ForumMessage> listTopicMessages = forumMessageService
+				.getListForumMessageBetweenDateByIdForumTopic(idForumTopic, fromLDT,toLDT);
+		if(fromLDT.isAfter(toLDT)){
+			listTopicMessages=Collections.emptyList();
+		}
+		return listTopicMessages;
+	}
+	
+	@RequestMapping(value="/views/profile/admin/account/searchaccount.json", method = RequestMethod.POST)
+	public @ResponseBody List<Account> searchAccount(@RequestBody Account account) {
+		logger.info("AdminController: search account by account name");
+		List<Account> accountList=accountService.searchAccountByAccountNameUserLastName(account.getAccountName(), "");
+		
+		return accountList;
+	}
+	
+	@RequestMapping(value="/views/profile/admin/account/{blockStatus}/newblockstatus.json", method = RequestMethod.POST)
+	public @ResponseBody Account changeAccountBlockStatus(@RequestBody Account account,
+			@PathVariable("blockStatus") String blockStatus) {
+		
+		logger.info("AdminController: change account block status.");
+		account.setAccountBlockStatus(blockStatus);
+		accountService.updateAccount(account);
+				
+		return account;
+	}
+	
+	@RequestMapping(value="/views/profile/admin/account/{idAccount}/deleteaccount.json", method = RequestMethod.GET)
+	public @ResponseBody void deleteAccount(@PathVariable("idAccount") Long idAccount) {
+		
+		Account account= accountService.getAccountById(idAccount);
+		Long idUser= account.getUser().getIdUser();
+		logger.info("AdminController: delete user account="+idAccount);
+		accountService.deleteAccountById(idAccount);
+		logger.info("AdminController: delete user= "+idUser);
+		userService.deleteUserById(idUser);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/views/profile/admin/account/{searchIdAccount}/{fromDate}/{toDate}/singlemessages.json", method = RequestMethod.GET)
+	public @ResponseBody List<SingleMessage> loadUserAccountSingleMessages(@PathVariable("searchIdAccount") Long searchIdAccount,
+			@PathVariable("fromDate") Date fromDate, @PathVariable("toDate") Date toDate) {
+		
+		logger.info("AdminController:Load user account single messages.");
+		TimeConverter converter = new TimeConverter();
+		LocalDateTime fromLDT = converter.convertDateToLocalDateTime(fromDate);
+		LocalDateTime toLDT = converter.convertDateToLocalDateTime(toDate);
+		
+		List<SingleMessage> listSingleMessages = singleMessageService
+				.getListSingleMessageBeetweenDateByIdAccount(searchIdAccount, fromLDT, toLDT);	
+		if(fromLDT.isAfter(toLDT)){
+			listSingleMessages=Collections.emptyList();
+		}
+		return listSingleMessages;		
+	}
+	
+	@RequestMapping(value="/views/profile/admin/group/{groupName}/{accountName}/searchAccountGroup.json", method = RequestMethod.GET)
+	public @ResponseBody List<AccountGroup> searchAccountGroup(@PathVariable("groupName") String groupName,
+			@PathVariable("accountName") String accountName) {
+		
+		logger.info("AdminController: search account group.");
+		if(groupName.equals("undefined")){
+			groupName=null;
+		}
+		if(accountName.equals("undefined")){
+			accountName=null;
+		}
+		List<AccountGroup> listAccountGroup=accountGroupService
+				.searchAccountGroupByGroupNameAccountName(groupName, accountName);	
+		return listAccountGroup;
+	}
+	
+	@RequestMapping(value="/views/profile/admin/group/{blockStatus}/newblockstatus.json", method = RequestMethod.POST)
+	public @ResponseBody AccountGroup changeAccountBlockStatus(@RequestBody AccountGroup accountGroup,
+			@PathVariable("blockStatus") String blockStatus) {
+		logger.info("AdminController: change account group block status.");
+		accountGroup.setAccountGroupBlockStatus(blockStatus);
+		accountGroupService.updateAccountGroup(accountGroup);
+				
+		return accountGroup;
+	}
+	
+	@RequestMapping(value="/views/profile/admin/group/{idAccountGroup}/deleteaccountgroup.json", method = RequestMethod.GET)
+	public @ResponseBody void deleteAccountGroup(@PathVariable("idAccountGroup") Long idAccountGroup) {
+		logger.info("AdminController: delete user account group="+idAccountGroup);
+		accountGroupService.deleteAccountGroupById(idAccountGroup);
+	}
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value="/views/profile/admin/group/{idAccountGroup}/{fromDate}/{toDate}/groupmessages.json", method = RequestMethod.GET)
+	public @ResponseBody List<GroupMessage> loadAccounrGroupMessages(@PathVariable("idAccountGroup") Long idAccountGroup,
+			@PathVariable("fromDate") Date fromDate, @PathVariable("toDate") Date toDate) {
+		
+		logger.info("AdminController:Load account group messages.");
+		TimeConverter converter = new TimeConverter();
+		LocalDateTime fromLDT = converter.convertDateToLocalDateTime(fromDate);
+		LocalDateTime toLDT = converter.convertDateToLocalDateTime(toDate);
+		
+		List<GroupMessage> listGroupMessages = groupMessageService
+					.getListGroupMessageBeetweenDateByIdAccountGroup(idAccountGroup, fromLDT, toLDT);
+		if(fromLDT.isAfter(toLDT)){
+			listGroupMessages=Collections.emptyList();
+		}
+		return listGroupMessages;		
+	}
+	
+	@RequestMapping(value="/views/profile/admin/{idAdmin}/group/{idAccountGroup}/saveAccountGroupMessage.json", method = RequestMethod.POST)
+	public @ResponseBody void saveNewAccountGroupMessages(@RequestBody GroupMessage newAccountGroupMessage,
+			@PathVariable("idAdmin") Long idAdmin, @PathVariable("idAccountGroup") Long idAccountGroup) {
+		
+		logger.info("AdminController: Create new group message.");
+		Account account= userService.getAccountByUserId(idAdmin);
+		GroupMember groupMember= groupMemberService.getGroupMemberInAccountGroupByIdAccount(idAccountGroup,
+				account.getIdAccount());
+		
+		if(groupMember==null){	
+			logger.info("AdminController: Save admin account as group member account,"
+					+ " becouse admin create messages never before");
+			groupMember= new GroupMember();
+			groupMember.setGroupMemberStatus(FriendStatus.NOTFRIEND.toString());
+			AccountGroup accountGroup= accountGroupService.getAccountGroupById(idAccountGroup);
+			groupMember.setAccountGroup(accountGroup);
+			groupMember.setMemberAccount(account);
+			groupMemberService.saveGroupMember(groupMember);
+		}
+		
+		logger.info("AdminController: Create new group message.");
+		newAccountGroupMessage.setDateCreateGroupMessage(LocalDateTime.now());
+		newAccountGroupMessage.setGroupMember(groupMember);
+		groupMessageService.saveGroupMessage(newAccountGroupMessage);
+	}
+	
+	@RequestMapping(value="/views/profile/admin/group/{idAccountGroup}/listgroupmembers.json", method = RequestMethod.GET)
+	public @ResponseBody List<GroupMember> loadListGroupMembers(@PathVariable("idAccountGroup") Long idAccountGroup) {
+		
+		logger.info("AdminController: load list group members for account group="+idAccountGroup);
+		List<GroupMember> listGroupMembers=groupMemberService.getListGroupMemberByIdAccountGroup(idAccountGroup);
+		
+		return listGroupMembers;
+	}
 	
 	
 	

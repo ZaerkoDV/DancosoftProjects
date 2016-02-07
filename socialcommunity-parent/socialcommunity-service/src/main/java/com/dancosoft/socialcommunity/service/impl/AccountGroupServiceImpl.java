@@ -184,7 +184,7 @@ public class AccountGroupServiceImpl implements AccountGroupService {
 	public List<AccountGroup> searchAccountGroupByGroupNameAccountName(String groupName, String accountName) {
 		
 		List<AccountGroup> list=Collections.emptyList();
-		if ((groupName.equals(null) || groupName.equals("")) && (accountName.equals(null) || accountName.equals(""))) {
+		if ((groupName==null  && accountName==null)) {
 			throw new RuntimeException("AccountGroupService:Account group or account"
 					+ " name must not equals null at the same time.");
 		}else{

@@ -159,10 +159,14 @@ public class AccountGroupDAOImpl extends CommonEntityDAOImpl implements	AccountG
 				.getCurrentSession().createCriteria(AccountGroup.class);
 		criteria.createAlias("account", "a");
 
-		if (!groupName.equals(null) && !groupName.equals("")) {
+		if (groupName!=null && accountName!=null) {
 			criteria.add(Restrictions.eq("groupName", groupName));
-		}
-		if (!accountName.equals(null) && !accountName.equals("")) {
+			criteria.add(Restrictions.eq("a.accountName", accountName));
+			
+		}else if(groupName!=null) {
+			criteria.add(Restrictions.eq("groupName", groupName));
+			
+		}else if (accountName!=null) {
 			criteria.add(Restrictions.eq("a.accountName", accountName));
 		}
 		criteria.addOrder(Order.desc("groupName"));

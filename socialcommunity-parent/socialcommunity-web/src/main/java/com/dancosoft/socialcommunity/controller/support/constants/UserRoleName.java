@@ -1,17 +1,16 @@
 package com.dancosoft.socialcommunity.controller.support.constants;
 
+public enum UserRoleName {
 
-public enum BlockStatus {
-
-	BLOCK {
+	USER {
 	      public String toString() {
-	          return "block";
+	          return "user";
 	      }
 	  },
 
-	UNBLOCK {
+	ADMIN {
 	      public String toString() {
-	          return "unblock";
+	          return "admin";
 	      }
-	  }	
+	  }
 }

@@ -1,10 +1,189 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<style>
 
-</body>
-</html>
+tbody {
+    height: 100px;       
+    overflow-y: auto;   
+    overflow-x: hidden;
+}
+
+input[type="text"] {
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	padding: 5px;
+	outline: none;
+	width: 200px;
+	margin: 10px 10px 10px 10px;
+}
+
+input[type="button"] {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 5px;
+	outline: none;
+	width: 60px;
+	margin: 10px 10px 10px 10px;
+}
+
+</style>
+
+<div class="col-md-2">
+  <ul class="nav nav-pills nav-stacked">
+  	<li>
+	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse1">Profile Detail</a>
+			     </h4>
+			</div>
+			<div id="collapse1" class="panel-collapse collapse">
+			    <form>
+				  <div class="panel-body"> 
+					<p><a ng-click="loadCommonAdminProfile(idAdmin)">My Common Profile</a></p>
+					<a ng-click="loadExtendedAdminProfile(idAdmin)">My Extended Profile</a>
+				  </div>
+			    </form>    
+			</div>
+	   </div>
+	</li>
+    <li>
+	  <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse2">Group</a>
+			     </h4>
+			</div>
+			<div id="collapse2" class="panel-collapse collapse">
+			    <form>
+				    <div class="panel-body">
+				       <a ng-click="getSearchAccountGroupPage(idAdmin)">Search Group</a>
+				    </div>
+			    </form>    
+			</div>
+	   </div>
+	 </li>
+     <li>
+	   <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse3">Forum</a>
+			     </h4>
+			</div>
+			<div id="collapse3" class="panel-collapse collapse">
+			    <form>
+				  <p><a ng-click="getListForumToEdit(idAdmin)">Edit Forum</a></p>
+				  <a ng-click="createNewForum(idAdmin)">+ New Forum</a>
+			    </form>    
+			</div>
+	    </div>
+	  </li>
+	  <li>
+	   <div class="panel panel" style="background-color:#92A7B8" style="opacity: 0">
+			<div class="panel-heading">
+			     <h4 class="panel-title">
+			       <a data-toggle="collapse" data-target="#collapse8">Event Pattern</a>
+			     </h4>
+			</div>
+			<div id="collapse8" class="panel-collapse collapse">
+			    <form>
+				    <div class="panel-body">
+				       <a ng-click="getEventPatternPage(idAdmin)">Edit Event Pattern</a>
+				    </div>
+				</form>   
+			</div>
+	    </div>
+	 </li>
+  </ul>
+</div>
+
+
+<title>Search Account Group Page</title>
+<div ng-controller="AdministratorController">
+  <div class="col-lg-8 col-lg-offset-0">
+	<div class="well">
+	    <div class="container">
+		    <div class="row">
+			   <div class="col-lg-8">
+				<form name="myForm" class="form-horizontal">
+					<fieldset>
+						<a ui-sref="searchaccountgrouppage"></a>
+						<legend style="text-align: center;">Search Account Group Page</legend>
+						  <div class="form-group" style="outline: 2px solid #000;">
+							 <div style="display:inline-block;">
+							    <strong> Group Name</strong>
+								<input type="text" id="accountGroupName" ng-model="groupName" placeholder="Enter Account Group Name.">   
+							    <strong>Account Name</strong>      
+								<input type="text" id="accountName" ng-model="accountName" placeholder="Enter Account Name">			 
+							</div>
+							<br>
+							<input type="button" value="Search" class="btn btn-xs btn-primary" style="float:right;"
+						      ng-click="searchAccountGroup(groupName,accountName)"> 
+						  </div>		
+						<br>
+						<div ng-show="listAccountGroup.length > 0">
+							<table class="table table-bordered"	style="background-color: #ffffff">
+							   <thead>
+								 <tr>
+									<th>GroupName</th>
+									<th>AccountName</th>
+									<th>ChangeStatus</th>
+									<th>Delete</th>
+									<th>Members</th>
+									<th>Messages</th>
+								 </tr>
+							  </thead>
+								  <tbody>
+				      			     <tr ng-repeat="accountGroup in listAccountGroup">
+				      			      	 <td>{{accountGroup.groupName}}</td>
+				      			      	 <td>{{accountGroup.account.accountName}}</td>
+				      			      	 
+				      			      	 <td ng-if="accountGroup.accountGroupBlockStatus=='block'">
+				      			      	   <input type="hidden" ng-model="blockStatus" ng-init="blockStatus='unblock'">  
+					      			       <a type="submit" ng-click="changeAccountGroupBlockStatus(accountGroup,blockStatus)">Unblock</a> 			      	
+				      			      	 </td>
+				      			      	 <td ng-if="accountGroup.accountGroupBlockStatus=='unblock'">
+				      			      	 	<input type="hidden" ng-model="blockStatus" ng-init="blockStatus='block'"> 
+				      			      	 	<a type="submit" ng-click="changeAccountGroupBlockStatus(accountGroup,blockStatus,groupName,accountName)">Block</a>
+				      			      	 </td>
+				      			      	 <td>
+				      			      	 	<a type="submit" ng-click="deleteAccountGroup(accountGroup.idAccountGroup)">Delete</a>
+				      			      	 </td>
+				      			      	 <td>
+				      			      	 	<a type="submit" ng-click="getAccountGroupMembers(idAdmin,accountGroup.idAccountGroup)">Members</a>
+				      			      	 </td>
+				      			      	  <td>
+				      			      	 	<a type="submit" ng-click="getAccountGroupMessages(idAdmin, accountGroup.idAccountGroup)">Messages</a>
+				      			      	 </td>
+						   		    </tr>
+						      </tbody>
+						  </table>	  
+						 </div> 
+		    	 </fieldset>
+				</form>
+	          </div>
+	        </div>
+	     </div>
+      </div>
+   </div>
+</div>
+
+
+<div class="col-md-2">
+	<ul class="nav nav-pills nav-stacked">
+	  <li>
+		  <div class="panel panel" style="background-color:#92A7B8">
+			   <div class="panel-heading">
+			        <h4 class="panel-title">
+			          <a data-toggle="collapse" data-target="#collapse">Account</a>
+			        </h4>
+			   </div>
+			   <div id="collapse" class="panel-collapse collapse">
+			     <form>
+				    <div class="panel-body">
+				       <a ng-click="getPageSearchAccount(idAdmin)">Search Account</a>
+				    </div>
+				</form>    
+			 </div>
+	     </div>
+	  </li>
+	</ul>
+</div>
