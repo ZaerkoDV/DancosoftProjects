@@ -30,7 +30,7 @@ input:valid {
 					        </div>				        
 					        <div>        	
 					        	<input type="checkbox" id="prompt" class="btn btn-primary" ng-disabled="!securityPrompt.userSecurity.userLogin"
-					        		ng-click="show=true; getSecurityQuestion(securityPrompt) "> 
+					        		ng-click="show=true; getSecurityQuestion(securityPrompt.userSecurity.userLogin) "> 
 					        	<label for="prompt">Show prompt</label> 				        			
 					        </div>			        
 					    </div>
@@ -64,16 +64,17 @@ input:valid {
 					    <!-- check and send login, password-->
 					    <div ng-if="!show ==true">   
 						    <div class="controls">  
-						         <button type="button" class="btn btn-primary" ng-disabled="!securityPrompt.userSecurity.userLogin ||
-						          !securityPrompt.userSecurity.userPassword" style="float: right;" ng-click="userSignIn(securityPrompt)">Sign In</button>       
+						         <button type="button" class="btn btn-primary"
+						          ng-disabled="!securityPrompt.userSecurity.userLogin || !securityPrompt.userSecurity.userPassword" style="float: right;"
+						          ng-click="userSignIn(securityPrompt.userSecurity.userLogin,securityPrompt.userSecurity.userPassword,securityPrompt.userAnswer)">Sign In</button>       
 						    </div>  
 					    </div>
 					    
 					    <!-- check and send email, answer on question-->
 					    <div ng-if="!show ==false">
 					    	<div class="controls">  
-						         <button type="button" class="btn btn-primary" ng-disabled="!securityPrompt.userSecurity.userLogin ||
-						          !securityPrompt.userAnswer" style="float: right;" ng-click="userSignIn(securityPrompt)">Sign In</button>       
+						         <button type="button" class="btn btn-primary" ng-disabled="!securityPrompt.userSecurity.userLogin || !securityPrompt.userAnswer" style="float: right;"
+						          ng-click="userSignIn(securityPrompt.userSecurity.userLogin,securityPrompt.userSecurity.userPassword,securityPrompt.userAnswer)">Sign In</button>       
 						    </div>
 					    </div>
 					    

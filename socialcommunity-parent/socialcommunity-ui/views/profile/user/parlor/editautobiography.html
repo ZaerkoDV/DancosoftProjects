@@ -90,22 +90,22 @@ input:valid {
 				    <fieldset>
 						<a ui-sref="editautobiography"></a>
 						<legend style="text-align: center;">Edit User Autobiography</legend>
-					<!--
+					
 						<div class="form-group">
-						  <label for="hobby" style="width: 50px;float: left;" class="control-label">Birth</label>
-						   	<div class="col-lg-8">
-							   <p class="input-group">
-								 <input type="text" class="form-control" uib-datepicker-popup ng-model="userAutobiography.birth"
-								   is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" />
-								 <span class="input-group-btn">
-								    <button type="button" class="btn btn-default" ng-click="open1()">
-								    	<i class="glyphicon glyphicon-calendar"></i>
-								    </button>
-						         </span>
-							   </p>
+							<label for="hobby" style="width: 50px;float: left;" class="control-label">Birth</label>
+						    <div class="col-lg-8">
+						      <p class="input-group">
+								<input type="text" class="form-control" uib-datepicker-popup ng-model="birth"
+							      is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" />
+								  <span class="input-group-btn">
+								     <button type="button" class="btn btn-default" ng-click="open1()">
+								     	<i class="glyphicon glyphicon-calendar"></i>
+								     </button>
+								  </span>
+						  	  </p>
 						   </div>
 						</div>
-				 -->
+				
 						<div class="form-group">
 					       <label for="hobby" style="width: 50px;float: left;" class="control-label">Hobby</label>
 					       <div class="col-lg-8">
@@ -123,7 +123,7 @@ input:valid {
 						<div class="form-group">
 							<div class="controls">  
 							     <button type="button" class="btn btn-primary" style="float: right;"
-							      ng-click="editUserAutobiography(id,userAutobiography)">Update</button> <!--ng-disabled="!userAutobiography.birth"--> 
+							      ng-click="editUserAutobiography(id,userAutobiography,birth)">Update</button> <!--ng-disabled="!userAutobiography.birth"--> 
 								  <button type="button" class="btn btn-primary" style="float: right;" ng-click="returnToParlor(id)">Back</button>    
 							</div>
 						 </div>

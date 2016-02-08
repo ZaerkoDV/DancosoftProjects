@@ -3,7 +3,6 @@
 var socialcommunity = {};
 var App = angular.module('socialcommunity',['ui.router','ui.bootstrap','ui.bootstrap.tpls']);
 		  
-
 App.config(function($stateProvider) {
 		 
 	$stateProvider.state('index', {
@@ -13,27 +12,24 @@ App.config(function($stateProvider) {
               controller: 'IndexController'
             },
           }
-    });
 	
-	$stateProvider.state('signupcommon', {
+    }).state('signupcommon', {
         url: '/signup',
         views: {'': {
               templateUrl: '/socialcommunity/views/profile/signup/commonprofile.html',
               controller: 'IndexController'
             },
           }
-    });
-	
-	$stateProvider.state('signin', {
+    
+    }).state('signin', {
 	  url: '/signin',
 	  views: {'': {
 	        templateUrl: '/socialcommunity/views/profile/signin.html',
 	        controller: 'IndexController'
 	      },
 	    }
-	});
-	
-	$stateProvider.state('signupextended', {
+    
+	}).state('signupextended', {
         url: '/signup/extended/:idUser',
         views: {'': {
               templateUrl: '/socialcommunity/views/profile/signup/extendedprofile.html',
@@ -41,9 +37,8 @@ App.config(function($stateProvider) {
             },
           },
         params: {idUser: null}
-    });
-	
-	$stateProvider.state('signuplogin', {
+          
+    }).state('signuplogin', {
         url: '/signup/login/:idUser',
         views: {'': {
               templateUrl: '/socialcommunity/views/profile/signup/loginprofile.html',
@@ -52,6 +47,8 @@ App.config(function($stateProvider) {
           },
         params: {idUser: null}
     });
+    
+												//user state
 	
 	$stateProvider.state('userparlor', {
         url: '/user/parlor/:idUser',
@@ -61,9 +58,8 @@ App.config(function($stateProvider) {
             },
           },
           params: {idUser: null}
-    });
-	
-	$stateProvider.state('editcommonprofile', {
+          
+    }).state('editcommonprofile', {
         url: '/user/parlor/editcommonprofile/:idUser',
         views: {'': {
               templateUrl: '/socialcommunity/views/profile/user/parlor/editcommonprofile.html',
@@ -71,9 +67,8 @@ App.config(function($stateProvider) {
             },
           },
           params: {idUser: null}
-    });
-	
-	$stateProvider.state('editextendedprofile', {
+          
+    }).state('editextendedprofile', {
         url: '/user/parlor/editextendedprofile/:idUser',
         views: {'': {
               templateUrl: '/socialcommunity/views/profile/user/parlor/editextendedprofile.html',
@@ -81,9 +76,8 @@ App.config(function($stateProvider) {
             },
           },
           params: {idUser: null}
-    });
-	
-	$stateProvider.state('editautobiography', {
+          
+    }).state('editautobiography', {
 		  url: '/user/parlor/editautobiography/:idUser',
 		  views: {'': {
 		        templateUrl: '/socialcommunity/views/profile/user/parlor/editautobiography.html',
@@ -91,9 +85,8 @@ App.config(function($stateProvider) {
 		      },
 		    },
 		   params: {idUser: null}
-	});
-	
-	$stateProvider.state('editlistforumtopic', {
+		    
+	}).state('editlistforumtopic', {
 		  url: '/user/forum/listtopic/:idUser/:idForum',
 		  views: {'': {
 		        templateUrl: '/socialcommunity/views/profile/user/forum/listtopic.html',
@@ -101,9 +94,8 @@ App.config(function($stateProvider) {
 		      },
 		    },
 		  params: {idUser: null, idForum:null}
-	});
-	
-	$stateProvider.state('forumtopicmessages', {
+		    
+	}).state('forumtopicmessages', {
 		  url: '/user/forum/forummessages/:idUser/:idForumTopic',
 		  views: {'': {
 		        templateUrl: '/socialcommunity/views/profile/user/forum/forumtopicmessage.html',
@@ -111,9 +103,8 @@ App.config(function($stateProvider) {
 		      },
 		    },
 		  params: {idUser: null, idForumTopic:null}
-	});
-	
-	$stateProvider.state('addaccountgroup', {
+		    
+	}).state('addaccountgroup', {
 		  url: '/user/group/addaccountgroup/:idUser',
 		  views: {'': {
 		        templateUrl: '/socialcommunity/views/profile/user/group/addaccountgroup.html',
@@ -121,29 +112,26 @@ App.config(function($stateProvider) {
 		      },
 		    },
 		  params: {idUser: null}
-	});
-	
-	$stateProvider.state('viewaccountgroup', {
-		  url: '/user/group/viewaccountgroup/:idUser:/idAccountGroupMember/:idAccountGroup',
+		    
+	}).state('viewaccountgroup', {
+		  url: '/user/group/viewaccountgroup/:idUser/:idAccountGroupMember/:idAccountGroup',
 		  views: {'': {
 		        templateUrl: '/socialcommunity/views/profile/user/group/viewaccountgroup.html',
 		        controller: 'UserController'
 		      },
 		    },
 		   params: {idUser: null,idAccountGroupMember:null,idAccountGroup:null}
-	});
-	
-	$stateProvider.state('editaccountgroupmember', {
-		  url: '/user/group/editaccountgroupmember/:idUser:/idAccountGroupMember/:idAccountGroup',
+		    
+	}).state('editaccountgroupmember', {
+		  url: '/user/group/editaccountgroupmember/:idUser/:idAccountGroupMember/:idAccountGroup',
 		  views: {'': {
 		        templateUrl: '/socialcommunity/views/profile/user/group/editaccountgroup.html',
 		        controller: 'UserController'
 		      },
 		    },
 		   params: {idUser: null,idAccountGroupMember:null,idAccountGroup:null}
-	});
-	
-	$stateProvider.state('searchaccount', {
+		    
+	}).state('searchaccount', {
 		  url: '/user/account/search/listaccounts/:idUser',
 		  views: {'': {
 		        templateUrl: '/socialcommunity/views/profile/user/account/listaccounts.html',
@@ -151,9 +139,8 @@ App.config(function($stateProvider) {
 		      },
 		    },
 		   params: {idUser: null}
-	});
-	
-	$stateProvider.state('accountinfo', {
+		    
+	}).state('accountinfo', {
 		  url: '/user/account/search/accountinfo/:idUser/:searchIdAccount',
 		  views: {'': {
 		        templateUrl: '/socialcommunity/views/profile/user/account/useraccountinfo.html',
@@ -161,9 +148,8 @@ App.config(function($stateProvider) {
 		      },
 		    },
 		  params: {idUser: null,searchIdAccount:null}
-	});
-	
-	$stateProvider.state('accountsinglemessage', {
+		    
+	}).state('accountsinglemessage', {
 		  url: '/user/account/search/accountsinglemessage/:idUser/:searchIdAccount',
 		  views: {'': {
 		        templateUrl: '/socialcommunity/views/profile/user/account/accountsinglemessage.html',
@@ -173,7 +159,10 @@ App.config(function($stateProvider) {
 		  params: {idUser: null,searchIdAccount:null}
 	});
 	
-												//admin states
+	
+	
+	
+												//administrator states
 	
 	$stateProvider.state('adminparlor', {
         url: '/admin/parlor/:idAdmin',
@@ -183,9 +172,8 @@ App.config(function($stateProvider) {
             },
           },
         params: {idAdmin: null}
-    });
-	
-	$stateProvider.state('editadmincommonprofile', {
+          
+    }).state('editadmincommonprofile', {
         url: '/admin/parlor/editadmincommonpofile/:idAdmin',
         views: {'': {
               templateUrl: '/socialcommunity/views/profile/admin/parlor/editcommonprofile.html',
@@ -193,9 +181,8 @@ App.config(function($stateProvider) {
             },
           },
         params: {idAdmin: null}
-    });
-
-	$stateProvider.state('editextendedadminprofile', {
+          
+    }).state('editextendedadminprofile', {
         url: '/admin/parlor/editextendedadminprofile/:idAdmin',
         views: {'': {
               templateUrl: '/socialcommunity/views/profile/admin/parlor/editextendedprofile.html',
@@ -203,9 +190,8 @@ App.config(function($stateProvider) {
             },
           },
         params: {idAdmin: null}
-    });
-	
-	$stateProvider.state('editeventpattern', {
+          
+    }).state('editeventpattern', {
         url: '/admin/event/editeventpattern/:idAdmin',
         views: {'': {
               templateUrl: '/socialcommunity/views/profile/admin/event/editeventpattern.html',
@@ -213,9 +199,8 @@ App.config(function($stateProvider) {
             },
           },
         params: {idAdmin: null}
-    });
-	
-	$stateProvider.state('newforum', {
+          
+    }).state('newforum', {
         url: '/admin/forum/addforum/:idAdmin',
         views: {'': {
               templateUrl: '/socialcommunity/views/profile/admin/forum/addforum.html',
@@ -223,9 +208,8 @@ App.config(function($stateProvider) {
             },
           },
         params: {idAdmin: null}
-    });
-	
-	$stateProvider.state('editlistforum', {
+          
+    }).state('editlistforum', {
         url: '/admin/forum/search/editlistforum/:idAdmin',
         views: {'': {
               templateUrl: '/socialcommunity/views/profile/admin/forum/editlistforum.html',
@@ -233,9 +217,8 @@ App.config(function($stateProvider) {
             },
           },
         params: {idAdmin: null}
-    });
-	
-	$stateProvider.state('editforumtopic', {
+          
+    }).state('editforumtopic', {
         url: '/admin/forum/search/editlisttopic/:idAdmin/:idForum',
         views: {'': {
               templateUrl: '/socialcommunity/views/profile/admin/forum/editlistforumtopic.html',
@@ -243,9 +226,8 @@ App.config(function($stateProvider) {
             },
           },
         params: {idAdmin: null, idForum:null}
-    });
-	
-	$stateProvider.state('forummessage', {
+          
+    }).state('forummessage', {
         url: '/admin/forum/search/editlistmessage/:idAdmin/:idForum/:idForumTopic',
         views: {'': {
               templateUrl: '/socialcommunity/views/profile/admin/forum/editlistforummessage.html',
@@ -253,9 +235,8 @@ App.config(function($stateProvider) {
             },
           },
         params: {idAdmin: null, idForum:null, idForumTopic:null}
-    });
-	
-	$stateProvider.state('editlistaccount', {
+          
+    }).state('editlistaccount', {
         url: '/admin/account/search/editlistaccount/:idAdmin',
         views: {'': {
               templateUrl: '/socialcommunity/views/profile/admin/account/editlistaccount.html',
@@ -263,9 +244,8 @@ App.config(function($stateProvider) {
             },
           },
         params: {idAdmin: null}
-    });
-	
-	$stateProvider.state('useraccountinfo', {
+          
+    }).state('useraccountinfo', {
 		  url: '/admin/account/search/accountinfo/:idAdmin/:searchIdAccount',
 		  views: {'': {
 		        templateUrl: '/socialcommunity/views/profile/admin/account/useraccountinfo.html',
@@ -273,9 +253,8 @@ App.config(function($stateProvider) {
 		      },
 		    },
 		  params: {idAdmin: null,searchIdAccount:null}
-	});
-	
-	$stateProvider.state('useraccountsinglemessage', {
+		    
+	}).state('useraccountsinglemessage', {
 		  url: '/admin/account/search/showsinglemessage/:idAdmin/:searchIdAccount',
 		  views: {'': {
 		        templateUrl: '/socialcommunity/views/profile/admin/account/showsinglemessage.html',
@@ -283,9 +262,8 @@ App.config(function($stateProvider) {
 		      },
 		    },
 		  params: {idAdmin: null,searchIdAccount:null}
-	});
-	
-	$stateProvider.state('searchaccountgrouppage', {
+		    
+	}).state('searchaccountgrouppage', {
 		  url: '/admin/group/search/editlistgroup/:idAdmin',
 		  views: {'': {
 		        templateUrl: '/socialcommunity/views/profile/admin/group/editlistgroup.html',
@@ -293,9 +271,8 @@ App.config(function($stateProvider) {
 		      },
 		    },
 		  params: {idAdmin: null}
-	});
-	
-	$stateProvider.state('listusergroupmessages', {
+		    
+	}).state('listusergroupmessages', {
 		  url: '/admin/group/search/listgroupmessages/:idAdmin/:idAccountGroup',
 		  views: {'': {
 		        templateUrl: '/socialcommunity/views/profile/admin/group/editlistgroupmessages.html',
@@ -303,9 +280,8 @@ App.config(function($stateProvider) {
 		      },
 		    },
 		  params: {idAdmin: null, idAccountGroup:null}
-	});
-	
-	$stateProvider.state('editlistgroupmembers', {
+		    
+	}).state('editlistgroupmembers', {
 		  url: '/admin/group/search/editlistgroupmembers/:idAdmin/:idAccountGroup',
 		  views: {'': {
 		        templateUrl: '/socialcommunity/views/profile/admin/group/editlistgroupmembers.html',
@@ -314,6 +290,10 @@ App.config(function($stateProvider) {
 		    },
 		  params: {idAdmin: null, idAccountGroup:null}
 	});
+	
+	
+	
+	
 	
 });
 

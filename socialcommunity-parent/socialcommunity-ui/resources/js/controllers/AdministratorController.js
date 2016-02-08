@@ -17,7 +17,7 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 	};
 	
 	$scope.loadAdminData = function(idAdmin){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/parlor/accountdata.json',idAdmin)
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/'+idAdmin+'/parlor/accountdata.json')
 		.success(function(adminParlorData) {
 			$scope.adminParlorData=adminParlorData;
 		}).error(function() {
@@ -31,7 +31,7 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 	};
 	
 	$scope.loadCommonAdminProfileData = function(idAdmin){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/parlor/commonadminprofile.json',idAdmin)
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/'+idAdmin+'/parlor/commonadminprofile.json')
 		.success(function(admin) {
 			$scope.admin=admin;
 		}).error(function(){
@@ -40,8 +40,8 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 	$scope.loadCommonAdminProfileData($scope.idAdmin);
 	
 	$scope.editCommonAdminProfile = function(idAdmin,admin){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/parlor/editcommonadminprofile.json',admin)
- 	.success(function(idAdmin) {
+		$http.put('http://localhost:8080/socialcommunity-web/views/profile/admin/parlor/editcommonadminprofile.json',admin)
+		.success(function(idAdmin) {
 			$state.go('adminparlor', {idAdmin: idAdmin});		
 		}).error(function(){
 		});
@@ -53,17 +53,16 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 	};
 	
 	$scope.loadExtendedAdminProfileData = function(idAdmin){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/parlor/extendedadminprofile.json',idAdmin)
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/'+idAdmin+'/parlor/extendedadminprofile.json')
 		.success(function(adminExtendedData) {
 			$scope.adminExtendedData=adminExtendedData;
-			
 		}).error(function(){
 		});
 	};
 	$scope.loadExtendedAdminProfileData($scope.idAdmin);
 	
 	$scope.editExtendedAdminProfile = function(idAdmin,adminExtendedData){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/parlor/'+idAdmin+'/editextendedadminprofile.json',adminExtendedData)
+		$http.put('http://localhost:8080/socialcommunity-web/views/profile/admin/parlor/'+idAdmin+'/editextendedadminprofile.json',adminExtendedData)
 		.success(function(idAdmin) {
 			$state.go('adminparlor', {idAdmin: idAdmin});	
 		}).error(function(){
@@ -88,12 +87,11 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 	$scope.getListCountry();
 	
 	$scope.getListCityByIdCountry = function(idCountry){
-		$http.post('http://localhost:8080/socialcommunity-web/views/listcity.json',idCountry).success(function(listCity) {
+		$http.get('http://localhost:8080/socialcommunity-web/views/'+idCountry+'/listcity.json').success(function(listCity) {
 			$scope.listCity=listCity;		
 		}).error(function() {
 		});
 	};
-	
 													//event pattern
 	
 	$scope.getEventPatternPage = function(idAdmin){
@@ -117,7 +115,7 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 	};
 	
 	$scope.deleteEventPattern=function(idEventPattern){
-		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/event/'+idEventPattern+'/deletedeventpattern.json')
+		$http.delete('http://localhost:8080/socialcommunity-web/views/profile/admin/event/'+idEventPattern+'/deletedeventpattern.json')
 		.success(function() {
 			$scope.loadListEventPattern();
 		}).error(function(){
@@ -125,7 +123,7 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 	};
 	
 	$scope.updateEventPattern=function(eventPattern){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/event/updatedeventpattern.json',eventPattern)
+		$http.put('http://localhost:8080/socialcommunity-web/views/profile/admin/event/updatedeventpattern.json',eventPattern)
 		.success(function() {
 			$scope.loadListEventPattern();
 		}).error(function(){
@@ -157,16 +155,16 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 		});
 	};
 	
-	$scope.editForum=function(idAdmin,forum){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/forum/editforum.json',forum)
+	$scope.deleteForum=function(idForum){
+		$http.delete('http://localhost:8080/socialcommunity-web/views/profile/admin/forum/'+idForum+'/deletedforum.json')
 		.success(function() {
 			$scope.getListForum();
 		}).error(function(){
 		});
 	};
 	
-	$scope.deleteForum=function(idForum){
-		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/forum/'+idForum+'/deletedforum.json')
+	$scope.editForum=function(idAdmin,forum){
+		$http.put('http://localhost:8080/socialcommunity-web/views/profile/admin/forum/editforum.json',forum)
 		.success(function() {
 			$scope.getListForum();
 		}).error(function(){
@@ -179,10 +177,9 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 	};
 	
 	$scope.loadListForumTopic = function(idForum){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/forum/listforumtopic.json',idForum)
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/forum/'+idForum+'/listforumtopic.json')
 		.success(function(listForumTopic) {
 			$scope.listForumTopic=listForumTopic;
-			
 		}).error(function(){
 		});
 	};
@@ -196,7 +193,7 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 	};
 	
 	$scope.deleteForumTopic=function(idForum,idForumTopic){
-		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/forum/deleteforumtopic/'+idForumTopic+'/forumtopic.json')
+		$http.delete('http://localhost:8080/socialcommunity-web/views/profile/admin/forum/deleteforumtopic/'+idForumTopic+'/forumtopic.json')
 		.success(function() {
 			$scope.loadListForumTopic(idForum);
 		}).error(function(){
@@ -234,13 +231,12 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 	};
 	
 	$scope.deleteForumMessages=function(idForumTopic,from,to,idForumMessage){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/forum/'+idForumTopic+'/deleteForumMessages.json',idForumMessage)
+		$http.delete('http://localhost:8080/socialcommunity-web/views/profile/user/forum/'+idForumTopic+'/'+idForumMessage+'/deleteForumMessages.json')
 		.success(function(idForumTopic) {
 			$scope.searchForumMessagesBetweenDate(idForumTopic,from,to);
 		}).error(function(){
 		});
 	};
-	
 													//account
 	
 	$scope.getPageSearchAccount=function(idAdmin){
@@ -257,7 +253,7 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 	};
 	
 	$scope.changeAccountBlockStatus=function(account,blockStatus){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/account/'+blockStatus+'/newblockstatus.json',account)
+		$http.put('http://localhost:8080/socialcommunity-web/views/profile/admin/account/'+blockStatus+'/newblockstatus.json',account)
 		.success(function(account) {
 			$scope.searchAccount(account)
 		}).error(function(){
@@ -265,7 +261,7 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 	}
 	
 	$scope.deleteAccount=function(idAdmin,idAccount){
-		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/account/'+idAccount+'/deleteaccount.json')
+		$http.delete('http://localhost:8080/socialcommunity-web/views/profile/admin/account/'+idAccount+'/deleteaccount.json')
 		.success(function() {
 			$scope.accountList='';
 		}).error(function(){
@@ -306,8 +302,8 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 	};
 	
 	$scope.deleteAccountSingleMessage=function(idAdmin,searchIdAccount,idAccountSingleMessage,fromDate,toDate){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/account/'+idAdmin+'/deleteAccountSingleMessage.json',idAccountSingleMessage)
-		.success(function() {
+		$http.delete('http://localhost:8080/socialcommunity-web/views/profile/user/'+idAdmin+'/account/'
+				+idAccountSingleMessage+'/deleteAccountSingleMessage.json').success(function() {
 			$scope.searchSingleMessagesBetweenDate(searchIdAccount,fromDate,toDate);
 		}).error(function(){
 		});
@@ -328,12 +324,12 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 	};
 	
 	$scope.changeAccountGroupBlockStatus=function(accountGroup,blockStatus,groupName,accountName){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/admin/group/'+blockStatus+'/newblockstatus.json',accountGroup)
+		$http.put('http://localhost:8080/socialcommunity-web/views/profile/admin/group/'+blockStatus+'/newblockstatus.json',accountGroup)
 		.success(function() {		
-			if(groupName===''){
+			if(groupName==='undefined'){
 				groupName=null;
 			}
-			if(accountName===''){
+			if(accountName==='undefined'){
 				accountName=null;
 			}
 			$scope.searchAccountGroup(groupName,accountName);	
@@ -342,7 +338,7 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 	};
 	
 	$scope.deleteAccountGroup=function(idAccountGroup){
-		$http.get('http://localhost:8080/socialcommunity-web/views/profile/admin/group/'+idAccountGroup+'/deleteaccountgroup.json')
+		$http.delete('http://localhost:8080/socialcommunity-web/views/profile/admin/group/'+idAccountGroup+'/deleteaccountgroup.json')
 		.success(function() {
 			$scope.listAccountGroup='';
 		}).error(function(){
@@ -371,7 +367,7 @@ angular.module('socialcommunity').controller('AdministratorController',function 
 	};
 	
 	$scope.deleteAccountGroupMessage=function(idAccountGroup,idGroupMessage,fromDate,toDate){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/deleteAccountGroupMessage.json',idGroupMessage)
+		$http.delete('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/'+idGroupMessage+'/deleteAccountGroupMessage.json')
 		.success(function(idAccountGroup) {
 			$scope.searchGroupMessagesBetweenDate(idAccountGroup,fromDate,toDate);
 		}).error(function(){

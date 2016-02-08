@@ -1,6 +1,5 @@
 package com.dancosoft.socialcommunity.controller.support;
 
-import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserAutobiography;
 import com.dancosoft.socialcommunity.model.UserEmail;
 import com.dancosoft.socialcommunity.model.UserLocation;

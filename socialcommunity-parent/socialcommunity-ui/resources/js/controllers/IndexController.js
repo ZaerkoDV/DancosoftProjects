@@ -53,8 +53,8 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
 		});
 	};	
 													//sign in
-	$scope.userSignIn = function(securityPrompt){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/signin/userdata.json',securityPrompt)
+	$scope.userSignIn = function(login,password,answer){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/signin/'+login+'/'+password+'/'+answer+'/userdata.json')
 		.success(function(id) {
 			
 			if(id===null && id===''){
@@ -67,8 +67,9 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
 	};	
 	
 	//get security prompt for user
-	$scope.getSecurityQuestion= function(securityPrompt){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/signin/securityquestion.json', securityPrompt).success(function(question) {
+	$scope.getSecurityQuestion= function(loginOrEmail){
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/signin/'+loginOrEmail+'/securityquestion.json')
+		.success(function(question) {
 			$scope.question=question;
 		})
 		.error(function() {
@@ -77,7 +78,7 @@ angular.module('socialcommunity').controller('IndexController',function ($scope,
 	
 	//before use spring security 
 	$scope.redirectToUserPage= function(id){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/signin/userrole.json', id).success(function(userRole) {
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/signin/'+id+'/userrole.json').success(function(userRole) {
 		
 			if(userRole.userRoleName==='user'){
 				$state.go('userparlor', {idUser: id});	

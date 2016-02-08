@@ -5,6 +5,7 @@ package com.dancosoft.socialcommunity.controller.controllers;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.codehaus.jackson.JsonParseException;
@@ -27,6 +28,7 @@ import com.dancosoft.socialcommunity.controller.support.UserParlorData;
 import com.dancosoft.socialcommunity.controller.support.constants.BlockStatus;
 import com.dancosoft.socialcommunity.controller.support.constants.FriendStatus;
 import com.dancosoft.socialcommunity.controller.support.constants.ViewStatus;
+import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 //import com.dancosoft.socialcommunity.controller.support.constants.BlockStatus;
 //import com.dancosoft.socialcommunity.controller.support.constants.FriendStatus;
 //import com.dancosoft.socialcommunity.controller.support.constants.ViewStatus;
@@ -273,8 +275,8 @@ public class UserController {
 	
 												//user account
 
-	@RequestMapping(value="/views/profile/user/parlor/accountdata.json", method = RequestMethod.POST)
-	public @ResponseBody UserParlorData loadUserAccount(@RequestBody Long id) {
+	@RequestMapping(value="/views/profile/user/{id}/parlor/accountdata.json", method = RequestMethod.GET)
+	public @ResponseBody UserParlorData loadUserData(@PathVariable("id") Long id) {
 	
 		logger.info("UserController: Load data for user account.");
 		//data for user account
@@ -305,8 +307,8 @@ public class UserController {
 		return userParlorData;
 	}
 	
-	@RequestMapping(value="/views/profile/user/parlor/listaccountgroup.json", method = RequestMethod.POST)
-	public @ResponseBody List<AccountGroup> getListAccountGroup(@RequestBody Long id) {
+	@RequestMapping(value="/views/profile/user/{id}/parlor/listaccountgroup.json", method = RequestMethod.GET)
+	public @ResponseBody List<AccountGroup> getListAccountGroup(@PathVariable("id") Long id) {
 		
 		logger.info("UserController: Load list of user account groups.");
 		Account userAccount=userService.getAccountByUserId(id);
@@ -317,8 +319,8 @@ public class UserController {
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@RequestMapping(value="/views/profile/user/parlor/listforum.json", method = RequestMethod.POST)
-	public @ResponseBody List<Forum> getListForum(@RequestBody Long id) {
+	@RequestMapping(value="/views/profile/user/{id}/parlor/listforum.json", method = RequestMethod.GET)
+	public @ResponseBody List<Forum> getListForum(@PathVariable("id") Long id) {
 		
 		logger.info("UserController: Load list forum for user account");
 		List<Forum> listForum;	
@@ -337,24 +339,22 @@ public class UserController {
 	
 											//edit user profile
 	
-	@RequestMapping(value="/views/profile/user/parlor/commonuserprofile.json", method = RequestMethod.POST)
-	public @ResponseBody User loadCommonUserProfile (@RequestBody Long id) {
-		
+	@RequestMapping(value="/views/profile/user/{id}/parlor/commonuserprofile.json", method = RequestMethod.GET)
+	public @ResponseBody User loadCommonUserProfileData(@PathVariable("id") Long id) {
 		logger.info("UserController: load common user profile.");
 		User user =userService.getUserById(id);
 		return user;
 	}
 	
-	@RequestMapping(value="/views/profile/user/parlor/{id}/editcommonprofile.json", method = RequestMethod.POST)
-	public @ResponseBody Long editCommonUserProfile (@RequestBody User user, @PathVariable("id") Long id) {
-		
+	@RequestMapping(value="/views/profile/user/parlor/{id}/editcommonprofile.json", method = RequestMethod.PUT)
+	public @ResponseBody Long editCommonUserProfile(@RequestBody User user, @PathVariable("id") Long id) {
 		logger.info("UserController: update user common profile.");
 		userService.updateUser(user);
 		return id;
 	}
 	
-	@RequestMapping(value="/views/profile/user/parlor/extendeduserprofile.json", method = RequestMethod.POST)
-	public @ResponseBody UserExtendedData loadExtendedUserProfile (@RequestBody Long id) {
+	@RequestMapping(value="/views/profile/user/{id}/parlor/extendeduserprofile.json", method = RequestMethod.GET)
+	public @ResponseBody UserExtendedData loadExtendedUserProfileData(@PathVariable("id") Long id) {
 		
 		logger.info("UserController: load extended user profile.");
 		UserExtendedData userExtendedData =new UserExtendedData();
@@ -396,7 +396,7 @@ public class UserController {
 		return userExtendedData;
 	}
 	
-	@RequestMapping(value="/views/profile/user/parlor/{id}/editextendedprofile.json", method = RequestMethod.POST)
+	@RequestMapping(value="/views/profile/user/{id}/parlor/editextendedprofile.json", method = RequestMethod.PUT)
 	public @ResponseBody Long editExtendedUserProfile(@RequestBody String userExtendedDataJson, @PathVariable("id") Long id) {
 		
 		logger.info("UserController: update user extended profile.");
@@ -439,19 +439,23 @@ public class UserController {
 		logger.info("UserController:Create new social network (or update old if exist) and"
 				+ " update skype and facebook corespondence");
 		UserSocialNetwork userSocialNetwork;
-		UserSocialNetwork userSocialNetworkOld = userSocialNetworkService
-				.getSocialNetworkWithStatusByIdUser(id,ViewStatus.PRIVATE.toString());
+		UserSocialNetwork userSocialNetworkOld = userSocialNetworkService.getSocialNetworkWithStatusByIdUser(id,
+				ViewStatus.PRIVATE.toString());
 		
 		if(userSocialNetworkOld !=null){
 			userSocialNetwork=userSocialNetworkOld;
+			userSocialNetwork.setFacebookAddress(userExtendedData.getUserSocialNetwork().getFacebookAddress());
+			userSocialNetwork.setSkypeAddress(userExtendedData.getUserSocialNetwork().getSkypeAddress());
+			userSocialNetwork.setUserCorespondence(newUserEmail.getUserCorespondence());
+			userSocialNetworkService.updateUserSocialNetwork(userSocialNetwork);
 			
 		}else{
 			userSocialNetwork= new UserSocialNetwork();
+			userSocialNetwork.setFacebookAddress(userExtendedData.getUserSocialNetwork().getFacebookAddress());
+			userSocialNetwork.setSkypeAddress(userExtendedData.getUserSocialNetwork().getSkypeAddress());
+			userSocialNetwork.setUserCorespondence(newUserEmail.getUserCorespondence());
+			userSocialNetworkService.saveUserSocialNetwork(userSocialNetwork);
 		}
-		userSocialNetwork.setFacebookAddress(userExtendedData.getUserSocialNetwork().getFacebookAddress());
-		userSocialNetwork.setSkypeAddress(userExtendedData.getUserSocialNetwork().getSkypeAddress());
-		userSocialNetwork.setUserCorespondence(newUserEmail.getUserCorespondence());
-		userSocialNetworkService.saveUserSocialNetwork(userSocialNetwork);
 		
 		logger.info("UserController:Get language for update.");
 		Long idNewLanguage=userExtendedData.getUserLocation().getLanguage().getIdLanguage();
@@ -474,18 +478,19 @@ public class UserController {
 		return id;
 	}
 	
-	@RequestMapping(value="/views/profile/user/parlor/userautobiographyprofile.json", method = RequestMethod.POST)
-	public @ResponseBody UserAutobiography loadUserAutobiographyProfile (@RequestBody Long id) {
+	@RequestMapping(value="/views/profile/user/{id}/parlor/userautobiographyprofile.json", method = RequestMethod.GET)
+	public @ResponseBody UserAutobiography loadUserAutobiographyData(@PathVariable("id") Long id) {
 		
 		logger.info("UserController: load user autobiography to update.");
 		UserAutobiography userAutobiography=userAutobiographyService.getUserAutobiographyByIdUser(id);
-		userAutobiography.setBirth(null);
+		//userAutobiography.setBirth(null);
 		
 		return userAutobiography;
 	}
 	
-	@RequestMapping(value="/views/profile/user/parlor/{id}/editautobiographyprofile.json", method = RequestMethod.POST)
-	public @ResponseBody Long editUserAutobiographyProfile(@RequestBody String userAutobiographyJson, @PathVariable("id") Long id) {
+	@RequestMapping(value="/views/profile/user/{id}/{birth}/parlor/editautobiographyprofile.json", method = RequestMethod.PUT)
+	public @ResponseBody Long editUserAutobiographyProfile(@RequestBody String userAutobiographyJson,
+			@PathVariable("id") Long id, @PathVariable("birth") Date birth) {
 		
 		logger.info("UserController: update user autobiography.");
 		UserAutobiography userAutobiography=null;
@@ -506,7 +511,8 @@ public class UserController {
 					+ " userExtendedDataJson "+e);
 		}
 		
-		userAutobiography.setBirth(LocalDateTime.of(1990, 12, 30, 0, 0));
+		TimeConverter converter=new TimeConverter();
+		userAutobiography.setBirth(converter.convertDateToLocalDateTime(birth));
 		logger.info("UserController:Update user Autobiography.");
 		userAutobiographyService.updateUserAutobiography(userAutobiography);
 			
@@ -532,8 +538,8 @@ public class UserController {
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	@RequestMapping(value="/views/listcity.json", method = RequestMethod.POST)
-	public @ResponseBody List<City> loadListCity(@RequestBody Long idCountry) {
+	@RequestMapping(value="/views/{idCountry}/listcity.json", method = RequestMethod.GET)
+	public @ResponseBody List<City> getListCityByIdCountry(@PathVariable("idCountry") Long idCountry) {
 		logger.info("UserController: load list city by id country.");
 		List<City>  listCity= (List)cityService.getListCityByIdCountry(idCountry);
 		
@@ -541,8 +547,8 @@ public class UserController {
 	}
 														//forum
 	
-	@RequestMapping(value="/views/profile/user/forum/listforumtopic.json", method = RequestMethod.POST)
-	public @ResponseBody List<ForumTopic> loadListForumTopic(@RequestBody Long idForum) {
+	@RequestMapping(value="/views/profile/user/forum/{idForum}/listforumtopic.json", method = RequestMethod.GET)
+	public @ResponseBody List<ForumTopic> loadListForumTopic(@PathVariable("idForum") Long idForum) {
 		logger.info("UserController: load list forum topic by id forum.");
 		List<ForumTopic> listForumTopic= forumTopicService.getListForumTopicByIdForum(idForum);
 		
@@ -566,7 +572,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/views/profile/user/forum/{idForumTopic}/listForumMessages.json", method = RequestMethod.GET)
-	public @ResponseBody List<ForumMessage> loadTopicMessages(@PathVariable("idForumTopic") Long idForumTopic) {
+	public @ResponseBody List<ForumMessage> loadListTopicMessages(@PathVariable("idForumTopic") Long idForumTopic) {
 		
 		logger.info("UserController: Load topic messages from last week");
 		//load topic messages from last week
@@ -595,8 +601,10 @@ public class UserController {
 		return idForumTopic;
 	}
 
-	@RequestMapping(value="/views/profile/user/forum/{idForumTopic}/deleteForumMessages.json", method = RequestMethod.POST)
-	public @ResponseBody Long deleteForumMessages(@RequestBody Long idForumMessage, @PathVariable("idForumTopic") Long idForumTopic) {
+	@RequestMapping(value="/views/profile/user/forum/{idForumTopic}/{idForumMessage}/deleteForumMessages.json", method = RequestMethod.DELETE)
+	public @ResponseBody Long deleteForumMessages( @PathVariable("idForumTopic") Long idForumTopic,
+			@PathVariable("idForumMessage") Long idForumMessage) {
+		
 		logger.info("UserController: Delete forum message by id");
 		forumMessageService.deleteForumMessageById(idForumMessage);
 		
@@ -655,7 +663,6 @@ public class UserController {
 	public @ResponseBody Long saveNewAccountGroupMessage(@RequestBody GroupMessage newGroupMessage) {
 		
 		logger.info("UserController: Save new member message of account group.");
-		
 		GroupMessage groupMessage=new GroupMessage();
 		GroupMember groupMember= groupMemberService.getGroupMemberById(newGroupMessage.getGroupMember().getIdGroupMember());
 		groupMessage.setGroupMember(groupMember);
@@ -670,8 +677,8 @@ public class UserController {
 		return idAccountGroup;
 	}
 	
-	@RequestMapping(value="/views/profile/user/group/{idAccountGroup}/deleteAccountGroupMessage.json", method = RequestMethod.POST)
-	public @ResponseBody Long deleteNewAccountGroupMessage(@RequestBody Long idGroupMessage,
+	@RequestMapping(value="/views/profile/user/group/{idAccountGroup}/{idGroupMessage}/deleteAccountGroupMessage.json", method = RequestMethod.DELETE)
+	public @ResponseBody Long deleteAccountGroupMessage(@PathVariable("idGroupMessage") Long idGroupMessage,
 			@PathVariable("idAccountGroup") Long idAccountGroup) {
 		
 		logger.info("UserController: Delete group message by id");
@@ -697,7 +704,7 @@ public class UserController {
 		return listAccountGroupMember;
 	}
 	
-	@RequestMapping(value="/views/profile/user/group/{idAccountGroupMember}/{idDeleteGroupMember}/deleteAccountGroupMember.json", method = RequestMethod.GET)
+	@RequestMapping(value="/views/profile/user/group/{idAccountGroupMember}/{idDeleteGroupMember}/deleteAccountGroupMember.json", method = RequestMethod.DELETE)
 	public @ResponseBody Long deleteMemberFromAccountGroup(@PathVariable("idAccountGroupMember") Long idAccountGroupMember,
 			@PathVariable("idDeleteGroupMember") Long idDeleteGroupMember){
 		
@@ -856,8 +863,9 @@ public class UserController {
 		return id;
 	}
 	
-	@RequestMapping(value="/views/profile/user/account/{id}/deleteAccountSingleMessage.json", method = RequestMethod.POST)
-	public @ResponseBody Long deleteAccountSingleMessage(@RequestBody Long idAccountSingleMessage,@PathVariable("id") Long id){
+	@RequestMapping(value="/views/profile/user/{id}/account/{idAccountSingleMessage}/deleteAccountSingleMessage.json", method = RequestMethod.DELETE)
+	public @ResponseBody Long deleteAccountSingleMessage(@PathVariable("idAccountSingleMessage") Long idAccountSingleMessage,
+			@PathVariable("id") Long id){
 		logger.info("UserController:Delete account single message.");
 		singleMessageService.deleteSingleMessageById(idAccountSingleMessage);		
 		

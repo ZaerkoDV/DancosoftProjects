@@ -6,19 +6,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.dancosoft.socialcommunity.controller.support.constants.BlockStatus;
+import com.dancosoft.socialcommunity.controller.support.constants.FriendStatus;
 import com.dancosoft.socialcommunity.controller.support.constants.StandartGroupName;
 import com.dancosoft.socialcommunity.controller.support.constants.ViewStatus;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountGroup;
 import com.dancosoft.socialcommunity.model.AccountGroupHistory;
+import com.dancosoft.socialcommunity.model.GroupMember;
 
 public class StandartAccountGroup {
 
 	private static final Logger logger = LoggerFactory.getLogger(StandartAccountGroup.class);
-	
-	
-	
-	
 	
 	public AccountGroup createAccountGroupFamily(Account account){
 		logger.info("StandartAccountGroup: create base group family for new user account.");
@@ -82,4 +80,17 @@ public class StandartAccountGroup {
 		
 		return accountGroupHistoryWork;
 	}
+	
+	public GroupMember createGroupMemberForGroup(AccountGroup accountGroup,Account account){
+		
+		logger.info("StandartAccountGroup: Add user to created group.");
+		GroupMember groupMember= new GroupMember();
+		groupMember.setAccountGroup(accountGroup);
+		groupMember.setGroupMemberStatus(FriendStatus.FRIEND.toString());
+		groupMember.setMemberAccount(account);
+	
+		return groupMember;
+	}
+	
+	
 }

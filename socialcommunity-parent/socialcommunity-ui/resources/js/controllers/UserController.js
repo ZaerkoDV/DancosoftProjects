@@ -12,30 +12,29 @@ angular.module('socialcommunity').controller('UserController',function ($scope,$
 	$scope.idAccountGroupMember=$state.params.idAccountGroupMember;
 	$scope.searchIdAccount=$state.params.searchIdAccount;
 	
+													//user parlor
+	
 	$scope.loadUserData = function(id){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/parlor/accountdata.json',id).success(function(userParlorData) {
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/parlor/accountdata.json')
+		.success(function(userParlorData) {
 			$scope.userParlorData=userParlorData;
-					
 		}).error(function() {
 		});
 	};	
 	$scope.loadUserData($scope.id);
 	
 	$scope.getListAccountGroup = function(id){	
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/parlor/listaccountgroup.json',id)
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/parlor/listaccountgroup.json')
 		.success(function(listAccountGroup) {
 			$scope.listAccountGroup=listAccountGroup;		
-			$state.go('userparlor', {idUser: id});
-			
 		}).error(function() {
 		});
 	};
 	
 	$scope.getListForum = function(id){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/parlor/listforum.json',id).success(function(listForum) {
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/parlor/listforum.json')
+		.success(function(listForum) {
 			$scope.listForum=listForum;		
-			$state.go('userparlor', {idUser: id});
-			
 		}).error(function() {
 		});
 	};
@@ -51,7 +50,8 @@ angular.module('socialcommunity').controller('UserController',function ($scope,$
 	};
 	
 	$scope.loadCommonUserProfileData = function(id){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/parlor/commonuserprofile.json',id).success(function(user) {
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/parlor/commonuserprofile.json')
+		.success(function(user) {
 			$scope.user=user;
 		}).error(function(){
 		});
@@ -59,19 +59,20 @@ angular.module('socialcommunity').controller('UserController',function ($scope,$
 	$scope.loadCommonUserProfileData($scope.id);
 	
 	$scope.editCommonUserProfile = function(id,user){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/parlor/'+id+'/editcommonprofile.json',user).success(function(id) {
+		$http.put('http://localhost:8080/socialcommunity-web/views/profile/user/parlor/'+id+'/editcommonprofile.json',user)
+		.success(function(id) {
 			$state.go('userparlor', {idUser: id});		
 		}).error(function(){
 		});
 	};
-														//edit extended profile
+												//edit extended profile
 
 	$scope.loadExtendedUserProfile = function(id){
 		$state.go('editextendedprofile', {idUser: id});
 	};
 	
 	$scope.loadExtendedUserProfileData = function(id){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/parlor/extendeduserprofile.json',id)
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/parlor/extendeduserprofile.json')
 		.success(function(userExtendedData) {
 			$scope.userExtendedData=userExtendedData;
 		}).error(function(){
@@ -80,21 +81,20 @@ angular.module('socialcommunity').controller('UserController',function ($scope,$
 	$scope.loadExtendedUserProfileData($scope.id);
 	
 	$scope.editExtendedUserProfile = function(id,userExtendedData){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/parlor/'+id+'/editextendedprofile.json',userExtendedData)
+		$http.put('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/parlor/editextendedprofile.json',userExtendedData)
 		.success(function(id) {
 			$state.go('userparlor', {idUser: id});
-			
 		}).error(function(){
 		});
 	};
-														//editAutoboigraphy
+												//editAutoboigraphy
 	
 	$scope.loadUserAutobiography = function(id){
 		$state.go('editautobiography', {idUser: id});
 	};
 	
 	$scope.loadUserAutobiographyData = function(id){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/parlor/userautobiographyprofile.json',id)
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/parlor/userautobiographyprofile.json')
 		.success(function(userAutobiography) {
 			$scope.userAutobiography=userAutobiography;
 		}).error(function(){
@@ -102,19 +102,19 @@ angular.module('socialcommunity').controller('UserController',function ($scope,$
 	};
 	$scope.loadUserAutobiographyData($scope.id);
 
-	$scope.editUserAutobiography = function(id,userAutobiography){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/parlor/'+id+'/editautobiographyprofile.json',userAutobiography)
+	$scope.editUserAutobiography = function(id,userAutobiography,birth){
+		//this.userAutobiography.birth = null;
+		$http.put('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/'+birth+'/parlor/editautobiographyprofile.json',userAutobiography)
 		.success(function(id) {
 			$state.go('userparlor', {idUser: id});
 		}).error(function(){
 		});
 	};
-															//support data
+													//support data
 	
 	$scope.getListLanguage = function(){
 		$http.get('http://localhost:8080/socialcommunity-web/views/listlanguage.json').success(function(listLanguage) {
 			$scope.listLanguage=listLanguage;		
-			//$state.go('editextendedprofile', {idUser: id});
 		}).error(function() {
 		});
 	};
@@ -129,20 +129,19 @@ angular.module('socialcommunity').controller('UserController',function ($scope,$
 	$scope.getListCountry();
 	
 	$scope.getListCityByIdCountry = function(idCountry){
-		$http.post('http://localhost:8080/socialcommunity-web/views/listcity.json',idCountry).success(function(listCity) {
+		$http.get('http://localhost:8080/socialcommunity-web/views/'+idCountry+'/listcity.json').success(function(listCity) {
 			$scope.listCity=listCity;		
-			//$state.go('editextendedprofile', {idUser: id});
 		}).error(function() {
 		});
 	};
-															//forum topics
+													//forum
 	
 	$scope.getForum = function(id,idForum){
 		$state.go('editlistforumtopic', {idUser: id, idForum:idForum})
 	};
 	
 	$scope.loadListForumTopic = function(idForum){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/forum/listforumtopic.json',idForum)
+		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/forum/'+idForum+'/listforumtopic.json')
 		.success(function(listForumTopic) {
 			$scope.listForumTopic=listForumTopic;
 		}).error(function(){
@@ -156,7 +155,6 @@ angular.module('socialcommunity').controller('UserController',function ($scope,$
 		}).error(function(){
 		});
 	};
-													//forum messages
 	
 	$scope.getTopicMessages=function(id,idForumTopic){
 		$state.go('forumtopicmessages', {idUser: id, idForumTopic:idForumTopic})
@@ -179,13 +177,13 @@ angular.module('socialcommunity').controller('UserController',function ($scope,$
 	};
 	
 	$scope.deleteForumMessages=function(idForumTopic,idForumMessage){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/forum/'+idForumTopic+'/deleteForumMessages.json',idForumMessage)
+		$http.delete('http://localhost:8080/socialcommunity-web/views/profile/user/forum/'+idForumTopic+'/'+idForumMessage+'/deleteForumMessages.json')
 		.success(function(idForumTopic) {
 			$scope.loadListTopicMessages(idForumTopic);
 		}).error(function(){
 		});
 	};
-														  //group save
+												  //account group
 	$scope.createAccountGroup = function(id){	
 		$state.go('addaccountgroup', {idUser: id});
 	};
@@ -197,7 +195,6 @@ angular.module('socialcommunity').controller('UserController',function ($scope,$
 		}).error(function(){
 		});
 	};
-														//get id group member
 	
 	$scope.getAccountGroup = function(id,idAccountGroup){	
 		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+id+'/'+idAccountGroup+'/accountGroupMember.json')
@@ -206,7 +203,6 @@ angular.module('socialcommunity').controller('UserController',function ($scope,$
 		}).error(function(){
 		});
 	};
-														//group messages & pattern
 	
 	$scope.loadListAccountGroupMessages = function(idAccountGroup){
 		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/listAccountGroupMessages.json')
@@ -225,7 +221,7 @@ angular.module('socialcommunity').controller('UserController',function ($scope,$
 	};
 	
 	$scope.deleteAccountGroupMessage=function(idAccountGroup,idGroupMessage){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/deleteAccountGroupMessage.json',idGroupMessage)
+		$http.delete('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/'+idGroupMessage+'/deleteAccountGroupMessage.json')
 		.success(function(idAccountGroup) {
 			$scope.loadListAccountGroupMessages(idAccountGroup);
 		}).error(function(){
@@ -252,16 +248,14 @@ angular.module('socialcommunity').controller('UserController',function ($scope,$
 		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/listAccountGroupMembers.json')
 		.success(function(listAccountGroupMember) {
 			$scope.listAccountGroupMember=listAccountGroupMember;
-			
 		}).error(function(){
 		});
 	};
 	
 	$scope.deleteMemberFromAccountGroup=function(idAccountGroupMember,idAccountGroup,idDeleteGroupMember){
-		$http.get('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroupMember+'/'+idDeleteGroupMember+'/deleteAccountGroupMember.json')
+		$http.delete('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroupMember+'/'+idDeleteGroupMember+'/deleteAccountGroupMember.json')
 		.success(function(idAccountGroupMember) {
 			$scope.loadListAccountGroupMember(idAccountGroup);
-			
 		}).error(function(){
 		});	
 	};
@@ -282,8 +276,7 @@ angular.module('socialcommunity').controller('UserController',function ($scope,$
 		}).error(function(){
 		});	
 	};
-	
-																//search account
+													//search account
 	$scope.getPageSearchAccount=function(id){
 		$state.go('searchaccount', {idUser: id});
 	};
@@ -311,7 +304,6 @@ angular.module('socialcommunity').controller('UserController',function ($scope,$
 		}).error(function(){
 		});
 	};
-												 //get account info
 	
 	$scope.getAccountInfo=function(id,searchIdAccount){
 		$state.go('accountinfo', {idUser: id,searchIdAccount:searchIdAccount});
@@ -337,7 +329,6 @@ angular.module('socialcommunity').controller('UserController',function ($scope,$
 		}).error(function() {
 		});
 	};
-													//save new single messege
 	
 	$scope.saveNewAccountSingleMessage=function(id,searchIdAccount,newAccountSingleMessage){
 		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/account/saveAccountSingleMessage.json',newAccountSingleMessage)
@@ -346,11 +337,10 @@ angular.module('socialcommunity').controller('UserController',function ($scope,$
 		}).error(function(){
 		});
 	};
-													//delete single message
 	
 	$scope.deleteAccountSingleMessage=function(id,searchIdAccount,idAccountSingleMessage){
-		$http.post('http://localhost:8080/socialcommunity-web/views/profile/user/account/'+id+'/deleteAccountSingleMessage.json',idAccountSingleMessage)
-		.success(function(id) {
+		$http.delete('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/account/'
+				+idAccountSingleMessage+'/deleteAccountSingleMessage.json').success(function(id) {
 			$scope.loadListAccountSingleMessages(id,searchIdAccount);
 		}).error(function(){
 		});

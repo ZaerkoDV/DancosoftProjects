@@ -4,11 +4,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-
-
-
-
-
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -23,13 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
-
-
-
-
-
-
 import com.dancosoft.socialcommunity.controller.support.UserExtended;
 import com.dancosoft.socialcommunity.controller.support.base.StandartAccountGroup;
 import com.dancosoft.socialcommunity.controller.support.constants.BlockStatus;
@@ -40,6 +28,7 @@ import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountGroup;
 import com.dancosoft.socialcommunity.model.AccountGroupHistory;
 import com.dancosoft.socialcommunity.model.AccountHistory;
+import com.dancosoft.socialcommunity.model.GroupMember;
 import com.dancosoft.socialcommunity.model.SecurityPrompt;
 import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserAutobiography;
@@ -52,6 +41,7 @@ import com.dancosoft.socialcommunity.service.AccountGroupHistoryService;
 import com.dancosoft.socialcommunity.service.AccountGroupService;
 import com.dancosoft.socialcommunity.service.AccountHistoryService;
 import com.dancosoft.socialcommunity.service.AccountService;
+import com.dancosoft.socialcommunity.service.GroupMemberService;
 import com.dancosoft.socialcommunity.service.SecurityPromptService;
 import com.dancosoft.socialcommunity.service.UserAutobiographyService;
 import com.dancosoft.socialcommunity.service.UserCorespondenceService;
@@ -160,6 +150,14 @@ public class IndexController {
 	
 	public void setAccountGroupHistoryService(AccountGroupHistoryService accountGroupHistoryService) {
 		this.accountGroupHistoryService = accountGroupHistoryService;
+	}
+	
+	@Autowired
+	@Qualifier(value="groupMemberService")
+	private GroupMemberService groupMemberService;
+	
+	public GroupMemberService getGroupMemberService() {
+		return groupMemberService;
 	}
 
 
@@ -310,62 +308,68 @@ public class IndexController {
 			accountHistoryService.saveAccountHistory(accountHistory);
 
 			// create base groups for empty account and group history
-			StandartAccountGroup accountGroup = new StandartAccountGroup();
-			StandartAccountGroup historyAccountGroup = new StandartAccountGroup();
+			StandartAccountGroup standartAccountGroup = new StandartAccountGroup();
 
 			logger.info("IndexController: create base group family");
-			AccountGroup family = accountGroup.createAccountGroupFamily(account);
+			AccountGroup family = standartAccountGroup.createAccountGroupFamily(account);
 			accountGroupService.saveAccountGroup(family);
-			AccountGroupHistory familyHistory = historyAccountGroup.createAccountGroupHistoryFamily(family);
+			AccountGroupHistory familyHistory = standartAccountGroup.createAccountGroupHistoryFamily(family);
 			accountGroupHistoryService.saveAccountGroupHistory(familyHistory);
-
+			GroupMember groupMemberInGroupFamily=standartAccountGroup.createGroupMemberForGroup(family, account);
+			groupMemberService.saveGroupMember(groupMemberInGroupFamily);
+			
+				
 			logger.info("IndexController: create base group friend");
-			AccountGroup friend = accountGroup.createAccountGroupFriend(account);
+			AccountGroup friend = standartAccountGroup.createAccountGroupFriend(account);
 			accountGroupService.saveAccountGroup(friend);
-			AccountGroupHistory friendHistory = historyAccountGroup.createAccountGroupHistoryFriend(friend);
+			AccountGroupHistory friendHistory = standartAccountGroup.createAccountGroupHistoryFriend(friend);
 			accountGroupHistoryService.saveAccountGroupHistory(friendHistory);
-
+			GroupMember groupMemberInGroupFriend= standartAccountGroup.createGroupMemberForGroup(friend, account);
+			groupMemberService.saveGroupMember(groupMemberInGroupFriend);
+			
+			
 			logger.info("IndexController: create base group work");
-			AccountGroup work = accountGroup.createAccountGroupWork(account);
+			AccountGroup work = standartAccountGroup.createAccountGroupWork(account);
 			accountGroupService.saveAccountGroup(work);
-			AccountGroupHistory workHistory = historyAccountGroup.createAccountGroupHistoryFriend(work);
+			AccountGroupHistory workHistory = standartAccountGroup.createAccountGroupHistoryFriend(work);
 			accountGroupHistoryService.saveAccountGroupHistory(workHistory);
+			GroupMember groupMemberInGroupWork=standartAccountGroup.createGroupMemberForGroup(work, account);
+			groupMemberService.saveGroupMember(groupMemberInGroupWork);
 
 		}else{
-			logger.info("IndexController: create new account and base groups for account failed! Id user must not null.");
+			logger.info("IndexController: create new account and base groups"
+					+ " for account failed! Id user must not null.");
 			idUser=null;
 		}
 		return idUser;
 	}
-	//headers="Accept=application/json"
-	@RequestMapping(value="/views/profile/signin/userdata.json", method = RequestMethod.POST)
-	public @ResponseBody Long signIn(@RequestBody SecurityPrompt prompt){
+	
+	@RequestMapping(value="/views/profile/signin/{loginOrEmail}/{password}/{answer}/userdata.json", method = RequestMethod.GET)
+	public @ResponseBody Long signIn(@PathVariable("loginOrEmail") String loginOrEmail,@PathVariable("password") String password,
+			@PathVariable("answer") String answer){
 		
 		Long idUser=null;
-		Boolean signin=false;
+		Boolean signIn=false;
 		SecurityPrompt securityPrompt;
 		
 		logger.info("IndexController: user sign in, check user security information for autorization in system.");
-		String loginOrEmail=prompt.getUserSecurity().getUserLogin();
-		String password=prompt.getUserSecurity().getUserPassword();
-		String answer=prompt.getUserAnswer();
 		
 		//email and password
 		Boolean isValidEmail=userEmailService.isValidEmail(loginOrEmail);
-		if(isValidEmail && password!=null){
+		if(isValidEmail && !password.equals("undefined")){
 			logger.info("IndexController: user sign in by user email and user password");
 			idUser=userEmailService.getIdUserByEmail(loginOrEmail);
 			UserSecurity userSecurity=userSecurityService.getLoginPasswordByIdUser(idUser);
 			if(userSecurity.getUserPassword().equals(password)){
-				signin=true;
+				signIn=true;
 			}
 			
 		//email and answer	
-		}else if(isValidEmail && answer!=null){		
+		}else if(isValidEmail && !answer.equals("undefined")){		
 			logger.info("IndexController: user sign in by user email and user answer on question");
 			idUser=userEmailService.getIdUserByEmail(loginOrEmail);
 			securityPrompt=securityPromptService.getSecurityPromptByIdUser(idUser);
-			signin=securityPromptService.signInUserByPromptAnswer(securityPrompt.getIdSecurityPrompt(), answer);
+			signIn=securityPromptService.signInUserByPromptAnswer(securityPrompt.getIdSecurityPrompt(), answer);
 			
 			//generate new password with old login which send on email
 			//userSecurityService.updateLoginPasswordByIdUser(idUser);
@@ -373,24 +377,23 @@ public class IndexController {
 		
 		//login and password
 		Boolean isLoginNotExist= userSecurityService.isUniqueLogin(loginOrEmail);
-		if(!isLoginNotExist && password!=null){
+		if(!isLoginNotExist && !password.equals("undefined")){
 			logger.info("IndexController: user sign in by user login and password");
 			idUser=userSecurityService.getIdUserByLoginPassword(loginOrEmail, password);
-			signin=userSecurityService.signInUserByLoginPassword(loginOrEmail, password);
+			signIn=userSecurityService.signInUserByLoginPassword(loginOrEmail, password);
 			
 		//login and answer	
-		} else if(!isLoginNotExist && answer!=null){	
+		} else if(!isLoginNotExist && !answer.equals("undefined")){	
 			logger.info("IndexController: user sign in by user login and answer on question.");
 			securityPrompt=securityPromptService.getSecurityPromptByLogin(loginOrEmail);
 			idUser=securityPromptService.getIdUserByPromptAnswer(securityPrompt.getIdSecurityPrompt(), answer);
-			signin=securityPromptService.signInUserByPromptAnswer(securityPrompt.getIdSecurityPrompt(), answer);
-			
+			signIn=securityPromptService.signInUserByPromptAnswer(securityPrompt.getIdSecurityPrompt(), answer);
 			//generate new password with old login which send on email
 			//userSecurityService.updateLoginPasswordByIdUser(idUser);
 		}
 		
 		//result of user autorization
-		if(signin && !idUser.equals(null)){
+		if(signIn && !idUser.equals(null)){
 			logger.info("IndexController: user autorization is successfully");
 			return idUser;
 			
@@ -400,12 +403,17 @@ public class IndexController {
 		}	
 	}	
 		
-	@RequestMapping(value="/views/profile/signin/securityquestion.json", method = RequestMethod.POST)
-	public @ResponseBody SecurityPrompt getSecurityQuestion(@RequestBody SecurityPrompt prompt){
+	@RequestMapping(value="/views/profile/signin/{loginOrEmail}/securityquestion.json", method = RequestMethod.GET)
+	public @ResponseBody SecurityPrompt getSecurityQuestion(@PathVariable("loginOrEmail") String loginOrEmail){
 		
 		logger.info("IndexController: user sign in, get security answer for autorization.");
-		String loginOrEmail=prompt.getUserSecurity().getUserLogin();
 		SecurityPrompt securityPrompt;
+		
+		//save data which send on view
+		SecurityPrompt prompt=new SecurityPrompt();
+		UserSecurity userSecurity=new UserSecurity();
+		userSecurity.setUserLogin(loginOrEmail);
+		prompt.setUserSecurity(userSecurity);
 		
 		//if user enter email
 		Boolean isValidEmail=userEmailService.isValidEmail(loginOrEmail);
@@ -432,8 +440,8 @@ public class IndexController {
 		return prompt;
 	}
 	
-	@RequestMapping(value="/views/profile/signin/userrole.json", method = RequestMethod.POST)
-	public @ResponseBody UserRole getUserRole(@RequestBody Long idUser){
+	@RequestMapping(value="/views/profile/signin/{idUser}/userrole.json", method = RequestMethod.GET)
+	public @ResponseBody UserRole getUserRole(@PathVariable("idUser") Long idUser){
 		
 		logger.info("IndexController: get user role after sign");
 		UserRole userRole= userSecurityService.getUserRoleAsObjectByIdUser(idUser);

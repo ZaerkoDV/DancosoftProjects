@@ -5,7 +5,6 @@ package com.dancosoft.socialcommunity.controller.controllers;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -266,10 +265,10 @@ public class AdministratorController {
 	}
 
 	
-	@RequestMapping(value="/views/profile/admin/parlor/accountdata.json", method = RequestMethod.POST)
-	public @ResponseBody UserParlorData loadAdminAccount(@RequestBody Long idAdmin) {
+	@RequestMapping(value="/views/profile/admin/{idAdmin}/parlor/accountdata.json", method = RequestMethod.GET)
+	public @ResponseBody UserParlorData loadAdminData(@PathVariable("idAdmin") Long idAdmin) {
 		
-		logger.info("AdminController: Load data for admin account.");
+		logger.info("AdministratorController: Load data for admin account.");
 		//data for user account
 		UserParlorData userParlorData=new UserParlorData();
 		
@@ -289,7 +288,7 @@ public class AdministratorController {
 		userParlorData.setUserLocation(userLocation);
 		
 		//history last visit account
-		logger.info("UserController: Create date last visit account.");
+		logger.info("AdministratorController: Create date last visit account.");
 		Account userAccount=userService.getAccountByUserId(idAdmin);
 		AccountHistory accountHistory =accountHistoryService
 				.getAccountHistoryByIdAccount(userAccount.getIdAccount());
@@ -300,29 +299,29 @@ public class AdministratorController {
 	}
 										// edit common profile
 
-	@RequestMapping(value = "/views/profile/admin/parlor/commonadminprofile.json", method = RequestMethod.POST)
-	public @ResponseBody User loadCommonAdminProfile(@RequestBody Long idAdmin) {
-		logger.info("AdminController: load common admin profile.");
+	@RequestMapping(value = "/views/profile/admin/{idAdmin}/parlor/commonadminprofile.json", method = RequestMethod.GET)
+	public @ResponseBody User loadCommonAdminProfileData(@PathVariable("idAdmin") Long idAdmin) {
+		logger.info("AdministratorController: load common admin profile.");
 		User user = userService.getUserById(idAdmin);
 		return user;
 	}
 	
-	@RequestMapping(value="/views/profile/admin/parlor/editcommonadminprofile.json", method = RequestMethod.POST)
+	@RequestMapping(value="/views/profile/admin/parlor/editcommonadminprofile.json", method = RequestMethod.PUT)
 	public @ResponseBody Long editCommonAdminProfile (@RequestBody User admin) {
-		logger.info("AdminController: update admin common profile.");
+		logger.info("AdministratorController: update admin common profile.");
 		userService.updateUser(admin);
 		return admin.getIdUser();
 	}
 	
-										// edit extended profile
+									// edit extended profile
 	
-	@RequestMapping(value="/views/profile/admin/parlor/extendedadminprofile.json", method = RequestMethod.POST)
-	public @ResponseBody UserExtendedData loadExtendedAdminProfile (@RequestBody Long idAdmin) {
+	@RequestMapping(value="/views/profile/admin/{idAdmin}/parlor/extendedadminprofile.json", method = RequestMethod.GET)
+	public @ResponseBody UserExtendedData loadExtendedAdminProfileData(@PathVariable("idAdmin") Long idAdmin) {
 		
-		logger.info("AdminController: load extended admin profile.");
+		logger.info("AdministratorController: load extended admin profile.");
 		UserExtendedData userExtendedData = new UserExtendedData();
 		
-		logger.info("AdminController: load admin email to update");
+		logger.info("AdministratorController: load admin email to update");
 		UserEmail userEmail=userEmailService.getEmailByIdUser(idAdmin);
 		userExtendedData.setUserEmail(userEmail);
 		
@@ -330,7 +329,7 @@ public class AdministratorController {
 //		UserAutobiography userAutobiography = userAutobiographyService.getUserAutobiographyByIdUser(idAdmin);
 //		userExtendedData.setUserAutobiography(userAutobiography);
 		
-		logger.info("AdminController: load admin photo to update");
+		logger.info("AdministratorController: load admin photo to update");
 		UserPhoto userPhoto=userPhotoService.getUserPhotoByIdUser(idAdmin);
 //		String pathToPhoto=userPhotoService.loadPathToUserPhoto(id);
 //		
@@ -340,7 +339,7 @@ public class AdministratorController {
 //		userPhoto.setPhotoName(pathToPhoto);
 		userExtendedData.setUserPhoto(userPhoto);
 		
-		logger.info("AdminController: load admin location to update");
+		logger.info("AdministratorController: load admin location to update");
 		UserLocation userLocation=userLocationService.getUserLocationByIdUser(idAdmin);
 		
 		if(userLocation!=null){
@@ -355,12 +354,12 @@ public class AdministratorController {
 		
 		return userExtendedData;
 	}
-	
-	@RequestMapping(value="/views/profile/admin/parlor/{idAdmin}/editextendedadminprofile.json", method = RequestMethod.POST)
+//not convert date	
+	@RequestMapping(value="/views/profile/admin/parlor/{idAdmin}/editextendedadminprofile.json", method = RequestMethod.PUT)
 	public @ResponseBody Long editExtendedAdminProfile(@RequestBody String adminExtendedDataJson,
 			@PathVariable("idAdmin") Long idAdmin) {
 		
-		logger.info("AdminController: update user extended profile.");
+		logger.info("AdministratorController: update user extended profile.");
 		UserExtendedData adminExtendedData =null;
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -368,20 +367,20 @@ public class AdministratorController {
 			adminExtendedData = mapper.readValue(adminExtendedDataJson, UserExtendedData.class);
 			
 		} catch (JsonParseException e) {
-			logger.info("AdminController: error when json parse class UserExtendedData "+e);
+			logger.info("AdministratorController: error when json parse class UserExtendedData "+e);
 			
 		} catch (JsonMappingException e) {
-			logger.info("AdminController: error in json mapping for class UserExtendedData "+e);
+			logger.info("AdministratorController: error in json mapping for class UserExtendedData "+e);
 			
 		} catch (IOException e) {
-			logger.info("AdminController: input output exeption when read json value of object"
+			logger.info("AdministratorController: input output exeption when read json value of object"
 					+ " userExtendedDataJson "+e);
 		}
 
-		logger.info("AdminController:Get user for update coresponding field.");
+		logger.info("AdministratorController:Get user for update coresponding field.");
 		User user=userService.getUserById(idAdmin);
 		
-//		logger.info("AdminController:Save(or update) new admin photo.");
+//		logger.info("AdministratorController:Save(or update) new admin photo.");
 //		UserPhoto userPhoto=userPhotoService.getUserPhotoByIdUser(idAdmin);
 //		if(userPhoto==null){
 //			userPhoto=new UserPhoto();	
@@ -390,10 +389,10 @@ public class AdministratorController {
 //		userPhoto.setPhotoNote(adminExtendedData.getUserPhoto().getPhotoNote());
 //		userPhoto.setUser(user);
 //		userPhotoService.updateUserPhoto(userPhoto);
-//		logger.info("AdminController:Save new admin photo(on hird drive and name photo to data base).");
+//		logger.info("AdministratorController:Save new admin photo(on hird drive and name photo to data base).");
 //		userPhotoService.savePhotoAsFormat(idAdmin, "jpg", adminExtendedData.getUserPhoto().getPhotoName());
 		
-		logger.info("AdminController:Get email and update.");
+		logger.info("AdministratorController:Get email and update.");
 		UserEmail newAdminEmail= adminExtendedData.getUserEmail();
 		userEmailService.updateUserEmail(newAdminEmail);	
 	
@@ -401,15 +400,15 @@ public class AdministratorController {
 //		UserAutobiography userAutobiography=adminExtendedData.getUserAutobiography();
 //		userAutobiographyService.updateUserAutobiography(userAutobiography);		
 		
-		logger.info("AdminController:Get language for update.");
+		logger.info("AdministratorController:Get language for update.");
 		Long idNewLanguage=adminExtendedData.getUserLocation().getLanguage().getIdLanguage();
 		Language newLanguage=languageService.getLanguageById(idNewLanguage); 
 		
-		logger.info("AdminController:Get city and country for update.");
+		logger.info("AdministratorController:Get city and country for update.");
 		Long idNewCity=adminExtendedData.getUserLocation().getCity().getIdCity();
 		City newCity=cityService.getCityById(idNewCity);
 		
-		logger.info("AdminController:Create new admin location(or update old if exist) and update"
+		logger.info("AdministratorController:Create new admin location(or update old if exist) and update"
 				+ " his language, country, city.");
 		UserLocation newAdminLocation=userLocationService.getUserLocationByIdUser(idAdmin);
 		if(newAdminLocation==null){
@@ -426,28 +425,27 @@ public class AdministratorController {
 	
 	@RequestMapping(value="/views/profile/admin/event/neweventpattern.json", method = RequestMethod.POST)
 	public @ResponseBody void saveEventPattern(@RequestBody EventPattern eventPattern) {
-		logger.info("AdminController: save new event pattern");
+		logger.info("AdministratorController: save new event pattern");
 		eventPatternService.saveEventPattern(eventPattern);
 	}
 	
-	@RequestMapping(value="/views/profile/admin/event/{idEventPattern}/deletedeventpattern", method = RequestMethod.GET)
+	@RequestMapping(value="/views/profile/admin/event/{idEventPattern}/deletedeventpattern", method = RequestMethod.DELETE)
 	public @ResponseBody void deleteEventPattern(@PathVariable("idEventPattern") Long idEventPattern) {
-		logger.info("AdminController: delete event pattern by id event pattern");
+		logger.info("AdministratorController: delete event pattern by id event pattern");
 		eventPatternService.deleteEventPatternById(idEventPattern);
 	}
 	
-	@RequestMapping(value="/views/profile/admin/event/updatedeventpattern.json", method = RequestMethod.POST)
+	@RequestMapping(value="/views/profile/admin/event/updatedeventpattern.json", method = RequestMethod.PUT)
 	public @ResponseBody void updateEventPattern(@RequestBody EventPattern eventPattern) {
-		logger.info("AdminController: update event pattern");
+		logger.info("AdministratorController: update event pattern");
 		eventPatternService.updateEventPattern(eventPattern);
 	}
-	
 													//forum
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/views/profile/admin/parlor/listforum.json", method = RequestMethod.GET)
 	public @ResponseBody List<Forum> getListForum() {
-		logger.info("AdminController: Load list forum for admin account");
+		logger.info("AdministratorController: Load list forum for admin account");
 		List<Forum> listForum= (List) forumService.getListForum();
 		
 		return listForum;
@@ -455,28 +453,28 @@ public class AdministratorController {
 	
 	@RequestMapping(value="/views/profile/admin/forum/newforum.json", method = RequestMethod.POST)
 	public @ResponseBody void saveNewForum(@RequestBody Forum forum) {
-		logger.info("AdminController: save new forum");
+		logger.info("AdministratorController: save new forum");
 		forum.setDateCreateForum(LocalDateTime.now());
 		forumService.saveForum(forum);
 	}
 	
-//not convert date	
-	@RequestMapping(value="/views/profile/admin/forum/editforum.json", method = RequestMethod.POST)
-	public @ResponseBody void updateForum(@RequestBody Forum forum) {
-		logger.info("AdminController: update forum");
-		forumService.updateForum(forum);
+	@RequestMapping(value="/views/profile/admin/forum/{idForum}/deletedforum.json", method = RequestMethod.DELETE)
+	public @ResponseBody void deleteForum(@PathVariable Long idForum) {
+		logger.info("AdministratorController: Load list forum for admin account");
+		forumService.deleteForumById(idForum);
 	}
 	
-	@RequestMapping(value="/views/profile/admin/forum/{idForum}/deletedforum.json", method = RequestMethod.GET)
-	public @ResponseBody void deleteForum(@PathVariable Long idForum) {
-		logger.info("AdminController: Load list forum for admin account");
-		forumService.deleteForumById(idForum);
+//not convert date	
+	@RequestMapping(value="/views/profile/admin/forum/editforum.json", method = RequestMethod.PUT)
+	public @ResponseBody void updateForum(@RequestBody Forum forum) {
+		logger.info("AdministratorController: update forum");
+		forumService.updateForum(forum);
 	}
 	
 	@RequestMapping(value="/views/profile/admin/forum/newtopic.json", method = RequestMethod.POST)
 	public @ResponseBody Long saveNewForumTopic(@RequestBody ForumTopic forumTopic) {
 		
-		logger.info("AdminController: Save new forum topic for forum.");
+		logger.info("AdministratorController: Save new forum topic for forum.");
 		Long idUser=forumTopic.getAuthorAccount().getUser().getIdUser();
 		Account userAccount=userService.getAccountByUserId(idUser);
 		
@@ -491,15 +489,15 @@ public class AdministratorController {
 		return idForum;
 	}
 	
-	@RequestMapping(value="/views/profile/admin/forum/deleteforumtopic/{idForumTopic}/forumtopic.json", method = RequestMethod.GET)
-	public @ResponseBody void deleteForumTopic(@PathVariable Long idForumTopic) {
-		logger.info("AdminController: Delete forum topic by id");
+	@RequestMapping(value="/views/profile/admin/forum/deleteforumtopic/{idForumTopic}/forumtopic.json", method = RequestMethod.DELETE)
+	public @ResponseBody void deleteForumTopic(@PathVariable("idForumTopic") Long idForumTopic) {
+		logger.info("AdministratorController: Delete forum topic by id");
 		forumTopicService.deleteForumTopicById(idForumTopic);
 	}
 	
-	@RequestMapping(value="/views/profile/admin/forum/updateforumtopic.json", method = RequestMethod.POST)
+	@RequestMapping(value="/views/profile/admin/forum/updateforumtopic.json", method = RequestMethod.PUT)
 	public @ResponseBody void updateForumTopic(@RequestBody ForumTopic forumTopic) {
-		logger.info("AdminController: Update forum topic.");
+		logger.info("AdministratorController: Update forum topic.");
 		forumTopicService.updateForumTopic(forumTopic);
 	}
 	
@@ -508,7 +506,7 @@ public class AdministratorController {
 	public @ResponseBody List<ForumMessage> loadForumTopicMessages(@PathVariable("idForumTopic") Long idForumTopic,
 			@PathVariable("fromDate") Date fromDate,@PathVariable("toDate") Date toDate) {
 		
-		logger.info("AdminController: Load Forum Messages which created between date.");
+		logger.info("AdministratorController: Load Forum Messages which created between date.");
 		TimeConverter converter = new TimeConverter();
 		LocalDateTime fromLDT = converter.convertDateToLocalDateTime(fromDate);
 		LocalDateTime toLDT = converter.convertDateToLocalDateTime(toDate);
@@ -523,31 +521,30 @@ public class AdministratorController {
 	
 	@RequestMapping(value="/views/profile/admin/account/searchaccount.json", method = RequestMethod.POST)
 	public @ResponseBody List<Account> searchAccount(@RequestBody Account account) {
-		logger.info("AdminController: search account by account name");
+		logger.info("AdministratorController: search account by account name");
 		List<Account> accountList=accountService.searchAccountByAccountNameUserLastName(account.getAccountName(), "");
 		
 		return accountList;
 	}
 	
-	@RequestMapping(value="/views/profile/admin/account/{blockStatus}/newblockstatus.json", method = RequestMethod.POST)
+	@RequestMapping(value="/views/profile/admin/account/{blockStatus}/newblockstatus.json", method = RequestMethod.PUT)
 	public @ResponseBody Account changeAccountBlockStatus(@RequestBody Account account,
 			@PathVariable("blockStatus") String blockStatus) {
-		
-		logger.info("AdminController: change account block status.");
+		logger.info("AdministratorController: change account block status.");
 		account.setAccountBlockStatus(blockStatus);
 		accountService.updateAccount(account);
 				
 		return account;
 	}
 	
-	@RequestMapping(value="/views/profile/admin/account/{idAccount}/deleteaccount.json", method = RequestMethod.GET)
+	@RequestMapping(value="/views/profile/admin/account/{idAccount}/deleteaccount.json", method = RequestMethod.DELETE)
 	public @ResponseBody void deleteAccount(@PathVariable("idAccount") Long idAccount) {
 		
 		Account account= accountService.getAccountById(idAccount);
 		Long idUser= account.getUser().getIdUser();
-		logger.info("AdminController: delete user account="+idAccount);
+		logger.info("AdministratorController: delete user account="+idAccount);
 		accountService.deleteAccountById(idAccount);
-		logger.info("AdminController: delete user= "+idUser);
+		logger.info("AdministratorController: delete user= "+idUser);
 		userService.deleteUserById(idUser);
 	}
 	
@@ -556,7 +553,7 @@ public class AdministratorController {
 	public @ResponseBody List<SingleMessage> loadUserAccountSingleMessages(@PathVariable("searchIdAccount") Long searchIdAccount,
 			@PathVariable("fromDate") Date fromDate, @PathVariable("toDate") Date toDate) {
 		
-		logger.info("AdminController:Load user account single messages.");
+		logger.info("AdministratorController:Load user account single messages.");
 		TimeConverter converter = new TimeConverter();
 		LocalDateTime fromLDT = converter.convertDateToLocalDateTime(fromDate);
 		LocalDateTime toLDT = converter.convertDateToLocalDateTime(toDate);
@@ -573,7 +570,7 @@ public class AdministratorController {
 	public @ResponseBody List<AccountGroup> searchAccountGroup(@PathVariable("groupName") String groupName,
 			@PathVariable("accountName") String accountName) {
 		
-		logger.info("AdminController: search account group.");
+		logger.info("AdministratorController: search account group.");
 		if(groupName.equals("undefined")){
 			groupName=null;
 		}
@@ -585,19 +582,19 @@ public class AdministratorController {
 		return listAccountGroup;
 	}
 	
-	@RequestMapping(value="/views/profile/admin/group/{blockStatus}/newblockstatus.json", method = RequestMethod.POST)
+	@RequestMapping(value="/views/profile/admin/group/{blockStatus}/newblockstatus.json", method = RequestMethod.PUT)
 	public @ResponseBody AccountGroup changeAccountBlockStatus(@RequestBody AccountGroup accountGroup,
 			@PathVariable("blockStatus") String blockStatus) {
-		logger.info("AdminController: change account group block status.");
+		logger.info("AdministratorController: change account group block status.");
 		accountGroup.setAccountGroupBlockStatus(blockStatus);
 		accountGroupService.updateAccountGroup(accountGroup);
 				
 		return accountGroup;
 	}
 	
-	@RequestMapping(value="/views/profile/admin/group/{idAccountGroup}/deleteaccountgroup.json", method = RequestMethod.GET)
+	@RequestMapping(value="/views/profile/admin/group/{idAccountGroup}/deleteaccountgroup.json", method = RequestMethod.DELETE)
 	public @ResponseBody void deleteAccountGroup(@PathVariable("idAccountGroup") Long idAccountGroup) {
-		logger.info("AdminController: delete user account group="+idAccountGroup);
+		logger.info("AdministratorController: delete user account group="+idAccountGroup);
 		accountGroupService.deleteAccountGroupById(idAccountGroup);
 	}
 
@@ -606,7 +603,7 @@ public class AdministratorController {
 	public @ResponseBody List<GroupMessage> loadAccounrGroupMessages(@PathVariable("idAccountGroup") Long idAccountGroup,
 			@PathVariable("fromDate") Date fromDate, @PathVariable("toDate") Date toDate) {
 		
-		logger.info("AdminController:Load account group messages.");
+		logger.info("AdministratorController:Load account group messages.");
 		TimeConverter converter = new TimeConverter();
 		LocalDateTime fromLDT = converter.convertDateToLocalDateTime(fromDate);
 		LocalDateTime toLDT = converter.convertDateToLocalDateTime(toDate);
@@ -623,13 +620,13 @@ public class AdministratorController {
 	public @ResponseBody void saveNewAccountGroupMessages(@RequestBody GroupMessage newAccountGroupMessage,
 			@PathVariable("idAdmin") Long idAdmin, @PathVariable("idAccountGroup") Long idAccountGroup) {
 		
-		logger.info("AdminController: Create new group message.");
+		logger.info("AdministratorController: Create new group message.");
 		Account account= userService.getAccountByUserId(idAdmin);
 		GroupMember groupMember= groupMemberService.getGroupMemberInAccountGroupByIdAccount(idAccountGroup,
 				account.getIdAccount());
 		
 		if(groupMember==null){	
-			logger.info("AdminController: Save admin account as group member account,"
+			logger.info("AdministratorController: Save admin account as group member account,"
 					+ " becouse admin create messages never before");
 			groupMember= new GroupMember();
 			groupMember.setGroupMemberStatus(FriendStatus.NOTFRIEND.toString());
@@ -639,7 +636,7 @@ public class AdministratorController {
 			groupMemberService.saveGroupMember(groupMember);
 		}
 		
-		logger.info("AdminController: Create new group message.");
+		logger.info("AdministratorController: Create new group message.");
 		newAccountGroupMessage.setDateCreateGroupMessage(LocalDateTime.now());
 		newAccountGroupMessage.setGroupMember(groupMember);
 		groupMessageService.saveGroupMessage(newAccountGroupMessage);
@@ -647,8 +644,7 @@ public class AdministratorController {
 	
 	@RequestMapping(value="/views/profile/admin/group/{idAccountGroup}/listgroupmembers.json", method = RequestMethod.GET)
 	public @ResponseBody List<GroupMember> loadListGroupMembers(@PathVariable("idAccountGroup") Long idAccountGroup) {
-		
-		logger.info("AdminController: load list group members for account group="+idAccountGroup);
+		logger.info("AdministratorController: load list group members for account group="+idAccountGroup);
 		List<GroupMember> listGroupMembers=groupMemberService.getListGroupMemberByIdAccountGroup(idAccountGroup);
 		
 		return listGroupMembers;
