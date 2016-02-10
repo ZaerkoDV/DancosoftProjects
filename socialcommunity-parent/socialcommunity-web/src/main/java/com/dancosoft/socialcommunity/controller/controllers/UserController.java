@@ -483,7 +483,6 @@ public class UserController {
 		
 		logger.info("UserController: load user autobiography to update.");
 		UserAutobiography userAutobiography=userAutobiographyService.getUserAutobiographyByIdUser(id);
-		//userAutobiography.setBirth(null);
 		
 		return userAutobiography;
 	}

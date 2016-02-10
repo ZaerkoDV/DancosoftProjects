@@ -355,9 +355,9 @@ public class AdministratorController {
 		return userExtendedData;
 	}
 //not convert date	
-	@RequestMapping(value="/views/profile/admin/parlor/{idAdmin}/editextendedadminprofile.json", method = RequestMethod.PUT)
+	@RequestMapping(value="/views/profile/admin/parlor/{idAdmin}/{birth}/editextendedadminprofile.json", method = RequestMethod.PUT)
 	public @ResponseBody Long editExtendedAdminProfile(@RequestBody String adminExtendedDataJson,
-			@PathVariable("idAdmin") Long idAdmin) {
+			@PathVariable("idAdmin") Long idAdmin, @PathVariable("birth") Date birth) {
 		
 		logger.info("AdministratorController: update user extended profile.");
 		UserExtendedData adminExtendedData =null;
@@ -380,6 +380,9 @@ public class AdministratorController {
 		logger.info("AdministratorController:Get user for update coresponding field.");
 		User user=userService.getUserById(idAdmin);
 		
+		logger.info("AdministratorController:Update  ");
+		
+		
 //		logger.info("AdministratorController:Save(or update) new admin photo.");
 //		UserPhoto userPhoto=userPhotoService.getUserPhotoByIdUser(idAdmin);
 //		if(userPhoto==null){
@@ -396,9 +399,11 @@ public class AdministratorController {
 		UserEmail newAdminEmail= adminExtendedData.getUserEmail();
 		userEmailService.updateUserEmail(newAdminEmail);	
 	
-//		logger.info("AdminController: Update admin birth.");
-//		UserAutobiography userAutobiography=adminExtendedData.getUserAutobiography();
-//		userAutobiographyService.updateUserAutobiography(userAutobiography);		
+		logger.info("AdministratorController:Update admin Autobiography.");
+		TimeConverter converter=new TimeConverter();
+		UserAutobiography userAutobiography=adminExtendedData.getUserAutobiography();
+		userAutobiography.setBirth(converter.convertDateToLocalDateTime(birth));
+		userAutobiographyService.updateUserAutobiography(userAutobiography);
 		
 		logger.info("AdministratorController:Get language for update.");
 		Long idNewLanguage=adminExtendedData.getUserLocation().getLanguage().getIdLanguage();

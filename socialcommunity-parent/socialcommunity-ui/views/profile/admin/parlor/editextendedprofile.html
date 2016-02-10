@@ -142,19 +142,22 @@ input:valid {
 									       placeholder="Must not empty" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"> 
 								  	</div>
 							      </div>
-								  <!--
-								  <div class="row">
-								    <div class="col-md-6">
-								       <p class="input-group">
-								         <input type="text" class="form-control" ng-model="ng-model="userExtended.userAutobiography.birth"/>
-									     <span class="input-group-btn">
+							      <!--
+								  <div>
+									<div style="display:inline-block; margin: 10px 0 5px 5px;">
+								    	<label style="width: 120px;" for="email" class="col-lg-3 control-label">Birth</label>
+								    </div>	
+								    <div style="display:inline-block; margin: 10px 5px 0px 5px;">
+								      <div class="col-lg-4">	
+									    <input type="text" class="form-control" ng-model="birth"/>
+									    <span class="input-group-btn">
 								             <button type="button" class="btn btn-default" ng-click="open()">
 								             <i class="glyphicon glyphicon-calendar"></i></button>
-			    				         </span>
-								       </p>
-								     </div>
-								  </div>
-								  --> 
+			    				        </span>
+			    				      </div>
+								  	</div>
+							     </div>
+							    -->
 								 <div>
 								   <div style="display:inline-block;margin: 10px 5px 0 0px;">
 									  <label style="width: 120px;" for="country" class="col-lg-3 control-label">
@@ -191,8 +194,8 @@ input:valid {
 	
 				  <div class="form-group">
 					<div class="controls">  
-					   <button type="button" class="btn btn-primary" ng-disabled="!adminExtendedData.userEmail.userEmail "
-					   style="float: right;" ng-click="editExtendedAdminProfile(idAdmin,adminExtendedData)">Update</button>    
+					   <button type="button" class="btn btn-primary" ng-disabled="!adminExtendedData.userEmail.userEmail"
+					   style="float: right;" ng-click="editExtendedAdminProfile(idAdmin,adminExtendedData,birth)">Update</button>    
 					</div>
 					<div class="controls">  
 				   	    <button type="button" class="btn btn-primary" style="float: right;"
