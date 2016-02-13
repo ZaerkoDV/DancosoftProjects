@@ -13,7 +13,6 @@ angular.module('socialcommunity').controller('UserController', function ($scope,
 	$scope.searchIdAccount=$state.params.searchIdAccount;
 	
 												//user parlor
-	
 	$scope.loadUserData = function(id){
 		UserService.loadUserData(id).then(
               function(userParlorData) {
@@ -53,123 +52,22 @@ angular.module('socialcommunity').controller('UserController', function ($scope,
 		$state.go('userparlor', {idUser: id});	
 	};
 												//edit common profile
+	
 	$scope.loadCommonUserProfile = function(id){
 		$state.go('editcommonprofile', {idUser: id});
 	};
-	
-	$scope.loadCommonUserProfileData = function(id){
-		UserService.loadCommonUserProfileData(id).then(
-              function(user) {
-            	  $scope.user=user;	
-              },
-              function(errResponse){
-                  console.error('!!!Error');
-              }
-          );
-	};	
-	$scope.loadCommonUserProfileData($scope.id);
-	
-	$scope.editCommonUserProfile = function(id,user){
-		UserService.editCommonUserProfile(id,user).then(
-              function(id) {
-            	  $state.go('userparlor', {idUser: id});
-              },
-              function(errResponse){
-                  console.error('!!!Error');
-              }
-          );
-	};
 											//edit extended profile
+	
 	$scope.loadExtendedUserProfile = function(id){
 		$state.go('editextendedprofile', {idUser: id});
 	};
+										   //editAutoboigraphy
 	
-	$scope.loadExtendedUserProfileData = function(id){
-		UserService.loadExtendedUserProfileData(id).then(
-              function(userExtendedData) {
-            	  $scope.userExtendedData=userExtendedData;
-              },
-              function(errResponse){
-                  console.error('!!!Error');
-              }
-          );
-	};
-	$scope.loadExtendedUserProfileData($scope.id);
-	
-	$scope.editExtendedUserProfile = function(id,userExtendedData){
-		UserService.editExtendedUserProfile(id,userExtendedData).then(
-              function(id) {
-            	  $state.go('userparlor', {idUser: id});
-              },
-              function(errResponse){
-                  console.error('!!!Error');
-              }
-          );
-	};
-											//editAutoboigraphy
 	$scope.loadUserAutobiography = function(id){
 		$state.go('editautobiography', {idUser: id});
 	};	
 	
-	$scope.loadUserAutobiographyData = function(id){
-		UserService.loadUserAutobiographyData(id).then(
-              function(userAutobiography) {
-            	  $scope.userAutobiography=userAutobiography;
-              },
-              function(errResponse){
-                  console.error('!!!Error');
-              }
-          );
-	};
-	$scope.loadUserAutobiographyData($scope.id);
-	
-	$scope.editUserAutobiography = function(id,userAutobiography,birth){
-		//this.userAutobiography.birth = null;
-		UserService.editUserAutobiography(id,userAutobiography,birth).then(
-              function(id) {
-            	  $state.go('userparlor', {idUser: id});
-              },
-              function(errResponse){
-                  console.error('!!!Error');
-              }
-          );
-	};
-												//support data
-	$scope.getListLanguage = function(){
-		UserService.getListLanguage().then(
-              function(listLanguage) {
-            	  $scope.listLanguage=listLanguage;	
-              },
-              function(errResponse){
-                  console.error('!!!Error');
-              }
-          );
-	};
-	$scope.getListLanguage();
-	
-	$scope.getListCountry=function(){
-		UserService.getListCountry().then(
-              function(listCountry) {
-            	  $scope.listCountry=listCountry;
-              },
-              function(errResponse){
-                  console.error('!!!Error');
-              }
-          );
-	};
-	$scope.getListCountry();
-	
-	$scope.getListCityByIdCountry = function(idCountry){
-		UserService.getListCityByIdCountry(idCountry).then(
-              function(listCity) {
-            	  $scope.listCity=listCity;
-              },
-              function(errResponse){
-                  console.error('!!!Error');
-              }
-          );
-	};
-												//forum
+											//forum
 	$scope.getForum = function(id,idForum){
 		$state.go('editlistforumtopic', {idUser: id, idForum:idForum})
 	};
@@ -445,17 +343,8 @@ angular.module('socialcommunity').controller('UserController', function ($scope,
           );
 	};
 	
-	$scope.today = function() {
-	    $scope.birth = new Date();
-	};
-	$scope.today();
-
 	$scope.open1 = function() {
 	    $scope.popup1.opened = true;
-	};
-
-	$scope.setDate = function(year, month, day) {
-	    $scope.birth = new Date(year, month, day);
 	};
 
 	$scope.dateOptions = {

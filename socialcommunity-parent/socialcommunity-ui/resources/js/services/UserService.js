@@ -3,10 +3,12 @@
  */
 'use strict';
 
-angular.module('socialcommunity').service('UserService', function($http, $q){   
+angular.module('socialcommunity').service('UserService', function($http, $q,hostName){   
+	
+	this.hostName=hostName;
 	
 	this.loadUserData= function(id){
-        return $http.get('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/parlor/accountdata.json').then(
+        return $http.get(hostName+'/views/profile/user/'+id+'/parlor/accountdata.json').then(
             function(response){
                  return response.data;
             }
@@ -14,7 +16,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.getListAccountGroup = function(id){
-        return $http.get('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/parlor/listaccountgroup.json').then(
+        return $http.get(hostName+'/views/profile/user/'+id+'/parlor/listaccountgroup.json').then(
             function(response){
                  return response.data;
             }
@@ -22,7 +24,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.getListForum = function(id){
-        return $http.get('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/parlor/listforum.json').then(
+        return $http.get(hostName+'/views/profile/user/'+id+'/parlor/listforum.json').then(
             function(response){
                  return response.data;
             }
@@ -30,7 +32,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.loadCommonUserProfileData = function(id){
-        return $http.get('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/parlor/commonuserprofile.json').then(
+        return $http.get(hostName+'/views/profile/user/'+id+'/parlor/commonuserprofile.json').then(
             function(response){
                  return response.data;
             }
@@ -38,7 +40,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.editCommonUserProfile = function(id,user){
-        return $http.put('http://localhost:8080/socialcommunity-web/views/profile/user/parlor/'+id+'/editcommonprofile.json',user).then(
+        return $http.put(hostName+'/views/profile/user/parlor/'+id+'/editcommonprofile.json',user).then(
             function(response){
                  return response.data;
             }
@@ -46,7 +48,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.loadExtendedUserProfileData = function(id){
-        return $http.get('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/parlor/extendeduserprofile.json').then(
+        return $http.get(hostName+'/views/profile/user/'+id+'/parlor/extendeduserprofile.json').then(
             function(response){
                  return response.data;
             }
@@ -54,7 +56,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.editExtendedUserProfile = function(id,userExtendedData){
-        return $http.put('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/parlor/editextendedprofile.json',userExtendedData).then(
+        return $http.put(hostName+'/views/profile/user/'+id+'/parlor/editextendedprofile.json',userExtendedData).then(
             function(response){
                  return response.data;
             }
@@ -62,15 +64,15 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.loadUserAutobiographyData = function(id){
-        return $http.get('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/parlor/userautobiographyprofile.json').then(
+        return $http.get(hostName+'/views/profile/user/'+id+'/parlor/userautobiographyprofile.json').then(
             function(response){
                  return response.data;
             }
         );
     }
 	
-	this.editUserAutobiography = function(id,userAutobiography,birth){
-        return $http.put('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/'+birth+'/parlor/editautobiographyprofile.json',userAutobiography).then(
+	this.editUserAutobiography = function(id,userAutobiography){
+        return $http.put(hostName+'/views/profile/user/'+id+'/parlor/editautobiographyprofile.json',userAutobiography).then(
             function(response){
                  return response.data;
             }
@@ -78,7 +80,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.getListLanguage = function(){
-        return $http.get('http://localhost:8080/socialcommunity-web/views/listlanguage.json').then(
+        return $http.get(hostName+'/views/listlanguage.json').then(
             function(response){
                  return response.data;
             }
@@ -86,7 +88,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.getListCountry = function(){
-        return $http.get('http://localhost:8080/socialcommunity-web/views/listcountry.json').then(
+        return $http.get(hostName+'/views/listcountry.json').then(
             function(response){
                  return response.data;
             }
@@ -94,7 +96,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.getListCityByIdCountry = function(idCountry){
-        return $http.get('http://localhost:8080/socialcommunity-web/views/'+idCountry+'/listcity.json').then(
+        return $http.get(hostName+'/views/'+idCountry+'/listcity.json').then(
             function(response){
                  return response.data;
             }
@@ -102,7 +104,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.loadListForumTopic = function(idForum){
-        return $http.get('http://localhost:8080/socialcommunity-web/views/profile/user/forum/'+idForum+'/listforumtopic.json').then(
+        return $http.get(hostName+'/views/profile/user/forum/'+idForum+'/listforumtopic.json').then(
             function(response){
                  return response.data;
             }
@@ -110,7 +112,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.saveNewForumTopic = function(id,newForumTopic){
-        return $http.post('http://localhost:8080/socialcommunity-web/views/profile/user/forum/'+id+'/savenewforumtopic.json',newForumTopic).then(
+        return $http.post(hostName+'/views/profile/user/forum/'+id+'/savenewforumtopic.json',newForumTopic).then(
             function(response){
                  return response.data;
             }
@@ -118,7 +120,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.loadListTopicMessages = function(idForumTopic){
-        return $http.get('http://localhost:8080/socialcommunity-web/views/profile/user/forum/'+idForumTopic+'/listForumMessages.json').then(
+        return $http.get(hostName+'/views/profile/user/forum/'+idForumTopic+'/listForumMessages.json').then(
             function(response){
                  return response.data;
             }
@@ -126,7 +128,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.saveNewForumMessages=function(newForumMessage){
-        return $http.post('http://localhost:8080/socialcommunity-web/views/profile/user/forum/saveForumMessages.json',newForumMessage).then(
+        return $http.post(hostName+'/views/profile/user/forum/saveForumMessages.json',newForumMessage).then(
             function(response){
                  return response.data;
             }
@@ -134,7 +136,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.deleteForumMessages=function(idForumTopic,idForumMessage){
-        return $http.delete('http://localhost:8080/socialcommunity-web/views/profile/user/forum/'+idForumTopic+'/'+idForumMessage+'/deleteForumMessages.json').then(
+        return $http.delete(hostName+'/views/profile/user/forum/'+idForumTopic+'/'+idForumMessage+'/deleteForumMessages.json').then(
             function(response){
                  return response.data;
             }
@@ -142,7 +144,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.saveNewAccountGroup=function(id,accountGroup){
-        return $http.post('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+id+'/saveAccountGroup.json',accountGroup).then(
+        return $http.post(hostName+'/views/profile/user/group/'+id+'/saveAccountGroup.json',accountGroup).then(
             function(response){
                  return response.data;
             }
@@ -150,7 +152,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.getAccountGroup = function(id,idAccountGroup){
-        return $http.get('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+id+'/'+idAccountGroup+'/accountGroupMember.json').then(
+        return $http.get(hostName+'/views/profile/user/group/'+id+'/'+idAccountGroup+'/accountGroupMember.json').then(
             function(response){
                  return response.data;
             }
@@ -158,7 +160,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.loadListAccountGroupMessages = function(idAccountGroup){
-        return $http.get('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/listAccountGroupMessages.json').then(
+        return $http.get(hostName+'/views/profile/user/group/'+idAccountGroup+'/listAccountGroupMessages.json').then(
             function(response){
                  return response.data;
             }
@@ -166,7 +168,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.saveNewAccountGroupMessage=function(newAccountGroupMessage){
-        return $http.post('http://localhost:8080/socialcommunity-web/views/profile/user/group/saveAccountGroupMessage.json',newAccountGroupMessage).then(
+        return $http.post(hostName+'/views/profile/user/group/saveAccountGroupMessage.json',newAccountGroupMessage).then(
             function(response){
                  return response.data;
             }
@@ -174,7 +176,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.deleteAccountGroupMessage=function(idAccountGroup,idGroupMessage){
-        return $http.delete('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/'+idGroupMessage+'/deleteAccountGroupMessage.json').then(
+        return $http.delete(hostName+'/views/profile/user/group/'+idAccountGroup+'/'+idGroupMessage+'/deleteAccountGroupMessage.json').then(
             function(response){
                  return response.data;
             }
@@ -182,7 +184,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.loadListEventPattern=function(){
-        return $http.get('http://localhost:8080/socialcommunity-web/views/profile/user/group/listEventPattern.json').then(
+        return $http.get(hostName+'/views/profile/user/group/listEventPattern.json').then(
             function(response){
                  return response.data;
             }
@@ -190,7 +192,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.loadListAccountGroupMember=function(idAccountGroup){
-        return $http.get('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/listAccountGroupMembers.json').then(
+        return $http.get(hostName+'/views/profile/user/group/'+idAccountGroup+'/listAccountGroupMembers.json').then(
             function(response){
                  return response.data;
             }
@@ -198,7 +200,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.deleteMemberFromAccountGroup=function(idAccountGroupMember,idAccountGroup,idDeleteGroupMember){
-        return $http.delete('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroupMember+'/'+idDeleteGroupMember+'/deleteAccountGroupMember.json').then(
+        return $http.delete(hostName+'/views/profile/user/group/'+idAccountGroupMember+'/'+idDeleteGroupMember+'/deleteAccountGroupMember.json').then(
             function(response){
                  return response.data;
             }
@@ -206,7 +208,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.searchAccountForAccountGroup=function(idAccountGroup,searchPattern){
-        return $http.post('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/listaccount.json',searchPattern).then(
+        return $http.post(hostName+'/views/profile/user/group/'+idAccountGroup+'/listaccount.json',searchPattern).then(
             function(response){
                  return response.data;
             }
@@ -214,7 +216,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.addToAccountGroup=function(idAccountGroup,idAccountNewMember,friendStatus){
-        return $http.post('http://localhost:8080/socialcommunity-web/views/profile/user/group/'+idAccountGroup+'/'+idAccountNewMember+'/newmember.json',friendStatus).then(
+        return $http.post(hostName+'/views/profile/user/group/'+idAccountGroup+'/'+idAccountNewMember+'/newmember.json',friendStatus).then(
             function(response){
                  return response.data;
             }
@@ -222,7 +224,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.getListAccountGroupForAccount=function(id){
-        return $http.get('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/account/listaccountgroup.json').then(
+        return $http.get(hostName+'/views/profile/user/'+id+'/account/listaccountgroup.json').then(
             function(response){
                  return response.data;
             }
@@ -230,7 +232,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.searchAccountByAccountName=function(id, searchPattern){
-        return $http.post('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/account/searchaccount.json',searchPattern).then(
+        return $http.post(hostName+'/views/profile/user/'+id+'/account/searchaccount.json',searchPattern).then(
             function(response){
                  return response.data;
             }
@@ -238,8 +240,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.addToAccountGroupAfterSearch=function(idAccountGroupSelected,idAccount,friendStatus){
-        return $http.post('http://localhost:8080/socialcommunity-web/views/profile/user/account/'+idAccountGroupSelected
-    			+'/'+idAccount+'/newaccountgroupmember.json',friendStatus).then(
+        return $http.post(hostName+'/views/profile/user/account/'+idAccountGroupSelected+'/'+idAccount+'/newaccountgroupmember.json',friendStatus).then(
             function(response){
                  return response.data;
             }
@@ -247,7 +248,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.loadAccountInfo=function(searchIdAccount){
-        return $http.get('http://localhost:8080/socialcommunity-web/views/profile/user/account/'+searchIdAccount+'/accountinfo.json').then(
+        return $http.get(hostName+'/views/profile/user/account/'+searchIdAccount+'/accountinfo.json').then(
             function(response){
                  return response.data;
             }
@@ -255,7 +256,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.loadListAccountSingleMessages=function(id,searchIdAccount){
-        return $http.get('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/account/'+searchIdAccount+'/listAccountSingleMessage.json').then(
+        return $http.get(hostName+'/views/profile/user/'+id+'/account/'+searchIdAccount+'/listAccountSingleMessage.json').then(
             function(response){
                  return response.data;
             }
@@ -263,7 +264,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.saveNewAccountSingleMessage=function(id,searchIdAccount,newAccountSingleMessage){
-        return $http.post('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/account/saveAccountSingleMessage.json',newAccountSingleMessage).then(
+        return $http.post(hostName+'/views/profile/user/'+id+'/account/saveAccountSingleMessage.json',newAccountSingleMessage).then(
             function(response){
                  return response.data;
             }
@@ -271,8 +272,7 @@ angular.module('socialcommunity').service('UserService', function($http, $q){
     }
 	
 	this.deleteAccountSingleMessage=function(id,searchIdAccount,idAccountSingleMessage){
-        return $http.delete('http://localhost:8080/socialcommunity-web/views/profile/user/'+id+'/account/'
-    			+idAccountSingleMessage+'/deleteAccountSingleMessage.json').then(
+        return $http.delete(hostName+'/views/profile/user/'+id+'/account/'+idAccountSingleMessage+'/deleteAccountSingleMessage.json').then(
             function(response){
                  return response.data;
             }

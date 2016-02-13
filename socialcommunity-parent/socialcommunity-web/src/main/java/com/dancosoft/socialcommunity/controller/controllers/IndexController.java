@@ -2,7 +2,6 @@ package com.dancosoft.socialcommunity.controller.controllers;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -23,7 +22,6 @@ import com.dancosoft.socialcommunity.controller.support.base.StandartAccountGrou
 import com.dancosoft.socialcommunity.controller.support.constants.BlockStatus;
 import com.dancosoft.socialcommunity.controller.support.constants.UserRoleName;
 import com.dancosoft.socialcommunity.controller.support.constants.ViewStatus;
-import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountGroup;
 import com.dancosoft.socialcommunity.model.AccountGroupHistory;
@@ -179,9 +177,8 @@ public class IndexController {
 		return idUser;
 	}
 		
-	@RequestMapping(value="/views/profile/signup/saveextended/{id}/{birth}/userextended.json", method = RequestMethod.POST)//{birth}
-	public @ResponseBody Long saveExtendedUser(@RequestBody String userExtendedJson, @PathVariable("id") Long id,
-			@PathVariable("birth") Date birth) {
+	@RequestMapping(value="/views/profile/signup/saveextended/{id}/userextended.json", method = RequestMethod.POST)
+	public @ResponseBody Long saveExtendedUser(@RequestBody String userExtendedJson, @PathVariable("id") Long id) {
 		
 		logger.info("IndexController: create new user with extended information");
 		Long idUser= null;
@@ -210,10 +207,8 @@ public class IndexController {
 			idUser=user.getIdUser();
 			
 			logger.info("IndexController: create new autobiography feature of user");
-			UserAutobiography userAutobiography =new UserAutobiography();
-			
-			TimeConverter converter=new TimeConverter();
-			userAutobiography.setBirth(converter.convertDateToLocalDateTime(birth));
+			UserAutobiography userAutobiography = new UserAutobiography();
+			userAutobiography.setBirth(userExtended.getUserAutobiography().getBirth());
 			
 			userAutobiography.setUser(user);
 			userAutobiographyService.saveUserAutobiographyService(userAutobiography);

@@ -117,7 +117,7 @@
 									 <strong>Sex:</strong>{{adminParlorData.user.sex}}
 								</div>
 								<div style="text-indent: 20px;">
-									 <strong>Birth:</strong><!--{{adminParlorData.userAutobiography.birth | date: "yyyy-MM-dd" }}-->
+									 <strong>Birth:</strong>{{adminParlorData.userAutobiography.birth | date: "yyyy-MM-dd" }}
 								</div>
 								<div ng-show="adminParlorData.userLocation.city.cityName != null" style="text-indent: 20px;">
 										<strong>Location:</strong>{{adminParlorData.userLocation.city.country.countryName}},

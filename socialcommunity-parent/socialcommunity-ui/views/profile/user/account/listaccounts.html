@@ -93,15 +93,19 @@ input[type="text"] {
 			  	     <fieldset>
 					    <a ui-sref="searchaccount"></a>
 					    <legend style="text-align: center;">Search Account Form</legend>
-					    <div style="display:inline-block; outline: 2px solid #000;">
+					 
+					    <div style="display:inline-block; outline: 2px solid #000; width: 720px;">
 							<div>
 								<strong>Please enter account name or last name!</strong>
 							</div>
 						    <input type="text" id="accountName" ng-model="searchPattern.accountName" placeholder="Enter account name.">      
 							<input type="text" id="userLastName" ng-model="searchPattern.userLastName" placeholder="Enter last name.">						 
-							<button type="submit" class="btn btn-xs btn-primary"
+							<br>
+							<button type="submit" class="btn btn-xs btn-primary" style="float:right; margin: 10px 10px 10px 10px;"
 							 ng-click="searchAccountByAccountName(id, searchPattern); getListAccountGroupForAccount(id)">Search..</button>
 					    </div>
+					   
+						<br>
 						<div ng-show="listAccount.length > 0">
 							<table class="table table-bordered"	style="background-color: #ffffff">
 							  <thead>

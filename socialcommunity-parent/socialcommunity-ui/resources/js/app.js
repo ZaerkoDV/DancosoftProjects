@@ -3,8 +3,20 @@
 var socialcommunity = {};
 var App = angular.module('socialcommunity',['ui.router','ui.bootstrap','ui.bootstrap.tpls']);
 		  
-App.config(function($stateProvider) {
-		 
+App.value('hostName', 'http://localhost:8080/socialcommunity-web');
+
+//App.factory('middleware', function() {
+//		return {
+//		  request: function(config) {
+//		      config.url = "http://localhost:8080/socialcommunity-web" + config.url
+//		      return config;
+//		  }
+//		};
+//});
+
+App.config(function($stateProvider) {//$httpProvider
+	//$httpProvider.interceptors.push('middleware');
+	
 	$stateProvider.state('index', {
         url: 'index',
         views: {'': {
@@ -48,7 +60,39 @@ App.config(function($stateProvider) {
         params: {idUser: null}
     });
     
-												//user state
+												//user state for chaild controller
+	
+	$stateProvider.state('editcommonprofile', {
+        url: '/user/parlor/editcommonprofile/:idUser',
+        views: {'': {
+              templateUrl: '/socialcommunity/views/profile/user/parlor/editcommonprofile.html',
+              controller: 'UserCommonProfileController'
+            },
+          },
+          params: {idUser: null} 
+    });
+	
+	$stateProvider.state('editextendedprofile', {
+        url: '/user/parlor/editextendedprofile/:idUser',
+        views: {'': {
+              templateUrl: '/socialcommunity/views/profile/user/parlor/editextendedprofile.html',
+              controller: 'UserExtendedProfileController'
+            },
+          },
+          params: {idUser: null}
+    });
+	
+	$stateProvider.state('editautobiography', {
+		  url: '/user/parlor/editautobiography/:idUser',
+		  views: {'': {
+		        templateUrl: '/socialcommunity/views/profile/user/parlor/editautobiography.html',
+		        controller: 'UserAutobiographyProfileController'
+		      },
+		    },
+		   params: {idUser: null}
+		    
+	});
+										//user state for parent controller
 	
 	$stateProvider.state('userparlor', {
         url: '/user/parlor/:idUser',
@@ -59,34 +103,7 @@ App.config(function($stateProvider) {
           },
           params: {idUser: null}
           
-    }).state('editcommonprofile', {
-        url: '/user/parlor/editcommonprofile/:idUser',
-        views: {'': {
-              templateUrl: '/socialcommunity/views/profile/user/parlor/editcommonprofile.html',
-              controller: 'UserController'
-            },
-          },
-          params: {idUser: null}
-          
-    }).state('editextendedprofile', {
-        url: '/user/parlor/editextendedprofile/:idUser',
-        views: {'': {
-              templateUrl: '/socialcommunity/views/profile/user/parlor/editextendedprofile.html',
-              controller: 'UserController'
-            },
-          },
-          params: {idUser: null}
-          
-    }).state('editautobiography', {
-		  url: '/user/parlor/editautobiography/:idUser',
-		  views: {'': {
-		        templateUrl: '/socialcommunity/views/profile/user/parlor/editautobiography.html',
-		        controller: 'UserController'
-		      },
-		    },
-		   params: {idUser: null}
-		    
-	}).state('editlistforumtopic', {
+    }).state('editlistforumtopic', {
 		  url: '/user/forum/listtopic/:idUser/:idForum',
 		  views: {'': {
 		        templateUrl: '/socialcommunity/views/profile/user/forum/listtopic.html',
@@ -158,34 +175,35 @@ App.config(function($stateProvider) {
 		    },
 		  params: {idUser: null,searchIdAccount:null}
 	});
+
 	
-	
-	
-	
-												//administrator states
-	
-	$stateProvider.state('adminparlor', {
-        url: '/admin/parlor/:idAdmin',
-        views: {'': {
-              templateUrl: '/socialcommunity/views/profile/admin/parlor/adminparlor.html',
-              controller: 'AdministratorController'
-            },
-          },
-        params: {idAdmin: null}
-          
-    }).state('editadmincommonprofile', {
+												//admin state for chaild controller
+
+    $stateProvider.state('editadmincommonprofile', {
         url: '/admin/parlor/editadmincommonpofile/:idAdmin',
         views: {'': {
               templateUrl: '/socialcommunity/views/profile/admin/parlor/editcommonprofile.html',
-              controller: 'AdministratorController'
+              controller: 'AdministratorCommonProfileController'
             },
           },
-        params: {idAdmin: null}
-          
-    }).state('editextendedadminprofile', {
+        params: {idAdmin: null}      
+    });
+    
+    $stateProvider.state('editextendedadminprofile', {
         url: '/admin/parlor/editextendedadminprofile/:idAdmin',
         views: {'': {
               templateUrl: '/socialcommunity/views/profile/admin/parlor/editextendedprofile.html',
+              controller: 'AdministratorExtendedProfileController'
+            },
+          },
+        params: {idAdmin: null}
+    });
+    										//admin state for parent controller
+    
+    $stateProvider.state('adminparlor', {
+        url: '/admin/parlor/:idAdmin',
+        views: {'': {
+              templateUrl: '/socialcommunity/views/profile/admin/parlor/adminparlor.html',
               controller: 'AdministratorController'
             },
           },
@@ -291,10 +309,5 @@ App.config(function($stateProvider) {
 		  params: {idAdmin: null, idAccountGroup:null}
 	});
 	
-	
-	
-	
-	
 });
-
 

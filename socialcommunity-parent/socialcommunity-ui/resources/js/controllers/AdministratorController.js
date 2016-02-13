@@ -32,90 +32,10 @@ angular.module('socialcommunity').controller('AdministratorController', function
 		$state.go('editadmincommonprofile', {idAdmin: idAdmin});
 	};
 	
-	$scope.loadCommonAdminProfileData = function(idAdmin){
-		AdministratorService.loadCommonAdminProfileData(idAdmin).then(
-              function(admin) {
-            	  $scope.admin=admin;
-              },
-              function(errResponse){
-                  console.error('!!!Error');
-              }
-          );
-	};	
-	$scope.loadCommonAdminProfileData($scope.idAdmin);
-	
-	$scope.editCommonAdminProfile = function(idAdmin,admin){
-		AdministratorService.editCommonAdminProfile(idAdmin,admin).then(
-              function(idAdmin) {
-            	  $state.go('adminparlor', {idAdmin: idAdmin});
-              },
-              function(errResponse){
-                  console.error('!!!Error');
-              }
-          );
-	};	
-												//edit extended profile
 	$scope.loadExtendedAdminProfile = function(idAdmin){
 		$state.go('editextendedadminprofile', {idAdmin: idAdmin});
 	};
-	
-	$scope.loadExtendedAdminProfileData = function(idAdmin){
-		AdministratorService.loadExtendedAdminProfileData(idAdmin).then(
-              function(adminExtendedData) {
-            	  $scope.adminExtendedData=adminExtendedData;
-              },
-              function(errResponse){
-                  console.error('!!!Error');
-              }
-          );
-	};
-	$scope.loadExtendedAdminProfileData($scope.idAdmin);
-	
-	$scope.editExtendedAdminProfile = function(idAdmin,adminExtendedData,birth){
-		AdministratorService.editExtendedAdminProfile(idAdmin,adminExtendedData,birth).then(
-              function(idAdmin) {
-            	  $state.go('adminparlor', {idAdmin: idAdmin});
-              },
-              function(errResponse){
-                  console.error('!!!Error');
-              }
-          );
-	};
-															//data
-	$scope.getListLanguage = function(){
-		AdministratorService.getListLanguage().then(
-              function(listLanguage) {
-            	  $scope.listLanguage=listLanguage;
-              },
-              function(errResponse){
-                  console.error('!!!Error');
-              }
-          );
-	};
-	$scope.getListLanguage();
-	
-	$scope.getListCountry=function(){
-		AdministratorService.getListCountry().then(
-              function(listCountry) {
-            	  $scope.listCountry=listCountry;
-              },
-              function(errResponse){
-                  console.error('!!!Error');
-              }
-          );
-	};
-	$scope.getListCountry();
-	
-	$scope.getListCityByIdCountry = function(idCountry){
-		AdministratorService.getListCityByIdCountry(idCountry).then(
-              function(listCity) {
-            	  $scope.listCity=listCity;
-              },
-              function(errResponse){
-                  console.error('!!!Error');
-              }
-          );
-	};
+
 												//event pattern
 	
 	$scope.getEventPatternPage = function(idAdmin){
@@ -206,7 +126,7 @@ angular.module('socialcommunity').controller('AdministratorController', function
               }
           );
 	};
-//not convert 	
+	
 	$scope.editForum=function(idAdmin,forum){
 		AdministratorService.editForum(idAdmin,forum).then(
               function() {
@@ -233,7 +153,7 @@ angular.module('socialcommunity').controller('AdministratorController', function
               }
           );
 	};
-//	
+	
 	$scope.saveNewForumTopic=function(idForum,forumTopic){
 		AdministratorService.saveNewForumTopic(idForum,forumTopic).then(
               function(idForum) {
@@ -333,7 +253,7 @@ angular.module('socialcommunity').controller('AdministratorController', function
               }
           );
 	};
-//idAdmin	
+	
 	$scope.deleteAccount=function(idAdmin,idAccount){
 		AdministratorService.deleteAccount(idAccount).then(
               function() {
@@ -404,6 +324,12 @@ angular.module('socialcommunity').controller('AdministratorController', function
 	};
 	
 	$scope.searchAccountGroup=function(groupName,accountName){
+		if(groupName===''){
+  			groupName='undefined';
+  		}
+  		if(accountName===''){
+  			accountName='undefined';
+  		}
 		AdministratorService.searchAccountGroup(groupName,accountName).then(
               function(listAccountGroup) {
             		$scope.blockStatus='';

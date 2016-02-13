@@ -22,8 +22,8 @@ angular.module('socialcommunity').controller('IndexController', function ($scope
           );
 	};	
 	
-	$scope.saveExtendedUser = function(id,userExtended,birth){
-		IndexService.saveExtendedUser(id,userExtended,birth).then(
+	$scope.saveExtendedUser = function(id,userExtended){
+		IndexService.saveExtendedUser(id,userExtended).then(
 	         function(id) {
 	             if(id===null || id===''){
 	          		$state.go('signupextended', {idUser: id});
@@ -135,8 +135,6 @@ angular.module('socialcommunity').controller('IndexController', function ($scope
 		
 });	
 	
-
-
 														//old
 
 

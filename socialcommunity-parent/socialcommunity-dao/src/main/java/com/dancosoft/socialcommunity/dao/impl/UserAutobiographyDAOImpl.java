@@ -15,7 +15,10 @@
 package com.dancosoft.socialcommunity.dao.impl;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Converter;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Conjunction;
@@ -27,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.dancosoft.socialcommunity.dao.UserAutobiographyDAO;
+import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserAutobiography;
 
@@ -122,7 +126,8 @@ public class UserAutobiographyDAOImpl extends CommonEntityDAOImpl implements Use
 	 */
 	public Boolean isUserAdult(Long idUser,Long yearAdult) {
 		
-		LocalDateTime borderAdultDate=LocalDateTime.now().minusYears(yearAdult);
+		TimeConverter converter= new TimeConverter();
+		Date borderAdultDate=converter.convertLocalDateTimeToDate(LocalDateTime.now().minusYears(yearAdult));
 		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory()
 				.getCurrentSession().createCriteria(UserAutobiography.class);
@@ -135,7 +140,6 @@ public class UserAutobiographyDAOImpl extends CommonEntityDAOImpl implements Use
 	    and.add( Restrictions.lt("birth", borderAdultDate)); 
 		
 	    Boolean isUserAdult=false;
-
 		if (criteria.list().isEmpty()) {
 			isUserAdult = false;
 			logger.info("UserAutobiographyDAO:User " + idUser + " is not adult");

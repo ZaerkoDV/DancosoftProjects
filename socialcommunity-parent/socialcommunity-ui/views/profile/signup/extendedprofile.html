@@ -23,11 +23,11 @@ input:valid {
 						<fieldset>
 						   <a ui-sref="signupextended"></a>
 						   <legend>Extended Sign Up Form </legend>									
-				
 							<div class="form-group">
-						      <div class="col-md-6">
+							<label for="email" class="col-lg-3 control-label">Birth</label>
+						      <div class="col-md-8">
 						        <p class="input-group">
-								  <input type="text" class="form-control" uib-datepicker-popup ng-model="birth"
+								  <input type="text" class="form-control" uib-datepicker-popup ng-model="userExtended.userAutobiography.birth"
 							      is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" />
 								   <span class="input-group-btn">
 								     <button type="button" class="btn btn-default" ng-click="open1()">
@@ -63,8 +63,8 @@ input:valid {
 						    </div>
 										
 							<div class="controls">  
-						         <button type="button" class="btn btn-primary" ng-disabled="!userExtended.userEmail.userEmail|| !birth"
-						         ng-click="saveExtendedUser(id ,userExtended,birth)">Save</button>       
+						         <button type="button" class="btn btn-primary" ng-disabled="!userExtended.userEmail.userEmail"
+						         ng-click="saveExtendedUser(id,userExtended)">Save</button>       
 						    </div>
 						    
 						 </fieldset>

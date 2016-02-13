@@ -146,30 +146,30 @@ public class UserAutobiography implements Serializable {
 		this.idUserAutobiography = idUserAutobiography;
 	}
 
-//	/**
-//	 * @return the birth
-//	 */
-//	public Date getBirth() {
-//		return birth;
+	/**
+	 * @return the birth
+	 */
+	public Date getBirth() {
+		return birth;
+	}
+	
+	/**
+	 * @param birth
+	 *            the birth to set
+	 */
+	public void setBirth(Date birth) {
+		this.birth = birth;
+	}
+	
+//	public LocalDateTime getBirth() {
+//		Instant instant = Instant.ofEpochMilli(birth.getTime());
+//		return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
 //	}
 //	
-//	/**
-//	 * @param birth
-//	 *            the birth to set
-//	 */
-//	public void setBirth(Date birth) {
-//		this.birth = birth;
+//	public void setBirth(LocalDateTime birth) {
+//		Instant instant = birth.toInstant(ZoneOffset.UTC);		
+//		this.birth = Date.from(instant);
 //	}
-	
-	public LocalDateTime getBirth() {
-		Instant instant = Instant.ofEpochMilli(birth.getTime());
-		return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
-	}
-	
-	public void setBirth(LocalDateTime birth) {
-		Instant instant = birth.toInstant(ZoneOffset.UTC);		
-		this.birth = Date.from(instant);
-	}
 
 	/**
 	 * @return the hobby

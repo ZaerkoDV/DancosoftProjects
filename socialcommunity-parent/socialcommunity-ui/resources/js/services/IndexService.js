@@ -3,18 +3,20 @@
  */
 'use strict';
 
-angular.module('socialcommunity').service('IndexService', function($http, $q){   
+angular.module('socialcommunity').service('IndexService', function($http, $q,hostName){   
     
+	 this.hostName=hostName;
+	
 	 this.saveCommonUser= function(user){
-          return $http.post('http://localhost:8080/socialcommunity-web/views/profile/signup/savecommon/user.json',user).then(
+          return $http.post(hostName+'/views/profile/signup/savecommon/user.json',user).then(
               function(response){
                    return response.data;
               }
           );
       }
    
-	 this.saveExtendedUser=function(id,userExtended,birth){
-		 return $http.post('http://localhost:8080/socialcommunity-web/views/profile/signup/saveextended/'+id+'/'+birth+'/userextended.json',userExtended).then(
+	 this.saveExtendedUser=function(id,userExtended){
+		 return $http.post(hostName+'/views/profile/signup/saveextended/'+id+'/userextended.json',userExtended).then(
 	          function(response){
 	                return response.data;
 	          }
@@ -22,7 +24,7 @@ angular.module('socialcommunity').service('IndexService', function($http, $q){
 	 }
 	 
 	 this.saveLoginUser=function(id,securityPrompt){
-		 return $http.post('http://localhost:8080/socialcommunity-web/views/profile/signup/savelogin/'+id+'/userlogin.json',securityPrompt).then(
+		 return $http.post(hostName+'/views/profile/signup/savelogin/'+id+'/userlogin.json',securityPrompt).then(
 	          function(response){
 	                return response.data;
 	          }
@@ -30,7 +32,7 @@ angular.module('socialcommunity').service('IndexService', function($http, $q){
 	 }
 	 
 	 this.createUserAccount = function(id){
-		 return $http.post('http://localhost:8080/socialcommunity-web/views/profile/signup/createaccount/useraccount.json',id).then(
+		 return $http.post(hostName+'/views/profile/signup/createaccount/useraccount.json',id).then(
 	          function(response){
 	                return response.data;
 	          }
@@ -38,7 +40,7 @@ angular.module('socialcommunity').service('IndexService', function($http, $q){
 	 }
    
 	 this.userSignIn = function(login,password,answer){
-		 return $http.get('http://localhost:8080/socialcommunity-web/views/profile/signin/'+login+'/'+password+'/'+answer+'/userdata.json').then(
+		 return $http.get(hostName+'/views/profile/signin/'+login+'/'+password+'/'+answer+'/userdata.json').then(
 	          function(response){
 	                return response.data;
 	          }
@@ -46,7 +48,7 @@ angular.module('socialcommunity').service('IndexService', function($http, $q){
 	 }
 	 
 	 this.getSecurityQuestion= function(loginOrEmail){
-		 return $http.get('http://localhost:8080/socialcommunity-web/views/profile/signin/'+loginOrEmail+'/securityquestion.json').then(
+		 return $http.get(hostName+'/views/profile/signin/'+loginOrEmail+'/securityquestion.json').then(
 	          function(response){
 	                return response.data;
 	          }
@@ -54,7 +56,7 @@ angular.module('socialcommunity').service('IndexService', function($http, $q){
 	 }
 	 
 	 this.redirectToUserPage= function(id){
-		 return $http.get('http://localhost:8080/socialcommunity-web/views/profile/signin/'+id+'/userrole.json').then(
+		 return $http.get(hostName+'/views/profile/signin/'+id+'/userrole.json').then(
 	          function(response){
 	                return response.data;
 	          }

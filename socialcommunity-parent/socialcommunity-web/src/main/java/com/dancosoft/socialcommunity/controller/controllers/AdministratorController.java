@@ -281,8 +281,9 @@ public class AdministratorController {
 		UserEmail userEmail=userEmailService.getEmailByIdUser(idAdmin);
 		userParlorData.setUserEmail(userEmail);
 		
-		UserPhoto userPhoto=userPhotoService.getUserPhotoByIdUser(idAdmin);
-		userParlorData.setUserPhoto(userPhoto);
+//		UserPhoto userPhoto=userPhotoService.getUserPhotoByIdUser(idAdmin);
+//		userPhoto.setPhotoName(userPhotoService.loadPathToUserPhoto(idAdmin));
+//		userParlorData.setUserPhoto(userPhoto);
 		
 		UserLocation userLocation= userLocationService.getUserLocationByIdUser(idAdmin);
 		userParlorData.setUserLocation(userLocation);
@@ -325,9 +326,9 @@ public class AdministratorController {
 		UserEmail userEmail=userEmailService.getEmailByIdUser(idAdmin);
 		userExtendedData.setUserEmail(userEmail);
 		
-//		logger.info("AdminComtroller: load admin autobiography");
-//		UserAutobiography userAutobiography = userAutobiographyService.getUserAutobiographyByIdUser(idAdmin);
-//		userExtendedData.setUserAutobiography(userAutobiography);
+		logger.info("AdministratorController: load admin autobiography");
+		UserAutobiography userAutobiography = userAutobiographyService.getUserAutobiographyByIdUser(idAdmin);
+		userExtendedData.setUserAutobiography(userAutobiography);
 		
 		logger.info("AdministratorController: load admin photo to update");
 		UserPhoto userPhoto=userPhotoService.getUserPhotoByIdUser(idAdmin);
@@ -354,10 +355,9 @@ public class AdministratorController {
 		
 		return userExtendedData;
 	}
-//not convert date	
-	@RequestMapping(value="/views/profile/admin/parlor/{idAdmin}/{birth}/editextendedadminprofile.json", method = RequestMethod.PUT)
-	public @ResponseBody Long editExtendedAdminProfile(@RequestBody String adminExtendedDataJson,
-			@PathVariable("idAdmin") Long idAdmin, @PathVariable("birth") Date birth) {
+
+	@RequestMapping(value="/views/profile/admin/parlor/{idAdmin}/editextendedadminprofile.json", method = RequestMethod.PUT)
+	public @ResponseBody Long editExtendedAdminProfile(@RequestBody String adminExtendedDataJson,@PathVariable("idAdmin") Long idAdmin) {
 		
 		logger.info("AdministratorController: update user extended profile.");
 		UserExtendedData adminExtendedData =null;
@@ -380,15 +380,11 @@ public class AdministratorController {
 		logger.info("AdministratorController:Get user for update coresponding field.");
 		User user=userService.getUserById(idAdmin);
 		
-		logger.info("AdministratorController:Update  ");
-		
-		
 //		logger.info("AdministratorController:Save(or update) new admin photo.");
 //		UserPhoto userPhoto=userPhotoService.getUserPhotoByIdUser(idAdmin);
 //		if(userPhoto==null){
 //			userPhoto=new UserPhoto();	
 //		}
-//		
 //		userPhoto.setPhotoNote(adminExtendedData.getUserPhoto().getPhotoNote());
 //		userPhoto.setUser(user);
 //		userPhotoService.updateUserPhoto(userPhoto);
@@ -400,27 +396,34 @@ public class AdministratorController {
 		userEmailService.updateUserEmail(newAdminEmail);	
 	
 		logger.info("AdministratorController:Update admin Autobiography.");
-		TimeConverter converter=new TimeConverter();
 		UserAutobiography userAutobiography=adminExtendedData.getUserAutobiography();
-		userAutobiography.setBirth(converter.convertDateToLocalDateTime(birth));
 		userAutobiographyService.updateUserAutobiography(userAutobiography);
-		
-		logger.info("AdministratorController:Get language for update.");
-		Long idNewLanguage=adminExtendedData.getUserLocation().getLanguage().getIdLanguage();
-		Language newLanguage=languageService.getLanguageById(idNewLanguage); 
-		
-		logger.info("AdministratorController:Get city and country for update.");
-		Long idNewCity=adminExtendedData.getUserLocation().getCity().getIdCity();
-		City newCity=cityService.getCityById(idNewCity);
-		
+			
 		logger.info("AdministratorController:Create new admin location(or update old if exist) and update"
 				+ " his language, country, city.");
 		UserLocation newAdminLocation=userLocationService.getUserLocationByIdUser(idAdmin);
 		if(newAdminLocation==null){
 			newAdminLocation=new UserLocation();
 		}
-		newAdminLocation.setLanguage(newLanguage);
-		newAdminLocation.setCity(newCity);
+		
+		Language newLanguage = null;
+		City newCity=null;
+		if(adminExtendedData.getUserLocation()!=null){
+			if(adminExtendedData.getUserLocation().getLanguage()!=null){
+				logger.info("AdministratorController:Get language for update.");
+				Long idNewLanguage=adminExtendedData.getUserLocation().getLanguage().getIdLanguage();
+				newLanguage=languageService.getLanguageById(idNewLanguage); 	
+				newAdminLocation.setLanguage(newLanguage);
+			}
+			
+			if(adminExtendedData.getUserLocation().getCity()!=null){
+				logger.info("AdministratorController:Get city and country for update.");
+				Long idNewCity=adminExtendedData.getUserLocation().getCity().getIdCity();
+				newCity=cityService.getCityById(idNewCity);
+				newAdminLocation.setCity(newCity);
+			}
+		}
+		
 		newAdminLocation.setUser(user);
 		userLocationService.updateUserLocation(newAdminLocation);
 			
@@ -526,6 +529,9 @@ public class AdministratorController {
 	
 	@RequestMapping(value="/views/profile/admin/account/searchaccount.json", method = RequestMethod.POST)
 	public @ResponseBody List<Account> searchAccount(@RequestBody Account account) {
+		
+		
+		
 		logger.info("AdministratorController: search account by account name");
 		List<Account> accountList=accountService.searchAccountByAccountNameUserLastName(account.getAccountName(), "");
 		

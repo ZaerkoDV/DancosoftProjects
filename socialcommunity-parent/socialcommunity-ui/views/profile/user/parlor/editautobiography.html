@@ -80,7 +80,7 @@ input:valid {
 </div>
 
 <title>Edit Autobiography Form</title>
-<div ng-controller="UserController">
+<div ng-controller="UserAutobiographyProfileController">
   <div class="col-lg-6 col-lg-offset-1">
 	<div class="well">
 	    <div class="container">
@@ -95,7 +95,7 @@ input:valid {
 							<label for="hobby" style="width: 50px;float: left;" class="control-label">Birth</label>
 						    <div class="col-lg-8">
 						      <p class="input-group">
-								<input type="text" class="form-control" uib-datepicker-popup ng-model="birth"
+								<input type="text" class="form-control" uib-datepicker-popup ng-model="userAutobiography.birth"
 							      is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" />
 								  <span class="input-group-btn">
 								     <button type="button" class="btn btn-default" ng-click="open1()">
@@ -123,8 +123,9 @@ input:valid {
 						<div class="form-group">
 							<div class="controls">  
 							     <button type="button" class="btn btn-primary" style="float: right;"
-							      ng-click="editUserAutobiography(id,userAutobiography,birth)">Update</button> <!--ng-disabled="!userAutobiography.birth"--> 
-								  <button type="button" class="btn btn-primary" style="float: right;" ng-click="returnToParlor(id)">Back</button>    
+							      ng-click="editUserAutobiography(id,userAutobiography)">Update</button> 
+								  <button type="button" class="btn btn-primary" style="float: right;"
+								   ng-disabled="!userAutobiography.birth" ng-click="returnToParlor(id)">Back</button>    
 							</div>
 						 </div>
 					</fieldset>

@@ -5,7 +5,6 @@ package com.dancosoft.socialcommunity.controller.controllers;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import org.codehaus.jackson.JsonParseException;
@@ -28,10 +27,6 @@ import com.dancosoft.socialcommunity.controller.support.UserParlorData;
 import com.dancosoft.socialcommunity.controller.support.constants.BlockStatus;
 import com.dancosoft.socialcommunity.controller.support.constants.FriendStatus;
 import com.dancosoft.socialcommunity.controller.support.constants.ViewStatus;
-import com.dancosoft.socialcommunity.dao.support.TimeConverter;
-//import com.dancosoft.socialcommunity.controller.support.constants.BlockStatus;
-//import com.dancosoft.socialcommunity.controller.support.constants.FriendStatus;
-//import com.dancosoft.socialcommunity.controller.support.constants.ViewStatus;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountGroup;
 import com.dancosoft.socialcommunity.model.AccountGroupHistory;
@@ -166,7 +161,6 @@ public class UserController {
 	public void setCityService(CityService cityService) {
 		this.cityService = cityService;
 	}
-	
 															//account
 	@Autowired
 	@Qualifier(value="accountService")
@@ -272,8 +266,7 @@ public class UserController {
 		this.forumMessageService = forumMessageService;
 	}
 	
-	
-												//user account
+													//user account
 
 	@RequestMapping(value="/views/profile/user/{id}/parlor/accountdata.json", method = RequestMethod.GET)
 	public @ResponseBody UserParlorData loadUserData(@PathVariable("id") Long id) {
@@ -291,8 +284,9 @@ public class UserController {
 		UserEmail userEmail=userEmailService.getEmailByIdUser(id);
 		userParlorData.setUserEmail(userEmail);
 		
-		UserPhoto userPhoto=userPhotoService.getUserPhotoByIdUser(id);
-		userParlorData.setUserPhoto(userPhoto);
+//		UserPhoto userPhoto=userPhotoService.getUserPhotoByIdUser(id);
+//		userPhoto.setPhotoName(userPhotoService.loadPathToUserPhoto(id));
+//		userParlorData.setUserPhoto(userPhoto);
 		
 		UserLocation userLocation= userLocationService.getUserLocationByIdUser(id);
 		userParlorData.setUserLocation(userLocation);
@@ -480,16 +474,14 @@ public class UserController {
 	
 	@RequestMapping(value="/views/profile/user/{id}/parlor/userautobiographyprofile.json", method = RequestMethod.GET)
 	public @ResponseBody UserAutobiography loadUserAutobiographyData(@PathVariable("id") Long id) {
-		
 		logger.info("UserController: load user autobiography to update.");
 		UserAutobiography userAutobiography=userAutobiographyService.getUserAutobiographyByIdUser(id);
 		
 		return userAutobiography;
 	}
 	
-	@RequestMapping(value="/views/profile/user/{id}/{birth}/parlor/editautobiographyprofile.json", method = RequestMethod.PUT)
-	public @ResponseBody Long editUserAutobiographyProfile(@RequestBody String userAutobiographyJson,
-			@PathVariable("id") Long id, @PathVariable("birth") Date birth) {
+	@RequestMapping(value="/views/profile/user/{id}/parlor/editautobiographyprofile.json", method = RequestMethod.PUT)
+	public @ResponseBody Long editUserAutobiographyProfile(@RequestBody String userAutobiographyJson,@PathVariable("id") Long id) {
 		
 		logger.info("UserController: update user autobiography.");
 		UserAutobiography userAutobiography=null;
@@ -509,9 +501,6 @@ public class UserController {
 			logger.info("IndexController: input output exeption when read json value of object"
 					+ " userExtendedDataJson "+e);
 		}
-		
-		TimeConverter converter=new TimeConverter();
-		userAutobiography.setBirth(converter.convertDateToLocalDateTime(birth));
 		logger.info("UserController:Update user Autobiography.");
 		userAutobiographyService.updateUserAutobiography(userAutobiography);
 			
@@ -734,20 +723,24 @@ public class UserController {
 	public @ResponseBody Long addToAccountGroup(@RequestBody String friendStatus, @PathVariable("idAccountGroup") Long idAccountGroup,
 			@PathVariable("idAccountNewMember") Long idAccountNewMember){
 		
-		logger.info("UserController: Save new account group member.");
-		GroupMember groupMember=new GroupMember();
-		Account memberAccount= accountService.getAccountById(idAccountNewMember);
-		groupMember.setMemberAccount(memberAccount);
-		AccountGroup accountGroup=accountGroupService.getAccountGroupById(idAccountGroup);
-		groupMember.setAccountGroup(accountGroup);
-		
-		if(friendStatus.equals("true")){
-			groupMember.setGroupMemberStatus(FriendStatus.FRIEND.toString());	
+		GroupMember groupMemberInGroup=groupMemberService.getGroupMemberInAccountGroupByIdAccount(idAccountGroup, idAccountNewMember);
+		if(groupMemberInGroup!=null){
+			logger.info("UserController: Account exist in group yet. Group may have only unique account.");
 		}else{
-			groupMember.setGroupMemberStatus(FriendStatus.NOTFRIEND.toString());	
+			logger.info("UserController: Save new account group member.");
+			GroupMember groupMember=new GroupMember();
+			Account memberAccount= accountService.getAccountById(idAccountNewMember);
+			groupMember.setMemberAccount(memberAccount);
+			AccountGroup accountGroup=accountGroupService.getAccountGroupById(idAccountGroup);
+			groupMember.setAccountGroup(accountGroup);
+			
+			if(friendStatus.equals("true")){
+				groupMember.setGroupMemberStatus(FriendStatus.FRIEND.toString());	
+			}else{
+				groupMember.setGroupMemberStatus(FriendStatus.NOTFRIEND.toString());	
+			}
+			groupMemberService.saveGroupMember(groupMember);
 		}
-		groupMemberService.saveGroupMember(groupMember);
-		
 		return idAccountGroup;
 	}
 															//account 
@@ -779,22 +772,28 @@ public class UserController {
 	public @ResponseBody void addToAccountGroupAfterSearch(@RequestBody String friendStatus,@PathVariable("idAccount") Long idAccount,
 			@PathVariable("idAccountGroupSelected") Long idAccountGroupSelected){
 	
-		logger.info("UserController:Add new member to account group.");
-		AccountGroup accountGroup=accountGroupService.getAccountGroupById(idAccountGroupSelected);
-		Account memberAccount= accountService.getAccountById(idAccount); 
+		GroupMember groupMemberInGroup=groupMemberService
+				.getGroupMemberInAccountGroupByIdAccount(idAccountGroupSelected, idAccount);
 		
-		GroupMember groupMember=new GroupMember();
-		groupMember.setAccountGroup(accountGroup);
-		groupMember.setMemberAccount(memberAccount);
-		
-		if(friendStatus.equals("true")){
-			groupMember.setGroupMemberStatus(FriendStatus.FRIEND.toString());	
+		if(groupMemberInGroup!=null){
+			logger.info("UserController: Account exist in group yet. Group may have only unique account.");
+			
 		}else{
-			groupMember.setGroupMemberStatus(FriendStatus.NOTFRIEND.toString());	
+			logger.info("UserController:Add new member to account group.");
+			AccountGroup accountGroup=accountGroupService.getAccountGroupById(idAccountGroupSelected);
+			Account memberAccount= accountService.getAccountById(idAccount); 
+			GroupMember groupMember=new GroupMember();
+			groupMember.setAccountGroup(accountGroup);
+			groupMember.setMemberAccount(memberAccount);
+			
+			if(friendStatus.equals("true")){
+				groupMember.setGroupMemberStatus(FriendStatus.FRIEND.toString());	
+			}else{
+				groupMember.setGroupMemberStatus(FriendStatus.NOTFRIEND.toString());	
+			}
+			groupMemberService.saveGroupMember(groupMember);
 		}
-		groupMemberService.saveGroupMember(groupMember);	
 	}
-	
 	
 	@RequestMapping(value="/views/profile/user/account/{searchIdAccount}/accountinfo.json", method = RequestMethod.GET)
 	public @ResponseBody UserParlorData getAccountSearchInfo(@PathVariable("searchIdAccount") Long searchIdAccount){
@@ -814,8 +813,9 @@ public class UserController {
 		UserEmail userEmail=userEmailService.getEmailByIdUser(idUserSearch);
 		userParlorData.setUserEmail(userEmail);
 		
-		UserPhoto userPhoto=userPhotoService.getUserPhotoByIdUser(idUserSearch);
-		userParlorData.setUserPhoto(userPhoto);
+//		UserPhoto userPhoto=userPhotoService.getUserPhotoByIdUser(idUserSearch);
+//		userPhoto.setPhotoName(userPhotoService.loadPathToUserPhoto(idUserSearch));
+//		userParlorData.setUserPhoto(userPhoto);
 		
 		UserLocation userLocation= userLocationService.getUserLocationByIdUser(idUserSearch);
 		userParlorData.setUserLocation(userLocation);
