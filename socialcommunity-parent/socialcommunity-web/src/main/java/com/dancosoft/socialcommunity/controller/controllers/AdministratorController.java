@@ -1,5 +1,17 @@
 /**
+ * @package com.dancosoft.socialcommunity.controller.controllers
  * 
+ * Package com.dancosoft.socialcommunity.controller.controllers contain set of classes
+ * which perform controller pattern in SocialCommunity project. This project is based
+ * on MVC architecture.This class is part of controller in MVC architecture. Controller
+ * provides communication between the user and the system: controls user input and uses
+ * models and views to implement the necessary response. In SocialCommunity define two
+ * roles User, Administrator. For each role, define separate back end controller. All
+ * classes which contain postfix “Controller” provide to work Controller for SocialCommunity
+ * application.
+ * 
+ * Please contact with Zaerko Denis or send letter on zaerko1991@gmail.com if you need
+ * to use information or have any questions. 
  */
 package com.dancosoft.socialcommunity.controller.controllers;
 
@@ -71,8 +83,27 @@ import com.dancosoft.socialcommunity.service.UserSocialNetworkService;
 import edu.emory.mathcs.backport.java.util.Collections;
 
 /**
- * @author Zaerko_DV
- *
+ * Class AdministratorController use technologe IoC for work with other layer in
+ * application. All methods are public in class. For logging use framework shell
+ * slf4j and framework log4j.Class contain also private, static variable logger,
+ * which use to call log message.Controller use spring framework for organize
+ * request/response mappling. The class AdministratorController contain methods
+ * which prepares date for sending in ui service layer. The main task of
+ * AdministratorController class is operation which performs user with role
+ * administrator. Administrator have extended right which give chance even
+ * delete user and account. Class contain method which describe work with data
+ * as administrator(role) for user account, account group, forum, single message,
+ * edit event pattern and edit profile Also class use enums from package in this module:
+ * com.dancosoft.socialcommunity.controller.support.constants for literals. There
+ * are: BlockStatus(block, unblock),UserRoleName (admin/user),ViewStatus(public/private).
+ * 
+ * @version 1.0 12.02.2016
+ * 
+ * @see org.codehaus.jackson.map.ObjectMapper
+ * @see org.springframework.web
+ * @see org.springframework.stereotype
+ * 
+ * @author Denis Zaerko
  */
 @Controller(value="administratorController")
 public class AdministratorController {
@@ -159,7 +190,6 @@ public class AdministratorController {
 		this.cityService = cityService;
 	}
 	
-															//account
 	@Autowired
 	@Qualifier(value="accountService")
 	private AccountService accountService;
@@ -175,7 +205,7 @@ public class AdministratorController {
 	public void setAccountHistoryService(AccountHistoryService accountHistoryService) {
 		this.accountHistoryService = accountHistoryService;
 	}
-														//single message
+														
 	@Autowired
 	@Qualifier(value="singleMessageService")
 	private SingleMessageService singleMessageService;
@@ -183,7 +213,7 @@ public class AdministratorController {
 	public void setSingleMessageService(SingleMessageService singleMessageService) {
 		this.singleMessageService = singleMessageService;
 	}
-															//group
+															
 	@Autowired
 	@Qualifier(value="accountGroupService")
 	private AccountGroupService accountGroupService;
@@ -231,7 +261,7 @@ public class AdministratorController {
 	public void setEventPatternService(EventPatternService eventPatternService) {
 		this.eventPatternService = eventPatternService;
 	}
-																	//forum
+																	
 	@Autowired
 	@Qualifier(value="accountForumService")
 	private AccountForumService accountForumService;
@@ -265,6 +295,15 @@ public class AdministratorController {
 	}
 
 	
+	/**
+	 * Method prepares object UserParlorData (data) for sending in ui service layer.
+	 * This object is wapper for other object.
+	 * 
+	 * @type Long
+	 * @param idAdmin
+	 * 
+	 * @return UserParlorData
+	 */
 	@RequestMapping(value="/views/profile/admin/{idAdmin}/parlor/accountdata.json", method = RequestMethod.GET)
 	public @ResponseBody UserParlorData loadAdminData(@PathVariable("idAdmin") Long idAdmin) {
 		
@@ -291,15 +330,22 @@ public class AdministratorController {
 		//history last visit account
 		logger.info("AdministratorController: Create date last visit account.");
 		Account userAccount=userService.getAccountByUserId(idAdmin);
-		AccountHistory accountHistory =accountHistoryService
-				.getAccountHistoryByIdAccount(userAccount.getIdAccount());
+		AccountHistory accountHistory =accountHistoryService.getAccountHistoryByIdAccount(userAccount.getIdAccount());
 		accountHistory.setLastVisit(LocalDateTime.now());
 		accountHistoryService.updateAccountHistory(accountHistory);	
 		
 		return userParlorData;
 	}
 										// edit common profile
-
+	/**
+	 * Method prepares User (data) for sending in ui service layer.
+	 * User contain data for user common profile. 
+	 * 
+	 * @type Long
+	 * @param idAdmin
+	 * 
+	 * @return User
+	 */
 	@RequestMapping(value = "/views/profile/admin/{idAdmin}/parlor/commonadminprofile.json", method = RequestMethod.GET)
 	public @ResponseBody User loadCommonAdminProfileData(@PathVariable("idAdmin") Long idAdmin) {
 		logger.info("AdministratorController: load common admin profile.");
@@ -307,6 +353,14 @@ public class AdministratorController {
 		return user;
 	}
 	
+	/**
+	 * Method update data about user common profile.
+	 * 
+	 * @type User
+	 * @param admin
+	 * 
+	 * @return idAdmin(Long)
+	 */
 	@RequestMapping(value="/views/profile/admin/parlor/editcommonadminprofile.json", method = RequestMethod.PUT)
 	public @ResponseBody Long editCommonAdminProfile (@RequestBody User admin) {
 		logger.info("AdministratorController: update admin common profile.");
@@ -315,7 +369,16 @@ public class AdministratorController {
 	}
 	
 									// edit extended profile
-	
+	/**
+	 * Method prepares UserExtendedData (data) for sending in ui service layer.
+	 * UserExtendedData contain data for user extended profile. This class is
+	 * class wapper other objects. 
+	 * 
+	 * @type Long
+	 * @param idAdmin
+	 * 
+	 * @return UserExtendedData
+	 */
 	@RequestMapping(value="/views/profile/admin/{idAdmin}/parlor/extendedadminprofile.json", method = RequestMethod.GET)
 	public @ResponseBody UserExtendedData loadExtendedAdminProfileData(@PathVariable("idAdmin") Long idAdmin) {
 		
@@ -356,6 +419,21 @@ public class AdministratorController {
 		return userExtendedData;
 	}
 
+	/**
+	 * Method update administrator extended profile(data). For converting json
+	 * format object to object use ObjectMapper. If convering failed thow exeption.
+	 * 
+	 * @type Long
+	 * @type String
+	 * @param idAdmin
+	 * @param adminExtendedDataJson
+	 * 
+	 * @exception JsonParseException
+	 * @exception JsonMappingException
+	 * @exception IOException
+	 * 
+	 * @return Long
+	 */
 	@RequestMapping(value="/views/profile/admin/parlor/{idAdmin}/editextendedadminprofile.json", method = RequestMethod.PUT)
 	public @ResponseBody Long editExtendedAdminProfile(@RequestBody String adminExtendedDataJson,@PathVariable("idAdmin") Long idAdmin) {
 		
@@ -423,33 +501,55 @@ public class AdministratorController {
 				newAdminLocation.setCity(newCity);
 			}
 		}
-		
 		newAdminLocation.setUser(user);
 		userLocationService.updateUserLocation(newAdminLocation);
 			
 		return idAdmin;
 	}
 												//event pattern
-	
+	/**
+	 * Method save new event pattern.
+	 * 
+	 * @type EventPattern
+	 * @param eventPattern
+	 */
 	@RequestMapping(value="/views/profile/admin/event/neweventpattern.json", method = RequestMethod.POST)
 	public @ResponseBody void saveEventPattern(@RequestBody EventPattern eventPattern) {
 		logger.info("AdministratorController: save new event pattern");
 		eventPatternService.saveEventPattern(eventPattern);
 	}
 	
+	/**
+	 * Method delete event patttern by idEventPattern. 
+	 * 
+	 * @type Long
+	 * @param idEventPattern
+	 */
 	@RequestMapping(value="/views/profile/admin/event/{idEventPattern}/deletedeventpattern", method = RequestMethod.DELETE)
 	public @ResponseBody void deleteEventPattern(@PathVariable("idEventPattern") Long idEventPattern) {
 		logger.info("AdministratorController: delete event pattern by id event pattern");
 		eventPatternService.deleteEventPatternById(idEventPattern);
 	}
 	
+	/**
+	 * Method update event patttern by idEventPattern. 
+	 * 
+	 * @type Long
+	 * @param idEventPattern
+	 */
 	@RequestMapping(value="/views/profile/admin/event/updatedeventpattern.json", method = RequestMethod.PUT)
 	public @ResponseBody void updateEventPattern(@RequestBody EventPattern eventPattern) {
 		logger.info("AdministratorController: update event pattern");
 		eventPatternService.updateEventPattern(eventPattern);
 	}
 													//forum
-	
+	/**
+	 * Method prepares List<Forum> (data) for sending in ui service layer.
+	 * This List contain list forum. If List<Forum> is empty
+	 * return empty list else return list with objects.
+	 * 
+	 * @return List<Forum>
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/views/profile/admin/parlor/listforum.json", method = RequestMethod.GET)
 	public @ResponseBody List<Forum> getListForum() {
@@ -459,6 +559,12 @@ public class AdministratorController {
 		return listForum;
 	}
 	
+	/**
+	 * Method save new forum.
+	 * 
+	 * @type Forum
+	 * @param forum
+	 */
 	@RequestMapping(value="/views/profile/admin/forum/newforum.json", method = RequestMethod.POST)
 	public @ResponseBody void saveNewForum(@RequestBody Forum forum) {
 		logger.info("AdministratorController: save new forum");
@@ -466,19 +572,38 @@ public class AdministratorController {
 		forumService.saveForum(forum);
 	}
 	
+	/**
+	 * Method delete forum by idForum
+	 * 
+	 * @type Long
+	 * @param idForum
+	 */
 	@RequestMapping(value="/views/profile/admin/forum/{idForum}/deletedforum.json", method = RequestMethod.DELETE)
 	public @ResponseBody void deleteForum(@PathVariable Long idForum) {
 		logger.info("AdministratorController: Load list forum for admin account");
 		forumService.deleteForumById(idForum);
 	}
 	
-//not convert date	
+	/**
+	 * Method update forum by idForum
+	 * 
+	 * @type Long
+	 * @param idForum
+	 */
 	@RequestMapping(value="/views/profile/admin/forum/editforum.json", method = RequestMethod.PUT)
 	public @ResponseBody void updateForum(@RequestBody Forum forum) {
 		logger.info("AdministratorController: update forum");
 		forumService.updateForum(forum);
 	}
 	
+	/**
+	 * Method save new forum topic.
+	 * 
+	 * @type ForumTopic
+	 * @param forumTopic
+	 * 
+	 * @return Long
+	 */
 	@RequestMapping(value="/views/profile/admin/forum/newtopic.json", method = RequestMethod.POST)
 	public @ResponseBody Long saveNewForumTopic(@RequestBody ForumTopic forumTopic) {
 		
@@ -497,23 +622,41 @@ public class AdministratorController {
 		return idForum;
 	}
 	
+	/**
+	 * Method delete new forum topic by idForumTopic
+	 * 
+	 * @type ForumTopic
+	 * @param idForumTopic
+	 */
 	@RequestMapping(value="/views/profile/admin/forum/deleteforumtopic/{idForumTopic}/forumtopic.json", method = RequestMethod.DELETE)
 	public @ResponseBody void deleteForumTopic(@PathVariable("idForumTopic") Long idForumTopic) {
 		logger.info("AdministratorController: Delete forum topic by id");
 		forumTopicService.deleteForumTopicById(idForumTopic);
 	}
 	
+	/**
+	 * Method update new forum topic by idForumTopic
+	 * 
+	 * @type ForumTopic
+	 * @param idForumTopic
+	 */
 	@RequestMapping(value="/views/profile/admin/forum/updateforumtopic.json", method = RequestMethod.PUT)
 	public @ResponseBody void updateForumTopic(@RequestBody ForumTopic forumTopic) {
 		logger.info("AdministratorController: Update forum topic.");
 		forumTopicService.updateForumTopic(forumTopic);
 	}
 	
+	/**
+	 * Method prepares List<ForumMessage> (data) for sending in ui service layer
+	 * by id forumTopic.This List contain list forum messages. If List is empty
+	 * return empty list else return list with objects.  
+	 * 
+	 * @return List<ForumMessage>
+	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/views/profile/admin/forum/{idForumTopic}/{fromDate}/{toDate}/topicmessages.json", method = RequestMethod.GET)
 	public @ResponseBody List<ForumMessage> loadForumTopicMessages(@PathVariable("idForumTopic") Long idForumTopic,
 			@PathVariable("fromDate") Date fromDate,@PathVariable("toDate") Date toDate) {
-		
 		logger.info("AdministratorController: Load Forum Messages which created between date.");
 		TimeConverter converter = new TimeConverter();
 		LocalDateTime fromLDT = converter.convertDateToLocalDateTime(fromDate);
@@ -527,17 +670,34 @@ public class AdministratorController {
 		return listTopicMessages;
 	}
 	
+	/**
+	 * Method prepares List<Account>(data) for sending in ui service layer
+	 * This list contain list account by account name. If List is empty
+	 * return empty list else return list with objects.
+	 * 
+	 * @type Account
+	 * @param account
+	 * 
+	 * @return List<Account> 
+	 */
 	@RequestMapping(value="/views/profile/admin/account/searchaccount.json", method = RequestMethod.POST)
 	public @ResponseBody List<Account> searchAccount(@RequestBody Account account) {
-		
-		
-		
 		logger.info("AdministratorController: search account by account name");
 		List<Account> accountList=accountService.searchAccountByAccountNameUserLastName(account.getAccountName(), "");
 		
 		return accountList;
 	}
 	
+	/**
+	 * Method change account block status and after return account.
+	 * 
+	 * @type Account
+	 * @type String
+	 * @param account
+	 * @param blockStatus
+	 * 
+	 * @return Account
+	 */
 	@RequestMapping(value="/views/profile/admin/account/{blockStatus}/newblockstatus.json", method = RequestMethod.PUT)
 	public @ResponseBody Account changeAccountBlockStatus(@RequestBody Account account,
 			@PathVariable("blockStatus") String blockStatus) {
@@ -548,9 +708,16 @@ public class AdministratorController {
 		return account;
 	}
 	
+	/**
+	 * Method delete account and user by id account.
+	 * 
+	 * @type Long
+	 * @param idAccount
+	 * 
+	 * @return Account
+	 */
 	@RequestMapping(value="/views/profile/admin/account/{idAccount}/deleteaccount.json", method = RequestMethod.DELETE)
 	public @ResponseBody void deleteAccount(@PathVariable("idAccount") Long idAccount) {
-		
 		Account account= accountService.getAccountById(idAccount);
 		Long idUser= account.getUser().getIdUser();
 		logger.info("AdministratorController: delete user account="+idAccount);
@@ -559,6 +726,19 @@ public class AdministratorController {
 		userService.deleteUserById(idUser);
 	}
 	
+	/**
+	 * Method prepares List<SingleMessage>(data) for sending in ui service layer
+	 * This list contain list single messages which created between date.If List
+	 * is empty return empty list else return list with objects.
+	 * 
+	 * @type Long
+	 * @type Date
+	 * @param searchIdAccount
+	 * @param fromDate
+	 * @param toDate
+	 * 
+	 * @return List<SingleMessage> 
+	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/views/profile/admin/account/{searchIdAccount}/{fromDate}/{toDate}/singlemessages.json", method = RequestMethod.GET)
 	public @ResponseBody List<SingleMessage> loadUserAccountSingleMessages(@PathVariable("searchIdAccount") Long searchIdAccount,
@@ -577,6 +757,17 @@ public class AdministratorController {
 		return listSingleMessages;		
 	}
 	
+	/**
+	 * Method prepares List<AccountGroup>(data) for sending in ui service layer.Method
+	 * return result search account group by group name and by account name. This list
+	 * contain list account group by group name and account name.
+	 * 
+	 * @type String
+	 * @param groupName
+	 * @param accountName
+	 * 
+	 * @return List<AccountGroup> 
+	 */
 	@RequestMapping(value="/views/profile/admin/group/{groupName}/{accountName}/searchAccountGroup.json", method = RequestMethod.GET)
 	public @ResponseBody List<AccountGroup> searchAccountGroup(@PathVariable("groupName") String groupName,
 			@PathVariable("accountName") String accountName) {
@@ -593,8 +784,18 @@ public class AdministratorController {
 		return listAccountGroup;
 	}
 	
+	/**
+	 * Method change account group block status and after return account group.
+	 * 
+	 * @type AccountGroup
+	 * @type String
+	 * @param accountGroup
+	 * @param blockStatus
+	 * 
+	 * @return AccountGroup
+	 */
 	@RequestMapping(value="/views/profile/admin/group/{blockStatus}/newblockstatus.json", method = RequestMethod.PUT)
-	public @ResponseBody AccountGroup changeAccountBlockStatus(@RequestBody AccountGroup accountGroup,
+	public @ResponseBody AccountGroup changeAccountGroupBlockStatus(@RequestBody AccountGroup accountGroup,
 			@PathVariable("blockStatus") String blockStatus) {
 		logger.info("AdministratorController: change account group block status.");
 		accountGroup.setAccountGroupBlockStatus(blockStatus);
@@ -603,12 +804,33 @@ public class AdministratorController {
 		return accountGroup;
 	}
 	
+	/**
+	 * Method delete account group by idAccountGroup
+	 * 
+	 * @type Long
+	 * @param idAccountGroup
+	 * 
+	 * @return AccountGroup
+	 */
 	@RequestMapping(value="/views/profile/admin/group/{idAccountGroup}/deleteaccountgroup.json", method = RequestMethod.DELETE)
 	public @ResponseBody void deleteAccountGroup(@PathVariable("idAccountGroup") Long idAccountGroup) {
 		logger.info("AdministratorController: delete user account group="+idAccountGroup);
 		accountGroupService.deleteAccountGroupById(idAccountGroup);
 	}
 
+	/**
+	 * Method prepares List<GroupMessage> (data) for sending in ui service layer
+	 * This List contain list group messages which create between date. If List
+	 * is empty return empty list else return list with objects.  
+	 * 
+	 * @type Long
+	 * @type Date
+	 * @param idAccountGroup
+	 * @param fromDate
+	 * @param toDate
+	 * 
+	 * @return List<GroupMessage>
+	 */
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/views/profile/admin/group/{idAccountGroup}/{fromDate}/{toDate}/groupmessages.json", method = RequestMethod.GET)
 	public @ResponseBody List<GroupMessage> loadAccounrGroupMessages(@PathVariable("idAccountGroup") Long idAccountGroup,
@@ -627,6 +849,15 @@ public class AdministratorController {
 		return listGroupMessages;		
 	}
 	
+	/**
+	 * Method save new account group messages. 
+	 * 
+	 * @type Long
+	 * @type GroupMessage
+	 * @param idAdmin
+	 * @param idAccountGroup
+	 * @param newGroupMessage
+	 */
 	@RequestMapping(value="/views/profile/admin/{idAdmin}/group/{idAccountGroup}/saveAccountGroupMessage.json", method = RequestMethod.POST)
 	public @ResponseBody void saveNewAccountGroupMessages(@RequestBody GroupMessage newAccountGroupMessage,
 			@PathVariable("idAdmin") Long idAdmin, @PathVariable("idAccountGroup") Long idAccountGroup) {
@@ -646,23 +877,27 @@ public class AdministratorController {
 			groupMember.setMemberAccount(account);
 			groupMemberService.saveGroupMember(groupMember);
 		}
-		
 		logger.info("AdministratorController: Create new group message.");
 		newAccountGroupMessage.setDateCreateGroupMessage(LocalDateTime.now());
 		newAccountGroupMessage.setGroupMember(groupMember);
 		groupMessageService.saveGroupMessage(newAccountGroupMessage);
 	}
 	
+	/**
+	 * Method prepares List<GroupMember>(data) for sending in ui service layer
+	 * This List contain list group members. If List is empty return empty list
+	 * else return list with objects.
+	 * 
+	 * @type Long
+	 * @param idAccountGroup
+	 * 
+	 * @return List<GroupMember>
+	 */
 	@RequestMapping(value="/views/profile/admin/group/{idAccountGroup}/listgroupmembers.json", method = RequestMethod.GET)
 	public @ResponseBody List<GroupMember> loadListGroupMembers(@PathVariable("idAccountGroup") Long idAccountGroup) {
 		logger.info("AdministratorController: load list group members for account group="+idAccountGroup);
 		List<GroupMember> listGroupMembers=groupMemberService.getListGroupMemberByIdAccountGroup(idAccountGroup);
 		
 		return listGroupMembers;
-	}
-	
-	
-	
-	
-	
+	}	
 }

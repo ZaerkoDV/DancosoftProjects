@@ -438,13 +438,12 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 				logger.info("UserSecurityService:Login and password update by id user.");
 				
 				//send login and password on user email
-				//email=userEmailDAO.getEmailByIdUser(idUser);
-				//toEmail=email.getUserEmail();
+				email=userEmailDAO.getEmailByIdUser(idUser);
+				toEmail=email.getUserEmail();
 				
-				//contentEmail="\n Login:" + newLogin +"\n Password:" + newPassword;
-				//emailCreator.createSecurityEmail(fromeEmail, toEmail,contentEmail);
+				contentEmail="\n Login:" + newLogin +"\n Password:" + newPassword;
+				emailCreator.createSecurityEmail(fromeEmail, toEmail,contentEmail);
 				logger.info("UserSecurityService:New login and password send to post.");
-				
 				////sender.sendEmail(list,newLogin,newPassword);
 				
 			} catch (DataRetrievalFailureException rf) {

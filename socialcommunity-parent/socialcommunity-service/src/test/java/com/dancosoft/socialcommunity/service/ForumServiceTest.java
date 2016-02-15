@@ -16,9 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.Forum;
-import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 
 /**
@@ -74,8 +72,9 @@ public class ForumServiceTest {//extends TestStarter{
 //
 //		logger.info("ForumServiceTest: test method GetCountForum");
 //		int actual=forumService.getCountForum();
-//		int expected=1;
-//		Assert.assertEquals(expected, actual);	
+//		//int expected=1;
+//		//Assert.assertEquals(expected, actual);	
+//		Assert.assertTrue(actual>0);
 //	}
 //
 //	@Transactional

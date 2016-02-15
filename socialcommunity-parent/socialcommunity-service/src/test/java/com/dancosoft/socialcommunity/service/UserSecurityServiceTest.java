@@ -166,10 +166,10 @@ public class UserSecurityServiceTest {//extends TestStarter {
 //	@Transactional
 //	@Rollback(true)
 //	@Test
-//	public void testGettingListAdminWithUserRole() {
+//	public void testGettingListUserWithAdminRole() {
 //		logger.info("UserSecurityServiceTest: test method testGettingListUserWithUserRole");
-//		List<User> listAdmin = userSecurityService.getListUserWithAdminRole();
-//		Assert.assertTrue(listAdmin.isEmpty());
+//		//List<User> listAdmin = userSecurityService.getListUserWithAdminRole();
+//		//Assert.assertTrue(listAdmin.isEmpty());
 //	}
 //
 //	@Transactional
@@ -177,8 +177,8 @@ public class UserSecurityServiceTest {//extends TestStarter {
 //	@Test
 //	public void testOnUpdateLoginPasswordByIdUser() {
 //		logger.info("UserSecurityServiceTest: test method testOnUpdateLoginPasswordByIdUser");
-//		Long idUser = userSecurity.getUser().getIdUser();
-//		Assert.assertTrue(userSecurityService.updateLoginPasswordByIdUser(idUser));
+//		//Long idUser = userSecurity.getUser().getIdUser();
+//		//Assert.assertTrue(userSecurityService.updateLoginPasswordByIdUser(idUser));
 //	}
 //
 //	@Transactional

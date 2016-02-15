@@ -88,13 +88,13 @@ public class UserServiceTest {//extends TestStarter {
 //	@Test
 //	public void testGettingListUserBySex(){
 //		
-//		List<User> listUser;
+//	//List<User> listUser;
 //		logger.info("UserServiceTest: test method testGettingListUserBySex");
 //		
-//		listUser =userService.getListUserBySex("F");
-//		Assert.assertFalse(listUser.isEmpty());
-//		listUser =userService.getListUserBySex("M");
-//		Assert.assertTrue(listUser.isEmpty());
+//	//listUser =userService.getListUserBySex("F");
+//	//Assert.assertFalse(listUser.isEmpty());
+//	//listUser =userService.getListUserBySex("M");
+//	//Assert.assertTrue(listUser.isEmpty());
 //	}
 //		
 //	@Transactional

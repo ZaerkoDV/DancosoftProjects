@@ -3,8 +3,6 @@
  */
 package com.dancosoft.socialcommunity.service;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -102,9 +100,8 @@ public class UserSocialNetworkServiceTest {//extends TestStarter{
 //	public void  testGettingListUserSocialNetworkWithStatusByIdUser() {
 //
 //		logger.info("UserSocialNetworkServiceTest: test method GetListUserSocialNetworkWithStatusByIdUser");
-//		List<UserSocialNetwork> list=userSocialNetworkService
-//				.getListSocialNetworkWithStatusByIdUser(user.getIdUser(), "public");
-//		Assert.assertFalse(list.isEmpty());
+//		UserSocialNetwork userSocialNetwork=userSocialNetworkService.getSocialNetworkWithStatusByIdUser(user.getIdUser(), "public");
+//		Assert.assertNotNull( userSocialNetwork);
 //	}
 //	
 //	@Transactional

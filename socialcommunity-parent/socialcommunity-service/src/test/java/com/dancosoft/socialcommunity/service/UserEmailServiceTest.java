@@ -3,8 +3,6 @@
  */
 package com.dancosoft.socialcommunity.service;
 
-import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -83,7 +81,7 @@ public class UserEmailServiceTest {//extends TestStarter {
 //		UserCorespondence testUserCorespondence = createUserCorespondenceForTest();
 //		UserEmail testUserEmail = new UserEmail();
 //
-//		testUserEmail.setUserEmail("zaerko1991@gmail.com");
+//		testUserEmail.setUserEmail("zaerko@mail.com");
 //		testUserEmail.setUserCorespondence(testUserCorespondence);
 //		userEmailService.saveUserEmail(testUserEmail);
 //
@@ -102,8 +100,8 @@ public class UserEmailServiceTest {//extends TestStarter {
 //	@Test
 //	public void  testGettingListEmailWithStatusByIdUser() {
 //		logger.info("UserEmailServiceTest: test method GetListEmailWithStatusByIdUser");
-//		List<UserEmail> list=userEmailService.getListEmailWithStatusByIdUser(user.getIdUser(), "public");
-//		Assert.assertFalse(list.isEmpty());
+//		UserEmail userEmail=userEmailService.getEmailWithStatusByIdUser(user.getIdUser(), "public");
+//		Assert.assertNotNull(userEmail);
 //	}
 //	
 //	@Transactional
@@ -111,8 +109,8 @@ public class UserEmailServiceTest {//extends TestStarter {
 //	@Test
 //	public void  testGettingListEmailByIdUser() {
 //		logger.info("UserEmailServiceTest: test method GetListEmailByIdUser");
-//		List<UserEmail> list=userEmailService.getListEmailByIdUser(user.getIdUser());
-//		Assert.assertFalse(list.isEmpty());
+//		UserEmail userEmail=userEmailService.getEmailByIdUser(user.getIdUser());
+//		Assert.assertNotNull(userEmail);
 //	}
 //	
 //	@Transactional

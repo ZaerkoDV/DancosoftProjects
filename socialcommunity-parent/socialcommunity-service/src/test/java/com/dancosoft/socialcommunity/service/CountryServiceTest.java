@@ -86,7 +86,7 @@ public class CountryServiceTest {//extends TestStarter {
 //	
 //	public Country createCountryForTest() {
 //		Country testCountry = new Country();
-//		testCountry.setCountryName("UK");
+//		testCountry.setCountryName("TestCountry");
 //		countryService.saveCountry(testCountry);
 //
 //		return testCountry;
@@ -95,7 +95,7 @@ public class CountryServiceTest {//extends TestStarter {
 //	public City createCityForTest() {
 //		Country testCountry = createCountryForTest();
 //		City testCity = new City();
-//		testCity.setCityName("London");
+//		testCity.setCityName("TestCity");
 //		testCity.setCountry(testCountry);
 //		cityService.saveCity(testCity);
 //
@@ -104,7 +104,7 @@ public class CountryServiceTest {//extends TestStarter {
 //	
 //	public Language createLanguageForTest() {
 //		Language testLanguage = new Language();
-//		testLanguage.setLanguageName("English");
+//		testLanguage.setLanguageName("TestLanguage");
 //		languageService.saveLanguage(testLanguage);
 //		
 //		return testLanguage;

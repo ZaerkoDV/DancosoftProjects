@@ -60,9 +60,7 @@ public class AccountGroupHistoryServiceTest {//extends TestStarter {
 //	public void setAccountGroupHistoryService(AccountGroupHistoryService accountGroupHistoryService) {
 //		this.accountGroupHistoryService = accountGroupHistoryService;
 //	}
-//		
-//	private User user;
-//	private Account account;
+//
 //	private AccountGroup accountGroup;
 //	private AccountGroupHistory accountGroupHistory;
 //

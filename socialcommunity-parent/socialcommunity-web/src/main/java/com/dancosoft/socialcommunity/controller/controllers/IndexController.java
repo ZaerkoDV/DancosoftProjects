@@ -1,3 +1,18 @@
+/**
+ * @package com.dancosoft.socialcommunity.controller.controllers
+ * 
+ * Package com.dancosoft.socialcommunity.controller.controllers contain set of classes
+ * which perform controller pattern in SocialCommunity project. This project is based
+ * on MVC architecture.This class is part of controller in MVC architecture. Controller
+ * provides communication between the user and the system: controls user input and uses
+ * models and views to implement the necessary response. In SocialCommunity define two
+ * roles User, Administrator. For each role, define separate back end controller. All
+ * classes which contain postfix “Controller” provide to work Controller for SocialCommunity
+ * application.
+ * 
+ * Please contact with Zaerko Denis or send letter on zaerko1991@gmail.com if you need
+ * to use information or have any questions. 
+ */
 package com.dancosoft.socialcommunity.controller.controllers;
 
 import java.io.IOException;
@@ -49,6 +64,28 @@ import com.dancosoft.socialcommunity.service.UserSecurityService;
 import com.dancosoft.socialcommunity.service.UserService;
 import com.dancosoft.socialcommunity.service.UserSocialNetworkService;
 
+/**
+ * Class IndexController use technologe IoC for work with other layer in application. All methods
+ * are public in class. For logging use framework shell slf4j and framework log4j.Class contain
+ * also private, static variable logger, which use to call log message.Controller use spring
+ * framework for organize request/response mappling. 
+ * 
+ * The class IndexController contain methods which prepares date for sending in ui service layer.
+ * The main task of IndexController class is basic operation(prepares date for sending) for
+ * all users. There are sign up, sign in, get security question and other. Class use when
+ * user have not role(not sign in). Class use other classes: StandartAccountGroup for crateing
+ * account group when user sign up at the first. Also class use enums from package in this module:
+ * com.dancosoft.socialcommunity.controller.support.constants for literals. Ther are: BlockStatus(block,
+ * unblock),UserRoleName (admin/user), ViewStatus(public/private).
+ * 
+ * 
+ * @version 1.0 12.02.2016
+ * 
+ * @see org.springframework.web
+ * @see org.springframework.stereotype
+ * 
+ * @author Denis Zaerko
+ */
 @Controller(value="indexController")
 public class IndexController {
 
@@ -158,7 +195,16 @@ public class IndexController {
 		return groupMemberService;
 	}
 
-
+	
+	/**
+	 * Method save common user prifile and return id user after save.
+	 * If save failed return null. Methods convert json to object.
+	 * 
+	 * @type User
+	 * @param user
+	 * 
+	 * @return idUser(Long)
+	 */
 	@RequestMapping(value="/views/profile/signup/savecommon/user.json", method = RequestMethod.POST)
 	public @ResponseBody Long saveCommonUser(@RequestBody User user) {
 	
@@ -172,11 +218,27 @@ public class IndexController {
 			
 		}else{
 			idUser=null;
-			logger.info("IndexController: create new user with common information");
+			logger.info("IndexController: new user not save");
 		}
 		return idUser;
 	}
 		
+	/**
+	 * Method save extended user prifile and return id user after save.
+	 * If save failed return null. Methods convert json to objects using ObjectMapper.
+	 * 
+	 * @see ObjectMapper 
+	 * @type User
+	 * @type Long
+	 * @param user
+	 * @param id
+	 * 
+	 * @exception JsonParseException
+	 * @exception JsonMappingException
+	 * @exception IOException
+	 * 
+	 * @return idUser(Long)
+	 */
 	@RequestMapping(value="/views/profile/signup/saveextended/{id}/userextended.json", method = RequestMethod.POST)
 	public @ResponseBody Long saveExtendedUser(@RequestBody String userExtendedJson, @PathVariable("id") Long id) {
 		
@@ -239,6 +301,18 @@ public class IndexController {
 		return idUser;
 	}
 	
+	/**
+	 * Method save security user prifile and return id user after save. If save failed
+	 * return null. Methods convert json to objects using ObjectMapper.
+	 * 
+	 * @see ObjectMapper 
+	 * @type SecurityPrompt
+	 * @type Long
+	 * @param prompt
+	 * @param id
+	 * 
+	 * @return idUser(Long)
+	 */
 	@RequestMapping(value="/views/profile/signup/savelogin/{id}/userlogin.json", method = RequestMethod.POST)
 	public @ResponseBody Long saveSecurityUser(@RequestBody SecurityPrompt prompt, @PathVariable("id") Long id) {
 	
@@ -280,6 +354,15 @@ public class IndexController {
 		return idUser;
 	}
 	
+	/**
+	 * Method create new user account and basic group for this group. If
+	 * success save return id user else return null.
+	 * 
+	 * @type Long
+	 * @param idUser
+	 * 
+	 * @return idUser(Long)
+	 */
 	@RequestMapping(value="/views/profile/signup/createaccount/useraccount.json", method = RequestMethod.POST)
 	public @ResponseBody Long createUserAccount(@RequestBody Long idUser){
 		
@@ -339,6 +422,17 @@ public class IndexController {
 		return idUser;
 	}
 	
+	/**
+	 * Method return status of user sign in. If sign in successful return id user else return null.
+	 * Method contain methods which call method for validation email.
+	 * 
+	 * @type String
+	 * @param loginOrEmail
+	 * @param password
+	 * @param answer
+	 * 
+	 * @return idUser(Long)
+	 */
 	@RequestMapping(value="/views/profile/signin/{loginOrEmail}/{password}/{answer}/userdata.json", method = RequestMethod.GET)
 	public @ResponseBody Long signIn(@PathVariable("loginOrEmail") String loginOrEmail,@PathVariable("password") String password,
 			@PathVariable("answer") String answer){
@@ -367,7 +461,7 @@ public class IndexController {
 			signIn=securityPromptService.signInUserByPromptAnswer(securityPrompt.getIdSecurityPrompt(), answer);
 			
 			//generate new password with old login which send on email
-			//userSecurityService.updateLoginPasswordByIdUser(idUser);
+			userSecurityService.updateLoginPasswordByIdUser(idUser);
 		}	
 		
 		//login and password
@@ -383,8 +477,9 @@ public class IndexController {
 			securityPrompt=securityPromptService.getSecurityPromptByLogin(loginOrEmail);
 			idUser=securityPromptService.getIdUserByPromptAnswer(securityPrompt.getIdSecurityPrompt(), answer);
 			signIn=securityPromptService.signInUserByPromptAnswer(securityPrompt.getIdSecurityPrompt(), answer);
+			
 			//generate new password with old login which send on email
-			//userSecurityService.updateLoginPasswordByIdUser(idUser);
+			userSecurityService.updateLoginPasswordByIdUser(idUser);
 		}
 		
 		//result of user autorization
@@ -398,6 +493,16 @@ public class IndexController {
 		}	
 	}	
 		
+	/**
+	 * Method return security user question for user. If user give right answer(sign in) user autorizaton
+	 * successfully else filed. Simultaneously method call other method for sending new user security
+	 * password on user past.
+	 * 
+	 * @type String
+	 * @param loginOrEmail
+	 * 
+	 * @return SecurityPrompt
+	 */
 	@RequestMapping(value="/views/profile/signin/{loginOrEmail}/securityquestion.json", method = RequestMethod.GET)
 	public @ResponseBody SecurityPrompt getSecurityQuestion(@PathVariable("loginOrEmail") String loginOrEmail){
 		
@@ -435,6 +540,14 @@ public class IndexController {
 		return prompt;
 	}
 	
+	/**
+	 * Method return user role by user id. If user id not exist return null else user role.
+	 * 
+	 * @type long
+	 * @param idUser
+	 * 
+	 * @return UserRole
+	 */
 	@RequestMapping(value="/views/profile/signin/{idUser}/userrole.json", method = RequestMethod.GET)
 	public @ResponseBody UserRole getUserRole(@PathVariable("idUser") Long idUser){
 		

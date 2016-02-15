@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.User;
 import com.dancosoft.socialcommunity.model.UserAutobiography;
 import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
@@ -46,6 +47,8 @@ public class UserAutobiographyServiceTest {//extends TestStarter {
 //
 //	public User user;
 //	public UserAutobiography userAutobiography;
+//	
+//	TimeConverter converter =new TimeConverter();
 //
 //	public User createUserForTest() {
 //
@@ -63,7 +66,8 @@ public class UserAutobiographyServiceTest {//extends TestStarter {
 //
 //		User testUser = createUserForTest();
 //		UserAutobiography testUserAutobiography = new UserAutobiography();
-//		testUserAutobiography.setBirth(LocalDateTime.of(1990, 12, 31, 0, 0));
+//		
+//		testUserAutobiography.setBirth(converter.convertLocalDateTimeToDate(LocalDateTime.of(1990, 12, 31, 0, 0)));
 //		testUserAutobiography.setHobby("Test Hobby");
 //		testUserAutobiography.setAutobiography("Test User Autobiography");
 //		testUserAutobiography.setUser(testUser);

@@ -21,7 +21,7 @@ import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
  * @author Zaerko_DV
  *
  */
-public class UserPhotoServiceTest  {//extends TestStarter {
+public class UserPhotoServiceTest {//extends TestStarter {
 
 //	private static final Logger logger = LoggerFactory.getLogger(UserPhotoServiceTest.class);
 //

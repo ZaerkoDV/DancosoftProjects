@@ -108,6 +108,7 @@ public class UserRoleServiceTest {//extends TestStarter {
 //	public void testGettingCountUserByRole() {
 //		logger.info("UserRoleServiceTest: test method testGettingCountUserByRole");
 //		int countUser = userRoleService.getCountUserByRole("User");
-//		Assert.assertEquals(1,countUser);
+//		//Assert.assertEquals(1,countUser);
+//		Assert.assertTrue(countUser>0);
 //	}
 }

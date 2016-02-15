@@ -1,5 +1,17 @@
 /**
+ * @package com.dancosoft.socialcommunity.controller.controllers
  * 
+ * Package com.dancosoft.socialcommunity.controller.controllers contain set of classes
+ * which perform controller pattern in SocialCommunity project. This project is based
+ * on MVC architecture.This class is part of controller in MVC architecture. Controller
+ * provides communication between the user and the system: controls user input and uses
+ * models and views to implement the necessary response. In SocialCommunity define two
+ * roles User, Administrator. For each role, define separate back end controller. All
+ * classes which contain postfix “Controller” provide to work Controller for SocialCommunity
+ * application.
+ * 
+ * Please contact with Zaerko Denis or send letter on zaerko1991@gmail.com if you need
+ * to use information or have any questions. 
  */
 package com.dancosoft.socialcommunity.controller.controllers;
 
@@ -72,8 +84,24 @@ import com.dancosoft.socialcommunity.service.UserService;
 import com.dancosoft.socialcommunity.service.UserSocialNetworkService;
 
 /**
- * @author Zaerko_DV
- *
+ * Class UserController use technologe IoC for work with other layer in application. All methods
+ * are public in class. For logging use framework shell slf4j and framework log4j.Class contain
+ * also private, static variable logger, which use to call log message.Controller use spring
+ * framework for organize request/response mappling. 
+ * The class UserController contain methods which prepares date for sending in ui service layer.
+ * The main task of UserController class is operation which performs user with role user. Class contain
+ * method which describe work with data as user(role) for user account, account group, forum,
+ * single message and edit profile. Also class use enums from package in this module:
+ * com.dancosoft.socialcommunity.controller.support.constants for literals. Ther are:
+ * BlockStatus(block, unblock),UserRoleName (admin/user), ViewStatus(public/private).
+ * 
+ * @version 1.0 12.02.2016
+ * 
+ * @see org.codehaus.jackson.map.ObjectMapper
+ * @see org.springframework.web
+ * @see org.springframework.stereotype
+ * 
+ * @author Denis Zaerko
  */
 @Controller(value = "userController")
 public class UserController {
@@ -266,8 +294,17 @@ public class UserController {
 		this.forumMessageService = forumMessageService;
 	}
 	
+	
 													//user account
-
+	/**
+	 * Method prepares object UserParlorData (data) for sending in ui service layer.
+	 * This object is wapper for other object.
+	 * 
+	 * @type Long
+	 * @param id
+	 * 
+	 * @return UserParlorData
+	 */
 	@RequestMapping(value="/views/profile/user/{id}/parlor/accountdata.json", method = RequestMethod.GET)
 	public @ResponseBody UserParlorData loadUserData(@PathVariable("id") Long id) {
 	
@@ -301,6 +338,16 @@ public class UserController {
 		return userParlorData;
 	}
 	
+	/**
+	 * Method prepares List<AccountGroup> (data) for sending in ui service layer.
+	 * This List contain account group for user by user id. If List<AccountGroup>
+	 * is empty return empty list else return list with objects.
+	 * 
+	 * @type Long
+	 * @param id
+	 * 
+	 * @return List<AccountGroup>
+	 */
 	@RequestMapping(value="/views/profile/user/{id}/parlor/listaccountgroup.json", method = RequestMethod.GET)
 	public @ResponseBody List<AccountGroup> getListAccountGroup(@PathVariable("id") Long id) {
 		
@@ -312,6 +359,17 @@ public class UserController {
 		return listAccountGroup;
 	}
 	
+	/**
+	 * Method prepares List<Forum> (data) for sending in ui service layer.
+	 * This List contain forum for user by user id. If List<Forum> is empty
+	 * return empty list else return list with objects. Method call other
+	 * method to check user on adults value.
+	 * 
+	 * @type Long
+	 * @param id
+	 * 
+	 * @return List<Forum>
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/views/profile/user/{id}/parlor/listforum.json", method = RequestMethod.GET)
 	public @ResponseBody List<Forum> getListForum(@PathVariable("id") Long id) {
@@ -332,7 +390,15 @@ public class UserController {
 	}
 	
 											//edit user profile
-	
+	/**
+	 * Method prepares user data for sending in ui service layer.
+	 * If user with id exist return user data else return null.
+	 * 
+	 * @type Long
+	 * @param id
+	 * 
+	 * @return User
+	 */
 	@RequestMapping(value="/views/profile/user/{id}/parlor/commonuserprofile.json", method = RequestMethod.GET)
 	public @ResponseBody User loadCommonUserProfileData(@PathVariable("id") Long id) {
 		logger.info("UserController: load common user profile.");
@@ -340,6 +406,16 @@ public class UserController {
 		return user;
 	}
 	
+	/**
+	 * Method update data about user common profile.
+	 * 
+	 * @type Long
+	 * @type User
+	 * @param id
+	 * @param user
+	 * 
+	 * @return Long
+	 */
 	@RequestMapping(value="/views/profile/user/parlor/{id}/editcommonprofile.json", method = RequestMethod.PUT)
 	public @ResponseBody Long editCommonUserProfile(@RequestBody User user, @PathVariable("id") Long id) {
 		logger.info("UserController: update user common profile.");
@@ -347,6 +423,16 @@ public class UserController {
 		return id;
 	}
 	
+	/**
+	 * Method prepares UserExtendedData (data) for sending in ui service layer.
+	 * UserExtendedData contain data for user extended profile. This class is
+	 * class wapper other objects. 
+	 * 
+	 * @type Long
+	 * @param id
+	 * 
+	 * @return UserExtendedData
+	 */
 	@RequestMapping(value="/views/profile/user/{id}/parlor/extendeduserprofile.json", method = RequestMethod.GET)
 	public @ResponseBody UserExtendedData loadExtendedUserProfileData(@PathVariable("id") Long id) {
 		
@@ -390,6 +476,21 @@ public class UserController {
 		return userExtendedData;
 	}
 	
+	/**
+	 * Method update user extended profile(data). For converting json format object
+	 * to object use ObjectMapper. If convering failed thow exeption.
+	 * 
+	 * @type Long
+	 * @type String
+	 * @param id
+	 * @param userExtendedDataJson
+	 * 
+	 * @exception JsonParseException
+	 * @exception JsonMappingException
+	 * @exception IOException
+	 * 
+	 * @return Long
+	 */
 	@RequestMapping(value="/views/profile/user/{id}/parlor/editextendedprofile.json", method = RequestMethod.PUT)
 	public @ResponseBody Long editExtendedUserProfile(@RequestBody String userExtendedDataJson, @PathVariable("id") Long id) {
 		
@@ -450,7 +551,6 @@ public class UserController {
 			userSocialNetwork.setUserCorespondence(newUserEmail.getUserCorespondence());
 			userSocialNetworkService.saveUserSocialNetwork(userSocialNetwork);
 		}
-		
 		logger.info("UserController:Get language for update.");
 		Long idNewLanguage=userExtendedData.getUserLocation().getLanguage().getIdLanguage();
 		Language newLanguage=languageService.getLanguageById(idNewLanguage); 
@@ -472,6 +572,15 @@ public class UserController {
 		return id;
 	}
 	
+	/**
+	 * Method prepares UserAutobiography(data) for sending in ui service layer.
+	 * Method contain data for edit autobiography profile.
+	 * 
+	 * @type Long
+	 * @param id
+	 * 
+	 * @return Long
+	 */
 	@RequestMapping(value="/views/profile/user/{id}/parlor/userautobiographyprofile.json", method = RequestMethod.GET)
 	public @ResponseBody UserAutobiography loadUserAutobiographyData(@PathVariable("id") Long id) {
 		logger.info("UserController: load user autobiography to update.");
@@ -480,6 +589,21 @@ public class UserController {
 		return userAutobiography;
 	}
 	
+	/**
+	 * Method update user autobiography data. For converting userAutobiography from json
+	 * to user use ObjectMapper.
+	 * 
+	 * @type Long
+	 * @type String
+	 * @param id
+	 * @param userAutobiographyJson
+	 * 
+	 * @exception JsonParseException
+	 * @exception JsonMappingException
+	 * @exception IOException 
+	 * 
+	 * @return Long
+	 */
 	@RequestMapping(value="/views/profile/user/{id}/parlor/editautobiographyprofile.json", method = RequestMethod.PUT)
 	public @ResponseBody Long editUserAutobiographyProfile(@RequestBody String userAutobiographyJson,@PathVariable("id") Long id) {
 		
@@ -507,6 +631,13 @@ public class UserController {
 		return id;
 	}
 		
+	/**
+	 * Method prepares List<Language> (data) for sending in ui service layer.
+	 * This List contain list languages. If List<Language> is empty return empty list
+	 * else return list with objects.  
+	 * 
+	 * @return List<Language>
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/views/listlanguage.json", method = RequestMethod.GET)
 	public @ResponseBody List<Language> loadListLanguage() {
@@ -516,6 +647,13 @@ public class UserController {
 		return listlanguage;
 	}
 	
+	/**
+	 * Method prepares List<Country>(data) for sending in ui service layer.
+	 * This List contain list country. If List<Country> is empty return empty list
+	 * else return list with objects.  
+	 * 
+	 * @return List<Country>
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/views/listcountry.json", method = RequestMethod.GET)
 	public @ResponseBody List<Country> loadListCountry() {
@@ -525,6 +663,13 @@ public class UserController {
 		return listCountry;
 	}
 	
+	/**
+	 * Method prepares List<City>(data)for sending in ui service layer by id country which
+	 * contain this city. This List contain list city. If List<City> is empty return empty list
+	 * else return list with objects.  
+	 * 
+	 * @return List<City>
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/views/{idCountry}/listcity.json", method = RequestMethod.GET)
 	public @ResponseBody List<City> getListCityByIdCountry(@PathVariable("idCountry") Long idCountry) {
@@ -535,6 +680,13 @@ public class UserController {
 	}
 														//forum
 	
+	/**
+	 * Method prepares List<ForumTopic> (data) for sending in ui service layer by id forum
+	 * This List contain list forum topic. If List is empty return empty list else return
+	 * list with objects.  
+	 * 
+	 * @return List<ForumTopic>
+	 */
 	@RequestMapping(value="/views/profile/user/forum/{idForum}/listforumtopic.json", method = RequestMethod.GET)
 	public @ResponseBody List<ForumTopic> loadListForumTopic(@PathVariable("idForum") Long idForum) {
 		logger.info("UserController: load list forum topic by id forum.");
@@ -543,6 +695,16 @@ public class UserController {
 		return listForumTopic;
 	}
 	
+	/**
+	 * Method save new forum topic.
+	 * 
+	 * @type Long
+	 * @type ForumTopic
+	 * @param id
+	 * @param forumTopic
+	 * 
+	 * @return Long
+	 */
 	@RequestMapping(value="/views/profile/user/forum/{id}/savenewforumtopic.json", method = RequestMethod.POST)
 	public @ResponseBody Long saveNewForumTopic(@RequestBody ForumTopic forumTopic, @PathVariable("id") Long id) {
 		
@@ -559,6 +721,13 @@ public class UserController {
 		return idForum;
 	}
 	
+	/**
+	 * Method prepares List<ForumMessage> (data) for sending in ui service layer
+	 * by id forumTopic.This List contain list forum messages. If List is empty
+	 * return empty list else return list with objects.  
+	 * 
+	 * @return List<ForumMessage>
+	 */
 	@RequestMapping(value="/views/profile/user/forum/{idForumTopic}/listForumMessages.json", method = RequestMethod.GET)
 	public @ResponseBody List<ForumMessage> loadListTopicMessages(@PathVariable("idForumTopic") Long idForumTopic) {
 		
@@ -572,6 +741,14 @@ public class UserController {
 		return listTopicMessages;
 	}
 	
+	/**
+	 * Method save new forum messages.
+	 * 
+	 * @type ForumMessage
+	 * @param newForumMessage
+	 * 
+	 * @return Long
+	 */
 	@RequestMapping(value="/views/profile/user/forum/saveForumMessages.json", method = RequestMethod.POST)
 	public @ResponseBody Long saveNewForumMessages(@RequestBody ForumMessage newForumMessage) {
 		
@@ -589,17 +766,34 @@ public class UserController {
 		return idForumTopic;
 	}
 
+	/**
+	 * Method delete forum message by id message. 
+	 * 
+	 * @type Long
+	 * @param idForumTopic
+	 * @param idForumMessage
+	 * 
+	 * @return Long
+	 */
 	@RequestMapping(value="/views/profile/user/forum/{idForumTopic}/{idForumMessage}/deleteForumMessages.json", method = RequestMethod.DELETE)
 	public @ResponseBody Long deleteForumMessages( @PathVariable("idForumTopic") Long idForumTopic,
 			@PathVariable("idForumMessage") Long idForumMessage) {
-		
 		logger.info("UserController: Delete forum message by id");
 		forumMessageService.deleteForumMessageById(idForumMessage);
 		
 		return idForumTopic;
 	}
 													//group
-	
+	/**
+	 * Method save new account group.
+	 * 
+	 * @type Long
+	 * @type AccountGroup
+	 * @param id
+	 * @param newAccountGroup
+	 * 
+	 * @return idUser(Long)
+	 */
 	@RequestMapping(value="/views/profile/user/group/{id}/saveAccountGroup.json", method = RequestMethod.POST)
 	public @ResponseBody Long saveNewAccountGroup(@RequestBody AccountGroup newAccountGroup, @PathVariable("id") Long id) {
 	
@@ -628,9 +822,17 @@ public class UserController {
 		return id;
 	}
 	
+	/**
+	 * Method return id member in account group by id accountGroup and by id account.
+	 * 
+	 * @type Long
+	 * @param id
+	 * @param idAccountGroup
+	 * 
+	 * @return idGroupMember
+	 */
 	@RequestMapping(value="/views/profile/user/group/{id}/{idAccountGroup}/accountGroupMember.json", method = RequestMethod.GET)
-	public @ResponseBody Long getAccountGroup(@PathVariable("id") Long id, @PathVariable("idAccountGroup") Long idAccountGroup){
-	
+	public @ResponseBody Long getAccountGroupMember(@PathVariable("id") Long id, @PathVariable("idAccountGroup") Long idAccountGroup){
 		logger.info("UserController: Load id group member.");
 		Account account= userService.getAccountByUserId(id);
 		Long idAccount= account.getIdAccount();
@@ -639,6 +841,13 @@ public class UserController {
 		return groupMember.getIdGroupMember();
 	}
 	
+	/**
+	 * Method prepares List<GroupMessage> (data) for sending in ui service layer
+	 * This List contain list group messages. If List is empty return empty list
+	 * else return list with objects.  
+	 * 
+	 * @return List<GroupMessage>
+	 */
 	@RequestMapping(value="/views/profile/user/group/{idAccountGroup}/listAccountGroupMessages.json", method = RequestMethod.GET)
 	public @ResponseBody List<GroupMessage> loadAccountGroupMessages(@PathVariable("idAccountGroup") Long idAccountGroup) {
 		logger.info("UserController: Load account group messages from last week");
@@ -647,6 +856,14 @@ public class UserController {
 		return listGroupMessages;
 	}
 	
+	/**
+	 * Method save new account group messages. 
+	 * 
+	 * @type GroupMessage
+	 * @param newGroupMessage
+	 * 
+	 * @return idAccountGroup
+	 */
 	@RequestMapping(value="/views/profile/user/group/saveAccountGroupMessage.json", method = RequestMethod.POST)
 	public @ResponseBody Long saveNewAccountGroupMessage(@RequestBody GroupMessage newGroupMessage) {
 		
@@ -664,17 +881,32 @@ public class UserController {
 		
 		return idAccountGroup;
 	}
-	
+//idAccountGroup
+	/**
+	 * Method delete account group messages by id  idGroupMessage.
+	 * 
+	 * @type Long
+	 * @param idGroupMessage
+	 * @param idAccountGroup
+	 * 
+	 * @return idAccountGroup
+	 */
 	@RequestMapping(value="/views/profile/user/group/{idAccountGroup}/{idGroupMessage}/deleteAccountGroupMessage.json", method = RequestMethod.DELETE)
 	public @ResponseBody Long deleteAccountGroupMessage(@PathVariable("idGroupMessage") Long idGroupMessage,
 			@PathVariable("idAccountGroup") Long idAccountGroup) {
-		
 		logger.info("UserController: Delete group message by id");
 		groupMessageService.deleteGroupMessageById(idGroupMessage);
 		
 		return idAccountGroup;
 	}
 	
+	/**
+	 * Method prepares List<EventPattern>(data) for sending in ui service layer
+	 * This List contain list event pattern. If List is empty return empty list
+	 * else return list with objects.  
+	 * 
+	 * @return List<EventPattern>
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/views/profile/user/group/listEventPattern.json", method = RequestMethod.GET)
 	public @ResponseBody List<EventPattern> loadListEventPattern(){
@@ -684,6 +916,16 @@ public class UserController {
 		return listEventPattern;
 	}
 	
+	/**
+	 * Method prepares List<GroupMember>(data) for sending in ui service layer
+	 * This List contain list group members. If List is empty return empty list
+	 * else return list with objects.  
+	 * 
+	 * @type Long
+	 * @param idAccountGroup
+	 * 
+	 * @return List<GroupMember>
+	 */
 	@RequestMapping(value="/views/profile/user/group/{idAccountGroup}/listAccountGroupMembers.json", method = RequestMethod.GET)
 	public @ResponseBody List<GroupMember> loadListAccountGroupMember(@PathVariable("idAccountGroup") Long idAccountGroup){
 		logger.info("UserController: Load group members");
@@ -692,6 +934,15 @@ public class UserController {
 		return listAccountGroupMember;
 	}
 	
+	/**
+	 * Method delete member from account group by idDeleteGroupMember.
+	 * 
+	 * @type Long
+	 * @param idAccountGroupMember
+	 * @param idDeleteGroupMember
+	 * 
+	 * @return idAccountGroupMember
+	 */
 	@RequestMapping(value="/views/profile/user/group/{idAccountGroupMember}/{idDeleteGroupMember}/deleteAccountGroupMember.json", method = RequestMethod.DELETE)
 	public @ResponseBody Long deleteMemberFromAccountGroup(@PathVariable("idAccountGroupMember") Long idAccountGroupMember,
 			@PathVariable("idDeleteGroupMember") Long idDeleteGroupMember){
@@ -707,11 +958,18 @@ public class UserController {
 	}
 
 																//add new member
+	/**
+	 * Method return List<Account> for account group for adding in list group members.
+	 * 
+	 * @type GroupMessage
+	 * @param newGroupMessage
+	 * 
+	 * @return List<Account>
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/views/profile/user/group/{idAccountGroup}/listaccount.json", method = RequestMethod.POST)
 	public @ResponseBody List<Account> searchAccountForAccountGroup(@RequestBody SearchPatternData searchPattern,
 			@PathVariable("idAccountGroup") Long idAccountGroup){
-		
 		logger.info("UserController: Search account by account name or user last name for include in account group.");
 		List<Account> listAccount=(List)accountService
 				.searchAccountByAccountNameUserLastName(searchPattern.getAccountName(), searchPattern.getUserLastName());
@@ -719,8 +977,20 @@ public class UserController {
 		return listAccount;
 	}
 	
+	
+	/**
+	 * Method add new member to account group with friend status.
+	 * 
+	 * @type String
+	 * @type Long
+	 * @param friendStatus
+	 * @param idAccountGroup
+	 * @param idAccountNewMember
+	 * 
+	 * @return idAccountGroup(Long)
+	 */
 	@RequestMapping(value="/views/profile/user/group/{idAccountGroup}/{idAccountNewMember}/newmember.json", method = RequestMethod.POST)
-	public @ResponseBody Long addToAccountGroup(@RequestBody String friendStatus, @PathVariable("idAccountGroup") Long idAccountGroup,
+	public @ResponseBody Long addNewMemberToAccountGroup(@RequestBody String friendStatus, @PathVariable("idAccountGroup") Long idAccountGroup,
 			@PathVariable("idAccountNewMember") Long idAccountNewMember){
 		
 		GroupMember groupMemberInGroup=groupMemberService.getGroupMemberInAccountGroupByIdAccount(idAccountGroup, idAccountNewMember);
@@ -744,10 +1014,18 @@ public class UserController {
 		return idAccountGroup;
 	}
 															//account 
-	
+	/**
+	 * Method prepares List<AccountGroup>(data) for sending in ui service layer
+	 * This list contain list account groups for account. If List is empty return
+	 * empty list else return list with objects.
+	 * 
+	 * @type Long
+	 * @param id
+	 * 
+	 * @return List<AccountGroup> 
+	 */
 	@RequestMapping(value="/views/profile/user/{id}/account/listaccountgroup.json", method = RequestMethod.GET)
 	public @ResponseBody List<AccountGroup> getListAccountGroupForAccount(@PathVariable("id") Long id){
-		
 		Account account= userService.getAccountByUserId(id);
 		Long idAccount=account.getIdAccount();
 		logger.info("UserController: Load list account group for account.");
@@ -756,11 +1034,20 @@ public class UserController {
 		
 		return listAccountGroup;
 	}
-	
+//id	
+	/**
+	 * Method prepares List<Account>(data) for sending in ui service layer
+	 * This list contain list account by account name and by last name. If
+	 * List is empty return empty list else return list with objects.
+	 * 
+	 * @type Long
+	 * @param id
+	 * 
+	 * @return List<Account> 
+	 */
 	@RequestMapping(value="/views/profile/user/{id}/account/searchaccount.json", method = RequestMethod.POST)
 	public @ResponseBody List<Account> searchAccountByAccountName(@RequestBody SearchPatternData searchPattern,
 			@PathVariable("id") Long id){
-		
 		logger.info("UserController: Search accounts by name or user last name.");
 		List<Account> listAccount= accountService.searchAccountByAccountNameUserLastName(searchPattern.getAccountName(),
 				searchPattern.getUserLastName());
@@ -768,6 +1055,17 @@ public class UserController {
 		return listAccount;	
 	}
 	
+	/**
+	 * Method add new member in account group after search.
+	 * 
+	 * @type String
+	 * @type Long
+	 * @param friendStatus
+	 * @param idAccount
+	 * @param idAccountGroupSelected
+	 * 
+	 * @return List<Account> 
+	 */
 	@RequestMapping(value="/views/profile/user/account/{idAccountGroupSelected}/{idAccount}/newaccountgroupmember.json", method = RequestMethod.POST)
 	public @ResponseBody void addToAccountGroupAfterSearch(@RequestBody String friendStatus,@PathVariable("idAccount") Long idAccount,
 			@PathVariable("idAccountGroupSelected") Long idAccountGroupSelected){
@@ -795,6 +1093,16 @@ public class UserController {
 		}
 	}
 	
+	/**
+	 * Method prepares UserParlorData(data) for sending in ui service layer
+	 * Class UserParlorData is class wapper for other object
+	 * 
+	 * @type Long
+	 * @type UserParlorData
+	 * @param searchIdAccount
+	 * 
+	 * @return UserParlorData
+	 */
 	@RequestMapping(value="/views/profile/user/account/{searchIdAccount}/accountinfo.json", method = RequestMethod.GET)
 	public @ResponseBody UserParlorData getAccountSearchInfo(@PathVariable("searchIdAccount") Long searchIdAccount){
 		
@@ -823,10 +1131,19 @@ public class UserController {
 		return userParlorData;
 	}
 	
+	/**
+	 * Method return List<SingleMessage> by id account and id Intrlocutor. If list is
+	 * empty return empty list else return list objects.
+	 * 
+	 * @type Long
+	 * @type UserParlorData
+	 * @param searchIdAccount
+	 * 
+	 * @return UserParlorData
+	 */
 	@RequestMapping(value="/views/profile/user/{id}/account/{searchIdAccount}/listAccountSingleMessage.json", method = RequestMethod.GET)
 	public @ResponseBody List<SingleMessage> listAccountSingleMessage(@PathVariable("id") Long id,
 			@PathVariable("searchIdAccount") Long searchIdAccount){
-		
 		logger.info("UserControlleer: Load list account single message by id user and id interlocutor account");
 		Account account =userService.getAccountByUserId(id);
 		Long idAccount= account.getIdAccount();
@@ -838,6 +1155,16 @@ public class UserController {
 		return listSingleMessage;
 	}
 	
+	/**
+	 * Method save new account single message.
+	 * 
+	 * @type Long
+	 * @type SingleMessage
+	 * @param SingleMessage
+	 * @param id
+	 * 
+	 * @return idUser(Long)
+	 */
 	@RequestMapping(value="/views/profile/user/{id}/account/saveAccountSingleMessage.json", method = RequestMethod.POST)
 	public @ResponseBody Long saveNewAccountSingleMessage(@RequestBody SingleMessage newAccountSingleMessage,
 			@PathVariable("id") Long id){
@@ -862,6 +1189,15 @@ public class UserController {
 		return id;
 	}
 	
+	/**
+	 * Method delete account single message by idAccountSingleMessage
+	 * 
+	 * @type Long
+	 * @param idAccountSingleMessage
+	 * @param id
+	 * 
+	 * @return idUser(Long)
+	 */
 	@RequestMapping(value="/views/profile/user/{id}/account/{idAccountSingleMessage}/deleteAccountSingleMessage.json", method = RequestMethod.DELETE)
 	public @ResponseBody Long deleteAccountSingleMessage(@PathVariable("idAccountSingleMessage") Long idAccountSingleMessage,
 			@PathVariable("id") Long id){
