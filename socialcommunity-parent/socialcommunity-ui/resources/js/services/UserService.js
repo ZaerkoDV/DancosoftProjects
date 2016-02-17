@@ -191,6 +191,22 @@ angular.module('socialcommunity').service('UserService', function($http, $q,host
         );
     }
 	
+	this.loadAccountGroupToEdit=function(idAccountGroup){
+        return $http.get(hostName+'/views/profile/user/group/'+idAccountGroup+'/accountGroup.json').then(
+            function(response){
+                 return response.data;
+            }
+        );
+    }
+	
+	this.editAccountGroup = function(accountGroup){
+        return $http.put(hostName+'/views/profile/user/group/editAccountGroup.json',accountGroup).then(
+            function(response){
+                 return response.data;
+            }
+        );
+    }
+
 	this.loadListAccountGroupMember=function(idAccountGroup){
         return $http.get(hostName+'/views/profile/user/group/'+idAccountGroup+'/listAccountGroupMembers.json').then(
             function(response){
@@ -231,8 +247,8 @@ angular.module('socialcommunity').service('UserService', function($http, $q,host
         );
     }
 	
-	this.searchAccountByAccountName=function(id, searchPattern){
-        return $http.post(hostName+'/views/profile/user/'+id+'/account/searchaccount.json',searchPattern).then(
+	this.searchAccountByAccountName=function(searchPattern){
+        return $http.post(hostName+'/views/profile/user/account/searchaccount.json',searchPattern).then(
             function(response){
                  return response.data;
             }

@@ -93,8 +93,8 @@
 							            <input type="text" class="form-control" id="accountName" ng-model="account.accountName"
 							             placeholder="Enter Account Name">				 
 							        </div>
-							    </div>	
-								<button type="submit" class="btn btn-xs btn-primary" ng-disabled="!account.accountName"
+							    </div>	<!-- ng-disabled="!account.accountName" -->
+								<button type="submit" class="btn btn-xs btn-primary"
 								 style="float:right;" ng-click="searchAccount(account)">Search</button>   
 							</div>	
 						</div>
@@ -107,7 +107,6 @@
 									<th>LastName</th>
 									<th>FirstName</th>
 									<th>ChangeStatus</th>
-									<th>Delete</th>
 									<th>Info</th>
 									<th>Messages</th>
 								 </tr>
@@ -124,9 +123,6 @@
 				      			      	 <td ng-if="account.accountBlockStatus=='unblock'">
 				      			      	 	<input type="hidden" ng-model="blockStatus" ng-init="blockStatus='block'"> 
 				      			      	 	<a type="submit" ng-click="changeAccountBlockStatus(account,blockStatus)">Block</a>
-				      			      	 </td>
-				      			      	 <td>
-				      			      	 	<a type="submit" ng-click="deleteAccount(idAdmin,account.idAccount)">Delete</a>
 				      			      	 </td>
 				      			      	 <td>
 				      			      	 	<a type="submit" ng-click="getAccountInfo(idAdmin,account.idAccount)">Info</a>

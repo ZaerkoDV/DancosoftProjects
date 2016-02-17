@@ -108,7 +108,8 @@ input[type="text"] {
 												<th>First Name</th>
 												<th>Sex</th>
 												<th>Status Friend</th>
-												<th>Operation</th>
+												<th>Info</th>
+												<th>Delete</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -119,10 +120,12 @@ input[type="text"] {
 											   <td>{{accountGroupMember.memberAccount.user.sex}}</td>
 											   <td>{{accountGroupMember.groupMemberStatus}}</td>
 											   <td ng-if="idAccountGroupMember != accountGroupMember.idGroupMember">
-												   <a type="submit" ng-click="getAccountGroupMemberInfo(id,idAccountGroupMember,
-												   	 idAccountGroup,accountGroupMember.idGroupMember)">More info</a>
-												    <a type="submit" ng-click="deleteMemberFromAccountGroup(id,idAccountGroupMember,
-													   idAccountGroup,accountGroupMember.idGroupMember)">Delete</a>
+												  <a type="submit" ng-click="getAccountGroupMemberInfo(id,idAccountGroupMember,
+											    	 idAccountGroup,accountGroupMember.idGroupMember)">More info</a>
+											    </td>	  	
+												<td ng-if="idAccountGroupMember != accountGroupMember.idGroupMember">	 
+												  <a type="submit" ng-click="deleteMemberFromAccountGroup(id,idAccountGroupMember,
+												   idAccountGroup,accountGroupMember.idGroupMember)">Delete</a>
 											   </td>
 											</tr>	
 										</tbody>
@@ -138,13 +141,15 @@ input[type="text"] {
 						 </div>  
 					     <div id="collapse7" class="panel-collapse collapse">
 						   <div class="panel-body">
-							 <div style="display:inline-block; outline: 2px solid #000;">
+							 <div style="display:inline-block; outline: 2px solid #000; width: 720px;">
 							     <div><strong>Please enter account name or last name!</strong></div>
 								 <input type="text" id="accountName" ng-model="searchPattern.accountName" placeholder="Enter account name.">      
-							     <input type="text" id="userLastName" ng-model="searchPattern.userLastName" placeholder="Enter last name.">						 
-							 	 <button type="submit" class="btn btn-xs btn-primary"
+							     <input type="text" id="userLastName" ng-model="searchPattern.userLastName" placeholder="Enter last name.">
+							     <br>						 
+							 	 <button type="submit" class="btn btn-xs btn-primary" style="float:right; margin: 10px 10px 10px 10px;"
 							 	  ng-click="searchAccountForAccountGroup(idAccountGroup, searchPattern)">Search..</button>
 							 </div>
+							 <br>
 						   	 <div ng-show="listAccount.length > 0">
 							   <table class="table table-bordered" style="background-color:#ffffff">
 								   <thead>
@@ -153,12 +158,12 @@ input[type="text"] {
 									    <th>Last Name</th>
 										<th>First Name</th>
 										<th>Friend Status</th>
-										<td>More Info/Add To Group</td>
+										<td>More</td>
+										<td>Add To Group</td>
 									  </tr>
 								  </thead>
 								  <tbody> 
 									  <tr ng-repeat="account in listAccount">
-									  
 										 <td>{{account.accountName}}</td>
 										 <td>{{account.user.lastName}}</td>
 										 <td>{{account.user.firstName}}</td>
@@ -166,7 +171,9 @@ input[type="text"] {
 										 	<input type="checkbox" class="btn btn-primary" ng-click="friendStatus=true"> 
 										 </td>
 										 <td ng-if="id != account.user.idUser">
-											<a type="submit" ng-click="">Info </a>
+											<a type="submit" ng-click="getAccountInfo(id,account.idAccount)">Info </a>
+										 </td>
+										 <td ng-if="id != account.user.idUser">	
 										    <a type="submit" ng-click="addToAccountGroup(idAccountGroup,account.idAccount,friendStatus)">Add</a>
 										 </td>
 									   </tr>	 
@@ -213,7 +220,6 @@ input[type="text"] {
 			     <form>
 				    <div class="panel-body">
 						<p><a ng-click="editGroupSettings(idAccountGroup)">Edit Group Settings</a></p> 
-						<a ng-click="editAccountGroupMember(id,idAccountGroupMember,idAccountGroup)">Edit Group Member</a>
 				    </div>
 				</form>    
 			 </div>

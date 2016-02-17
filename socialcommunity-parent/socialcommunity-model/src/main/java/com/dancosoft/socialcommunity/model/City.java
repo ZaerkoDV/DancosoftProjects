@@ -27,7 +27,6 @@ import javax.validation.constraints.NotNull;
  * enity.This class contain name city in which user lives. Class City have
  * relations (or forigen key which refer on this class): one-to-one with Country
  * All communication is one-way.
- * 
  * The class is located in the com.dancosoft.socialcommunity.model and describes
  * part of model in MVC architecture. This class includes a description City
  * entity. Class implements interface Serializable. For creating City model

@@ -232,6 +232,11 @@ angular.module('socialcommunity').controller('AdministratorController', function
 	};
 	
 	$scope.searchAccount=function(account){
+		if(account===undefined){
+			var account=new Object();
+			account.accountName='';
+		}
+		
 		AdministratorService.searchAccount(account).then(
               function(accountList) {
             	  $scope.blockStatus='';
@@ -324,11 +329,11 @@ angular.module('socialcommunity').controller('AdministratorController', function
 	};
 	
 	$scope.searchAccountGroup=function(groupName,accountName){
-		if(groupName===''){
-  			groupName='undefined';
+		if(groupName===undefined){
+  			groupName=undefined;
   		}
-  		if(accountName===''){
-  			accountName='undefined';
+  		if(accountName===undefined){
+  			accountName=undefined;
   		}
 		AdministratorService.searchAccountGroup(groupName,accountName).then(
               function(listAccountGroup) {
@@ -344,10 +349,10 @@ angular.module('socialcommunity').controller('AdministratorController', function
 	$scope.changeAccountGroupBlockStatus=function(accountGroup,blockStatus,groupName,accountName){
 		AdministratorService.changeAccountGroupBlockStatus(accountGroup,blockStatus).then(
               function() {
-            	if(groupName==='undefined'){
+            	if(groupName===undefined){
           			groupName=null;
           		}
-          		if(accountName==='undefined'){
+          		if(accountName===undefined){
           			accountName=null;
           		}
           		$scope.searchAccountGroup(groupName,accountName);

@@ -264,7 +264,7 @@ angular.module('socialcommunity').service('AdministratorService', function($http
 	}
 	
 	this.changeAccountGroupBlockStatus=function(accountGroup,blockStatus){
-	    return $http.put(hostName+'views/profile/admin/group/'+blockStatus+'/newblockstatus.json',accountGroup).then(
+	    return $http.put(hostName+'/views/profile/admin/group/'+blockStatus+'/newblockstatus.json',accountGroup).then(
 	        function(response){
 	             return response.data;
 	        }

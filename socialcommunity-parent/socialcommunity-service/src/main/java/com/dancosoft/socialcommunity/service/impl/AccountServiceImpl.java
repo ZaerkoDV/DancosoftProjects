@@ -82,7 +82,7 @@ public class AccountServiceImpl implements AccountService {
 	public List<Account> searchAccountByAccountNameUserLastName(String accountName, String lastName) {
 		
 		List<Account> list=Collections.emptyList();
-		if ((accountName.equals(null) || accountName.equals("")) && (lastName.equals(null) ||lastName.equals(""))) {
+		if ((accountName==null || accountName.equals("")) && (lastName==null||lastName.equals("")) ) {
 			throw new RuntimeException("AccountService:Account name and name his"
 					+ " owner must not equals null at the same time.");
 		}else{

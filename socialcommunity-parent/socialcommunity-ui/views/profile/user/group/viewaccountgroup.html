@@ -319,40 +319,36 @@ p {
 	   <div class="panel panel" style="background-color:#92A7B8">
 			   <div class="panel-heading">
 			        <h4 class="panel-title">
-			          <a data-toggle="collapse"  data-target="#collapse5">Edit Account Group</a>
+			          <a data-toggle="collapse"  data-target="#collapse5">Edit Group Member</a>
 			        </h4>
 			   </div>
-			   <div id="collapse5" class="panel-collapse collapse">
-			     <form>
-				    <div class="panel-body">
-						<p><a ng-click="editGroupSettings(idAccountGroup)">Edit Group Settings</a></p> 
-						<a ng-click="editAccountGroupMember(id,idAccountGroupMember,idAccountGroup)">Edit Group Member</a>
-				    </div>
-				</form>    
+			   <div id="collapse5" class="panel-collapse collapse">  
+			     <div class="panel-body">
+				     <p><a ng-click="editAccountGroupMember(id,idAccountGroupMember,idAccountGroup)">Edit Group Member</a></p>
+				 </div> 
+			 </div>
+	     </div>
+	  </li>
+	  <li>
+	   <div class="panel panel" style="background-color:#92A7B8">
+			   <div class="panel-heading">
+			        <h4 class="panel-title">
+			          <a data-toggle="collapse" ng-click="loadAccountGroupToEdit(idAccountGroup)"  data-target="#collapse8">Edit Group Settings</a>
+			        </h4>
+			   </div> 
+			   <div id="collapse8" class="panel-collapse collapse">  
+			     <div class="panel-body">
+			     	<input type="text" class="form-control" id="accountGroupName" ng-model="accountGroup.groupName" placeholder="Name"> 
+			     	<br>
+			     	<select class="form-control" id="viewStatus" ng-model="accountGroup.viewStatus" placeholder="Must select" >
+						<option value="public">Public</option>
+						<option value="private">Private</option>
+					</select>
+					 <a type="button" style="width:50px;height:22px; float:right;margin: 10px 10px 10px 10px;"
+					  class="btn btn-xs btn-primary"  ng-click="editAccountGroup(accountGroup)">Update</a>
+				 </div> 
 			 </div>
 	     </div>
 	  </li>
 	</ul>
 </div>
-
-<!--
-
-(function() {
-
-	$('#live-chat header').on('click', function() {
-
-		$('.chat').slideToggle(300, 'swing');
-		$('.chat-message-counter').fadeToggle(300, 'swing');
-
-	});
-
-	$('.chat-close').on('click', function(e) {
-
-		e.preventDefault();
-		$('#live-chat').fadeOut(300);
-
-	});
-
-}) ();
- 
- -->

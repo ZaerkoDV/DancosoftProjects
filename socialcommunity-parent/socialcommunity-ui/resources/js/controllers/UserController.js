@@ -201,6 +201,30 @@ angular.module('socialcommunity').controller('UserController', function ($scope,
           );
 	};
 	
+	$scope.loadAccountGroupToEdit=function(idAccountGroup){
+		UserService.loadAccountGroupToEdit(idAccountGroup).then(
+	       function(accountGroup) {
+	           	  $scope.accountGroup=accountGroup;
+	       },
+	       function(errResponse){
+	              console.error('!!!Error');
+	       }
+	     );
+	};
+	
+	$scope.editAccountGroup=function(accountGroup){
+		UserService.editAccountGroup(accountGroup).then(
+	       function(accountGroup) {
+	           $scope.accountGroup=accountGroup;
+	       },
+	       function(errResponse){
+	           console.error('!!!Error');
+	       }
+	     );
+	};
+	
+	
+	
 	$scope.editAccountGroupMember=function(id,idAccountGroupMember,idAccountGroup){
 		$state.go('editaccountgroupmember', {
 			idUser: id,
@@ -232,6 +256,9 @@ angular.module('socialcommunity').controller('UserController', function ($scope,
 	};
 	
 	$scope.searchAccountForAccountGroup=function(idAccountGroup,searchPattern){
+		if(searchPattern===undefined){
+			searchPattern='null';
+		}
 		UserService.searchAccountForAccountGroup(idAccountGroup,searchPattern).then(
               function(listAccount) {
             	  $scope.friendStatus=false;
@@ -271,7 +298,10 @@ angular.module('socialcommunity').controller('UserController', function ($scope,
 	};
 	
 	$scope.searchAccountByAccountName=function(id, searchPattern){
-		UserService.searchAccountByAccountName(id, searchPattern).then(
+		if(searchPattern===undefined){
+			searchPattern='null';
+		}
+		UserService.searchAccountByAccountName(searchPattern).then(
               function(listAccount) {
             	  $scope.listAccount=listAccount;	
               },

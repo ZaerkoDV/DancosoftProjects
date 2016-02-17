@@ -680,11 +680,16 @@ public class AdministratorController {
 	 * 
 	 * @return List<Account> 
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/views/profile/admin/account/searchaccount.json", method = RequestMethod.POST)
 	public @ResponseBody List<Account> searchAccount(@RequestBody Account account) {
 		logger.info("AdministratorController: search account by account name");
-		List<Account> accountList=accountService.searchAccountByAccountNameUserLastName(account.getAccountName(), "");
-		
+		List<Account> accountList;
+		if(account.getAccountName().equals("")){
+			accountList=(List)accountService.getListAccount();
+		}else{
+			accountList=accountService.searchAccountByAccountNameUserLastName(account.getAccountName(), "");
+		}
 		return accountList;
 	}
 	
@@ -768,19 +773,26 @@ public class AdministratorController {
 	 * 
 	 * @return List<AccountGroup> 
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value="/views/profile/admin/group/{groupName}/{accountName}/searchAccountGroup.json", method = RequestMethod.GET)
 	public @ResponseBody List<AccountGroup> searchAccountGroup(@PathVariable("groupName") String groupName,
 			@PathVariable("accountName") String accountName) {
 		
 		logger.info("AdministratorController: search account group.");
+
 		if(groupName.equals("undefined")){
 			groupName=null;
 		}
 		if(accountName.equals("undefined")){
 			accountName=null;
 		}
-		List<AccountGroup> listAccountGroup=accountGroupService
-				.searchAccountGroupByGroupNameAccountName(groupName, accountName);	
+		
+		List<AccountGroup> listAccountGroup;	
+		if(groupName!=null || accountName!=null){
+			listAccountGroup=accountGroupService.searchAccountGroupByGroupNameAccountName(groupName, accountName);	
+		}else{
+			listAccountGroup=(List)accountGroupService.getListAccountGroup();
+		}
 		return listAccountGroup;
 	}
 	

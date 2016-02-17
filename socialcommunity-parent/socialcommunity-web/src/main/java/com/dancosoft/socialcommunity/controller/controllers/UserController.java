@@ -916,6 +916,36 @@ public class UserController {
 		return listEventPattern;
 	}
 	
+	
+	/**
+	 * Method prepares AccountGroup (data) by idAccountGroup
+	 * for sending in ui service layer.
+	 * 
+	 *  @type Long
+	 *  @param idAccountGroup
+	 * 
+	 * @return AccountGroup 
+	 */
+	@RequestMapping(value="/views/profile/user/group/{idAccountGroup}/accountGroup.json", method = RequestMethod.GET)
+	public @ResponseBody AccountGroup loadAccountGroupToEdit(@PathVariable("idAccountGroup") Long idAccountGroup){
+		logger.info("UserController: Load account group for edit");
+		AccountGroup accountGroup= accountGroupService.getAccountGroupById(idAccountGroup);
+		
+		return accountGroup;
+	}
+	
+	/**
+	 * Update account group.
+	 * 
+	 * @type AccountGroup
+	 * @param accountGroup
+	 */
+	@RequestMapping(value="/views/profile/user/group/editAccountGroup.json", method = RequestMethod.PUT)
+	public @ResponseBody void editAccountGroup(@RequestBody AccountGroup accountGroup) {
+		logger.info("UserController: update account group.");
+		accountGroupService.updateAccountGroup(accountGroup);
+	}
+
 	/**
 	 * Method prepares List<GroupMember>(data) for sending in ui service layer
 	 * This List contain list group members. If List is empty return empty list
@@ -971,9 +1001,25 @@ public class UserController {
 	public @ResponseBody List<Account> searchAccountForAccountGroup(@RequestBody SearchPatternData searchPattern,
 			@PathVariable("idAccountGroup") Long idAccountGroup){
 		logger.info("UserController: Search account by account name or user last name for include in account group.");
-		List<Account> listAccount=(List)accountService
-				.searchAccountByAccountNameUserLastName(searchPattern.getAccountName(), searchPattern.getUserLastName());
 		
+		String accountName=null;
+		String userLastName=null;
+		
+		if(searchPattern!=null){
+	
+			if(searchPattern.getAccountName()!=null && searchPattern.getAccountName()!=""){
+				accountName=searchPattern.getAccountName();
+			}
+			if(searchPattern.getUserLastName()!=null && searchPattern.getUserLastName()!=""){
+				userLastName=searchPattern.getUserLastName();
+			}
+		}
+		List<Account> listAccount;
+		if(accountName!=null || userLastName!=null){
+		    listAccount=accountService.searchAccountByAccountNameUserLastName(accountName,userLastName);
+		}else{
+			listAccount = (List)accountService.getListAccount();
+		}
 		return listAccount;
 	}
 	
@@ -1034,24 +1080,40 @@ public class UserController {
 		
 		return listAccountGroup;
 	}
-//id	
+	
 	/**
 	 * Method prepares List<Account>(data) for sending in ui service layer
 	 * This list contain list account by account name and by last name. If
 	 * List is empty return empty list else return list with objects.
 	 * 
-	 * @type Long
-	 * @param id
+	 * @type SearchPatternData
+	 * @param searchPattern
 	 * 
 	 * @return List<Account> 
 	 */
-	@RequestMapping(value="/views/profile/user/{id}/account/searchaccount.json", method = RequestMethod.POST)
-	public @ResponseBody List<Account> searchAccountByAccountName(@RequestBody SearchPatternData searchPattern,
-			@PathVariable("id") Long id){
-		logger.info("UserController: Search accounts by name or user last name.");
-		List<Account> listAccount= accountService.searchAccountByAccountNameUserLastName(searchPattern.getAccountName(),
-				searchPattern.getUserLastName());
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping(value="/views/profile/user/account/searchaccount.json", method = RequestMethod.POST)
+	public @ResponseBody List<Account> searchAccountByAccountName(@RequestBody SearchPatternData searchPattern){
 		
+		logger.info("UserController: Search accounts by name or user last name.");
+		String accountName=null;
+		String userLastName=null;
+		
+		if(searchPattern!=null){
+	
+			if(searchPattern.getAccountName()!=null && searchPattern.getAccountName()!=""){
+				accountName=searchPattern.getAccountName();
+			}
+			if(searchPattern.getUserLastName()!=null && searchPattern.getUserLastName()!=""){
+				userLastName=searchPattern.getUserLastName();
+			}
+		}
+		List<Account> listAccount;
+		if(accountName!=null || userLastName!=null){
+			listAccount = accountService.searchAccountByAccountNameUserLastName(accountName,userLastName);
+		}else{
+			listAccount = (List)accountService.getListAccount();
+		}
 		return listAccount;	
 	}
 	
