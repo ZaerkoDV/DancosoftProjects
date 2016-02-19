@@ -15,8 +15,8 @@
  */
 package com.dancosoft.socialcommunity.service.impl;
 
-import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -108,12 +108,12 @@ public class AccountHistoryServiceImpl implements AccountHistoryService{
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
-	 * @return LocalDateTime
+	 * @return Date
 	 */
 	@Transactional
-	public LocalDateTime getLastVisitAccountByIdAccount(Long idAccount) {
+	public Date getLastVisitAccountByIdAccount(Long idAccount) {
 		
-		LocalDateTime lastVisit = null;
+		Date lastVisit = null;
 		if(idAccount.equals(null) || idAccount.equals("")){
 			throw new RuntimeException("AccountHistoryService:Id Account must not null and empty.");
 		} else {

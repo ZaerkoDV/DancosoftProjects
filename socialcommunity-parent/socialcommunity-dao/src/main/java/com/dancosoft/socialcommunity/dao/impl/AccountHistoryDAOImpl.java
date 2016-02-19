@@ -14,7 +14,6 @@
  */
 package com.dancosoft.socialcommunity.dao.impl;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.hibernate.Criteria;
@@ -97,17 +96,16 @@ public class AccountHistoryDAOImpl  extends CommonEntityDAOImpl implements Accou
 	 * @type Long
 	 * @param idAccount
 	 * 
-	 * @return LocalDateTime
+	 * @return Date
 	 */
-	public LocalDateTime getLastVisitAccountByIdAccount(Long idAccount) {
+	public Date getLastVisitAccountByIdAccount(Long idAccount) {
 		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory().getCurrentSession()
 				.createCriteria(AccountHistory.class);
 		criteria.setProjection(Projections.property("lastVisit"));
 		criteria.add(Restrictions.eq("account.idAccount", idAccount));
 		
-		Date date=(Date) criteria.uniqueResult();
-		LocalDateTime lastVisit=converter.convertDateToLocalDateTime(date);
+		Date lastVisit=(Date) criteria.uniqueResult();
 		logger.info("AccountHistoryDAO: Date last visit load for account");
 
 		return lastVisit;

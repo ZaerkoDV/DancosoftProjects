@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountGroup;
 import com.dancosoft.socialcommunity.model.AccountGroupHistory;
@@ -28,6 +29,8 @@ import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 public class AccountGroupHistoryServiceTest {//extends TestStarter {
 
 //	private static final Logger logger = LoggerFactory.getLogger(AccountGroupHistoryServiceTest.class);
+//	
+//	public TimeConverter converter=new TimeConverter();
 //	
 //	@Autowired
 //	@Qualifier(value="userService")
@@ -105,8 +108,10 @@ public class AccountGroupHistoryServiceTest {//extends TestStarter {
 //
 //		AccountGroup testAccountGroup = createAccountGroupForTest();
 //		AccountGroupHistory testAccountGroupHistory = new AccountGroupHistory();
-//		testAccountGroupHistory.setDateCreateGroup(LocalDateTime.of(2015, 12,16, 00, 00));
-//		testAccountGroupHistory.setLastVisit(LocalDateTime.of(2015, 12, 17, 00, 00));
+//		testAccountGroupHistory.setDateCreateGroup(converter
+//				.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12,16, 00, 00)));
+//		testAccountGroupHistory.setLastVisit(converter
+//				.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 17, 00, 00)));
 //		testAccountGroupHistory.setAccountGroup(testAccountGroup);
 //		accountGroupHistoryService.saveAccountGroupHistory(testAccountGroupHistory);
 //

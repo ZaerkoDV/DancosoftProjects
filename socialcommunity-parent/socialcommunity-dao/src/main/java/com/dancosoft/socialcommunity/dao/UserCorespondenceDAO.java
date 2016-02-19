@@ -11,8 +11,6 @@
  */
 package com.dancosoft.socialcommunity.dao;
 
-import java.util.List;
-
 import com.dancosoft.socialcommunity.model.UserCorespondence;
 
 /**

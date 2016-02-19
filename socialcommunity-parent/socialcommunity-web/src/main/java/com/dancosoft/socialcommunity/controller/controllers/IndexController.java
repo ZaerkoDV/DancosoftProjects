@@ -37,6 +37,7 @@ import com.dancosoft.socialcommunity.controller.support.base.StandartAccountGrou
 import com.dancosoft.socialcommunity.controller.support.constants.BlockStatus;
 import com.dancosoft.socialcommunity.controller.support.constants.UserRoleName;
 import com.dancosoft.socialcommunity.controller.support.constants.ViewStatus;
+import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountGroup;
 import com.dancosoft.socialcommunity.model.AccountGroupHistory;
@@ -90,7 +91,9 @@ import com.dancosoft.socialcommunity.service.UserSocialNetworkService;
 public class IndexController {
 
 	private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
-										//user
+										
+	public TimeConverter converter =new TimeConverter();
+	
 	@Autowired
 	@Qualifier(value="userService")
 	private UserService userService;
@@ -367,7 +370,7 @@ public class IndexController {
 	public @ResponseBody Long createUserAccount(@RequestBody Long idUser){
 		
 		if(!idUser.equals(null)){
-			
+		
 			User user=userService.getUserById(idUser);
 			UserSecurity userSecurity=userSecurityService.getLoginPasswordByIdUser(idUser);	
 			
@@ -380,8 +383,8 @@ public class IndexController {
 
 			logger.info("IndexController: create history for new user account.");
 			AccountHistory accountHistory = new AccountHistory();
-			accountHistory.setDateCreateAccount(LocalDateTime.now());
-			accountHistory.setLastVisit(LocalDateTime.now());
+			accountHistory.setDateCreateAccount(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
+			accountHistory.setLastVisit(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
 			accountHistory.setAccount(account);
 			accountHistoryService.saveAccountHistory(accountHistory);
 

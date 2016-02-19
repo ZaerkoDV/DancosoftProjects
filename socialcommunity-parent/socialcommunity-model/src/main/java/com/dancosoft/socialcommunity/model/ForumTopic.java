@@ -11,9 +11,6 @@
 package com.dancosoft.socialcommunity.model;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -160,30 +157,30 @@ public class ForumTopic implements Serializable {
 		this.forumTopic = forumTopic;
 	}
 
-//	/**
-//	 * @return the dateCreateForumTopic
-//	 */
-//	public Date getDateCreateForumTopic() {
-//		return dateCreateForumTopic;
-//	}
-//
-//	/**
-//	 * @param dateCreateForumTopic
-//	 *            the dateCreateForumTopic to set
-//	 */
-//	public void setDateCreateForumTopic(Date dateCreateForumTopic) {
-//		this.dateCreateForumTopic = dateCreateForumTopic;
-//	}
+	/**
+	 * @return the dateCreateForumTopic
+	 */
+	public Date getDateCreateForumTopic() {
+		return dateCreateForumTopic;
+	}
 
-	public LocalDateTime getDateCreateForumTopic() {
-		Instant instant = Instant.ofEpochMilli(dateCreateForumTopic.getTime());
-		return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+	/**
+	 * @param dateCreateForumTopic
+	 *            the dateCreateForumTopic to set
+	 */
+	public void setDateCreateForumTopic(Date dateCreateForumTopic) {
+		this.dateCreateForumTopic = dateCreateForumTopic;
 	}
-	
-	public void setDateCreateForumTopic(LocalDateTime dateCreateForumTopic) {
-		Instant instant = dateCreateForumTopic.toInstant(ZoneOffset.UTC);		
-		this.dateCreateForumTopic = Date.from(instant);
-	}
+
+//	public LocalDateTime getDateCreateForumTopic() {
+//		Instant instant = Instant.ofEpochMilli(dateCreateForumTopic.getTime());
+//		return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+//	}
+//	
+//	public void setDateCreateForumTopic(LocalDateTime dateCreateForumTopic) {
+//		Instant instant = dateCreateForumTopic.toInstant(ZoneOffset.UTC);		
+//		this.dateCreateForumTopic = Date.from(instant);
+//	}
 	
 	/**
 	 * @return the authorAccount

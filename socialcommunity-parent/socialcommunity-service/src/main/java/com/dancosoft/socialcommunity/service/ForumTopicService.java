@@ -16,7 +16,7 @@
  */
 package com.dancosoft.socialcommunity.service;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.NonUniqueResultException;
@@ -85,8 +85,7 @@ public interface ForumTopicService {
 	 * 
 	 * @return List<ForumTopic>
 	 */
-	public List<ForumTopic> getListForumTopicCreateBetweenDateByIdForum(
-			Long idForum, LocalDateTime minDateLDT, LocalDateTime maxDateLDT);
+	public List<ForumTopic> getListForumTopicCreateBetweenDateByIdForum(Long idForum, Date minDate, Date maxDate);
 	
 	/**
 	 * Method return count of forum topic which belong to forum.

@@ -4,6 +4,7 @@
 package com.dancosoft.socialcommunity.service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountHistory;
 import com.dancosoft.socialcommunity.model.User;
@@ -28,6 +30,8 @@ public class AccountHistoryServiceTest {//extends TestStarter {
 
 //	private static final Logger logger = LoggerFactory.getLogger(AccountHistoryServiceTest.class);
 //
+//	public TimeConverter converter=new TimeConverter();
+//	
 //	@Autowired
 //	@Qualifier(value="userService")
 //	private UserService userService;
@@ -85,8 +89,10 @@ public class AccountHistoryServiceTest {//extends TestStarter {
 //		Account testAccount = createAccountForTest();
 //		AccountHistory testAccountHistory = new AccountHistory();
 //		
-//		testAccountHistory.setDateCreateAccount(LocalDateTime.of(2015, 12, 16,00, 00));
-//		testAccountHistory.setLastVisit(LocalDateTime.of(2015, 12, 17, 00, 00));
+//		testAccountHistory.setDateCreateAccount(converter
+//				.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 16,00, 00)));
+//		testAccountHistory.setLastVisit(converter
+//				.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 17, 00, 00)));
 //		testAccountHistory.setAccount(testAccount);
 //		accountHistoryService.saveAccountHistory(testAccountHistory);
 //
@@ -115,8 +121,8 @@ public class AccountHistoryServiceTest {//extends TestStarter {
 //	public void testGettingLastVisitAccountByIdAccount() {
 //
 //		logger.info("AccountHistoryServiceTest: test method GetLastVisitAccountByIdAccount");
-//		LocalDateTime actual = accountHistoryService.getLastVisitAccountByIdAccount(account.getIdAccount());
-//		LocalDateTime expected= accountHistory.getLastVisit();
+//		Date actual = accountHistoryService.getLastVisitAccountByIdAccount(account.getIdAccount());
+//		Date expected= accountHistory.getLastVisit();
 //		Assert.assertEquals(expected, actual);
 //	}
 }

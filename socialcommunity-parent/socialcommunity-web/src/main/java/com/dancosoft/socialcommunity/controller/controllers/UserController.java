@@ -17,6 +17,7 @@ package com.dancosoft.socialcommunity.controller.controllers;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.codehaus.jackson.JsonParseException;
@@ -39,6 +40,7 @@ import com.dancosoft.socialcommunity.controller.support.UserParlorData;
 import com.dancosoft.socialcommunity.controller.support.constants.BlockStatus;
 import com.dancosoft.socialcommunity.controller.support.constants.FriendStatus;
 import com.dancosoft.socialcommunity.controller.support.constants.ViewStatus;
+import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountGroup;
 import com.dancosoft.socialcommunity.model.AccountGroupHistory;
@@ -109,6 +111,8 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	private final Long adultValue=(long)18;
+	
+	public TimeConverter converter =new TimeConverter();
 	
 	@Autowired
 	@Qualifier(value = "userService")
@@ -332,7 +336,7 @@ public class UserController {
 		logger.info("UserController: Create date last visit account.");
 		Account userAccount=userService.getAccountByUserId(id);
 		AccountHistory accountHistory =accountHistoryService.getAccountHistoryByIdAccount(userAccount.getIdAccount());
-		accountHistory.setLastVisit(LocalDateTime.now());
+		accountHistory.setLastVisit(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
 		accountHistoryService.updateAccountHistory(accountHistory);	
 		
 		return userParlorData;
@@ -715,7 +719,7 @@ public class UserController {
 		
 		forumTopic.setAuthorAccount(userAccount);
 		forumTopic.setForum(forum);
-		forumTopic.setDateCreateForumTopic(LocalDateTime.now());
+		forumTopic.setDateCreateForumTopic(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
 		forumTopicService.saveForumTopic(forumTopic);
 		
 		return idForum;
@@ -733,10 +737,10 @@ public class UserController {
 		
 		logger.info("UserController: Load topic messages from last week");
 		//load topic messages from last week
-		LocalDateTime minDateLDT=LocalDateTime.now().minusDays(7);
-		LocalDateTime maxDateLDT=LocalDateTime.now();
+		Date minDate=converter.convertLocalDateTimeToDate(LocalDateTime.now().minusDays(7));
+		Date maxDate=converter.convertLocalDateTimeToDate(LocalDateTime.now());
 		List<ForumMessage> listTopicMessages=forumMessageService
-				.getListForumMessageBetweenDateByIdForumTopic(idForumTopic, minDateLDT, maxDateLDT);
+				.getListForumMessageBetweenDateByIdForumTopic(idForumTopic, minDate, maxDate);
 		
 		return listTopicMessages;
 	}
@@ -760,7 +764,7 @@ public class UserController {
 		
 		newForumMessage.setForumTopic(forumTopic);
 		newForumMessage.setAuthorAccount(account);
-		newForumMessage.setDateCreateForumMessage(LocalDateTime.now());
+		newForumMessage.setDateCreateForumMessage(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
 		forumMessageService.saveForumMessage(newForumMessage);
 		
 		return idForumTopic;
@@ -809,8 +813,9 @@ public class UserController {
 		
 		AccountGroupHistory accountGroupHistory = new AccountGroupHistory();
 		accountGroupHistory.setAccountGroup(accountGroup);
-		accountGroupHistory.setDateCreateGroup(LocalDateTime.now());
-		accountGroupHistory.setLastVisit(LocalDateTime.now());
+		
+		accountGroupHistory.setDateCreateGroup(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
+		accountGroupHistory.setLastVisit(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
 		accountGroupHistoryService.saveAccountGroupHistory(accountGroupHistory);
 		
 		logger.info("UserController: Author of account group create id member for yourself");
@@ -872,7 +877,7 @@ public class UserController {
 		GroupMember groupMember= groupMemberService.getGroupMemberById(newGroupMessage.getGroupMember().getIdGroupMember());
 		groupMessage.setGroupMember(groupMember);
 		groupMessage.setGroupMessage(newGroupMessage.getGroupMessage());
-		groupMessage.setDateCreateGroupMessage(LocalDateTime.now());
+		groupMessage.setDateCreateGroupMessage(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
 		groupMessageService.saveGroupMessage(groupMessage);
 		//not use group member event
 		
@@ -987,6 +992,36 @@ public class UserController {
 		return idAccountGroupMember;
 	}
 
+	
+	/**
+	 * Method chack user right to edit group members
+	 * 
+	 * @type Long
+	 * @param id
+	 * @param idAccountGroup
+	 * 
+	 * @return  If right true user may edit group members(Boolean)
+	 */
+	@RequestMapping(value="/views/profile/user/{id}/group/{idAccountGroup}/rightToEditGroupMember.json", method = RequestMethod.GET)
+	public @ResponseBody Boolean getRightEditGroupMember(@PathVariable("id") Long idUser, @PathVariable("idAccountGroup") Long idAccountGroup){
+		logger.info("UserController: Load group members");
+		
+		Boolean rightToAddNewMember=false;
+		AccountGroup accountGroup = accountGroupService.getAccountGroupById(idAccountGroup);
+		Long idAuthorGroup=accountGroup.getAccount().getUser().getIdUser();
+		
+		if(idAuthorGroup==idUser){
+			rightToAddNewMember=true;
+			logger.info("UserController: user have right to editGroupMembers as creator group");
+		}
+		if(accountGroup.getViewStatus().equals(ViewStatus.PUBLIC.toString())){
+			rightToAddNewMember=true;
+			logger.info("UserController: user have right to editGroupMembers becouse view status public");
+		}
+		
+		return rightToAddNewMember;
+	}
+	
 																//add new member
 	/**
 	 * Method return List<Account> for account group for adding in list group members.
@@ -1206,13 +1241,15 @@ public class UserController {
 	@RequestMapping(value="/views/profile/user/{id}/account/{searchIdAccount}/listAccountSingleMessage.json", method = RequestMethod.GET)
 	public @ResponseBody List<SingleMessage> listAccountSingleMessage(@PathVariable("id") Long id,
 			@PathVariable("searchIdAccount") Long searchIdAccount){
+		
 		logger.info("UserControlleer: Load list account single message by id user and id interlocutor account");
 		Account account =userService.getAccountByUserId(id);
 		Long idAccount= account.getIdAccount();
-		LocalDateTime minDateLDT=LocalDateTime.now().minusDays(7);
-		LocalDateTime maxDateLDT=LocalDateTime.now();
+		Date minDate=converter.convertLocalDateTimeToDate(LocalDateTime.now().minusDays(7));
+		Date maxDate=converter.convertLocalDateTimeToDate(LocalDateTime.now());
+		
 		List<SingleMessage> listSingleMessage=singleMessageService.getListIntrlocutorSingleMessageBeetweenDateByIdAccount(
-				idAccount, searchIdAccount, minDateLDT, maxDateLDT);
+				idAccount, searchIdAccount, minDate, maxDate);
 		
 		return listSingleMessage;
 	}
@@ -1244,7 +1281,7 @@ public class UserController {
 		Account interlocutorAccount= accountService.getAccountById(idInterlocutorAccount);
 		singleMessage.setInterlocutorAccount(interlocutorAccount);
 		
-		singleMessage.setDateCreateSingleMessage(LocalDateTime.now());
+		singleMessage.setDateCreateSingleMessage(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
 		singleMessage.setSingleMessage(newAccountSingleMessage.getSingleMessage());
 		singleMessageService.saveSingleMessage(singleMessage);
 		

@@ -16,7 +16,7 @@
  */
 package com.dancosoft.socialcommunity.service;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -61,9 +61,9 @@ public interface AccountHistoryService {
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
-	 * @return LocalDateTime
+	 * @return Date
 	 */
-	public LocalDateTime getLastVisitAccountByIdAccount(Long idAccount);
+	public Date getLastVisitAccountByIdAccount(Long idAccount);
 	
 	/**
 	 * This method is basic for all entities.The method is one of CRUD methods.

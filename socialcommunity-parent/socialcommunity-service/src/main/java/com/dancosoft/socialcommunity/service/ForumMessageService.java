@@ -16,7 +16,7 @@
  */
 package com.dancosoft.socialcommunity.service;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -73,15 +73,17 @@ public interface ForumMessageService {
 	 * forum topic. If messages are not exist return empty list
 	 * 
 	 * @type Long
+	 * @type Date
 	 * @param idForumTopic
+	 * @param minDate
+	 * @param maxDate
 	 * 
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
 	 * @return List<ForumMessage>
 	 */
-	public List<ForumMessage> getListForumMessageBetweenDateByIdForumTopic(
-			Long idForumTopic,LocalDateTime minDateLDT, LocalDateTime maxDateLDT);
+	public List<ForumMessage> getListForumMessageBetweenDateByIdForumTopic(Long idForumTopic,Date minDate, Date maxDate);
 
 	/**
 	 * Method return list of forum message by idAccount(user). If Account not

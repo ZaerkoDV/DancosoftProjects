@@ -11,9 +11,6 @@
 package com.dancosoft.socialcommunity.model;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -130,55 +127,55 @@ public class AccountGroupHistory implements Serializable {
 		this.idAccountGroupHistory = idAccountGroupHistory;
 	}
 
-//	/**
-//	 * @return the dateCreateGroup
-//	 */
-//	public Date getDateCreateGroup() {
-//		return dateCreateGroup;
-//	}
-//
-//	/**
-//	 * @param dateCreateGroup
-//	 *            the dateCreateGroup to set
-//	 */
-//	public void setDateCreateGroup(Date dateCreateGroup) {
-//		this.dateCreateGroup = dateCreateGroup;
-//	}
-	
-	public LocalDateTime getDateCreateGroup() {
-		Instant instant = Instant.ofEpochMilli(dateCreateGroup.getTime());
-		return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
-	}
-	
-	public void setDateCreateGroup(LocalDateTime dateCreateGroup) {
-		Instant instant = dateCreateGroup.toInstant(ZoneOffset.UTC);		
-		this.dateCreateGroup = Date.from(instant);
+	/**
+	 * @return the dateCreateGroup
+	 */
+	public Date getDateCreateGroup() {
+		return dateCreateGroup;
 	}
 
-//	/**
-//	 * @return the lastVisit
-//	 */
-//	public Date getLastVisit() {
-//		return lastVisit;
-//	}
-//
-//	/**
-//	 * @param lastVisit
-//	 *            the lastVisit to set
-//	 */
-//	public void setLastVisit(Date lastVisit) {
-//		this.lastVisit = lastVisit;
-//	}
-
-	public LocalDateTime getLastVisit() {
-		Instant instant = Instant.ofEpochMilli(lastVisit.getTime());
-		return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+	/**
+	 * @param dateCreateGroup
+	 *            the dateCreateGroup to set
+	 */
+	public void setDateCreateGroup(Date dateCreateGroup) {
+		this.dateCreateGroup = dateCreateGroup;
 	}
 	
-	public void setLastVisit(LocalDateTime lastVisit) {
-		Instant instant = lastVisit.toInstant(ZoneOffset.UTC);		
-		this.lastVisit = Date.from(instant);
+//	public LocalDateTime getDateCreateGroup() {
+//		Instant instant = Instant.ofEpochMilli(dateCreateGroup.getTime());
+//		return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+//	}
+//	
+//	public void setDateCreateGroup(LocalDateTime dateCreateGroup) {
+//		Instant instant = dateCreateGroup.toInstant(ZoneOffset.UTC);		
+//		this.dateCreateGroup = Date.from(instant);
+//	}
+
+	/**
+	 * @return the lastVisit
+	 */
+	public Date getLastVisit() {
+		return lastVisit;
 	}
+
+	/**
+	 * @param lastVisit
+	 *            the lastVisit to set
+	 */
+	public void setLastVisit(Date lastVisit) {
+		this.lastVisit = lastVisit;
+	}
+
+//	public LocalDateTime getLastVisit() {
+//		Instant instant = Instant.ofEpochMilli(lastVisit.getTime());
+//		return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+//	}
+//	
+//	public void setLastVisit(LocalDateTime lastVisit) {
+//		Instant instant = lastVisit.toInstant(ZoneOffset.UTC);		
+//		this.lastVisit = Date.from(instant);
+//	}
 	
 	/**
 	 * @return the accountGroup

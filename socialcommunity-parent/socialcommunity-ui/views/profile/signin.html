@@ -20,7 +20,7 @@ input:valid {
 				<form name="myForm" class="form-horizontal">
 					<fieldset>
 						<a ui-sref="signin"></a>
-						<legend>User Sign In Form</legend>
+						<legend style="text-align: center;">User Sign In Form</legend>
 						
 					    <div class="form-group">
 					        <label for="userLoginOrEmail" class="col-lg-3 control-label">Login or Email</label>
@@ -30,7 +30,7 @@ input:valid {
 					        </div>				        
 					        <div>        	
 					        	<input type="checkbox" id="prompt" class="btn btn-primary" ng-disabled="!securityPrompt.userSecurity.userLogin"
-					        		ng-click="show=true; getSecurityQuestion(securityPrompt.userSecurity.userLogin) "> 
+					        		ng-click="show=true; getSecurityQuestion(securityPrompt.userSecurity.userLogin)" style="margin: 10px 0 10px 5px;"> 
 					        	<label for="prompt">Show prompt</label> 				        			
 					        </div>			        
 					    </div>

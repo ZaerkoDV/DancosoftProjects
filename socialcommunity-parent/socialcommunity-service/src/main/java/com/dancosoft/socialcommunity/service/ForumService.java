@@ -16,7 +16,7 @@
  */
 package com.dancosoft.socialcommunity.service;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -51,7 +51,7 @@ public interface ForumService{
 	 * 
 	 * @return List<Forum>
 	 */
-	public List<Forum> getListForumCreatedBetweenDateByIdForum(LocalDateTime minDateLDT,LocalDateTime maxDateLDT); 
+	public List<Forum> getListForumCreatedBetweenDateByIdForum(Date minDate,Date maxDate); 
 	
 	/**
 	 * Method return total count of forums. If forums are not exist return zero. 

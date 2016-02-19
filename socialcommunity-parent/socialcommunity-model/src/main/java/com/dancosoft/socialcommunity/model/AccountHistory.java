@@ -11,9 +11,6 @@
 package com.dancosoft.socialcommunity.model;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -74,7 +71,7 @@ public class AccountHistory implements Serializable {
 	/**
 	 * Date last visit account.
 	 * 
-	 * @type LocalDateTime
+	 * @type Date
 	 */
 	@Column(name = "last_visit")
 	private Date lastVisit;
@@ -129,55 +126,55 @@ public class AccountHistory implements Serializable {
 		this.idAccountHistory = idAccountHistory;
 	}
 
-//	/**
-//	 * @return the dateCreateAccount
-//	 */
-//	public Date getDateCreateAccount() {
-//		return dateCreateAccount;
-//	}
-//
-//	/**
-//	 * @param dateCreateAccount
-//	 *            the dateCreateAccount to set
-//	 */
-//	public void setDateCreateAccount(Date dateCreateAccount) {
-//		this.dateCreateAccount = dateCreateAccount;
-//	}
-	
-	public LocalDateTime getDateCreateAccount() {
-		Instant instant = Instant.ofEpochMilli(dateCreateAccount.getTime());
-		return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
-	}
-	
-	public void setDateCreateAccount(LocalDateTime dateCreateAccount) {
-		Instant instant = dateCreateAccount.toInstant(ZoneOffset.UTC);		
-		this.dateCreateAccount = Date.from(instant);
+	/**
+	 * @return the dateCreateAccount
+	 */
+	public Date getDateCreateAccount() {
+		return dateCreateAccount;
 	}
 
-//	/**
-//	 * @return the dateLastVisit
-//	 */
-//	public Date getLastVisit() {
-//		return lastVisit;
-//	}
-//
-//	/**
-//	 * @param dateLastVisit
-//	 *            the dateLastVisit to set
-//	 */
-//	public void setLastVisit(Date lastVisit) {
-//		this.lastVisit = lastVisit;
-//	}
-
-	public LocalDateTime getLastVisit() {
-		Instant instant = Instant.ofEpochMilli(lastVisit.getTime());
-		return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+	/**
+	 * @param dateCreateAccount
+	 *            the dateCreateAccount to set
+	 */
+	public void setDateCreateAccount(Date dateCreateAccount) {
+		this.dateCreateAccount = dateCreateAccount;
 	}
 	
-	public void setLastVisit(LocalDateTime lastVisit) {
-		Instant instant = lastVisit.toInstant(ZoneOffset.UTC);		
-		this.lastVisit = Date.from(instant);
+//	public LocalDateTime getDateCreateAccount() {
+//		Instant instant = Instant.ofEpochMilli(dateCreateAccount.getTime());
+//		return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+//	}
+//	
+//	public void setDateCreateAccount(LocalDateTime dateCreateAccount) {
+//		Instant instant = dateCreateAccount.toInstant(ZoneOffset.UTC);		
+//		this.dateCreateAccount = Date.from(instant);
+//	}
+
+	/**
+	 * @return the dateLastVisit
+	 */
+	public Date getLastVisit() {
+		return lastVisit;
 	}
+
+	/**
+	 * @param dateLastVisit
+	 *            the dateLastVisit to set
+	 */
+	public void setLastVisit(Date lastVisit) {
+		this.lastVisit = lastVisit;
+	}
+
+//	public LocalDateTime getLastVisit() {
+//		Instant instant = Instant.ofEpochMilli(lastVisit.getTime());
+//		return LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+//	}
+//	
+//	public void setLastVisit(LocalDateTime lastVisit) {
+//		Instant instant = lastVisit.toInstant(ZoneOffset.UTC);		
+//		this.lastVisit = Date.from(instant);
+//	}
 	
 	/**
 	 * @return the account

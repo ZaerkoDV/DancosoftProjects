@@ -102,8 +102,7 @@ public class UserCorespondence implements Serializable {
 	 * @param corespondenceViewStatus
 	 * @param user
 	 */
-	public UserCorespondence(Long idUserCorespondence,
-			String corespondenceViewStatus, User user) {
+	public UserCorespondence(Long idUserCorespondence,String corespondenceViewStatus, User user) {
 		this.idUserCorespondence = idUserCorespondence;
 		this.corespondenceViewStatus = corespondenceViewStatus;
 		this.user = user;

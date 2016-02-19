@@ -18,8 +18,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Converter;
-
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Order;

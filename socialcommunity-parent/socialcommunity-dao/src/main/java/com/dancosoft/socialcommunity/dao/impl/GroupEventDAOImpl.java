@@ -115,13 +115,15 @@ public class GroupEventDAOImpl extends CommonEntityDAOImpl implements GroupEvent
 	 * account group. If group event is not exist return empty list.
 	 * 
 	 * @type Long
+	 * @type Date
 	 * @param idAccountGroup
+	 * @param minDate
+	 * @param maxDate
 	 * 
 	 * @return List<GroupEvent>
 	 */
 	@SuppressWarnings("unchecked")
-	public List<GroupEvent> getListGroupEventBeetweenDateByIdAccountGroup(
-			Long idAccountGroup, Date minDate, Date maxDate) {
+	public List<GroupEvent> getListGroupEventBeetweenDateByIdAccountGroup(Long idAccountGroup, Date minDate, Date maxDate) {
 
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory()
 				.getCurrentSession().createCriteria(GroupEvent.class);

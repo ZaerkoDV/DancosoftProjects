@@ -11,7 +11,7 @@
  */
 package com.dancosoft.socialcommunity.dao;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.dancosoft.socialcommunity.model.AccountHistory;
 
@@ -51,7 +51,7 @@ public interface AccountHistoryDAO extends CommonEntityDAO {
 	 * @type Long
 	 * @param idAccount
 	 * 
-	 * @return LocalDateTime
+	 * @return Date
 	 */
-	public LocalDateTime getLastVisitAccountByIdAccount(Long idAccount);
+	public Date getLastVisitAccountByIdAccount(Long idAccount);
 }

@@ -155,25 +155,23 @@ public class GroupMessageServiceImpl implements GroupMessageService {
 	 * @return List<GroupMessage> 
 	 */
 	@Transactional
-	public List<GroupMessage> getListGroupMessageBeetweenDateByIdAccountGroup(
-			Long idAccountGroup, LocalDateTime minDateLDT, LocalDateTime maxDateLDT) {
+	public List<GroupMessage> getListGroupMessageBeetweenDateByIdAccountGroup(Long idAccountGroup, Date minDate, Date maxDate) {
 
 		List<GroupMessage> list = Collections.emptyList();
-		Date minDateD;
-		Date maxDateD;
+		LocalDateTime minDateLTD=converter.convertDateToLocalDateTime(minDate);
+		LocalDateTime maxDateLTD=converter.convertDateToLocalDateTime(maxDate);
+		
 		if (idAccountGroup.equals(null) || idAccountGroup.equals("")) {
 			throw new RuntimeException("ForumMessageService:Id account group must not null or empty.");
 			
-		} else if (maxDateLDT.isBefore(minDateLDT)) {
+		} else if (maxDateLTD.isBefore(minDateLTD)) {
 			throw new RuntimeException("ForumMessageService: Max date must not before min date!");
 
 		} else {
 			try {
-				minDateD = converter.convertLocalDateTimeToDate(minDateLDT);
-				maxDateD = converter.convertLocalDateTimeToDate(maxDateLDT);
 				logger.info("GroupMessageService:List group message which"
 						+ " creete between date load by id account group");
-				list = groupMessageDAO.getListGroupMessageBeetweenDateByIdAccountGroup(idAccountGroup, minDateD, maxDateD);
+				list = groupMessageDAO.getListGroupMessageBeetweenDateByIdAccountGroup(idAccountGroup, minDate, maxDate);
 				
 			} catch (DataRetrievalFailureException rf) {
 				logger.warn("GroupMessageService: List group message which create between"

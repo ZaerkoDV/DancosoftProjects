@@ -254,7 +254,7 @@ input:valid {
 			     <form name="myForm" class="form-horizontal">
 			  	   <fieldset>
 			  	     <a ui-sref="listusergroupmessages"></a>
-					   <legend style="text-align: center;">Group Messages{{idAdmin}}/{{idAccountGroup}}</legend>
+					   <legend style="text-align: center;">Group Messages</legend>
 				 
 						 <div class="panel-heading">
 							<h4 class="panel-title">
@@ -310,7 +310,7 @@ input:valid {
 									   	 <div class="chat-message clearfix">
 									  <!--<img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">-->
 											<div class="chat-message-content clearfix">
-				    							<span class="chat-time">10:00<!--{{accountGroupMessage.dateCreateGroupMessage}}--></span>
+				    							<span class="chat-time">{{accountGroupMessage.dateCreateGroupMessage | date: "HH:mm:ss"}}</span>
 												<h5>{{accountGroupMessage.groupMember.memberAccount.accountName}}</h5>
 												<a class="chat-delete"
 												 ng-click="deleteAccountGroupMessage(idAccountGroup,accountGroupMessage.idGroupMessage,from,to)">x</a>

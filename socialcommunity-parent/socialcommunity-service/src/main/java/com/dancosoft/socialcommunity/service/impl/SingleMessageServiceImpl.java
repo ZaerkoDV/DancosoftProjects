@@ -86,25 +86,23 @@ public class SingleMessageServiceImpl implements SingleMessageService {
 	 * @return List<SingleMessage>
 	 */
 	@Transactional
-	public List<SingleMessage> getListSingleMessageBeetweenDateByIdAccount(Long idAccount,
-			LocalDateTime minDateLDT, LocalDateTime maxDateLDT) {
+	public List<SingleMessage> getListSingleMessageBeetweenDateByIdAccount(Long idAccount,Date minDate, Date maxDate) {
 
 		List<SingleMessage> list=Collections.emptyList();
-		Date minDateD;
-		Date maxDateD;
+		LocalDateTime minDateLTD=converter.convertDateToLocalDateTime(minDate);
+		LocalDateTime maxDateLTD=converter.convertDateToLocalDateTime(maxDate);
+		
 		if (idAccount.equals(null) || idAccount.equals("")) {
 			throw new RuntimeException("SingleMessageService:Id account must not null and empty.");
 			
-		} else if(maxDateLDT.isBefore(minDateLDT)){
+		} else if(maxDateLTD.isBefore(minDateLTD)){
 			throw new RuntimeException("SingleMessageService: Max date must not before min date!");
 			
 		}else{
 			try {
-				minDateD = converter.convertLocalDateTimeToDate(minDateLDT);
-				maxDateD = converter.convertLocalDateTimeToDate(maxDateLDT);
 				logger.info("SingleMessageService: List single account message which create between"
 						+ " data load by id account.");
-				list = singleMessageDAO.getListSingleMessageBeetweenDateByIdAccount(idAccount, minDateD, maxDateD);
+				list = singleMessageDAO.getListSingleMessageBeetweenDateByIdAccount(idAccount, minDate, maxDate);
 				
 			} catch (DataRetrievalFailureException rf) {
 				logger.warn("SingleMessageService: List single account message which create between"
@@ -169,29 +167,27 @@ public class SingleMessageServiceImpl implements SingleMessageService {
 	 * @return List<SingleMessage>
 	 */
 	@Transactional
-	public List<SingleMessage> getListIntrlocutorSingleMessageBeetweenDateByIdAccount(Long idAccount,
-			Long idInterlocutorAccount,LocalDateTime minDateLDT,LocalDateTime maxDateLDT) {
+	public List<SingleMessage> getListIntrlocutorSingleMessageBeetweenDateByIdAccount(Long idAccount,Long idInterlocutorAccount,Date minDate,Date maxDate) {
 		
 		List<SingleMessage> list=Collections.emptyList();
-		Date minDateD;
-		Date maxDateD;
+		LocalDateTime minDateLTD=converter.convertDateToLocalDateTime(minDate);
+		LocalDateTime maxDateLTD=converter.convertDateToLocalDateTime(maxDate);
+		
 		if (idAccount.equals(null) || idAccount.equals("")) {
 			throw new RuntimeException("SingleMessageService:Id account id  must not null or empty.");
 			
 		}else if(idInterlocutorAccount.equals(null) || idInterlocutorAccount.equals("")){
 			throw new RuntimeException("SingleMessageService:Id account interlocutor must not null or empty.");		
 			
-		}else if(maxDateLDT.isBefore(minDateLDT)){
+		}else if(maxDateLTD.isBefore(minDateLTD)){
 			throw new RuntimeException("SingleMessageService: Max date must not before min date!");
 			
 		}else{
 			try {
-				minDateD = converter.convertLocalDateTimeToDate(minDateLDT);
-				maxDateD = converter.convertLocalDateTimeToDate(maxDateLDT);
 				logger.info("SingleMessageService: List dialog message which create between"
 						+ " data load by id account and id interlocutor.");
 				list=singleMessageDAO.getListIntrlocutorSingleMessageBeetweenDateByIdAccount(idAccount,
-						idInterlocutorAccount, minDateD, maxDateD);
+						idInterlocutorAccount, minDate, maxDate);
 				
 			} catch (DataRetrievalFailureException rf) {
 				logger.warn("SingleMessageService:List of single messages load but list is empty=" + rf);

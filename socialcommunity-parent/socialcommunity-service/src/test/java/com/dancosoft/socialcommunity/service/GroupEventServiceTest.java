@@ -4,6 +4,7 @@
 package com.dancosoft.socialcommunity.service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountGroup;
 import com.dancosoft.socialcommunity.model.EventPattern;
@@ -31,6 +33,8 @@ import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 public class GroupEventServiceTest {//extends TestStarter {
 
 //	private static final Logger logger = LoggerFactory.getLogger(GroupEventServiceTest.class);
+//	
+//	public TimeConverter converter=new TimeConverter();
 //
 //	@Autowired
 //	@Qualifier(value="userService")
@@ -144,7 +148,8 @@ public class GroupEventServiceTest {//extends TestStarter {
 //		EventPattern testEventPattern = createEventPatternForTest();
 //		GroupEvent testGroupEvent = new GroupEvent();
 //		testGroupEvent.setEventPattern(testEventPattern);
-//		testGroupEvent.setDateCreateGroupEvent(LocalDateTime.of(2015, 12, 17,00, 00));
+//		testGroupEvent.setDateCreateGroupEvent(converter
+//				.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 17,00, 00)));
 //		testGroupEvent.setGroupMember(testGroupMember);
 //		groupEventService.saveGroupEvent(testGroupEvent);
 //
@@ -181,11 +186,11 @@ public class GroupEventServiceTest {//extends TestStarter {
 //	public void testGettingListGroupEventBeetweenDateByIdAccountGroup() {
 //
 //		logger.info("GroupEventServiceTest: test method GetListGroupEventBeetweenDateByIdAccountGroup");
-//		LocalDateTime minDateLDT = LocalDateTime.of(2015, 12, 17, 00, 00);
-//		LocalDateTime maxDateLDT = LocalDateTime.of(2015, 12, 20, 00, 00);
+//		Date minDate = converter.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 17, 00, 00));
+//		Date maxDate = converter.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 20, 00, 00));
 //		
 //		List<GroupEvent> list = groupEventService.getListGroupEventBeetweenDateByIdAccountGroup(
-//						accountGroup.getIdAccountGroup(), minDateLDT, maxDateLDT);
+//						accountGroup.getIdAccountGroup(), minDate, maxDate);
 //		Assert.assertFalse(list.isEmpty());
 //	}
 //	

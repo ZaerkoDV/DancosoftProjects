@@ -161,24 +161,22 @@ public class ForumTopicServiceImpl implements ForumTopicService {
 	 * @return List<ForumTopic>
 	 */
 	@Transactional
-	public List<ForumTopic> getListForumTopicCreateBetweenDateByIdForum(Long idForum, LocalDateTime minDateLDT,
-			LocalDateTime maxDateLDT) {
-		Date minDateD;
-		Date maxDateD;
+	public List<ForumTopic> getListForumTopicCreateBetweenDateByIdForum(Long idForum, Date minDate,Date maxDate) {
+			
+		LocalDateTime minDateLTD=converter.convertDateToLocalDateTime(minDate);
+		LocalDateTime maxDateLTD=converter.convertDateToLocalDateTime(maxDate);
 		List<ForumTopic> list=Collections.emptyList();
 		
 		if (idForum.equals(null) || idForum.equals("")) {
 			throw new RuntimeException("ForumTopicService:Id Forum must not null or empty");
 			
-		} else if(maxDateLDT.isBefore(minDateLDT)){
+		} else if(maxDateLTD.isBefore(minDateLTD)){
 			throw new RuntimeException("ForumTopicService: Max date must not before min date!");
 			
 		}else{
 			try {
-				minDateD = converter.convertLocalDateTimeToDate(minDateLDT);
-				maxDateD = converter.convertLocalDateTimeToDate(maxDateLDT);
 				logger.info("ForumTopicService:List forum topic which create between date load by id forum");
-				list= forumTopicDAO.getListForumTopicCreateBetweenDateByIdForum(idForum, minDateD, maxDateD);
+				list= forumTopicDAO.getListForumTopicCreateBetweenDateByIdForum(idForum, minDate, maxDate);
 				
 			} catch (DataRetrievalFailureException rf) {
 				logger.warn("ForumTopicService: List of forum messages load but list is empty=" + rf);

@@ -14,6 +14,7 @@
 package com.dancosoft.socialcommunity.controller.support.base;
 
 import java.time.LocalDateTime;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +22,7 @@ import com.dancosoft.socialcommunity.controller.support.constants.BlockStatus;
 import com.dancosoft.socialcommunity.controller.support.constants.FriendStatus;
 import com.dancosoft.socialcommunity.controller.support.constants.StandartGroupName;
 import com.dancosoft.socialcommunity.controller.support.constants.ViewStatus;
+import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountGroup;
 import com.dancosoft.socialcommunity.model.AccountGroupHistory;
@@ -74,10 +76,12 @@ public class StandartAccountGroup {
 	 * @return AccountGroupHistory
 	 */
 	public AccountGroupHistory createAccountGroupHistoryFamily(AccountGroup accountGroup){
+		
+		TimeConverter converter =new TimeConverter();
 		logger.info("StandartAccountGroup: create history of base group family for new user account.");
 		AccountGroupHistory accountGroupHistoryFamily =new AccountGroupHistory();
-		accountGroupHistoryFamily.setDateCreateGroup(LocalDateTime.now());
-		accountGroupHistoryFamily.setLastVisit(LocalDateTime.now());
+		accountGroupHistoryFamily.setDateCreateGroup(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
+		accountGroupHistoryFamily.setLastVisit(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
 		accountGroupHistoryFamily.setAccountGroup(accountGroup);
 		
 		return accountGroupHistoryFamily;
@@ -114,10 +118,13 @@ public class StandartAccountGroup {
 	 * @return AccountGroupHistory
 	 */
 	public AccountGroupHistory createAccountGroupHistoryFriend(AccountGroup accountGroup){
+		
+		TimeConverter converter =new TimeConverter();
+		
 		logger.info("StandartAccountGroup: create history of base group friend for new user account.");
 		AccountGroupHistory accountGroupHistoryFriend =new AccountGroupHistory();
-		accountGroupHistoryFriend.setDateCreateGroup(LocalDateTime.now());
-		accountGroupHistoryFriend.setLastVisit(LocalDateTime.now());
+		accountGroupHistoryFriend.setDateCreateGroup(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
+		accountGroupHistoryFriend.setLastVisit(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
 		accountGroupHistoryFriend.setAccountGroup(accountGroup);
 		
 		return accountGroupHistoryFriend;
@@ -154,10 +161,13 @@ public class StandartAccountGroup {
 	 * @return AccountGroupHistory
 	 */
 	public AccountGroupHistory createAccountGroupHistoryWork(AccountGroup accountGroup){
+		
+		TimeConverter converter =new TimeConverter();
+		
 		logger.info("StandartAccountGroup: create history of base group work for new user account.");
 		AccountGroupHistory accountGroupHistoryWork =new AccountGroupHistory();
-		accountGroupHistoryWork.setDateCreateGroup(LocalDateTime.now());
-		accountGroupHistoryWork.setLastVisit(LocalDateTime.now());
+		accountGroupHistoryWork.setDateCreateGroup(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
+		accountGroupHistoryWork.setLastVisit(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
 		accountGroupHistoryWork.setAccountGroup(accountGroup);
 		
 		return accountGroupHistoryWork;

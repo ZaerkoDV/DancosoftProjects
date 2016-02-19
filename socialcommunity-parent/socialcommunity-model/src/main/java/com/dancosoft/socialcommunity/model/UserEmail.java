@@ -97,8 +97,7 @@ public class UserEmail implements Serializable {
 	 * @param userEmail
 	 * @param userCorespondence
 	 */
-	public UserEmail(Long idUserEmail, String userEmail,
-			UserCorespondence userCorespondence) {
+	public UserEmail(Long idUserEmail, String userEmail,UserCorespondence userCorespondence) {
 		this.idUserEmail = idUserEmail;
 		this.userEmail = userEmail;
 		this.userCorespondence = userCorespondence;

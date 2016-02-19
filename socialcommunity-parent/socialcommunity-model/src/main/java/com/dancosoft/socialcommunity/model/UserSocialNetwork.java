@@ -103,8 +103,8 @@ public class UserSocialNetwork implements Serializable {
 	 * @param skypeAddress
 	 * @param userCorespondence
 	 */
-	public UserSocialNetwork(Long idUserSocialNetwork, String facebookAddress,
-			String skypeAddress, UserCorespondence userCorespondence) {
+	public UserSocialNetwork(Long idUserSocialNetwork, String facebookAddress,String skypeAddress,
+			UserCorespondence userCorespondence) {
 		this.idUserSocialNetwork = idUserSocialNetwork;
 		this.skypeAddress = skypeAddress;
 		this.facebookAddress = facebookAddress;

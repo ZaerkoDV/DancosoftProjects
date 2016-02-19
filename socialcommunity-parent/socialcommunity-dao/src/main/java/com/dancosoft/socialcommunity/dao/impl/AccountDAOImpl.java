@@ -33,7 +33,7 @@ import com.dancosoft.socialcommunity.model.Account;
  * to object. DAO layer perform link between relational and object model. Model
  * for this dao layer describied in class Account. This class contain methods
  * which intended to access to special operation with Account entity. Class
- * extend �ommonEntityDAOImpl class, which contain base set of operation(CRUD).
+ * extend CommonEntityDAOImpl class, which contain base set of operation(CRUD).
  * Class implements interface AccountDAO located in package which have name
  * com.dancosoft.socialcommunity.dao. All methods are public in class.For
  * logging use logger fasade slf4j and framework log4j. Class contain also
@@ -78,11 +78,11 @@ public class AccountDAOImpl extends CommonEntityDAOImpl implements AccountDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Account> searchAccountByAccountNameUserLastName(String accountName, String lastName) {
-
+		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory()
 				.getCurrentSession().createCriteria(Account.class);
 		criteria.createAlias("user", "u");
-		if((accountName!=null && !accountName.equals("")) && (lastName!=null && lastName.equals(""))){
+		if((accountName!=null && !accountName.equals("")) && (lastName!=null && !lastName.equals(""))){
 			criteria.add(Restrictions.eq("accountName", accountName));
 			criteria.add(Restrictions.eq("u.lastName", lastName));
 			

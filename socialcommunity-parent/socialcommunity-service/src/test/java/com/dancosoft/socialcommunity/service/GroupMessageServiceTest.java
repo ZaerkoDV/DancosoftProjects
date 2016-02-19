@@ -4,6 +4,7 @@
 package com.dancosoft.socialcommunity.service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountGroup;
 import com.dancosoft.socialcommunity.model.GroupMember;
@@ -31,6 +33,8 @@ public class GroupMessageServiceTest {//extends TestStarter{
 
 //	private static final Logger logger = LoggerFactory.getLogger(GroupMessageServiceTest.class);
 //
+//	public TimeConverter converter=new TimeConverter();
+//	
 //	@Autowired
 //	@Qualifier(value="userService")
 //	private UserService userService;
@@ -126,7 +130,7 @@ public class GroupMessageServiceTest {//extends TestStarter{
 //		GroupMember testGroupMember = createGroupMemberForTest();
 //		GroupMessage testGroupMessage = new GroupMessage();
 //		testGroupMessage.setGroupMessage("Test Group Message");
-//		testGroupMessage.setDateCreateGroupMessage(LocalDateTime.of(2015, 12, 17,00, 00));
+//		testGroupMessage.setDateCreateGroupMessage(converter.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 17,00, 00)));
 //		testGroupMessage.setGroupMember(testGroupMember);
 //		groupMessageService.saveGroupMessage(testGroupMessage);
 //
@@ -165,11 +169,11 @@ public class GroupMessageServiceTest {//extends TestStarter{
 //	public void testGettingListGroupMessageBeetweenDateByIdAccountGroup() {
 //
 //		logger.info("GroupMessageServiceTest: test method GetListGroupMessageBeetweenDateByIdAccountGroup");
-//		LocalDateTime minDateLDT = LocalDateTime.of(2015, 12, 17, 00, 00);
-//		LocalDateTime maxDateLDT = LocalDateTime.of(2015, 12, 20, 00, 00);
+//		Date minDate = converter.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 17, 00, 00));
+//		Date maxDate = converter.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 20, 00, 00));
 //
 //		List<GroupMessage> list = groupMessageService
-//				.getListGroupMessageBeetweenDateByIdAccountGroup(accountGroup.getIdAccountGroup(),minDateLDT, maxDateLDT);
+//				.getListGroupMessageBeetweenDateByIdAccountGroup(accountGroup.getIdAccountGroup(),minDate, maxDate);
 //		Assert.assertFalse(list.isEmpty());
 //	}
 //	

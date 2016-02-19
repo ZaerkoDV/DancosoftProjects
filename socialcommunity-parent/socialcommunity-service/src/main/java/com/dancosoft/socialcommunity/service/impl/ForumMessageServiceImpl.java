@@ -151,25 +151,23 @@ public class ForumMessageServiceImpl implements ForumMessageService {
 	 * @return List<ForumMessage>
 	 */
 	@Transactional
-	public List<ForumMessage> getListForumMessageBetweenDateByIdForumTopic(Long idForumTopic,
-			LocalDateTime minDateLDT, LocalDateTime maxDateLDT) {
+	public List<ForumMessage> getListForumMessageBetweenDateByIdForumTopic(Long idForumTopic,Date minDate, Date maxDate) {
 		
 		List<ForumMessage> list=Collections.emptyList();
-		Date minDateD;
-		Date maxDateD;
+		LocalDateTime minDateLTD=converter.convertDateToLocalDateTime(minDate);
+		LocalDateTime maxDateLTD=converter.convertDateToLocalDateTime(maxDate);
+			
 		if (idForumTopic.equals(null) || idForumTopic.equals("")) {
 			throw new RuntimeException("ForumMessageService:Id Forum messages must not null!");
 			
-		} else if(maxDateLDT.isBefore(minDateLDT)){
+		} else if(maxDateLTD.isBefore(minDateLTD)){
 			throw new RuntimeException("ForumMessageService: Max date must not before min date!");
 			
 		}else{
 			try {
-				minDateD = converter.convertLocalDateTimeToDate(minDateLDT);
-				maxDateD = converter.convertLocalDateTimeToDate(maxDateLDT);
 				logger.info("ForumMessageService: List of forum message"
 						+ " which create between date load by id forum topic.");
-				list=forumMessageDAO.getListForumMessageBetweenDateByIdForumTopic(idForumTopic, minDateD, maxDateD);
+				list=forumMessageDAO.getListForumMessageBetweenDateByIdForumTopic(idForumTopic, minDate, maxDate);
 				
 			}catch (DataRetrievalFailureException rf) {
 				logger.warn("ForumMessageService: List of forum messages load but list is empty=" + rf);

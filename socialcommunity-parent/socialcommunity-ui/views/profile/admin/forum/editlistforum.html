@@ -113,7 +113,7 @@ input:valid {
 				      			      	 <td>
 				      			      	 	<input type="text" class="form-control" ng-model="forum.forumName" placeholder="Must not empty.">      
 				      			      	 </td>
-				      			      	 <td><!--{{forum.dateCreateForum}}--></td>
+				      			      	 <td>{{forum.dateCreateForum | date: "yyyy-MM-dd" }}</td>
 				      			      	 <td>
 					      			      	 <select class="form-control" id="viewStatus" ng-model="forum.viewStatus" placeholder="Must select" >
 										   	 	<option value="public">public</option>
@@ -124,7 +124,7 @@ input:valid {
 				      			      	 	<a type="submit" ng-click="deleteForum(forum.idForum)">Delete</a>
 				      			      	 </td>
 				      			      	 <td>
-				      			      	 	<!--<a type="submit" ng-click="editForum(idAdmin,forum)">Update</a>-->
+				      			      	 	<a type="submit" ng-click="editForum(idAdmin,forum)">Update</a>
 				      			      	 </td>
 				      			      	 <td>
 				      			      	 	<a type="submit" ng-click="editForumTopic(idAdmin,forum.idForum)">Edit</a>

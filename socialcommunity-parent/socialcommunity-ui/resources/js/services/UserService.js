@@ -223,6 +223,16 @@ angular.module('socialcommunity').service('UserService', function($http, $q,host
         );
     }
 	
+	this.getRightEditGroupMember=function(id,idAccountGroup){
+        return $http.get(hostName+'/views/profile/user/'+id+'/group/'+idAccountGroup+'/rightToEditGroupMember.json').then(
+            function(response){
+                 return response.data;
+            }
+        );
+    }
+	
+	
+	
 	this.searchAccountForAccountGroup=function(idAccountGroup,searchPattern){
         return $http.post(hostName+'/views/profile/user/group/'+idAccountGroup+'/listaccount.json',searchPattern).then(
             function(response){

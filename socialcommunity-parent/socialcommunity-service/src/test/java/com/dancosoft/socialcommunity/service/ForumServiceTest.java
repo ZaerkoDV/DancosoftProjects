@@ -4,6 +4,7 @@
 package com.dancosoft.socialcommunity.service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Forum;
 import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 
@@ -26,6 +28,8 @@ import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 public class ForumServiceTest {//extends TestStarter{
 
 //	private static final Logger logger = LoggerFactory.getLogger(ForumServiceTest.class);
+//	
+//	public TimeConverter converter=new TimeConverter();
 //
 //	@Autowired
 //	@Qualifier(value="forumService")
@@ -41,7 +45,8 @@ public class ForumServiceTest {//extends TestStarter{
 //		Forum testForum = new Forum();
 //		testForum.setForumName("TestForum");
 //		testForum.setViewStatus("public");
-//		testForum.setDateCreateForum(LocalDateTime.of(2015, 12, 17,00, 00));
+//		testForum.setDateCreateForum(converter
+//				.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 17,00, 00)));
 //		forumService.saveForum(testForum);
 //
 //		return testForum;
@@ -58,10 +63,10 @@ public class ForumServiceTest {//extends TestStarter{
 //	public void testGettingListForumCreatedBetweenDateByIdForum() {
 //
 //		logger.info("ForumServiceTest: test method GetListForumCreatedBetweenDateByIdForum");
-//		LocalDateTime minDateLDT = LocalDateTime.of(2015, 12, 17, 00, 00);
-//		LocalDateTime maxDateLDT = LocalDateTime.of(2015, 12, 20, 00, 00);
+//		Date minDate = converter.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 17, 00, 00));
+//		Date maxDate = converter.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 20, 00, 00));
 //
-//		List<Forum> list = forumService.getListForumCreatedBetweenDateByIdForum(minDateLDT, maxDateLDT);
+//		List<Forum> list = forumService.getListForumCreatedBetweenDateByIdForum(minDate, maxDate);
 //		Assert.assertFalse(list.isEmpty());
 //	}
 //

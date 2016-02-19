@@ -16,7 +16,7 @@
  */
 package com.dancosoft.socialcommunity.service;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -53,8 +53,7 @@ public interface SingleMessageService {
 	 * 
 	 * @return List<SingleMessage>
 	 */
-	public List<SingleMessage> getListSingleMessageBeetweenDateByIdAccount(
-			Long idAccount, LocalDateTime minDateLDT, LocalDateTime maxDateLDT);
+	public List<SingleMessage> getListSingleMessageBeetweenDateByIdAccount(Long idAccount, Date minDate, Date maxDate);
 	
 	/**
 	 * Method return list of interlocutor account which speak with this account.
@@ -86,8 +85,7 @@ public interface SingleMessageService {
 	 * 
 	 * @return List<SingleMessage>
 	 */
-	public List<SingleMessage> getListIntrlocutorSingleMessageBeetweenDateByIdAccount(Long idAccount,
-			Long idInterlocutorAccount,LocalDateTime minDateLDT,LocalDateTime maxDateLDT);
+	public List<SingleMessage> getListIntrlocutorSingleMessageBeetweenDateByIdAccount(Long idAccount,Long idInterlocutorAccount,Date minDate,Date maxDate);
 	
 	/**
 	 * This method is basic for all entities.The method is one of CRUD methods.

@@ -4,6 +4,7 @@
 package com.dancosoft.socialcommunity.service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.Forum;
 import com.dancosoft.socialcommunity.model.ForumMessage;
@@ -30,6 +32,8 @@ import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 public class ForumMessageServiceTest {//extends TestStarter {
 
 //	private static final Logger logger = LoggerFactory.getLogger(ForumMessageServiceTest.class);
+//	
+//	public TimeConverter converter=new TimeConverter();
 //
 //	@Autowired
 //	@Qualifier(value="accountService")
@@ -101,7 +105,8 @@ public class ForumMessageServiceTest {//extends TestStarter {
 //		Forum testForum = new Forum();
 //		testForum.setForumName("TestForum");
 //		testForum.setViewStatus("public");
-//		testForum.setDateCreateForum(LocalDateTime.of(2015, 12, 17,00, 00));
+//		testForum.setDateCreateForum(converter
+//				.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 17,00, 00)));
 //		forumService.saveForum(testForum);
 //
 //		return testForum;
@@ -113,7 +118,8 @@ public class ForumMessageServiceTest {//extends TestStarter {
 //		Account testAuthorTopicAccount = createAccountForTest();
 //		ForumTopic testForumTopic = new ForumTopic();
 //		testForumTopic.setForumTopic("TestForumTopic");
-//		testForumTopic.setDateCreateForumTopic(LocalDateTime.of(2015, 12, 17,00, 00));
+//		testForumTopic.setDateCreateForumTopic(converter
+//				.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 17,00, 00)));
 //		testForumTopic.setForum(testForum);
 //		testForumTopic.setAuthorAccount(testAuthorTopicAccount);
 //		forumTopicService.saveForumTopic(testForumTopic);
@@ -127,7 +133,8 @@ public class ForumMessageServiceTest {//extends TestStarter {
 //		Account testAuthorAccount = createAccountForTest();
 //		ForumMessage testForumMessage = new ForumMessage();
 //		testForumMessage.setForumMessage("TestForum Message");
-//		testForumMessage.setDateCreateForumMessage(LocalDateTime.of(2015, 12,17, 00, 00));
+//		testForumMessage.setDateCreateForumMessage(converter
+//				.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12,17, 00, 00)));
 //		testForumMessage.setForumTopic(testForumTopic);
 //		testForumMessage.setAuthorAccount(testAuthorAccount);
 //		forumMessageService.saveForumMessage(testForumMessage);
@@ -171,11 +178,11 @@ public class ForumMessageServiceTest {//extends TestStarter {
 //	public void testGettingListForumMessageBetweenDateByIdForumTopic() {
 //
 //		logger.info("ForumMessageServiceTest: test method GetListForumMessageBetweenDateByIdForumTopic");
-//		LocalDateTime minDateLDT = LocalDateTime.of(2015, 12, 17, 00, 00);
-//		LocalDateTime maxDateLDT = LocalDateTime.of(2015, 12, 20, 00, 00);
+//		Date minDate = converter.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 17, 00, 00));
+//		Date maxDate = converter.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 20, 00, 00));
 //
 //		List<ForumMessage> list = forumMessageService
-//				.getListForumMessageBetweenDateByIdForumTopic(forumTopic.getIdForumTopic(), minDateLDT, maxDateLDT);
+//				.getListForumMessageBetweenDateByIdForumTopic(forumTopic.getIdForumTopic(), minDate, maxDate);
 //		Assert.assertFalse(list.isEmpty());
 //	}
 //

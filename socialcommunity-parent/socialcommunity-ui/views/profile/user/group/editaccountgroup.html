@@ -94,7 +94,8 @@ input[type="text"] {
 					    <a ui-sref="editaccountgroupmember"></a>
 						<div class="panel-heading">
 						   <h4 class="panel-title">
-							   <a data-toggle="collapse" ng-click="loadListAccountGroupMember(idAccountGroup)" data-target="#collapse6">Show Group Members</a>
+							   <a data-toggle="collapse" ng-click="loadListAccountGroupMember(idAccountGroup); getRightEditGroupMember(id,idAccountGroup)"
+							    data-target="#collapse6">Show Group Members</a>
 						   </h4>
 						</div>  
 					    <div id="collapse6" class="panel-collapse collapse">
@@ -118,14 +119,18 @@ input[type="text"] {
 											   <td>{{accountGroupMember.memberAccount.user.lastName}}</td>
 											   <td>{{accountGroupMember.memberAccount.user.firstName}}</td>
 											   <td>{{accountGroupMember.memberAccount.user.sex}}</td>
-											   <td>{{accountGroupMember.groupMemberStatus}}</td>
+											   <td ng-if="idAccountGroupMember != accountGroupMember.idGroupMember">
+											   		{{accountGroupMember.groupMemberStatus}}
+											   </td>
 											   <td ng-if="idAccountGroupMember != accountGroupMember.idGroupMember">
 												  <a type="submit" ng-click="getAccountGroupMemberInfo(id,idAccountGroupMember,
 											    	 idAccountGroup,accountGroupMember.idGroupMember)">More info</a>
-											    </td>	  	
-												<td ng-if="idAccountGroupMember != accountGroupMember.idGroupMember">	 
-												  <a type="submit" ng-click="deleteMemberFromAccountGroup(id,idAccountGroupMember,
-												   idAccountGroup,accountGroupMember.idGroupMember)">Delete</a>
+											   </td>	  	
+											   <td ng-if="idAccountGroupMember != accountGroupMember.idGroupMember">	
+												   <div ng-if="rightToEditGroupMember">
+													  <a type="submit" ng-click="deleteMemberFromAccountGroup(id,idAccountGroupMember,
+													   idAccountGroup,accountGroupMember.idGroupMember)">Delete</a>
+												   </div>
 											   </td>
 											</tr>	
 										</tbody>
@@ -136,7 +141,7 @@ input[type="text"] {
 				             
 				         <div class="panel-heading">
 						   <h4 class="panel-title">
-							   <a data-toggle="collapse" data-target="#collapse7">Search New Members</a>
+							   <a data-toggle="collapse" ng-click="getRightEditGroupMember(id,idAccountGroup)" data-target="#collapse7">Search New Members</a>
 						   </h4>
 						 </div>  
 					     <div id="collapse7" class="panel-collapse collapse">
@@ -149,6 +154,7 @@ input[type="text"] {
 							 	 <button type="submit" class="btn btn-xs btn-primary" style="float:right; margin: 10px 10px 10px 10px;"
 							 	  ng-click="searchAccountForAccountGroup(idAccountGroup, searchPattern)">Search..</button>
 							 </div>
+							 <br>
 							 <br>
 						   	 <div ng-show="listAccount.length > 0">
 							   <table class="table table-bordered" style="background-color:#ffffff">
@@ -173,8 +179,10 @@ input[type="text"] {
 										 <td ng-if="id != account.user.idUser">
 											<a type="submit" ng-click="getAccountInfo(id,account.idAccount)">Info </a>
 										 </td>
-										 <td ng-if="id != account.user.idUser">	
-										    <a type="submit" ng-click="addToAccountGroup(idAccountGroup,account.idAccount,friendStatus)">Add</a>
+										 <td ng-if="id != account.user.idUser">	<!-- forbid add youreself to group as author again-->
+										 	<div ng-if="rightToEditGroupMember"><!-- get right change if creator or group is public -->
+										    	<a type="submit" ng-click="addToAccountGroup(idAccountGroup,account.idAccount,friendStatus)">Add</a>
+										    </div>
 										 </td>
 									   </tr>	 
 								   </tbody>
@@ -209,21 +217,5 @@ input[type="text"] {
 			 </div>
 	     </div>
 	  </li>	
-	  <li>
-	   <div class="panel panel" style="background-color:#92A7B8">
-			   <div class="panel-heading">
-			        <h4 class="panel-title">
-			          <a data-toggle="collapse"  data-target="#collapse5">Edit Account Group</a>
-			        </h4>
-			   </div>
-			   <div id="collapse5" class="panel-collapse collapse">
-			     <form>
-				    <div class="panel-body">
-						<p><a ng-click="editGroupSettings(idAccountGroup)">Edit Group Settings</a></p> 
-				    </div>
-				</form>    
-			 </div>
-	     </div>
-	  </li>  
 	</ul>
 </div>

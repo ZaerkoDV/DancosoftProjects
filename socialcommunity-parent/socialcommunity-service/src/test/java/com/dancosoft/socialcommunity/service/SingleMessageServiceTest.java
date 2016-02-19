@@ -4,6 +4,7 @@
 package com.dancosoft.socialcommunity.service;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.SingleMessage;
 import com.dancosoft.socialcommunity.model.User;
@@ -29,6 +31,8 @@ public class SingleMessageServiceTest {//extends TestStarter {
 
 //	private static final Logger logger = LoggerFactory.getLogger(SingleMessageServiceTest.class);
 //
+//	public TimeConverter converter=new TimeConverter();
+//	
 //	@Autowired
 //	@Qualifier(value="userService")
 //	private UserService userService;
@@ -83,7 +87,8 @@ public class SingleMessageServiceTest {//extends TestStarter {
 //		Account testAccount = createAccountForTest();
 //		SingleMessage testSingleMessage = new SingleMessage();
 //		testSingleMessage.setSingleMessage("Same test message");
-//		testSingleMessage.setDateCreateSingleMessage(LocalDateTime.of(2015, 12,	17, 00, 00));
+//		testSingleMessage.setDateCreateSingleMessage(converter
+//				.convertLocalDateTimeToDate(LocalDateTime.of(2015,12,17, 00, 00)));
 //		testSingleMessage.setAccount(testAccount);
 //		testSingleMessage.setInterlocutorAccount(testAccount);
 //		singleMessageService.saveSingleMessage(testSingleMessage);
@@ -103,11 +108,11 @@ public class SingleMessageServiceTest {//extends TestStarter {
 //	public void testGettingListSingleMessageBeetweenDateByIdAccount() {
 //
 //		logger.info("SingleMessageServiceTest: test method GetListSingleMessageBeetweenDateByIdAccounte");
-//		LocalDateTime minDateLDT = LocalDateTime.of(2015, 12, 17, 00, 00);
-//		LocalDateTime maxDateLDT = LocalDateTime.of(2015, 12, 20, 00, 00);
+//		Date minDate = converter.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 17, 00, 00));
+//		Date maxDate = converter.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 20, 00, 00));
 //
 //		List<SingleMessage> list = singleMessageService.getListSingleMessageBeetweenDateByIdAccount(
-//						account.getIdAccount(), minDateLDT, maxDateLDT);
+//						account.getIdAccount(), minDate, maxDate);
 //		Assert.assertFalse(list.isEmpty());
 //	}
 //
@@ -128,12 +133,12 @@ public class SingleMessageServiceTest {//extends TestStarter {
 //	public void testGettingListIntrlocutorSingleMessageBeetweenDateByIdAccount() {
 //
 //		logger.info("SingleMessageServiceTest: test method GetListIntrlocutorSingleMessageBeetweenDateByIdAccount");
-//		LocalDateTime minDateLDT = LocalDateTime.of(2015, 12, 17, 00, 00);
-//		LocalDateTime maxDateLDT = LocalDateTime.of(2015, 12, 20, 00, 00);
+//		Date minDate = converter.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 17, 00, 00));
+//		Date maxDate = converter.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 20, 00, 00));
 //		Long idInterlocutorAccount=singleMessage.getInterlocutorAccount().getIdAccount();
 //		
 //		List<SingleMessage> list = singleMessageService.getListIntrlocutorSingleMessageBeetweenDateByIdAccount(
-//						account.getIdAccount(), idInterlocutorAccount, minDateLDT, maxDateLDT);
+//						account.getIdAccount(), idInterlocutorAccount, minDate, maxDate);
 //		Assert.assertFalse(list.isEmpty());
 //	}
 }

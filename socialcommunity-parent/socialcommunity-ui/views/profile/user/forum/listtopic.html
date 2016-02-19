@@ -113,7 +113,7 @@ tbody {
 											   <tbody> 
 											     <tr ng-repeat="topic in listForumTopic">
 												    <td>{{topic.forumTopic}}</td>
-													<td><!--{{topic.dateCreateForumTopic}}--></td>
+													<td>{{topic.dateCreateForumTopic | date: "yyyy-MM-dd"}}</td>
 													<td>{{topic.authorAccount.accountName}}</td>
 													<td>
 											     		<a type="submit" ng-click="getTopicMessages(id,topic.idForumTopic)">Dialog...</a>

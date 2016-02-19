@@ -110,6 +110,8 @@ public class AdministratorController {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdministratorController.class);
 	
+	public TimeConverter converter=new TimeConverter();
+	
 	@Autowired
 	@Qualifier(value = "userService")
 	private UserService userService;
@@ -306,7 +308,7 @@ public class AdministratorController {
 	 */
 	@RequestMapping(value="/views/profile/admin/{idAdmin}/parlor/accountdata.json", method = RequestMethod.GET)
 	public @ResponseBody UserParlorData loadAdminData(@PathVariable("idAdmin") Long idAdmin) {
-		
+			
 		logger.info("AdministratorController: Load data for admin account.");
 		//data for user account
 		UserParlorData userParlorData=new UserParlorData();
@@ -331,7 +333,7 @@ public class AdministratorController {
 		logger.info("AdministratorController: Create date last visit account.");
 		Account userAccount=userService.getAccountByUserId(idAdmin);
 		AccountHistory accountHistory =accountHistoryService.getAccountHistoryByIdAccount(userAccount.getIdAccount());
-		accountHistory.setLastVisit(LocalDateTime.now());
+		accountHistory.setLastVisit(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
 		accountHistoryService.updateAccountHistory(accountHistory);	
 		
 		return userParlorData;
@@ -567,8 +569,9 @@ public class AdministratorController {
 	 */
 	@RequestMapping(value="/views/profile/admin/forum/newforum.json", method = RequestMethod.POST)
 	public @ResponseBody void saveNewForum(@RequestBody Forum forum) {
+				
 		logger.info("AdministratorController: save new forum");
-		forum.setDateCreateForum(LocalDateTime.now());
+		forum.setDateCreateForum(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
 		forumService.saveForum(forum);
 	}
 	
@@ -606,7 +609,7 @@ public class AdministratorController {
 	 */
 	@RequestMapping(value="/views/profile/admin/forum/newtopic.json", method = RequestMethod.POST)
 	public @ResponseBody Long saveNewForumTopic(@RequestBody ForumTopic forumTopic) {
-		
+				
 		logger.info("AdministratorController: Save new forum topic for forum.");
 		Long idUser=forumTopic.getAuthorAccount().getUser().getIdUser();
 		Account userAccount=userService.getAccountByUserId(idUser);
@@ -616,7 +619,7 @@ public class AdministratorController {
 		
 		forumTopic.setAuthorAccount(userAccount);
 		forumTopic.setForum(forum);
-		forumTopic.setDateCreateForumTopic(LocalDateTime.now());
+		forumTopic.setDateCreateForumTopic(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
 		forumTopicService.saveForumTopic(forumTopic);
 		
 		return idForum;
@@ -657,13 +660,12 @@ public class AdministratorController {
 	@RequestMapping(value="/views/profile/admin/forum/{idForumTopic}/{fromDate}/{toDate}/topicmessages.json", method = RequestMethod.GET)
 	public @ResponseBody List<ForumMessage> loadForumTopicMessages(@PathVariable("idForumTopic") Long idForumTopic,
 			@PathVariable("fromDate") Date fromDate,@PathVariable("toDate") Date toDate) {
+		
 		logger.info("AdministratorController: Load Forum Messages which created between date.");
-		TimeConverter converter = new TimeConverter();
 		LocalDateTime fromLDT = converter.convertDateToLocalDateTime(fromDate);
 		LocalDateTime toLDT = converter.convertDateToLocalDateTime(toDate);
 		
-		List<ForumMessage> listTopicMessages = forumMessageService
-				.getListForumMessageBetweenDateByIdForumTopic(idForumTopic, fromLDT,toLDT);
+		List<ForumMessage> listTopicMessages = forumMessageService.getListForumMessageBetweenDateByIdForumTopic(idForumTopic, fromDate,toDate);
 		if(fromLDT.isAfter(toLDT)){
 			listTopicMessages=Collections.emptyList();
 		}
@@ -748,14 +750,13 @@ public class AdministratorController {
 	@RequestMapping(value="/views/profile/admin/account/{searchIdAccount}/{fromDate}/{toDate}/singlemessages.json", method = RequestMethod.GET)
 	public @ResponseBody List<SingleMessage> loadUserAccountSingleMessages(@PathVariable("searchIdAccount") Long searchIdAccount,
 			@PathVariable("fromDate") Date fromDate, @PathVariable("toDate") Date toDate) {
-		
+				
 		logger.info("AdministratorController:Load user account single messages.");
-		TimeConverter converter = new TimeConverter();
 		LocalDateTime fromLDT = converter.convertDateToLocalDateTime(fromDate);
 		LocalDateTime toLDT = converter.convertDateToLocalDateTime(toDate);
 		
 		List<SingleMessage> listSingleMessages = singleMessageService
-				.getListSingleMessageBeetweenDateByIdAccount(searchIdAccount, fromLDT, toLDT);	
+				.getListSingleMessageBeetweenDateByIdAccount(searchIdAccount, fromDate, toDate);	
 		if(fromLDT.isAfter(toLDT)){
 			listSingleMessages=Collections.emptyList();
 		}
@@ -849,12 +850,9 @@ public class AdministratorController {
 			@PathVariable("fromDate") Date fromDate, @PathVariable("toDate") Date toDate) {
 		
 		logger.info("AdministratorController:Load account group messages.");
-		TimeConverter converter = new TimeConverter();
 		LocalDateTime fromLDT = converter.convertDateToLocalDateTime(fromDate);
 		LocalDateTime toLDT = converter.convertDateToLocalDateTime(toDate);
-		
-		List<GroupMessage> listGroupMessages = groupMessageService
-					.getListGroupMessageBeetweenDateByIdAccountGroup(idAccountGroup, fromLDT, toLDT);
+		List<GroupMessage> listGroupMessages = groupMessageService.getListGroupMessageBeetweenDateByIdAccountGroup(idAccountGroup, fromDate, toDate);
 		if(fromLDT.isAfter(toLDT)){
 			listGroupMessages=Collections.emptyList();
 		}
@@ -873,7 +871,7 @@ public class AdministratorController {
 	@RequestMapping(value="/views/profile/admin/{idAdmin}/group/{idAccountGroup}/saveAccountGroupMessage.json", method = RequestMethod.POST)
 	public @ResponseBody void saveNewAccountGroupMessages(@RequestBody GroupMessage newAccountGroupMessage,
 			@PathVariable("idAdmin") Long idAdmin, @PathVariable("idAccountGroup") Long idAccountGroup) {
-		
+				
 		logger.info("AdministratorController: Create new group message.");
 		Account account= userService.getAccountByUserId(idAdmin);
 		GroupMember groupMember= groupMemberService.getGroupMemberInAccountGroupByIdAccount(idAccountGroup,
@@ -890,7 +888,7 @@ public class AdministratorController {
 			groupMemberService.saveGroupMember(groupMember);
 		}
 		logger.info("AdministratorController: Create new group message.");
-		newAccountGroupMessage.setDateCreateGroupMessage(LocalDateTime.now());
+		newAccountGroupMessage.setDateCreateGroupMessage(converter.convertLocalDateTimeToDate(LocalDateTime.now()));
 		newAccountGroupMessage.setGroupMember(groupMember);
 		groupMessageService.saveGroupMessage(newAccountGroupMessage);
 	}

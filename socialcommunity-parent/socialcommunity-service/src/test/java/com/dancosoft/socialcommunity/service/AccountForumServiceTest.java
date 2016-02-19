@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dancosoft.socialcommunity.dao.support.TimeConverter;
 import com.dancosoft.socialcommunity.model.Account;
 import com.dancosoft.socialcommunity.model.AccountForum;
 import com.dancosoft.socialcommunity.model.Forum;
@@ -29,6 +30,8 @@ import com.dancosoft.socialcommunity.service.testsupport.TestStarter;
 public class AccountForumServiceTest {//extends TestStarter {
 
 //	private static final Logger logger = LoggerFactory.getLogger(AccountForumServiceTest.class);
+//	
+//	public TimeConverter converter =new TimeConverter();
 //	
 //	@Autowired
 //	@Qualifier("accountForumService")
@@ -93,7 +96,7 @@ public class AccountForumServiceTest {//extends TestStarter {
 //		Forum testForum = new Forum();
 //		testForum.setForumName("TestForum");
 //		testForum.setViewStatus("public");
-//		testForum.setDateCreateForum(LocalDateTime.of(2015, 12, 17,00, 00));
+//		testForum.setDateCreateForum(converter.convertLocalDateTimeToDate(LocalDateTime.of(2015, 12, 17,00, 00)));
 //		forumService.saveForum(testForum);
 //
 //		return testForum;

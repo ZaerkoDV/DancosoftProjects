@@ -159,24 +159,21 @@ public class GroupEventServiceImpl implements GroupEventService {
 	 * @return List<GroupEvent>
 	 */
 	@Transactional
-	public List<GroupEvent> getListGroupEventBeetweenDateByIdAccountGroup(
-			Long idAccountGroup,LocalDateTime  minDateLDT, LocalDateTime maxDateLDT) {
+	public List<GroupEvent> getListGroupEventBeetweenDateByIdAccountGroup(Long idAccountGroup,Date  minDate, Date maxDate) {
 		
-		Date minDateD;
-		Date maxDateD;
+		LocalDateTime minDateLTD=converter.convertDateToLocalDateTime(minDate);
+		LocalDateTime maxDateLTD=converter.convertDateToLocalDateTime(maxDate);
 		List<GroupEvent> list=Collections.emptyList();
 		if (idAccountGroup.equals(null) || idAccountGroup.equals("")) {
 			throw new RuntimeException("GroupEventService:Id account group must not null or empty.");
 			
-		} else if(maxDateLDT.isBefore(minDateLDT)){
+		} else if(maxDateLTD.isBefore(minDateLTD)){
 			throw new RuntimeException("GroupEventService: Max date must not before min date!");
 			
 		} else {
 			try {
-				minDateD = converter.convertLocalDateTimeToDate(minDateLDT);
-				maxDateD = converter.convertLocalDateTimeToDate(maxDateLDT);
 				logger.info("GroupEventService:List group event which creete between date load by id account group");
-				list= groupEventDAO.getListGroupEventBeetweenDateByIdAccountGroup(idAccountGroup, minDateD, maxDateD);
+				list= groupEventDAO.getListGroupEventBeetweenDateByIdAccountGroup(idAccountGroup, minDate, maxDate);
 
 			} catch (DataRetrievalFailureException rf) {
 				logger.warn("GroupEventService: List group event which created between date load for"

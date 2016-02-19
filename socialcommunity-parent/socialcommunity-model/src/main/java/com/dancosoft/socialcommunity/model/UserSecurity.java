@@ -118,8 +118,7 @@ public class UserSecurity implements Serializable {
 	 * @param user
 	 * @param userRole
 	 */
-	public UserSecurity(Long idUserSecurity, String userLogin,
-			String userPassword, User user, UserRole userRole) {
+	public UserSecurity(Long idUserSecurity, String userLogin,String userPassword, User user, UserRole userRole) {
 		this.idUserSecurity = idUserSecurity;
 		this.userLogin = userLogin;
 		this.userPassword = userPassword;

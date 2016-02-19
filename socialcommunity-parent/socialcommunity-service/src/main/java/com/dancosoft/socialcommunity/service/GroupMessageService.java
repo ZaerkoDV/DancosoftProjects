@@ -16,7 +16,7 @@
  */
 package com.dancosoft.socialcommunity.service;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
@@ -82,9 +82,7 @@ public interface GroupMessageService {
 	 * 
 	 * @return List<GroupMessage> 
 	 */
-	public List<GroupMessage> getListGroupMessageBeetweenDateByIdAccountGroup(
-			Long idAccountGroup, LocalDateTime minDateLDT,
-			LocalDateTime maxDateLDT);
+	public List<GroupMessage> getListGroupMessageBeetweenDateByIdAccountGroup(Long idAccountGroup, Date minDate,Date maxDate);
 
 	/**
 	 * Method return count of group messages. If group messages are

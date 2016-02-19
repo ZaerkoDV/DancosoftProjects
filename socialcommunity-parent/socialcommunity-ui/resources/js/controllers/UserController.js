@@ -255,6 +255,17 @@ angular.module('socialcommunity').controller('UserController', function ($scope,
           );
 	};
 	
+	$scope.getRightEditGroupMember=function(id,idAccountGroup){
+		UserService.getRightEditGroupMember(id,idAccountGroup).then(
+	         function(rightToEditGroupMember) {
+	          	  $scope.rightToEditGroupMember=rightToEditGroupMember;	
+	         },
+	         function(errResponse){
+	              console.error('!!!Error');
+	         }
+	    );
+	}
+	
 	$scope.searchAccountForAccountGroup=function(idAccountGroup,searchPattern){
 		if(searchPattern===undefined){
 			searchPattern='null';

@@ -113,13 +113,15 @@ public class ForumMessageDAOImpl extends CommonEntityDAOImpl implements ForumMes
 	 * forum topic. If messages are not exist return empty list
 	 * 
 	 * @type Long
+	 * @type Date
 	 * @param idForumTopic
+	 * @param minDate
+	 * @param maxDate
 	 * 
 	 * @return List<ForumMessage>
 	 */
 	@SuppressWarnings("unchecked")
-	public List<ForumMessage> getListForumMessageBetweenDateByIdForumTopic(
-			Long idForumTopic, Date minDate, Date maxDate) {
+	public List<ForumMessage> getListForumMessageBetweenDateByIdForumTopic(Long idForumTopic, Date minDate, Date maxDate) {
 
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory()
 				.getCurrentSession().createCriteria(ForumMessage.class);

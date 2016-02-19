@@ -84,21 +84,19 @@ public class ForumServiceImpl implements ForumService {
 	 * @return List<Forum>
 	 */
 	@Transactional
-	public List<Forum> getListForumCreatedBetweenDateByIdForum(LocalDateTime minDateLDT,LocalDateTime maxDateLDT) {
+	public List<Forum> getListForumCreatedBetweenDateByIdForum(Date minDate,Date maxDate) {
 		
 		List<Forum> list=Collections.emptyList();
-		Date minDateD;
-		Date maxDateD;
-		
-		if(maxDateLDT.isBefore(minDateLDT)){
+		LocalDateTime minDateLTD = converter.convertDateToLocalDateTime(minDate);
+		LocalDateTime maxDateLTD = converter.convertDateToLocalDateTime(maxDate);
+				
+		if(maxDateLTD.isBefore(minDateLTD)){
 			throw new RuntimeException("ForumService: Max date must not before min date!");
 			
 		}else{
 			try {
-				minDateD = converter.convertLocalDateTimeToDate(minDateLDT);
-				maxDateD = converter.convertLocalDateTimeToDate(maxDateLDT);
 				logger.info("ForumService:List forum which create between date load.");
-				list=forumDAO.getListForumCreatedBetweenDateByIdForum(minDateD, maxDateD);
+				list=forumDAO.getListForumCreatedBetweenDateByIdForum(minDate, maxDate);
 				
 			} catch (DataRetrievalFailureException rf) {
 				logger.warn("ForumService: No one forum created between date. List forum is empty=" + rf);

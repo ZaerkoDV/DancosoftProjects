@@ -16,7 +16,7 @@
  */
 package com.dancosoft.socialcommunity.service;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.NonUniqueResultException;
@@ -76,15 +76,17 @@ public interface GroupEventService {
 	 * account group. If group event is not exist return empty list.
 	 * 
 	 * @type Long
+	 * @type Date
 	 * @param idAccountGroup
+	 * @param minDate
+	 * @param maxDate
 	 * 
 	 * @exception DataRetrievalFailureException
 	 * @exception DataAccessException
 	 * 
 	 * @return List<GroupEvent>
 	 */
-	public List<GroupEvent> getListGroupEventBeetweenDateByIdAccountGroup(
-			Long idAccountGroup,LocalDateTime  minDateLDT, LocalDateTime maxDateLDT); 
+	public List<GroupEvent> getListGroupEventBeetweenDateByIdAccountGroup(Long idAccountGroup,Date minDate, Date maxDate); 
 
 	/**
 	 * Method return count of group event by id account group. If account group
