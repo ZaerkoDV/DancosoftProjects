@@ -168,7 +168,6 @@ public class UserSecurity implements Serializable {
 	 *            the userPassword to set
 	 */
 	public void setUserPassword(String userPassword) {
-		//this.userPassword= DigestUtils.md5Hex(userPassword);
 		this.userPassword = userPassword;
 	}
 

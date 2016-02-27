@@ -26,6 +26,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dancosoft.socialcommunity.dao.AccountGroupDAO;
 import com.dancosoft.socialcommunity.model.AccountGroup;
+import com.dancosoft.socialcommunity.model.GroupMember;
 
 /**
  * <p>
@@ -125,15 +126,18 @@ public class AccountGroupDAOImpl extends CommonEntityDAOImpl implements	AccountG
 	 * @param blockStatus
 	 * 
 	 * @return List<AccountGroup>
-	 */
+	 */	
 	@SuppressWarnings("unchecked")
 	public List<AccountGroup> getListAccountGroupWithBlockStatusByIdAccount(Long idAccount,String blockStatus) {
 		
 		Criteria criteria = this.getHibernateTemplate().getSessionFactory()
-				.getCurrentSession().createCriteria(AccountGroup.class);
-		criteria.createAlias("account", "a");
-		criteria.add(Restrictions.eq("accountGroupBlockStatus", blockStatus));
+				.getCurrentSession().createCriteria(GroupMember.class);
+		criteria.setProjection(Projections.property("accountGroup"));
+		
+		criteria.createAlias("memberAccount", "a");
+		criteria.createAlias("accountGroup", "g");
 		criteria.add(Restrictions.eq("a.idAccount", idAccount));
+		criteria.add(Restrictions.eq("g.accountGroupBlockStatus", blockStatus));
 
 		criteria.setMaxResults(20);
 		criteria.setFirstResult(0);

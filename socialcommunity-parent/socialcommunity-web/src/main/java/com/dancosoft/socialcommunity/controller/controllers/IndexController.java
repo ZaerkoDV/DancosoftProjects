@@ -290,7 +290,7 @@ public class IndexController {
 			userEmail.setUserCorespondence(userCorespondence);
 			userEmailService.saveUserEmail(userEmail);
 			
-			if(!userExtended.getUserSocialNetwork().equals(null)){		
+			if(userExtended.getUserSocialNetwork()!=null){		
 				logger.info("IndexController: create new social network addresses of user");
 				UserSocialNetwork userSocialNetwork=new UserSocialNetwork();
 				userSocialNetwork.setFacebookAddress(userExtended.getUserSocialNetwork().getFacebookAddress());
@@ -321,9 +321,11 @@ public class IndexController {
 	
 		logger.info("IndexController: create new user with sercurity feature");
 		Long idUser= null;
+		UserSecurity userSecurity =new UserSecurity();
 		
 		Boolean isUniqueLogin= userSecurityService.isUniqueLogin(prompt.getUserSecurity().getUserLogin());
-		Boolean isUniquePassword= userSecurityService.isUniquePassword(prompt.getUserSecurity().getUserPassword());
+		Boolean isUniquePassword= userSecurityService.isUniquePassword(userSecurity
+				.convertToMD5(prompt.getUserSecurity().getUserPassword()));
 		Boolean isUniquePrompt = securityPromptService.isUniquePrompt(prompt.getSecurityPrompt(), prompt.getUserAnswer());
 		
 		if(isUniquePrompt && (isUniqueLogin && isUniquePassword)){
@@ -336,9 +338,8 @@ public class IndexController {
 			userRoleService.saveUserRole(userRole); 
 			
 			logger.info("IndexController: create new user security login and password");
-			UserSecurity userSecurity =new UserSecurity();
 			userSecurity.setUserLogin(prompt.getUserSecurity().getUserLogin());
-			userSecurity.setUserPassword(prompt.getUserSecurity().getUserPassword());
+			userSecurity.setUserPassword(userSecurity.convertToMD5(prompt.getUserSecurity().getUserPassword()));
 			userSecurity.setUser(user);
 			userSecurity.setUserRole(userRole);
 			userSecurityService.saveUserSecurity(userSecurity);
@@ -443,7 +444,7 @@ public class IndexController {
 		Long idUser=null;
 		Boolean signIn=false;
 		SecurityPrompt securityPrompt;
-		
+		UserSecurity userSecurity=new UserSecurity();
 		logger.info("IndexController: user sign in, check user security information for autorization in system.");
 		
 		//email and password
@@ -451,8 +452,8 @@ public class IndexController {
 		if(isValidEmail && !password.equals("undefined")){
 			logger.info("IndexController: user sign in by user email and user password");
 			idUser=userEmailService.getIdUserByEmail(loginOrEmail);
-			UserSecurity userSecurity=userSecurityService.getLoginPasswordByIdUser(idUser);
-			if(userSecurity.getUserPassword().equals(password)){
+			userSecurity=userSecurityService.getLoginPasswordByIdUser(idUser);
+			if(userSecurity.getUserPassword().equals(userSecurity.convertToMD5(password))){
 				signIn=true;
 			}
 			
@@ -471,8 +472,8 @@ public class IndexController {
 		Boolean isLoginNotExist= userSecurityService.isUniqueLogin(loginOrEmail);
 		if(!isLoginNotExist && !password.equals("undefined")){
 			logger.info("IndexController: user sign in by user login and password");
-			idUser=userSecurityService.getIdUserByLoginPassword(loginOrEmail, password);
-			signIn=userSecurityService.signInUserByLoginPassword(loginOrEmail, password);
+			idUser=userSecurityService.getIdUserByLoginPassword(loginOrEmail,userSecurity.convertToMD5(password));
+			signIn=userSecurityService.signInUserByLoginPassword(loginOrEmail,userSecurity.convertToMD5(password));
 			
 		//login and answer	
 		} else if(!isLoginNotExist && !answer.equals("undefined")){	

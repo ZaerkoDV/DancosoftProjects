@@ -141,7 +141,7 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 	public Long getIdUserByLoginPassword(String userLogin,String userPassword){
 		
 		Long idUser=null;
-		if (userLogin.equals(null) || userLogin.equals("")) {
+		if (userLogin==null || userLogin.equals("")) {
 			throw new RuntimeException("UserSecurityService:User login must not null amd empty");
 			
 		} else if(userPassword.equals(null) || userPassword.equals("")){
@@ -434,17 +434,16 @@ public class UserSecurityServiceImpl implements UserSecurityService {
 				//generate new password with old login
 				newLogin=userSecurityOld.getUserLogin();
 				newPassword=generator.generateNewSecutityRow();
-				statusUpdate= userSecurityDAO.updateLoginPasswordByIdUser(idUser,newLogin,newPassword);
-				logger.info("UserSecurityService:Login and password update by id user.");
-				
+								
 				//send login and password on user email
 				email=userEmailDAO.getEmailByIdUser(idUser);
 				toEmail=email.getUserEmail();
-				
 				contentEmail="\n Login:" + newLogin +"\n Password:" + newPassword;
 				emailCreator.createSecurityEmail(fromeEmail, toEmail,contentEmail);
 				logger.info("UserSecurityService:New login and password send to post.");
-				////sender.sendEmail(list,newLogin,newPassword);
+				String a=userSecurityOld.convertToMD5(newPassword);
+				statusUpdate= userSecurityDAO.updateLoginPasswordByIdUser(idUser,newLogin,a);
+				logger.info("UserSecurityService:Login and password update by id user.");
 				
 			} catch (DataRetrievalFailureException rf) {
 				logger.warn("UserSecurityService: User with id "+idUser+" not exist or user email not exist!"

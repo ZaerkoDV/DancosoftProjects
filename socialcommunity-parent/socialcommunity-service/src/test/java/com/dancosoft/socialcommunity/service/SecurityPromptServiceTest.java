@@ -64,7 +64,6 @@ public class SecurityPromptServiceTest {//extends TestStarter{
 //	public SecurityPrompt securityPrompt;
 //
 //	public User createUserForTest() {
-//
 //		User testUser = new User();
 //		testUser.setFirstName("testFirstName");
 //		testUser.setLastName("testLastName");
@@ -83,7 +82,6 @@ public class SecurityPromptServiceTest {//extends TestStarter{
 //	}
 //	
 //	public UserSecurity createUserSecurityForTest() {
-//
 //		User testUser = createUserForTest();
 //		UserRole userRole = createUserRoleForTest();
 //		UserSecurity testUserSecurity = new UserSecurity();
@@ -97,10 +95,8 @@ public class SecurityPromptServiceTest {//extends TestStarter{
 //	}
 //	
 //	public SecurityPrompt createSecurityPromptForTest() {
-//
 //		UserSecurity testUserSecurity = createUserSecurityForTest();
 //		SecurityPrompt testSecurityPrompt = new SecurityPrompt();
-//
 //		testSecurityPrompt.setSecurityPrompt("My test prompt");
 //		testSecurityPrompt.setUserAnswer("Prompt answer");
 //		testSecurityPrompt.setUserSecurity(testUserSecurity);

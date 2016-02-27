@@ -256,7 +256,7 @@ p {
 									   	  	 	 <div class="chat-message clearfix">
 									   	  	 <!--<img src="http://lorempixum.com/32/32/people" alt="" width="32" height="32">-->
 														<div class="chat-message-content clearfix">
-															<span class="chat-time">{{topicMessage.dateCreateForumMessage | date: "HH:mm:ss" }}</span>
+															<span class="chat-time">{{topicMessage.dateCreateForumMessage | date: "HH:mm" }}</span>
 															<h5>{{topicMessage.authorAccount.accountName}}</h5>
 															<a class="chat-delete" ng-click="deleteForumMessages(idForumTopic,topicMessage.idForumMessage)">x</a>
 															<p>{{topicMessage.forumMessage}}</p>

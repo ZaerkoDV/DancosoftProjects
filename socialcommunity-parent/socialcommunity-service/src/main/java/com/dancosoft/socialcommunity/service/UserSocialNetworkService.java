@@ -23,7 +23,6 @@ import javax.persistence.NonUniqueResultException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataRetrievalFailureException;
 import org.springframework.dao.TypeMismatchDataAccessException;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.dancosoft.socialcommunity.model.UserSocialNetwork;
 

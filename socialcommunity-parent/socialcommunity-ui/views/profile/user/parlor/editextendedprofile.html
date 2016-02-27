@@ -126,28 +126,28 @@ input:valid {
 									</div>
 								</div>	
 							    <div>
-									<div style="display:inline-block; margin: 10px 0 5px 5px;">
+									<div style="display:inline-block; margin: 10px 0 0 5px;">
 								    	<label style="width: 120px;" for="email" class="col-lg-3 control-label">Email</label>
 								    </div>	
-								    <div style="display:inline-block; margin: 10px 0 5px 5px;">	
+								    <div style="display:inline-block; margin: 10px 0 0 5px;">	
 									    <input type="email" class="form-control" id="email" ng-model="userExtendedData.userEmail.userEmail"
 									       placeholder="Must not empty" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"> 
 								  	</div>
 							      </div>
 								  <div>		
-								    <div style="display:inline-block; margin: 10px 0 10px 5px;">
+								    <div style="display:inline-block; margin: 10px 0 0 5px;">
 								        <label style="width: 120px;" for="skype" class="col-lg-3 control-label">Skype</label>
 								    </div>
-								    <div style="display:inline-block; margin: 10px 0 5px 5px;">   
+								    <div style="display:inline-block; margin: 10px 0 0 5px;">   
 								        <input type="text" class="form-control" id="skype" ng-model="userExtendedData.userSocialNetwork.skypeAddress"
 								         placeholder="May be empty">				 
 								    </div>
 								  </div>
 								  <div>
-									 <div style="display:inline-block; margin: 10px 0 10px 5px;">
+									 <div style="display:inline-block; margin: 10px 0 0 5px;">
 								        <label style="width: 120px;" for="facebook" class="col-lg-3 control-label">Facebook</label>
 								     </div>
-								   	 <div style="display:inline-block; margin: 10px 0 5px 5px;">
+								   	 <div style="display:inline-block; margin: 10px 0 0 5px;">
 								        <input type="text" class="form-control"id="facebook" ng-model="userExtendedData.userSocialNetwork.facebookAddress"
 								        placeholder="May be empty">
 								     </div>       				 
@@ -155,13 +155,14 @@ input:valid {
 							</div>						
 					</fieldset>
 					 
-					<div class="form-group">
-						<div style="display:inline-block; margin: 10px 0 0 20px;">
-							<label style="width: 120px;" for="country" class="col-lg-3 control-label">
+					 
+					<div class="form-group" style="margin: 0 0 0 0;">
+						<div style="display:inline-block;">
+							<label style="margin: 10px 0 0 0;" for="country" class="col-lg-3 control-label">
 								Country
 							 </label>
 						</div>		
-						<div style="display:inline-block; margin: 10px 0 5px 5px;">	
+						<div style="display:inline-block; margin: 0 0 0 0;">	
 							<select style="width:200px" class="form-control"
 								 	ng-model="userExtendedData.userLocation.city.country.idCountry"
 							 		ng-change="getListCityByIdCountry(userExtendedData.userLocation.city.country.idCountry)">
@@ -171,17 +172,18 @@ input:valid {
 								  		{{country.countryName}}							  		
 							    </option>		         	
 							</select>
+							
 						</div>
 					</div>
 					
 					<div class="form-group" ng-show="listCity.length > 0">					 
 						<div>
-							<div style="display:inline-block; margin: 10px 0 5px 5px;">
-								<label style="width: 120px;" for="city" class="col-lg-3 control-label">
+							<div style="display:inline-block; margin: 0 0 0 45px;">
+								<label for="city" class="col-lg-3 control-label">
 									City
 								</label>
 							</div>		
-							<div style="display:inline-block; margin: 10px 0 5px 5px;">	
+							<div style="display:inline-block; margin: 10px 0 0 0;">	
 								<select style="width:200px" class="form-control" ng-model="userExtendedData.userLocation.city.idCity">		
 								    <option ng-selected="city.idCity == userExtendedData.userLocation.city.idCity"
 								            ng-repeat="city in listCity"
@@ -196,7 +198,7 @@ input:valid {
 					 <div class="form-group">
 						<div class="controls">  
 						     <button type="button" class="btn btn-primary" ng-disabled="!userExtendedData.userEmail.userEmail "
-						      style="float: right;" ng-click="editExtendedUserProfile(id,userExtendedData)">Update</button>    
+						      style="float: right; margin: 0 0 5px 5px;" ng-click="editExtendedUserProfile(id,userExtendedData)">Update</button>    
 						</div>
 						<div class="controls">  
 							 <button type="button" class="btn btn-primary" style="float: right;"

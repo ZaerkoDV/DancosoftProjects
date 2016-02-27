@@ -541,35 +541,55 @@ public class UserController {
 		UserSocialNetwork userSocialNetworkOld = userSocialNetworkService.getSocialNetworkWithStatusByIdUser(id,
 				ViewStatus.PRIVATE.toString());
 		
+		//if user have old social address
 		if(userSocialNetworkOld !=null){
 			userSocialNetwork=userSocialNetworkOld;
-			userSocialNetwork.setFacebookAddress(userExtendedData.getUserSocialNetwork().getFacebookAddress());
-			userSocialNetwork.setSkypeAddress(userExtendedData.getUserSocialNetwork().getSkypeAddress());
+			if(userExtendedData.getUserSocialNetwork()!=null){
+				if(userExtendedData.getUserSocialNetwork().getFacebookAddress()!=null){
+					userSocialNetwork.setFacebookAddress(userExtendedData.getUserSocialNetwork().getFacebookAddress());	
+				}
+				if(userExtendedData.getUserSocialNetwork().getSkypeAddress()!=null){
+					userSocialNetwork.setSkypeAddress(userExtendedData.getUserSocialNetwork().getSkypeAddress());
+				}
+			}
 			userSocialNetwork.setUserCorespondence(newUserEmail.getUserCorespondence());
 			userSocialNetworkService.updateUserSocialNetwork(userSocialNetwork);
 			
+		//if user not have social address before
 		}else{
 			userSocialNetwork= new UserSocialNetwork();
-			userSocialNetwork.setFacebookAddress(userExtendedData.getUserSocialNetwork().getFacebookAddress());
-			userSocialNetwork.setSkypeAddress(userExtendedData.getUserSocialNetwork().getSkypeAddress());
-			userSocialNetwork.setUserCorespondence(newUserEmail.getUserCorespondence());
+			if(userExtendedData.getUserSocialNetwork()!=null){
+				if(userExtendedData.getUserSocialNetwork().getFacebookAddress()!=null){
+					userSocialNetwork.setFacebookAddress(userExtendedData.getUserSocialNetwork().getFacebookAddress());	
+				}
+				if(userExtendedData.getUserSocialNetwork().getSkypeAddress()!=null){
+					userSocialNetwork.setSkypeAddress(userExtendedData.getUserSocialNetwork().getSkypeAddress());
+				}
+			}
+			if(newUserEmail.getUserCorespondence()!=null){
+				userSocialNetwork.setUserCorespondence(newUserEmail.getUserCorespondence());
+			}
 			userSocialNetworkService.saveUserSocialNetwork(userSocialNetwork);
 		}
-		logger.info("UserController:Get language for update.");
-		Long idNewLanguage=userExtendedData.getUserLocation().getLanguage().getIdLanguage();
-		Language newLanguage=languageService.getLanguageById(idNewLanguage); 
-		
-		logger.info("UserController:Get city and country for update.");
-		Long idNewCity=userExtendedData.getUserLocation().getCity().getIdCity();
-		City newCity=cityService.getCityById(idNewCity);
 		
 		logger.info("UserController:Create new user location(or update old if exist) and update his language, country, city.");
 		UserLocation newUserLocation=userLocationService.getUserLocationByIdUser(id);
 		if(newUserLocation==null){
 			newUserLocation=new UserLocation();
 		}
-		newUserLocation.setLanguage(newLanguage);
-		newUserLocation.setCity(newCity);
+		if(userExtendedData.getUserLocation()!=null){
+			if(userExtendedData.getUserLocation().getLanguage()!=null){
+				logger.info("UserController:Get language for update.");
+				Long idNewLanguage=userExtendedData.getUserLocation().getLanguage().getIdLanguage();
+				newUserLocation.setLanguage(languageService.getLanguageById(idNewLanguage));
+			}
+			
+			if(userExtendedData.getUserLocation().getCity()!=null){
+				logger.info("UserController:Get city and country for update.");
+				Long idNewCity=userExtendedData.getUserLocation().getCity().getIdCity();
+				newUserLocation.setCity(cityService.getCityById(idNewCity));
+			}	
+		}
 		newUserLocation.setUser(user);
 		userLocationService.updateUserLocation(newUserLocation);
 		
@@ -823,6 +843,7 @@ public class UserController {
 		groupMember.setMemberAccount(account);
 		groupMember.setAccountGroup(accountGroup);
 		groupMember.setGroupMemberStatus(FriendStatus.FRIEND.toString());
+		groupMemberService.saveGroupMember(groupMember);
 		
 		return id;
 	}
@@ -886,7 +907,7 @@ public class UserController {
 		
 		return idAccountGroup;
 	}
-//idAccountGroup
+
 	/**
 	 * Method delete account group messages by id  idGroupMessage.
 	 * 
@@ -1108,7 +1129,7 @@ public class UserController {
 	@RequestMapping(value="/views/profile/user/{id}/account/listaccountgroup.json", method = RequestMethod.GET)
 	public @ResponseBody List<AccountGroup> getListAccountGroupForAccount(@PathVariable("id") Long id){
 		Account account= userService.getAccountByUserId(id);
-		Long idAccount=account.getIdAccount();
+		Long idAccount=account.getIdAccount();				
 		logger.info("UserController: Load list account group for account.");
 		List<AccountGroup> listAccountGroup = accountGroupService
 				.getListAccountGroupWithBlockStatusByIdAccount(idAccount,BlockStatus.UNBLOCK.toString());
